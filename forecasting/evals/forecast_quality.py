@@ -43,16 +43,12 @@ import os
 import re
 import sys
 
-import psycopg2
-import psycopg2.extras
-
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from tools.shared.env import load_env  # noqa: E402
-load_env()
+# The pure checks below need only the sibling store_forecast module.
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Same parser as the store wrapper — two computations that must agree read the
 # same object (never retype the parsing rules here).
-from tools.forecast.store_forecast import (  # noqa: E402
+from store_forecast import (  # noqa: E402
     MIN_CRITERIA_CHARS,
     MIN_PASSES,
     parse_probabilities,
@@ -66,6 +62,13 @@ _YEAR_RE = re.compile(r"\b20\d{2}\b")
 
 
 def _conn():
+    # ── NVF-ONLY ─────────────────────────────────────────────────────────
+    # Connects to NVF's Postgres via $NVF_DATABASE_URL (env was loaded by
+    # NVF's tools/shared/env.py, dropped in this repo). Lazy import so the
+    # pure checks above/below stay importable without psycopg2 installed.
+    # TO PORT: repoint this (and fetch/_store below) at the new DB.
+    import psycopg2
+
     return psycopg2.connect(os.environ["NVF_DATABASE_URL"], connect_timeout=10)
 
 
@@ -211,7 +214,18 @@ def check_sources_cited(source_urls, answer_md) -> dict:
 # Fetch + orchestrate
 # ---------------------------------------------------------------------------
 
+# =========================================================================
+# ── NVF-ONLY BOUNDARY ────────────────────────────────────────────────────
+# Everything ABOVE (the check_* functions and _safe) is pure and portable —
+# score any forecast payload, no DB needed. Everything BELOW reads/writes
+# NVF's Postgres (research_notes + eval_results tables) and must be
+# reimplemented on this project's own storage.
+# =========================================================================
+
+
 def fetch_forecast_note(note_id: str) -> dict | None:
+    import psycopg2.extras  # NVF-ONLY, see boundary banner
+
     with _conn() as conn:
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cur.execute(

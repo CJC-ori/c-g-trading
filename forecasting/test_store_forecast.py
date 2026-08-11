@@ -9,7 +9,7 @@ RED tests encode the defect classes this wrapper exists to refuse:
 
 import pytest
 
-from tools.forecast.store_forecast import (
+from store_forecast import (
     ForecastValidationError,
     parse_probabilities,
     validate_forecast,
@@ -160,7 +160,7 @@ def test_red_headline_must_match_the_logged_ensemble():
 
 
 def test_geomean_of_odds_matches_the_documented_rule():
-    from tools.forecast.store_forecast import geomean_of_odds
+    from store_forecast import geomean_of_odds
 
     # 93/88/90 -> 90.5% (the worked example in the /forecast skill)
     assert round(geomean_of_odds([93.0, 88.0, 90.0]), 1) == 90.5

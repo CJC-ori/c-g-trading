@@ -43,21 +43,26 @@ Public API:
   - ``parse_probabilities(raw) -> list[float]``  (pure; also used by the eval)
   - ``validate_forecast(payload) -> dict``        (pure — no DB; unit-tested)
   - ``store_forecast(payload, conn=None, commit=True) -> dict``
+
+PORTING NOTE (c-g-trading)
+--------------------------
+This file was extracted from Chris's NVF grantmaking system. Everything down to
+the "NVF-ONLY BOUNDARY" banner near the bottom is pure stdlib Python and runs
+here as-is (``python store_forecast.py`` validates JSON on stdin). The only NVF
+dependency was the persistence call — in NVF, ``store_forecast()`` delegated to
+``store_note()``, which wrote a row to NVF's Postgres. That seam is now a
+clearly-marked stub: implement ``store_note_port.py`` against whatever DB this
+project ends up on. The reference implementation is ``nvf-deps/store_note.py``
+(kept for reading, not for running — it imports NVF-internal helpers).
 """
 
 from __future__ import annotations
 
 import json
 import math as _math
-import os
 import re
 import sys
 from typing import Any
-
-sys.path.insert(
-    0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-)
-from tools.notes.store_note import StoreNoteError, store_note  # noqa: E402
 
 MIN_PASSES = 2  # the skill dispatches 2-3+; fewer than 2 is not an ensemble
 MIN_CRITERIA_CHARS = 40  # "TBD" / "passes" are not resolution criteria
@@ -76,8 +81,11 @@ _NUM_RE = re.compile(r"\d+(?:\.\d+)?")
 _ODDS_PHRASE_RE = re.compile(r"\d\s*(?:in|/|:)\s*\d")
 
 
-class ForecastValidationError(StoreNoteError):
-    """A forecast-specific validation failure. Message is the whole story."""
+class ForecastValidationError(ValueError):
+    """A forecast-specific validation failure. Message is the whole story.
+
+    (In NVF this subclassed StoreNoteError so one except-clause caught both
+    layers; here it's a plain ValueError — no NVF import needed.)"""
 
 
 def parse_probabilities(raw: Any) -> list[float]:
@@ -331,10 +339,31 @@ def validate_forecast(payload: dict) -> dict:
     return out
 
 
+# =========================================================================
+# ── NVF-ONLY BOUNDARY ────────────────────────────────────────────────────
+# Everything ABOVE this line is pure stdlib Python: parsing, validation, and
+# the geometric-mean-of-odds aggregation. Everything BELOW is the persistence
+# seam. In NVF, store_forecast() delegated to store_note(), which wrote a
+# `research_notes` row to NVF's Postgres (reference: nvf-deps/store_note.py).
+# TO PORT: create `store_note_port.py` next to this file exposing
+#     store_note(payload: dict, conn=None, commit: bool = True) -> dict
+# targeting the new DB, and store_forecast() below will pick it up.
+# =========================================================================
+
+
 def store_forecast(payload: dict, conn=None, commit: bool = True) -> dict:
-    """Validate forecast-specifically, then delegate to store_note (which
-    validates the generic contract, inserts, supersedes, emits the event)."""
-    return store_note(validate_forecast(payload), conn=conn, commit=commit)
+    """Validate forecast-specifically, then delegate to the persistence layer
+    (which validates the generic note contract, inserts, supersedes)."""
+    validated = validate_forecast(payload)
+    try:
+        from store_note_port import store_note  # type: ignore[import-not-found]
+    except ImportError as exc:
+        raise NotImplementedError(
+            "No persistence layer wired up: create store_note_port.py exposing "
+            "store_note(payload, conn=None, commit=True) for this project's DB "
+            "(see the NVF-ONLY BOUNDARY banner and nvf-deps/store_note.py)."
+        ) from exc
+    return store_note(validated, conn=conn, commit=commit)
 
 
 def main() -> int:
@@ -345,9 +374,15 @@ def main() -> int:
         return 1
     try:
         result = store_forecast(payload)
-    except StoreNoteError as exc:  # includes ForecastValidationError
+    except ForecastValidationError as exc:
         print(f"store_forecast: REFUSED: {exc}", file=sys.stderr)
         return 1
+    except NotImplementedError as exc:
+        # Validation passed; there is just nowhere to store it yet. Echo the
+        # validated payload so the CLI is still useful as a strict validator.
+        print(f"store_forecast: validated OK, NOT persisted — {exc}", file=sys.stderr)
+        print(json.dumps(validate_forecast(payload), indent=2, default=str))
+        return 0
     print(json.dumps(result, indent=2, default=str))
     return 0
 

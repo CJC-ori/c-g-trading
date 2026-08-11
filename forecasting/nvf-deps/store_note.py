@@ -1,3 +1,10 @@
+# ⚠ NVF-ONLY REFERENCE — DOES NOT RUN IN THIS REPO ⚠
+# This is NVF's notes-persistence layer, kept only so you can read what
+# store_forecast() used to delegate to (schema contract, supersession logic,
+# status derivation). It imports NVF-internal helpers (tools.shared.db) that
+# were deliberately not copied. Port point: implement store_note_port.py per
+# the NVF-ONLY BOUNDARY banner in ../store_forecast.py.
+
 """Write a row to the append surface — ``research_notes`` (migration 106).
 
 This module IS the API for appending to the case-notes surface. Every skill

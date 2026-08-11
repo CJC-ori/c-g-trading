@@ -8,7 +8,7 @@ The exception path scoring 0 (never vanishing) is
 ``test_exception_path_scores_zero``.
 """
 
-from tools.evals.forecast_quality import (
+from forecast_quality import (
     _safe,
     check_independent_passes,
     check_probability_bounds,
@@ -151,48 +151,9 @@ def test_red_central_outside_3_value_range_scores_zero():
 
 
 # ---------------------------------------------------------------------------
-# Gate-level: the new deterministic floors actually reach gate_summary
-# (mirrors test_me_quality.test_red_silent_lane_breaches_eval_gate)
+# NVF-ONLY (removed in this repo): the original file ended with four
+# gate-level tests wiring these checks into NVF's eval_gate (Slack alerts +
+# deterministic score floors). That plumbing wasn't ported — see the
+# NVF-ONLY BOUNDARY banner in forecast_quality.py. If this project grows an
+# alerting gate, resurrect them from NVF's tools/evals/test_forecast_quality.py.
 # ---------------------------------------------------------------------------
-
-from tools.evals import eval_gate  # noqa: E402
-
-
-def _gate(monkeypatch, results):
-    monkeypatch.setattr(eval_gate, "_send_slack", lambda *a, **k: {"ok": True})
-    monkeypatch.setattr(eval_gate, "_write_flag", lambda *a, **k: True)
-    return eval_gate.gate_summary(
-        {"run_id": "forecast-x", "run_type": "forecast", "quality_error": None,
-         "results": results}
-    )
-
-
-def test_red_uncited_forecast_breaches_gate(monkeypatch):
-    assert _gate(monkeypatch, [check_sources_cited([], "no refs here")]) == eval_gate.EXIT_BREACH
-
-
-def test_red_out_of_bounds_breaches_gate(monkeypatch):
-    assert _gate(
-        monkeypatch, [check_probability_bounds({"probability_or_range": "140%"})]
-    ) == eval_gate.EXIT_BREACH
-
-
-def test_boundary_half_score_passes_half_floor_gate(monkeypatch):
-    """forecast_resolution_criteria floor is 0.5 and the comparison is strict
-    (<): a 0.5 partial-credit score must PASS."""
-    r = check_resolution_criteria("Substantive but deadline-less criteria " * 3)
-    assert r["score"] == 0.5
-    assert _gate(monkeypatch, [r]) == eval_gate.EXIT_PASS
-
-
-def test_green_forecast_summary_passes_gate(monkeypatch):
-    results = [
-        check_resolution_criteria(GOOD_CRITERIA),
-        check_probability_bounds({"probability_or_range": "28% (range 15-45%)"}),
-        check_independent_passes([
-            {"stance": "outside-view-first", "probability": "25%"},
-            {"stance": "causal-chain-first", "probability": "32%"},
-        ]),
-        check_sources_cited(["https://example.org/x"], None),
-    ]
-    assert _gate(monkeypatch, results) == eval_gate.EXIT_PASS

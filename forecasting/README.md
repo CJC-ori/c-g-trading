@@ -15,10 +15,15 @@ the part we'd build new.
 | `methodology/02-fuzzy-questions.md` | How to operationalize vague questions into resolvable ones (entity/event/threshold/deadline + "does not count" list). Less critical for trading (market rules ARE the resolution criteria) but the proxy-bias thinking still applies | Mostly |
 | `methodology/03-passes-aggregation-uncertainty.md` | The multi-agent structure: 2–3+ independent estimation passes with distinct stances (outside-view-first / causal-chain-first / adversarial), aggregated by **geometric mean of odds**, with rules for handling disagreement. Also carries the full reference-link list | **Yes — this is the architecture.** |
 | `forecast-skill.md` | The orchestrator prompt that runs the whole pipeline as a Claude Code slash command: operationalize → gather context → dispatch independent passes in parallel → aggregate → sanity-check → persist | Yes, as a design template — strip the NVF-specific DB steps |
-| `store_forecast.py` | Strict validation + persistence wrapper. The **validation logic is pure Python and portable**: probability parsing, range ordering, in-(0,100) enforcement, ≥2-independent-passes requirement, counterfactual-pair completeness | Validation yes; persistence targets NVF's Postgres (via `nvf-deps/store_note.py`) and won't run here |
-| `test_store_forecast.py` | Unit tests for the validation logic | Yes |
-| `evals/forecast_quality.py` + test | Automated quality scoring of a stored forecast (checks for base rate present, drivers signed, criteria substantive, etc.) | The checks are portable; the DB plumbing isn't |
-| `nvf-deps/store_note.py` | NVF's notes-table persistence layer — included only so `store_forecast.py`'s import chain is visible | No — reference only |
+| `store_forecast.py` | Strict validation + probability parsing + geomean-of-odds aggregation. **Runs standalone in this repo (stdlib only)** — as a CLI it validates JSON on stdin. The NVF persistence call was cut out behind a labeled `NVF-ONLY BOUNDARY` seam: implement `store_note_port.py` when we have DB infra | **Yes** (persistence seam stubbed) |
+| `test_store_forecast.py` | Unit tests for the validation logic — `pytest forecasting/` passes standalone | Yes |
+| `evals/forecast_quality.py` + test | Automated quality scoring of a forecast payload (criteria substantive, probabilities in bounds, ≥2 passes, sources cited). Pure checks run standalone; everything below its `NVF-ONLY BOUNDARY` banner (note fetch/score storage) needs re-pointing at new DB infra | Checks yes; DB half labeled for porting |
+| `nvf-deps/store_note.py` | NVF's notes-table persistence layer — **reference only, does not run here** (header warning says the same). Kept so the schema contract `store_note_port.py` should honor is readable | No — reference only |
+
+**Dependency policy:** nothing in this directory imports NVF code or requires a
+database. Every place the NVF database *used* to be touched is marked with an
+`NVF-ONLY` banner comment naming the port point. Grep for `NVF-ONLY` to find
+them all.
 
 ## The design in one paragraph
 
