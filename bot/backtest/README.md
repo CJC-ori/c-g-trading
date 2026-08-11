@@ -8,7 +8,8 @@ Implements `SPEC.md` (the contract; read it first). Python 3.11, stdlib only.
 |---|---|
 | `types.py` | frozen dataclasses: `Candle`, `Trade`, `MarketInfo`, `SettlementResult`, `OrderIntent`, `Fill`, `Position`, `Portfolio`, `MarketView`, `Strategy` protocol |
 | `fills.py` | fill simulation as pure functions: taker crossing, maker vs trades, conservative OHLC rules, 25% volume caps, position/cash accounting, settlement payouts |
-| `fees.py` | Kalshi fee model: taker `ceil_to_cent(0.07·P·(1−P))` per contract, category multiplier table, maker 0, fee-stress hook |
+| `fees.py` | Kalshi fee model *(amended 2026-08-11 per research/)*: exact per-series formula `0.07 × fee_multiplier × C × P·(1−P)` **ceiled to $0.0001** via `trade_fee_centicents` + `FeeSchedule` (bundled `series_fees.json`, 162 non-default series; maker 0.0175 on `quadratic_with_maker_fees` only, ⚠ unverified), fee-stress hook; legacy per-contract-ceil kept as the no-schedule default |
+| `costs.py` | `CostLedger`: real-usage LLM inference cost → cents (never understated); Opus/Sonnet/Haiku prices, caching/batch/web-search modifiers, `amortize()` for shared dossiers, ×2 price-stress knob |
 | `risk.py` | harness-enforced sizing: fee-aware fractional Kelly, per-market/event/total caps, depth cap, no-borrowing floor |
 | `engine.py` | the replay loop: decision clock, point-in-time `MarketView`s, risk clamps, order lifecycle, settlements, inference cost, JSONL event log |
 | `metrics.py` | SPEC §6 metrics + `report.json` / `report.md` writer, capacity-curve and fee-stress re-runs |
@@ -116,12 +117,20 @@ Intents without `p_hat` can only reduce existing positions.
 P&L line (gross and net). The equity curve is gross of inference.
 
 **Metrics** (`full_report`): net P&L both ways, annualized on time-weighted
-average deployed premium, Brier vs the market-mid baseline at the same
-instants, calibration curve + ECE, max drawdown, top-5 concentration + worst
-market, trade stats (fill rates vs intents, maker/taker mix, avg entry edge,
-holding period), 60/40 time split and category split, capacity curve
-(fresh runs at 1×/3×/10× depth multiplier), and fee stress (×1.5 re-run).
-Reruns take a `strategy_factory` so state never leaks between runs.
+average deployed premium, the three-number Brier block (pooled ΔBrier with
+paired 95% CI, traded-subset ΔBrier at the 4¢ gate, trade P&L — always
+together; n≥500 gate; leak flag at ΔBrier>+0.05), calibration curve + ECE +
+Murphy reliability/resolution decomposition, max drawdown, top-5
+concentration + worst market, trade stats (fill rates vs intents,
+maker/taker mix, simulated maker fill rate with the 40–50% sanity band and
+>60% flag, avg entry edge, holding period, opportunity-lifetime
+median/p25/p75 with the <5s flag), cost ratios (inference/net-P&L <20%,
+inference/notional <1%), 60/40 time split and category split, capacity
+curve (fresh runs at 1×/3×/10× depth multiplier), fee stress (×1.5 re-run),
+and inference stress (×2 re-pricing of the inference line).
+Reruns take a `strategy_factory` so state never leaks between runs; pass
+`fee_schedule=FeeSchedule.load_default()` for real-data runs (exact
+per-series fees; `report["fee_mode"]` records which mode ran).
 
 ## Real-data wiring decisions (validated by `validate_wiring.py`)
 
@@ -155,9 +164,12 @@ Reruns take a `strategy_factory` so state never leaks between runs.
 
 Still open:
 
-- `fees.py TODO(verify)`: per-category multipliers and per-contract vs
-  per-order ceil vs Kalshi's official fee schedule (current implementation
-  is the conservative upper bound).
+- `fees.py`: the maker coefficient 0.0175 is triangulated, not verified —
+  the official fee-schedule PDF still 429s (a human should download it).
+  `series_fees.json` is a present-day snapshot; point-in-time fee-config
+  resolution via `/series/fee_changes` is unimplemented (the ×1.5 fee
+  stress bounds the error). The legacy no-schedule default remains the
+  conservative per-contract ceil.
 - LLM-strategy contamination gate (only markets resolving after 2026-02-01)
   is a run-configuration concern (`universe.UniverseConfig(close_after=...)`
   or settled-window filters); enforce when wiring forecaster strategies.

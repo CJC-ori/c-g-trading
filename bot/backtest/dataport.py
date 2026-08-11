@@ -18,7 +18,13 @@ from __future__ import annotations
 
 from typing import Iterable, Protocol, Sequence, runtime_checkable
 
-from bot.backtest.types import Candle, MarketInfo, SettlementResult, Trade
+from bot.backtest.types import (
+    Candle,
+    MarketInfo,
+    PriceStructure,
+    SettlementResult,
+    Trade,
+)
 
 
 @runtime_checkable
@@ -222,6 +228,20 @@ class SqliteHistoryProvider:
 
     @staticmethod
     def _market_row(r) -> MarketInfo:
+        # Tick structure: only non-linear structures (tapered_deci_cent etc.)
+        # are materialized; None means the default 1c grid. Extracted from
+        # the raw market JSON via SQL json_extract (see _MARKET_COLS).
+        structure = None
+        keys = r.keys()
+        if "plr" in keys and r["plr"] and r["plr"] != "linear_cent":
+            import json as _json
+
+            try:
+                ranges = _json.loads(r["pr"]) if r["pr"] else None
+            except ValueError:
+                ranges = None
+            if ranges:
+                structure = PriceStructure.from_raw(r["plr"], ranges)
         return MarketInfo(
             ticker=r["ticker"],
             event_ticker=r["event_ticker"] or "",
@@ -229,6 +249,8 @@ class SqliteHistoryProvider:
             title=r["title"] or "",
             open_ts=_iso_ts(r["open_time"], 0),
             close_ts=_iso_ts(r["close_time"], _FAR_FUTURE),
+            series_ticker=(r["series_ticker"] or "") if "series_ticker" in keys else "",
+            price_structure=structure,
         )
 
     @staticmethod
@@ -295,10 +317,13 @@ class SqliteHistoryProvider:
         if settled_after is not None or settled_before is not None:
             clauses.append("result IN ('yes','no','scalar')")
         where = f"WHERE {' AND '.join(clauses)}" if clauses else ""
-        sql = (
-            "SELECT ticker, event_ticker, category, title, open_time, close_time,"
-            " settlement_ts, result FROM markets " + where + " ORDER BY ticker"
+        cols = (
+            "ticker, event_ticker, series_ticker, category, title, open_time,"
+            " close_time, settlement_ts, result,"
+            " json_extract(raw_json, '$.price_level_structure') AS plr,"
+            " json_extract(raw_json, '$.price_ranges') AS pr"
         )
+        sql = f"SELECT {cols} FROM markets {where} ORDER BY ticker"
 
         def _rows():
             if tickers is None:
@@ -311,8 +336,7 @@ class SqliteHistoryProvider:
                 chunk = tick_list[i : i + 500]
                 w = "WHERE " + " AND ".join(base).format(ph=",".join("?" * len(chunk)))
                 yield from conn.execute(
-                    "SELECT ticker, event_ticker, category, title, open_time,"
-                    f" close_time, settlement_ts, result FROM markets {w} ORDER BY ticker",
+                    f"SELECT {cols} FROM markets {w} ORDER BY ticker",
                     params + chunk,
                 )
 

@@ -388,3 +388,175 @@ class TestRiskIntegration:
         res = run_backtest(provider, strat)
         assert res.fills == []
         assert res.intents[0]["clamped"] == 0
+
+
+# ---------------------------------------------------------------------------
+# Exact per-series fee mode (SYNTHESIS §2.1): centicent ceiling + per-order
+# accumulator, maker fees on quadratic_with_maker_fees series
+# ---------------------------------------------------------------------------
+
+class TestExactFeeMode:
+    def run_taker(self, fee_schedule):
+        from bot.backtest.fees import FeeSchedule
+
+        market, candles, settle = candles_only_market(
+            ticker="A", closes=(60, 61, 62), close_ts=4 * HOUR, result="yes"
+        )
+        provider = InMemoryHistoryProvider([market], candles, [], [settle])
+        strat = ScriptedStrategy({(HOUR, "A"): [buy_yes()]})
+        cfg = EngineConfig(fee_schedule=fee_schedule)
+        return run_backtest(provider, strat, cfg)
+
+    def test_taker_fee_centicent_ceiled_then_cent_ceiled(self):
+        from bot.backtest.fees import FeeSchedule
+
+        res = self.run_taker(FeeSchedule({}))
+        # 50 @ 61c: 0.07*50*0.61*0.39 = $0.832665 -> ceil $0.8327 -> 84c
+        # (legacy per-contract path charges 100c).
+        assert res.fees_cents == 84
+        assert res.net_pnl_cents == 50 * (100 - 61) - 84
+
+    def test_zero_multiplier_series_pays_no_fee(self):
+        from bot.backtest.fees import FeeSchedule, SeriesFeeConfig
+
+        sched = FeeSchedule({"A": SeriesFeeConfig("quadratic", 0.0)})
+        res = self.run_taker(sched)
+        assert res.fees_cents == 0
+
+    def test_fee_stress_applies_in_exact_mode(self):
+        from dataclasses import replace as dc_replace
+
+        from bot.backtest.fees import FeeSchedule
+
+        market, candles, settle = candles_only_market(
+            ticker="A", closes=(60, 61, 62), close_ts=4 * HOUR, result="yes"
+        )
+        provider = InMemoryHistoryProvider([market], candles, [], [settle])
+        strat = ScriptedStrategy({(HOUR, "A"): [buy_yes()]})
+        cfg = EngineConfig(fee_schedule=FeeSchedule({}), fee_stress=1.5)
+        res = run_backtest(provider, strat, cfg)
+        # 1.5 * $0.832665 = $1.2489975 -> ceil cc $1.2490 -> 125c
+        assert res.fees_cents == 125
+
+    def test_maker_fee_charged_on_maker_fee_series_with_accumulator(self):
+        from bot.backtest.fees import FeeSchedule, SeriesFeeConfig
+
+        market, candles, settle = candles_only_market(
+            ticker="B", closes=(60, 60, 60), close_ts=4 * HOUR, result="no"
+        )
+        trades = [
+            mk_trade("B", 5000, 39, 80),   # maker fill 20 @ 40
+            mk_trade("B", 8000, 38, 40),   # maker fill 10 @ 40
+        ]
+        provider = InMemoryHistoryProvider([market], candles, trades, [settle])
+        intent = OrderIntent("B", "yes", "buy", 40, 40, tif="rest", p_hat=0.6)
+        strat = ScriptedStrategy({(HOUR, "B"): [intent]})
+        sched = FeeSchedule(
+            {"B": SeriesFeeConfig("quadratic_with_maker_fees", 1.0)}
+        )
+        res = run_backtest(provider, strat, EngineConfig(fee_schedule=sched))
+        # fill 1: 0.0175*20*0.4*0.6 = $0.084 -> 840cc, ceil -> 9c charged
+        # fill 2: +0.0175*10*0.24 = $0.042 -> total 1260cc = 12.6c -> 13c
+        #         -> charges the 4c delta (per-order accumulator converges
+        #            to the single-fill-equivalent 13c, not 9+5=14c)
+        assert [f.fee_cents for f in res.fills] == [9, 4]
+        assert res.fees_cents == 13
+
+    def test_maker_fee_still_zero_on_plain_quadratic(self):
+        from bot.backtest.fees import FeeSchedule
+
+        market, candles, settle = candles_only_market(
+            ticker="B", closes=(60, 60, 60), close_ts=4 * HOUR, result="no"
+        )
+        trades = [mk_trade("B", 5000, 39, 80)]
+        provider = InMemoryHistoryProvider([market], candles, trades, [settle])
+        intent = OrderIntent("B", "yes", "buy", 40, 40, tif="rest", p_hat=0.6)
+        strat = ScriptedStrategy({(HOUR, "B"): [intent]})
+        res = run_backtest(
+            provider, strat, EngineConfig(fee_schedule=FeeSchedule({}))
+        )
+        assert res.fees_cents == 0
+
+    def test_legacy_default_unchanged_without_schedule(self):
+        res = self.run_taker(None)
+        assert res.fees_cents == 100  # per-contract 2c x 50, as before
+
+
+# ---------------------------------------------------------------------------
+# Opportunity lifetime (SYNTHESIS §2.2)
+# ---------------------------------------------------------------------------
+
+class TestOpportunityLifetime:
+    def test_lifetime_from_trades(self):
+        market, candles, settle = candles_only_market(
+            ticker="B", closes=(60, 60, 60), close_ts=4 * HOUR, result="no"
+        )
+        trades = [
+            mk_trade("B", HOUR + 100, 39, 10),  # still at/below 40: persists
+            mk_trade("B", HOUR + 900, 41, 10),  # above 40: condition dies
+        ]
+        provider = InMemoryHistoryProvider([market], candles, trades, [settle])
+        intent = OrderIntent("B", "yes", "buy", 40, 40, tif="rest", p_hat=0.6)
+        strat = ScriptedStrategy({(HOUR, "B"): [intent]})
+        res = run_backtest(provider, strat)
+        (oid,) = res.orders
+        assert res.orders[oid]["opportunity_lifetime_s"] == 900
+
+    def test_lifetime_capped_at_market_end_when_never_dies(self):
+        market, candles, settle = candles_only_market(
+            ticker="B", closes=(60, 60, 60), close_ts=4 * HOUR, result="no"
+        )
+        trades = [mk_trade("B", HOUR + 100, 39, 10)]
+        provider = InMemoryHistoryProvider([market], candles, trades, [settle])
+        intent = OrderIntent("B", "yes", "buy", 40, 40, tif="rest", p_hat=0.6)
+        strat = ScriptedStrategy({(HOUR, "B"): [intent]})
+        res = run_backtest(provider, strat)
+        (oid,) = res.orders
+        assert res.orders[oid]["opportunity_lifetime_s"] == 3 * HOUR
+
+    def test_lifetime_from_candles_when_no_trades(self):
+        # Candle-only market: buy @ 61; C2 (2h-3h) has low 58 (persists),
+        # then close_ts. lows: C1 low is from lows param.
+        market, candles, settle = candles_only_market(
+            ticker="A",
+            closes=(60, 61, 65, 65),
+            lows=(59, 58, 63, 64),  # C2 low 63 > 61 -> dies at C2 end (3h)
+            close_ts=5 * HOUR,
+            result="yes",
+        )
+        provider = InMemoryHistoryProvider([market], candles, [], [settle])
+        strat = ScriptedStrategy({(HOUR, "A"): [buy_yes(tif="rest")]})
+        res = run_backtest(provider, strat)
+        (oid,) = res.orders
+        # placed at 1h; first candle starting >= 1h with low > 61 is C2
+        # [2h,3h) -> death at its end 3h -> lifetime 2h
+        assert res.orders[oid]["opportunity_lifetime_s"] == 2 * HOUR
+
+
+# ---------------------------------------------------------------------------
+# Price quantization to per-market tick structures (SYNTHESIS §2.2)
+# ---------------------------------------------------------------------------
+
+class TestPriceQuantization:
+    def test_whole_cent_limits_are_on_grid_for_tapered(self):
+        from bot.backtest.types import MarketInfo, PriceRange, PriceStructure
+
+        tapered = PriceStructure(
+            "tapered_deci_cent",
+            (
+                PriceRange(0, 1000, 10),      # 0-10c in 0.1c ticks
+                PriceRange(1000, 9000, 100),  # 10-90c in 1c ticks
+                PriceRange(9000, 10000, 10),  # 90-100c in 0.1c ticks
+            ),
+        )
+        market = MarketInfo(
+            ticker="A", event_ticker="EV", category="test", title="A",
+            open_ts=0, close_ts=100 * HOUR, price_structure=tapered,
+        )
+        _, candles, settle = candles_only_market(ticker="A")
+        provider = InMemoryHistoryProvider([market], candles, [], [settle])
+        strat = ScriptedStrategy({(HOUR, "A"): [buy_yes()]})
+        res = run_backtest(provider, strat)
+        # 61c is a valid tick: no quantization event, order at 61 unchanged
+        assert not [e for e in res.events if e["type"] == "price_quantized"]
+        assert res.fills and res.fills[0].price_cents == 61

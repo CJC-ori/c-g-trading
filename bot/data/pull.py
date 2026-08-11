@@ -25,22 +25,42 @@ Examples::
     # 7. Coverage report
     python -m bot.data.pull stats
 
+The ``hist-*`` subcommands drive the **/historical/\\* tier**, which is where
+everything older than ``/historical/cutoff`` (2026-06-12 as of writing) lives —
+settled markets back to 2021, tick trades back to 2021-06, candlesticks to
+market inception::
+
+    # archived market metadata for whole categories (series-driven)
+    python -m bot.data.pull hist-markets --categories "Elections,Politics"
+
+    # tick tape for a universe, newest-first, capped
+    python -m bot.data.pull hist-trades --series PRES --max-pages 400
+
+    # 1-minute candles over the final 72h of each market's life
+    python -m bot.data.pull hist-candles --categories Elections --interval 1 \\
+        --window final-72h --min-volume 5000
+
+    # which markets traded during a window (exchange-wide firehose)
+    python -m bot.data.pull discover --min-ts 2024-11-05 --max-ts 2024-11-07
+
 Note:
-    Kalshi purges settled markets from the public API roughly 90 days after
-    close, so ``--settled-since`` cannot reach further back than that no matter
-    what date is passed. See ``NOTES.md``.
+    The **live** tier purges settled markets roughly 90 days after close, so
+    ``--settled-since`` cannot reach further back than that. The historical tier
+    has no such limit but also **no date filters** — enumeration must go through
+    ``series_ticker``/``event_ticker``. See ``NOTES.md``.
 """
 
 from __future__ import annotations
 
 import argparse
+import concurrent.futures as cf
 import datetime as dt
 import logging
 import random
 import sys
 import time
 from collections import Counter, defaultdict
-from typing import Any, Iterable, Sequence
+from typing import Any, Callable, Iterable, Iterator, Sequence
 
 from bot.data.kalshi_client import KalshiClient, known_categories
 from bot.data.store import DEFAULT_DB_PATH, Store, series_of
@@ -112,10 +132,15 @@ PINNED_SERIES: tuple[str, ...] = (
 # helpers
 # --------------------------------------------------------------------------
 def _utc(day: str) -> int:
-    """Parse ``YYYY-MM-DD`` to a unix second timestamp at UTC midnight."""
-    return int(
-        dt.datetime.strptime(day, "%Y-%m-%d").replace(tzinfo=dt.timezone.utc).timestamp()
-    )
+    """Parse ``YYYY-MM-DD`` or ``YYYY-MM-DDTHH:MM`` to unix seconds (UTC).
+
+    Bare unix-second integers pass through, which keeps event-window scripting
+    readable when a timestamp was copied straight out of a candle.
+    """
+    if day.isdigit():
+        return int(day)
+    fmt = "%Y-%m-%dT%H:%M" if "T" in day else "%Y-%m-%d"
+    return int(dt.datetime.strptime(day, fmt).replace(tzinfo=dt.timezone.utc).timestamp())
 
 
 def _iso(ts: int) -> str:
@@ -477,6 +502,405 @@ def cmd_trades(args: argparse.Namespace, client: KalshiClient, store: Store) -> 
 
 
 # --------------------------------------------------------------------------
+# /historical/* tier
+# --------------------------------------------------------------------------
+#: The 12 daily-high city series the weather strategy needs
+#: (``research/ground-truth.md`` §2). Each resolves ~10 strikes/day and the
+#: series ticker also resolves its pre-2023 ``HIGH*`` markets.
+WEATHER_HIGH_SERIES: tuple[str, ...] = (
+    "KXHIGHNY", "KXHIGHCHI", "KXHIGHAUS", "KXHIGHMIA", "KXHIGHLAX", "KXHIGHPHIL",
+    "KXHIGHDEN", "KXHIGHTPHX", "KXHIGHTATL", "KXHIGHTSEA", "KXHIGHTDC", "KXHIGHTDAL",
+)
+
+
+def _pmap(
+    fn: Callable[[Any], Any], items: Sequence[Any], workers: int
+) -> Iterator[tuple[Any, Any, BaseException | None]]:
+    """Run ``fn`` over ``items`` in a thread pool, yielding as results land.
+
+    Yields ``(item, result, exception)``. Network I/O parallelises well here —
+    the client's rate limiter is shared and thread-safe, and measured throughput
+    goes from ~3 rps single-threaded (latency-bound through the proxy) to ~15
+    rps at 8 workers. Database writes stay on the calling thread, because the
+    sqlite connection is not shared across threads.
+    """
+    if workers <= 1:
+        for it in items:
+            try:
+                yield it, fn(it), None
+            except BaseException as exc:  # noqa: BLE001 - reported, not raised
+                yield it, None, exc
+        return
+    with cf.ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = {pool.submit(fn, it): it for it in items}
+        for fut in cf.as_completed(futures):
+            it = futures[fut]
+            try:
+                yield it, fut.result(), None
+            except BaseException as exc:  # noqa: BLE001
+                yield it, None, exc
+
+
+def _over_budget(store: Store, limit_mb: float) -> bool:
+    return limit_mb > 0 and store.size_bytes() / 1e6 >= limit_mb
+
+
+def _window(row: Any, spec: str) -> tuple[int, int]:
+    """Resolve a ``--window`` spec to (start_ts, end_ts) for one market.
+
+    ``full`` spans market open to close; ``final-72h`` / ``final-15d`` take that
+    much time off the end. The end is padded an hour past close so the settling
+    candle is included, and clamped to now for still-open markets.
+    """
+    now = int(time.time())
+    open_ts = _parse_iso(row["open_time"])
+    close_ts = min(_parse_iso(row["close_time"]) or now, now)
+    start = open_ts or (close_ts - 86400 * 400)
+    if spec != "full":
+        body = spec.split("-", 1)[1]
+        n = float(body[:-1])
+        unit = body[-1]
+        secs = n * (3600 if unit == "h" else 86400)
+        start = max(start, close_ts - int(secs))
+    return start, min(close_ts + 3600, now + 3600)
+
+
+def _select_tickers(store: Store, args: argparse.Namespace) -> list[Any]:
+    """Resolve the universe selector flags shared by the ``hist-*`` commands.
+
+    Returns ``markets`` rows (ticker, series_ticker, category, open/close_time,
+    volume, source). The selectors compose: category + volume + settled + limit
+    is the FLB universe; ``--series`` is how the election and weather pulls are
+    targeted.
+    """
+    where: list[str] = ["1=1"]
+    params: list[Any] = []
+    if args.tickers:
+        tk = [t.strip() for t in args.tickers.split(",") if t.strip()]
+        where.append("ticker IN (%s)" % ",".join("?" * len(tk)))
+        params += tk
+    if getattr(args, "series", None):
+        st = [s.strip() for s in args.series.split(",") if s.strip()]
+        where.append("series_ticker IN (%s)" % ",".join("?" * len(st)))
+        params += st
+    if getattr(args, "series_like", None):
+        where.append("series_ticker LIKE ?")
+        params.append(args.series_like)
+    if getattr(args, "categories", None):
+        cats = [c.strip() for c in args.categories.split(",") if c.strip()]
+        where.append("category IN (%s)" % ",".join("?" * len(cats)))
+        params += cats
+    if getattr(args, "exclude_categories", None):
+        cats = [c.strip() for c in args.exclude_categories.split(",") if c.strip()]
+        where.append("COALESCE(category,'') NOT IN (%s)" % ",".join("?" * len(cats)))
+        params += cats
+    if getattr(args, "min_volume", 0):
+        where.append("volume >= ?")
+        params.append(args.min_volume)
+    if getattr(args, "settled_only", False):
+        where.append("status IN ('finalized','settled')")
+    if getattr(args, "source", None):
+        where.append("source = ?")
+        params.append(args.source)
+
+    sql = (
+        "SELECT ticker, series_ticker, category, open_time, close_time, volume, source"
+        " FROM markets WHERE " + " AND ".join(where) + " ORDER BY volume DESC"
+    )
+    if getattr(args, "limit", 0):
+        sql += f" LIMIT {int(args.limit)}"
+    rows = store.query(sql, params)
+
+    if getattr(args, "skip_existing", False):
+        have = _already_have(store, args)
+        rows = [r for r in rows if r["ticker"] not in have]
+    return rows
+
+
+def _already_have(store: Store, args: argparse.Namespace) -> set[str]:
+    """Tickers that already carry data for the table this command writes."""
+    if getattr(args, "interval", None):
+        return {
+            r["ticker"]
+            for r in store.query(
+                "SELECT ticker FROM candlesticks WHERE period_interval = ?"
+                " GROUP BY ticker HAVING COUNT(*) > 0",
+                (args.interval,),
+            )
+        }
+    return {r["ticker"] for r in store.query("SELECT ticker FROM trades GROUP BY ticker")}
+
+
+def cmd_hist_markets(args: argparse.Namespace, client: KalshiClient, store: Store) -> None:
+    """Enumerate archived markets via ``/historical/markets?series_ticker=``.
+
+    This is the whole-history counterpart to ``markets --by-series``. The
+    historical endpoint has **no date filters** (they are accepted and silently
+    ignored), so the series catalog is the only usable index. One series ticker
+    also resolves its legacy pre-``KX`` markets, so this reaches back to 2021
+    in a single sweep.
+    """
+    started = _now()
+    cats = _category_map(store)
+    if args.series:
+        targets = [s.strip() for s in args.series.split(",") if s.strip()]
+    else:
+        wanted = [c.strip() for c in (args.categories or "").split(",") if c.strip()]
+        q = "SELECT series_ticker FROM series"
+        p: list[Any] = []
+        if wanted:
+            q += " WHERE category IN (%s)" % ",".join("?" * len(wanted))
+            p = wanted
+        targets = [r["series_ticker"] for r in store.query(q, p)]
+    prefixes = DEFAULT_EXCLUDE_PREFIXES if args.exclude_default_prefixes else ()
+    targets = [t for t in targets if not any(t.startswith(x) for x in prefixes)]
+    log.info("hist-markets: %d series", len(targets))
+
+    def fetch(series_ticker: str) -> list[dict[str, Any]]:
+        return list(
+            client.get_historical_markets(
+                series_ticker=series_ticker, page_limit=1000, max_pages=args.max_pages
+            )
+        )
+
+    kept = empty = failed = 0
+    done = 0
+    for st, rows, exc in _pmap(fetch, targets, args.workers):
+        done += 1
+        if exc is not None:
+            failed += 1
+            log.warning("hist-markets %s: %s", st, exc)
+            continue
+        if not rows:
+            empty += 1
+            continue
+        if args.min_volume:
+            rows = [
+                r for r in rows
+                if float(r.get("volume_fp") or r.get("volume") or 0) >= args.min_volume
+            ]
+        kept += store.upsert_markets(
+            rows, cats, series_ticker=st, source="hist", compact=not args.full_json
+        )
+        if done % 200 == 0:
+            log.info(
+                "hist-markets %d/%d series  kept=%d empty=%d  reqs=%d  db=%.0fMB",
+                done, len(targets), kept, empty, client.request_count,
+                store.size_bytes() / 1e6,
+            )
+        if _over_budget(store, args.max_db_mb):
+            log.warning("db budget %.0fMB reached — stopping", args.max_db_mb)
+            break
+
+    store.backfill_categories()
+    store.log_pull(
+        "hist-markets", args.categories or (args.series or "all"), kept, started,
+        f"series={len(targets)} empty={empty} failed={failed}",
+    )
+    print(
+        f"hist-markets: {kept} archived market rows from {len(targets)} series"
+        f" ({empty} series had none, {failed} failed)"
+    )
+
+
+def cmd_hist_trades(args: argparse.Namespace, client: KalshiClient, store: Store) -> None:
+    """Pull the tick tape for a selected universe, routed across the cutoff.
+
+    Markets live in exactly one tier, so each ticker is tried on the tier its
+    ``source`` column names and falls back to the other. Pages are capped by
+    ``--max-pages`` (1,000 trades each) and the whole run by ``--max-rows``;
+    both matter because the 2024 presidential markets alone run to hundreds of
+    thousands of prints.
+
+    Each worker buffers one market's whole tape in memory before the main
+    thread writes it, so peak RSS is roughly
+    ``workers x max_pages x 1000 x ~1 KB``. Keep ``--max-pages`` around 100 for
+    wide sweeps and run the handful of giant markets separately with fewer
+    workers.
+    """
+    started = _now()
+    rows = _select_tickers(store, args)
+    log.info("hist-trades: %d markets selected", len(rows))
+    min_ts = _utc(args.min_ts) if args.min_ts else None
+    max_ts = _utc(args.max_ts) if args.max_ts else None
+
+    def fetch(row: Any) -> tuple[list[dict[str, Any]], str]:
+        return client.trades_any(
+            row["ticker"],
+            min_ts=min_ts,
+            max_ts=max_ts,
+            max_pages=args.max_pages,
+            prefer="live" if row["source"] == "live" else "hist",
+        )
+
+    total = 0
+    per_tier: Counter[str] = Counter()
+    empty = failed = done = 0
+    for row, res, exc in _pmap(fetch, rows, args.workers):
+        done += 1
+        if exc is not None:
+            failed += 1
+            log.warning("trades %s: %s", row["ticker"], exc)
+            continue
+        trades, tier = res
+        if not trades:
+            empty += 1
+            continue
+        per_tier[tier] += len(trades)
+        total += store.upsert_trades(trades, source=tier or "hist")
+        if done % 25 == 0:
+            log.info(
+                "trades %d/%d  rows=%d  reqs=%d  db=%.0fMB",
+                done, len(rows), total, client.request_count, store.size_bytes() / 1e6,
+            )
+        if args.max_rows and total >= args.max_rows:
+            log.warning("row cap %d reached — stopping", args.max_rows)
+            break
+        if _over_budget(store, args.max_db_mb):
+            log.warning("db budget %.0fMB reached — stopping", args.max_db_mb)
+            break
+
+    store.log_pull(
+        "hist-trades", (args.series or args.categories or args.tickers or "selection")[:200],
+        total, started, f"markets={done} empty={empty} failed={failed} tiers={dict(per_tier)}",
+    )
+    print(
+        f"hist-trades: {total} rows over {done - empty - failed} markets"
+        f" ({dict(per_tier)}), {empty} empty, {failed} failed"
+    )
+
+
+def cmd_hist_candles(args: argparse.Namespace, client: KalshiClient, store: Store) -> None:
+    """Candlesticks for a selected universe over a per-market window.
+
+    Handles both tiers and both JSON shapes. ``--window final-72h --interval 1``
+    is the event-night pull; ``--window final-15d --interval 60`` is the
+    favorite-longshot universe; ``--window full --interval 1440`` is one request
+    per market for its whole life.
+    """
+    started = _now()
+    rows = _select_tickers(store, args)
+    log.info("hist-candles: %d markets, interval=%d window=%s",
+             len(rows), args.interval, args.window)
+
+    def fetch(row: Any) -> tuple[list[dict[str, Any]], str]:
+        start, end = _window(row, args.window)
+        return client.candlesticks_any(
+            row["ticker"], start, end, args.interval,
+            series_ticker=row["series_ticker"],
+            prefer="live" if row["source"] == "live" else "hist",
+        )
+
+    total = empty = failed = done = 0
+    per_tier: Counter[str] = Counter()
+    for row, res, exc in _pmap(fetch, rows, args.workers):
+        done += 1
+        if exc is not None:
+            failed += 1
+            log.warning("candles %s: %s", row["ticker"], exc)
+            continue
+        candles, tier = res
+        if not candles:
+            empty += 1
+            continue
+        per_tier[tier] += len(candles)
+        total += store.upsert_candlesticks(
+            row["ticker"], args.interval, candles, source=tier or "hist"
+        )
+        if done % 100 == 0:
+            log.info(
+                "candles %d/%d  rows=%d  reqs=%d  db=%.0fMB",
+                done, len(rows), total, client.request_count, store.size_bytes() / 1e6,
+            )
+        if args.max_rows and total >= args.max_rows:
+            log.warning("row cap %d reached — stopping", args.max_rows)
+            break
+        if _over_budget(store, args.max_db_mb):
+            log.warning("db budget %.0fMB reached — stopping", args.max_db_mb)
+            break
+
+    store.log_pull(
+        "hist-candles",
+        f"interval={args.interval} window={args.window} "
+        + (args.series or args.categories or "selection")[:150],
+        total, started, f"markets={done} empty={empty} failed={failed} tiers={dict(per_tier)}",
+    )
+    print(
+        f"hist-candles: {total} rows @ {args.interval}min over"
+        f" {done - empty - failed} markets ({dict(per_tier)}), {empty} empty, {failed} failed"
+    )
+
+
+def cmd_discover(args: argparse.Namespace, client: KalshiClient, store: Store) -> None:
+    """Find (and optionally store) every market that traded in a time window.
+
+    Walks the exchange-wide ``/historical/trades`` firehose, which is the only
+    way to enumerate archived markets whose series is no longer in the live
+    catalog — and the cheapest way to build an event-night universe, since it
+    surfaces exactly the tickers that actually printed that night. Metadata for
+    unknown tickers is then fetched in batches of 100 via
+    ``/historical/markets?tickers=``.
+    """
+    started = _now()
+    lo, hi = _utc(args.min_ts), _utc(args.max_ts)
+    known = {r["ticker"] for r in store.query("SELECT ticker FROM markets")}
+    seen: Counter[str] = Counter()
+    trades_seen = 0
+    stored_trades = 0
+
+    # Walk backwards in 1-hour slices so a long window still makes progress.
+    step = args.slice_hours * 3600
+    for wstart in range(lo, hi, step):
+        wend = min(wstart + step, hi)
+        batch: list[dict[str, Any]] = []
+        for t in client.get_historical_trades(
+            min_ts=wstart, max_ts=wend, page_limit=1000, max_pages=args.max_pages
+        ):
+            trades_seen += 1
+            seen[t["ticker"]] += 1
+            if args.store_trades:
+                batch.append(t)
+                if len(batch) >= 5000:
+                    stored_trades += store.upsert_trades(batch, source="hist")
+                    batch.clear()
+        if args.store_trades:
+            stored_trades += store.upsert_trades(batch, source="hist")
+        log.info(
+            "discover %s: %d trades, %d distinct tickers so far (db=%.0fMB)",
+            _iso(wstart), trades_seen, len(seen), store.size_bytes() / 1e6,
+        )
+        if _over_budget(store, args.max_db_mb):
+            log.warning("db budget %.0fMB reached — stopping", args.max_db_mb)
+            break
+
+    new = [t for t, n in seen.most_common() if t not in known and n >= args.min_trades]
+    log.info("discover: %d distinct tickers, %d unknown to the store", len(seen), len(new))
+
+    cats = _category_map(store)
+    stored = 0
+    for i in range(0, len(new), 100):
+        chunk = new[i : i + 100]
+        rows = list(client.get_historical_markets(tickers=chunk, page_limit=1000))
+        stored += store.upsert_markets(rows, cats, source="hist", compact=True)
+    store.backfill_categories()
+    store.log_pull(
+        "discover", f"{args.min_ts}..{args.max_ts}", stored, started,
+        f"trades={trades_seen} tickers={len(seen)} new={len(new)} stored_trades={stored_trades}",
+    )
+    print(
+        f"discover {args.min_ts}..{args.max_ts}: {trades_seen:,} trades,"
+        f" {len(seen):,} distinct tickers, {len(new):,} new -> {stored} market rows"
+        + (f", {stored_trades:,} trades stored" if args.store_trades else "")
+    )
+
+
+def cmd_cutoff(args: argparse.Namespace, client: KalshiClient, store: Store) -> None:
+    """Print the live/historical tier boundary."""
+    for k, v in sorted(client.get_historical_cutoff().items()):
+        print(f"  {k:34s} {v}")
+
+
+# --------------------------------------------------------------------------
 # subcommand: stats
 # --------------------------------------------------------------------------
 def cmd_stats(args: argparse.Namespace, client: KalshiClient, store: Store) -> None:
@@ -590,6 +1014,67 @@ def build_parser() -> argparse.ArgumentParser:
 
     sp = sub.add_parser("stats", help="report DB coverage")
     sp.set_defaults(func=cmd_stats)
+
+    # -- /historical/* -----------------------------------------------------
+    def add_selector(sp: argparse.ArgumentParser) -> None:
+        """Universe-selection flags shared by hist-trades / hist-candles."""
+        sp.add_argument("--tickers", help="comma-separated market tickers")
+        sp.add_argument("--series", help="comma-separated series tickers")
+        sp.add_argument("--series-like", help="SQL LIKE pattern on series_ticker")
+        sp.add_argument("--categories", help="comma-separated categories")
+        sp.add_argument("--exclude-categories", help="comma-separated categories to drop")
+        sp.add_argument("--min-volume", type=float, default=0.0)
+        sp.add_argument("--settled-only", action="store_true")
+        sp.add_argument("--source", choices=["live", "hist"], help="restrict by API tier")
+        sp.add_argument("--limit", type=int, default=0, help="cap markets (highest volume first)")
+        sp.add_argument("--skip-existing", action="store_true",
+                        help="skip tickers that already have rows in the target table")
+        sp.add_argument("--workers", type=int, default=8)
+        sp.add_argument("--max-rows", type=int, default=0, help="stop after N stored rows")
+        sp.add_argument("--max-db-mb", type=float, default=0.0,
+                        help="stop when the DB reaches this size")
+
+    sp = sub.add_parser("hist-markets", help="archived market metadata (all history)")
+    sp.add_argument("--categories", help="comma-separated series categories")
+    sp.add_argument("--series", help="comma-separated series tickers")
+    sp.add_argument("--min-volume", type=float, default=0.0)
+    sp.add_argument("--max-pages", type=int, default=None)
+    sp.add_argument("--workers", type=int, default=8)
+    sp.add_argument("--full-json", action="store_true",
+                    help="keep the untrimmed payload in raw_json (~2x the disk)")
+    sp.add_argument("--exclude-default-prefixes", action="store_true", default=True)
+    sp.add_argument("--no-exclude-default-prefixes", dest="exclude_default_prefixes",
+                    action="store_false")
+    sp.add_argument("--max-db-mb", type=float, default=0.0)
+    sp.set_defaults(func=cmd_hist_markets)
+
+    sp = sub.add_parser("hist-trades", help="tick tape across both API tiers")
+    add_selector(sp)
+    sp.add_argument("--max-pages", type=int, default=None, help="pages (1000 trades) per market")
+    sp.add_argument("--min-ts", metavar="YYYY-MM-DD[THH:MM]")
+    sp.add_argument("--max-ts", metavar="YYYY-MM-DD[THH:MM]")
+    sp.set_defaults(func=cmd_hist_trades)
+
+    sp = sub.add_parser("hist-candles", help="candlesticks across both API tiers")
+    add_selector(sp)
+    sp.add_argument("--interval", type=int, choices=[1, 60, 1440], default=60)
+    sp.add_argument("--window", default="full",
+                    help="'full', or 'final-<N>h' / 'final-<N>d' (e.g. final-72h)")
+    sp.set_defaults(func=cmd_hist_candles)
+
+    sp = sub.add_parser("discover", help="find markets that traded in a window (firehose)")
+    sp.add_argument("--min-ts", required=True, metavar="YYYY-MM-DD[THH:MM]")
+    sp.add_argument("--max-ts", required=True, metavar="YYYY-MM-DD[THH:MM]")
+    sp.add_argument("--slice-hours", type=int, default=6)
+    sp.add_argument("--max-pages", type=int, default=None)
+    sp.add_argument("--min-trades", type=int, default=1,
+                    help="only resolve tickers with at least this many prints")
+    sp.add_argument("--store-trades", action="store_true", help="also store the tape it walks")
+    sp.add_argument("--max-db-mb", type=float, default=0.0)
+    sp.set_defaults(func=cmd_discover)
+
+    sp = sub.add_parser("cutoff", help="show the live/historical tier boundary")
+    sp.set_defaults(func=cmd_cutoff)
     return p
 
 

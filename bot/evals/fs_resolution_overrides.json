@@ -1,0 +1,13 @@
+{
+  "_README": {
+    "purpose": "Hand-curated outcomes for FutureSearch's 153 Kalshi questions that no automated source can reach. 52 of the 153 settled before our local store existed and have been purged from Kalshi's public API (~90-day retention); their outcomes are only recoverable from citable public reporting.",
+    "schema": "TICKER -> {\"outcome\": 0 | 1, \"source\": \"<url or citation, REQUIRED>\", \"note\": \"<optional>\"}",
+    "rules": [
+      "outcome is the YES resolution: 1 = market resolved YES, 0 = NO.",
+      "Every entry MUST carry a non-empty `source`; bot/evals/fs_replication.py raises if it does not. This file is the only place in the eval ladder where a human-supplied number enters the scoring path, so provenance is mandatory.",
+      "Do NOT add an entry from model memory. The whole point of this eval is measuring a forecaster against outcomes it could not have memorised; sourcing outcomes from the same memory destroys it.",
+      "Do NOT add entries for markets that have not resolved yet. Check the resolution date first."
+    ],
+    "keys_starting_with_underscore_are_ignored": true
+  }
+}

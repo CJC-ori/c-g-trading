@@ -20,9 +20,36 @@ Key quirks baked into this module
   chunks transparently.
 * Candlestick periods with no trades omit the ``price`` OHLC sub-keys
   entirely (only ``price.previous_dollars`` plus bid/ask OHLC are present).
-* Settled markets are purged from the API roughly 90 days after close, so
-  neither ``/markets`` enumeration nor ``/markets/{ticker}`` can reach older
+* Settled markets are purged from the **live** API roughly 90 days after close,
+  so neither ``/markets`` enumeration nor ``/markets/{ticker}`` can reach older
   history. Candlesticks for markets *still* served go back to market open.
+
+The ``/historical/*`` tier (undocumented in the OpenAPI list until recently,
+still unauthenticated) is what holds everything older than the cutoff returned
+by ``/historical/cutoff``:
+
+``/historical/markets``
+    Cursor-paginated market records for archived markets. Accepts ``tickers``,
+    ``event_ticker`` and — verified 2026-08-11, *not* in the published
+    docs — ``series_ticker``. **There are no date filters**; passing
+    ``min_close_ts``/``min_settled_ts`` is silently ignored, so enumeration has
+    to go through a series or event key.
+``/historical/markets/{ticker}``
+    Single archived market. Carries ``price_ranges`` /
+    ``price_level_structure`` (tick structure) and ``expiration_value``.
+``/historical/markets/{ticker}/candlesticks``
+    Same semantics as the live candlestick endpoint but **without the series
+    segment in the path** and with a different JSON key convention: bare
+    ``close``/``volume``/``open_interest`` instead of ``close_dollars`` /
+    ``volume_fp`` / ``open_interest_fp``. Values are identical dollar strings.
+``/historical/trades``
+    Tick tape for archived markets, back to **2021-06** (verified). Same shape
+    as ``/markets/trades``.
+
+The two tiers are disjoint by market, not by timestamp: a market lives in
+exactly one of them. ``/historical/*`` 404s for markets the live tier still
+serves and vice versa, so :meth:`KalshiClient.candlesticks_any` and
+:meth:`KalshiClient.market_any` try both.
 """
 
 from __future__ import annotations
@@ -305,6 +332,17 @@ class KalshiClient:
             Candles for periods with no trades carry **no** ``price`` OHLC keys
             (only ``price.previous_dollars``); bid/ask OHLC are still present.
         """
+        return self._candles(
+            f"/series/{series_ticker}/markets/{ticker}/candlesticks",
+            start_ts,
+            end_ts,
+            period_interval,
+        )
+
+    def _candles(
+        self, path: str, start_ts: int, end_ts: int, period_interval: int
+    ) -> list[dict[str, Any]]:
+        """Chunked candlestick fetch shared by the live and historical paths."""
         if period_interval not in CANDLE_INTERVALS:
             raise ValueError(
                 f"period_interval must be one of {CANDLE_INTERVALS}, got {period_interval}"
@@ -319,7 +357,7 @@ class KalshiClient:
             chunk_end = min(cur + span, end_ts)
             try:
                 payload = self._get(
-                    f"/series/{series_ticker}/markets/{ticker}/candlesticks",
+                    path,
                     {
                         "start_ts": cur,
                         "end_ts": chunk_end,
@@ -329,7 +367,7 @@ class KalshiClient:
             except KalshiAPIError as exc:
                 if exc.status_code in (400, 404):
                     # Unknown market/series, or a range the API dislikes.
-                    log.debug("candlesticks %s %s: %s", ticker, period_interval, exc)
+                    log.debug("candlesticks %s %s: %s", path, period_interval, exc)
                     return sorted(out.values(), key=lambda c: c["end_period_ts"])
                 raise
             for candle in payload.get("candlesticks") or []:
@@ -355,6 +393,173 @@ class KalshiClient:
         yield from self._paginate(
             "/markets/trades", "trades", params, page_limit=page_limit, max_pages=max_pages
         )
+
+    # -- /historical/* -----------------------------------------------------
+    def get_historical_cutoff(self) -> dict[str, Any]:
+        """Timestamps at which the live tier hands over to ``/historical/*``.
+
+        Returns keys ``market_settled_ts``, ``trades_created_ts``,
+        ``orders_updated_ts``, ``market_positions_last_updated_ts`` (RFC3339).
+        Kalshi advances these forward over time; anything we want long term has
+        to be archived locally.
+        """
+        return self._get("/historical/cutoff")
+
+    def get_historical_markets(
+        self,
+        *,
+        series_ticker: str | None = None,
+        event_ticker: str | None = None,
+        tickers: Sequence[str] | None = None,
+        mve_filter: str | None = "exclude",
+        page_limit: int = 1000,
+        max_pages: int | None = None,
+    ) -> Iterator[dict[str, Any]]:
+        """Iterate archived markets.
+
+        Exactly one of ``series_ticker`` / ``event_ticker`` / ``tickers`` should
+        be given — the API documents them as mutually exclusive — and one of
+        them is effectively mandatory, because there are no date filters and an
+        unfiltered walk is the whole exchange (majority ``KXMVE*`` parlay spam).
+
+        ``series_ticker`` resolves **legacy ticker prefixes too**: asking for
+        ``KXHIGHNY`` returns the 5,416 pre-rename ``HIGHNY-*`` markets alongside
+        the 3,570 ``KXHIGHNY-*`` ones. Do not derive the series from the market
+        ticker for archived rows — it is wrong for everything renamed in the
+        2023 ``KX`` migration.
+
+        ``mve_filter`` counts as one of the mutually-exclusive filters here (the
+        API 400s on any pair), so it is dropped whenever a key is supplied; a
+        series or event scope already excludes the ``KXMVE*`` parlay universe.
+        """
+        scoped = any((series_ticker, event_ticker, tickers))
+        params: dict[str, Any] = {
+            "series_ticker": series_ticker,
+            "event_ticker": event_ticker,
+            "tickers": ",".join(tickers) if tickers else None,
+            "mve_filter": None if scoped else mve_filter,
+        }
+        yield from self._paginate(
+            "/historical/markets", "markets", params, page_limit=page_limit, max_pages=max_pages
+        )
+
+    def get_historical_market(self, ticker: str) -> dict[str, Any] | None:
+        """Fetch a single archived market, or ``None`` if it is not archived."""
+        try:
+            return self._get(f"/historical/markets/{ticker}").get("market")
+        except KalshiAPIError as exc:
+            if exc.status_code == 404:
+                return None
+            raise
+
+    def get_historical_candlesticks(
+        self,
+        ticker: str,
+        start_ts: int,
+        end_ts: int,
+        period_interval: int = 60,
+    ) -> list[dict[str, Any]]:
+        """Candlesticks for an archived market (no series segment in the path).
+
+        Rows use the bare ``close``/``volume``/``open_interest`` key convention;
+        :func:`bot.data.store.Store.upsert_candlesticks` accepts both shapes.
+        """
+        return self._candles(
+            f"/historical/markets/{ticker}/candlesticks", start_ts, end_ts, period_interval
+        )
+
+    def get_historical_trades(
+        self,
+        *,
+        ticker: str | None = None,
+        min_ts: int | None = None,
+        max_ts: int | None = None,
+        page_limit: int = 1000,
+        max_pages: int | None = None,
+    ) -> Iterator[dict[str, Any]]:
+        """Iterate the archived tick tape, newest first.
+
+        Reaches back to **2021-06** exchange-wide (verified by probing month
+        windows: 2021-05 and earlier return nothing). Omitting ``ticker`` gives
+        an exchange-wide firehose over the ``min_ts``/``max_ts`` window, which
+        is the cheapest way to discover which markets traded on a given night.
+
+        Note pages overlap by one row: the cursor is inclusive of the last
+        ``created_time`` seen, so dedupe on ``trade_id`` (the store does).
+        """
+        params = {"ticker": ticker, "min_ts": min_ts, "max_ts": max_ts}
+        yield from self._paginate(
+            "/historical/trades", "trades", params, page_limit=page_limit, max_pages=max_pages
+        )
+
+    # -- tier-agnostic helpers --------------------------------------------
+    def market_any(self, ticker: str) -> tuple[dict[str, Any] | None, str]:
+        """Market record from whichever tier holds it, plus the tier name."""
+        m = self.get_market(ticker)
+        if m is not None:
+            return m, "live"
+        return self.get_historical_market(ticker), "hist"
+
+    def candlesticks_any(
+        self,
+        ticker: str,
+        start_ts: int,
+        end_ts: int,
+        period_interval: int = 60,
+        series_ticker: str | None = None,
+        prefer: str = "live",
+    ) -> tuple[list[dict[str, Any]], str]:
+        """Candles from whichever tier serves ``ticker``.
+
+        Args:
+            prefer: ``"live"`` or ``"hist"`` — which path to try first. Pass the
+                tier the market's ``source`` column says it came from to save a
+                wasted 404 round trip.
+
+        Returns:
+            ``(candles, tier)``; ``tier`` is ``"live"``, ``"hist"`` or ``""``
+            when neither served anything.
+        """
+        order = ("hist", "live") if prefer == "hist" else ("live", "hist")
+        for tier in order:
+            if tier == "live":
+                rows = self.get_candlesticks(
+                    series_ticker or ticker.split("-", 1)[0], ticker, start_ts, end_ts,
+                    period_interval,
+                )
+            else:
+                rows = self.get_historical_candlesticks(
+                    ticker, start_ts, end_ts, period_interval
+                )
+            if rows:
+                return rows, tier
+        return [], ""
+
+    def trades_any(
+        self,
+        ticker: str,
+        *,
+        min_ts: int | None = None,
+        max_ts: int | None = None,
+        max_pages: int | None = None,
+        prefer: str = "hist",
+    ) -> tuple[list[dict[str, Any]], str]:
+        """Full tape for one market from whichever tier holds it.
+
+        The tiers partition by market, not by timestamp, so this returns the
+        first tier that yields anything rather than merging. Deduping still
+        happens in the store (``trade_id`` primary key), so a caller that wants
+        both tiers around the cutoff can simply call twice.
+        """
+        order = ("hist", "live") if prefer == "hist" else ("live", "hist")
+        for tier in order:
+            fn = self.get_historical_trades if tier == "hist" else self.get_trades
+            rows = list(
+                fn(ticker=ticker, min_ts=min_ts, max_ts=max_ts, max_pages=max_pages)
+            )
+            if rows:
+                return rows, tier
+        return [], ""
 
 
 def known_categories() -> tuple[str, ...]:

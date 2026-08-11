@@ -53,8 +53,8 @@ At 10 tokens/request, Basic ≈ **20 reads + 10 writes per second** — plenty f
 
 **Fees.** The official fee schedule PDF (`kalshi.com/docs/kalshi-fee-schedule.pdf`) returned HTTP 429 on three fetch attempts, so the numbers below come from search-result summaries of it and third-party fee guides ([pm.wiki](https://pm.wiki/learn/kalshi-fees-explained), [marketmath.io](https://marketmath.io/blog/kalshi-fees-guide-2026), [kalshibacktest.com](https://kalshibacktest.com/resources/what-are-kalshi-fees)) — **treat as approximately right, verify against the PDF before writing the P&L model**:
 
-- Taker fee per contract ≈ `round(multiplier × P × (1−P), 2)`, multiplier 0.07 for most categories (higher for premium categories like crypto) → max ≈ $0.0175/contract at P = 50¢, shrinking toward the tails.
-- Maker fees are much lower — reported as 25% of taker, and often zero on many markets.
+- Taker fee = `0.07 × fee_multiplier × contracts × P × (1−P)`, **ceiling-rounded to $0.0001** (Kalshi's own fee_rounding doc — not round-to-cent), max ≈ $0.0175/contract at P = 50¢, shrinking toward the tails. The per-series `fee_multiplier` from the API is only ever **0, 0.5 or 1 — no multiplier above 1 exists**, and two crypto series sit at 0; an earlier draft of this line claimed "higher for premium categories like crypto", which the API data contradicts. *(corrected 2026-08-11 per research/kalshi-api.md §3)*
+- Maker fees are much lower — reported as 25% of taker (0.0175 coefficient, still unverified against the PDF), and charged on only 130 of 12,658 series (`quadratic_with_maker_fees`; none in Elections/Politics/Weather, but CPI and Fed series do charge makers). Zero on everything else. *(corrected 2026-08-11 per research/kalshi-api.md §3.1)*
 - Volume tiers discount taker fees (reported range ~12.0 bps down to ~2.6 bps for $3B+ volume).
 
 The strategic consequence is solid even if the digits shift: **a taker strategy near 50¢ pays ~3.5% round-trip of a 50¢ position's value in fees, so the forecaster's edge threshold must be fee-aware, and resting maker orders are dramatically cheaper.**

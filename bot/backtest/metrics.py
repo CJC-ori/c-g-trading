@@ -26,8 +26,66 @@ SECONDS_PER_YEAR = 365 * 86400
 # Individual metrics
 # ---------------------------------------------------------------------------
 
-def brier_vs_baseline(result: BacktestResult) -> dict[str, Any]:
-    """Strategy p_hat vs market mid, both scored at the same instants."""
+#: Forecast-strategy sample gate (SPEC §7, amended 2026-08-11): measured
+#: paired-difference SD on real ForecastBench 2026 data is ~0.0698, so the
+#: minimum detectable ΔBrier at n=100 (~0.0137) is 3x the superforecaster-
+#: vs-market edge (0.004). research/benchmarks.md §4.3.
+BRIER_N_GATE = 500
+
+#: Default traded-subset gate: |p_hat - mid| >= 4c (below ~4 points, fees
+#: eat the edge — research/cost-architecture.md §4.3).
+DEFAULT_TRADED_GATE_CENTS = 4.0
+
+#: ΔBrier sanity scale (research/benchmarks.md §4.3): +0.004 is
+#: superforecaster-class, +0.02 is top-bot-class (be suspicious),
+#: >+0.05 means the run is leaking.
+DELTA_BRIER_SUSPICIOUS = 0.02
+DELTA_BRIER_LEAK = 0.05
+
+
+def _paired_delta(pairs: list[tuple[float, float, int]]) -> dict[str, Any]:
+    """Brier stats for (p_hat, mid_prob, outcome) pairs, with the paired-
+    difference 95% CI on ΔBrier = Brier(market) - Brier(strategy)
+    (positive = strategy better). Always report the CI, never just the
+    point estimate (SPEC §7)."""
+    n = len(pairs)
+    if n == 0:
+        return {"n": 0, "strategy": None, "market_baseline": None,
+                "delta_brier": None, "delta_ci95": None, "beats_baseline": None}
+    strat = sum((p - o) ** 2 for p, _, o in pairs) / n
+    base = sum((m - o) ** 2 for _, m, o in pairs) / n
+    diffs = [(m - o) ** 2 - (p - o) ** 2 for p, m, o in pairs]
+    mean_d = sum(diffs) / n
+    ci = None
+    if n >= 2:
+        var = sum((d - mean_d) ** 2 for d in diffs) / (n - 1)
+        half = 1.96 * (var ** 0.5) / (n ** 0.5)
+        ci = [mean_d - half, mean_d + half]
+    return {
+        "n": n,
+        "strategy": strat,
+        "market_baseline": base,
+        "delta_brier": mean_d,
+        "delta_ci95": ci,
+        "beats_baseline": strat <= base,
+    }
+
+
+def brier_vs_baseline(
+    result: BacktestResult,
+    traded_gate_cents: float = DEFAULT_TRADED_GATE_CENTS,
+    n_gate: int = BRIER_N_GATE,
+) -> dict[str, Any]:
+    """The three-number Brier block (SPEC §6.2) — always reported together:
+
+    (a) pooled ΔBrier vs the market mid at the same instants, paired CI;
+    (b) ΔBrier on the traded subset (|p_hat - mid| >= gate) — the skill claim;
+    (c) simulated post-fee P&L on the markets actually traded — the only
+        number that pays rent.
+    Pooled-neutral but subset-positive is what success looks like
+    (research/benchmarks.md §4.2). Top-level keys keep the original
+    pooled-stats shape for backward compatibility.
+    """
     pairs: list[tuple[float, float, int]] = []  # (p_hat, mid_prob, outcome)
     for d in result.decisions:
         s = result.settlements.get(d.ticker)
@@ -35,20 +93,68 @@ def brier_vs_baseline(result: BacktestResult) -> dict[str, Any]:
             continue
         outcome = 1 if s.result == "yes" else 0
         pairs.append((d.p_hat, d.market_mid_cents / 100.0, outcome))
-    if not pairs:
-        return {"n": 0, "strategy": None, "market_baseline": None, "beats_baseline": None}
-    strat = sum((p - o) ** 2 for p, _, o in pairs) / len(pairs)
-    base = sum((m - o) ** 2 for _, m, o in pairs) / len(pairs)
-    return {
-        "n": len(pairs),
-        "strategy": strat,
-        "market_baseline": base,
-        "beats_baseline": strat <= base,
+    pooled = _paired_delta(pairs)
+    traded_pairs = [
+        (p, m, o) for p, m, o in pairs
+        if abs(p * 100 - m * 100) >= traded_gate_cents
+    ]
+    traded = _paired_delta(traded_pairs)
+    traded["gate_cents"] = traded_gate_cents
+
+    traded_markets = [
+        m for m in result.per_market.values() if m.get("contracts_traded")
+    ]
+    trade_pnl = {
+        "n_markets_traded": len(traded_markets),
+        "net_pnl_cents_after_fees": sum(
+            m["net_pnl_cents"] for m in traded_markets
+        ),
+        "net_pnl_cents_after_fees_and_inference": sum(
+            m["net_pnl_cents"] for m in traded_markets
+        ) - result.inference_cost_cents,
     }
+
+    flags: list[str] = []
+    if pooled["n"] and pooled["n"] < n_gate:
+        flags.append(
+            f"n={pooled['n']} < {n_gate}: below the forecast-strategy gate "
+            "(minimum detectable dBrier at n=100 is ~0.0137, 3x the "
+            "superforecaster edge)"
+        )
+    d = pooled["delta_brier"]
+    if d is not None and d > DELTA_BRIER_LEAK:
+        flags.append(
+            f"LEAK WARNING: pooled dBrier +{d:.4f} > +{DELTA_BRIER_LEAK} — "
+            "no known forecaster is this good; audit for lookahead/contamination"
+        )
+    elif d is not None and d > DELTA_BRIER_SUSPICIOUS:
+        flags.append(
+            f"pooled dBrier +{d:.4f} > +{DELTA_BRIER_SUSPICIOUS}: "
+            "top-2026-bot territory — be suspicious"
+        )
+
+    out = dict(pooled)
+    out.update(
+        {
+            "n_gate": n_gate,
+            "meets_n_gate": pooled["n"] >= n_gate,
+            "traded_subset": traded,
+            "trade_pnl": trade_pnl,
+            "flags": flags,
+        }
+    )
+    return out
 
 
 def calibration(result: BacktestResult, n_bins: int = 10) -> dict[str, Any]:
-    """Reliability curve over p_hat + expected calibration error."""
+    """Reliability curve + ECE + Murphy calibration/refinement decomposition.
+
+    Brier = reliability - resolution + uncertainty (binned). Reliability
+    (lower better) is miscalibration; resolution (higher better) is
+    sharpness that pays — frontier forecasters are all roughly calibrated
+    and differ in resolution, which is what generates edge
+    (research/futuresearch.md §6.2).
+    """
     binned: list[list[tuple[float, int]]] = [[] for _ in range(n_bins)]
     for d in result.decisions:
         s = result.settlements.get(d.ticker)
@@ -60,6 +166,11 @@ def calibration(result: BacktestResult, n_bins: int = 10) -> dict[str, Any]:
     curve = []
     total = sum(len(b) for b in binned)
     ece = 0.0
+    reliability = 0.0
+    resolution = 0.0
+    base_rate = (
+        sum(o for b in binned for _, o in b) / total if total else None
+    )
     for i, b in enumerate(binned):
         if not b:
             continue
@@ -73,8 +184,22 @@ def calibration(result: BacktestResult, n_bins: int = 10) -> dict[str, Any]:
                 "observed_freq": freq,
             }
         )
-        ece += (len(b) / total) * abs(freq - conf)
-    return {"n": total, "ece": ece if total else None, "curve": curve}
+        w = len(b) / total
+        ece += w * abs(freq - conf)
+        reliability += w * (conf - freq) ** 2
+        resolution += w * (freq - base_rate) ** 2
+    uncertainty = base_rate * (1 - base_rate) if total else None
+    return {
+        "n": total,
+        "ece": ece if total else None,
+        "curve": curve,
+        "reliability": reliability if total else None,
+        "resolution": resolution if total else None,
+        "uncertainty": uncertainty,
+        "brier_from_decomposition": (
+            reliability - resolution + uncertainty if total else None
+        ),
+    }
 
 
 def max_drawdown(equity_curve: list[tuple[int, int]]) -> dict[str, Any]:
@@ -140,6 +265,50 @@ def trade_stats(result: BacktestResult) -> dict[str, Any]:
         for m in result.per_market.values()
         if m["first_entry_ts"] is not None and m["exit_ts"] is not None
     ]
+
+    # Simulated maker fill rate (SPEC §3): maker-filled contracts over
+    # contracts that ever rested (rest-tif order size minus its taker leg).
+    # Sanity band 40-50% (FutureSearch's own positions table implies ~50%);
+    # >60% means the fill model is lying (SPEC §7 kill criterion).
+    taker_by_order: dict[int, int] = {}
+    maker_by_order: dict[int, int] = {}
+    for f in result.fills:
+        d = taker_by_order if f.is_taker else maker_by_order
+        d[f.order_id] = d.get(f.order_id, 0) + f.count
+    maker_exposed = 0
+    maker_filled = 0
+    for oid, o in result.orders.items():
+        size = o.get("size")
+        if size is None or o.get("tif") != "rest":
+            continue
+        maker_exposed += max(0, size - taker_by_order.get(oid, 0))
+        maker_filled += maker_by_order.get(oid, 0)
+    maker_fill_rate = maker_filled / maker_exposed if maker_exposed else None
+
+    lifetimes = sorted(
+        o["opportunity_lifetime_s"]
+        for o in result.orders.values()
+        if o.get("opportunity_lifetime_s") is not None
+    )
+
+    def _q(quantile: float) -> float | None:
+        if not lifetimes:
+            return None
+        return lifetimes[min(len(lifetimes) - 1, int(quantile * len(lifetimes)))]
+
+    flags: list[str] = []
+    if maker_fill_rate is not None and maker_fill_rate > 0.60:
+        flags.append(
+            f"maker fill rate {maker_fill_rate:.0%} > 60% — the fill model "
+            "is lying (sanity band is 40-50%); do not trust maker P&L"
+        )
+    median_life = _q(0.5)
+    if median_life is not None and median_life < 5:
+        flags.append(
+            f"median opportunity lifetime {median_life}s < 5s — this edge "
+            "belongs to colocated bots, not us (research/oss-arb.md §7.3)"
+        )
+
     return {
         "n_decision_calls": result.n_decision_calls,
         "n_intents": len(result.intents),
@@ -153,8 +322,17 @@ def trade_stats(result: BacktestResult) -> dict[str, Any]:
         "taker_contracts": taker,
         "maker_contracts": maker,
         "maker_share": maker / filled if filled else None,
+        "maker_fill_rate": maker_fill_rate,
+        "maker_fill_rate_sanity_band": [0.40, 0.50],
         "avg_edge_at_entry_cents": edge_num / edge_den if edge_den else None,
         "avg_holding_period_s": sum(holds) / len(holds) if holds else None,
+        "opportunity_lifetime_s": {
+            "n": len(lifetimes),
+            "p25": _q(0.25),
+            "median": median_life,
+            "p75": _q(0.75),
+        },
+        "flags": flags,
     }
 
 
@@ -224,6 +402,42 @@ def splits(result: BacktestResult, train_frac: float = 0.6) -> dict[str, Any]:
     return {"time": time_split, "category": by_cat}
 
 
+def cost_ratios(result: BacktestResult) -> dict[str, Any]:
+    """LLM cost-honesty ratios (SPEC §6.8; research/cost-architecture.md §5.2,
+    §7.4): inference/net-P&L must stay < 20%, inference/notional-traded < 1%
+    (fee drag is ~3.5% of notional at mid — inference approaching it means
+    the architecture is wrong)."""
+    inf = result.inference_cost_cents
+    net = result.net_pnl_cents  # after fees, gross of inference
+    notional = sum(f.count * f.price_cents for f in result.fills)
+    over_net = inf / net if net > 0 else None
+    over_notional = inf / notional if notional > 0 else None
+    flags: list[str] = []
+    if inf:
+        if over_net is None:
+            flags.append("inference cost with non-positive net P&L")
+        elif over_net > 0.20:
+            flags.append(
+                f"inference/net-P&L {over_net:.0%} > 20% — pipeline too "
+                "expensive for its edge"
+            )
+        if over_notional is not None and over_notional > 0.01:
+            flags.append(
+                f"inference/notional {over_notional:.2%} > 1% — approaching "
+                "fee-drag scale (~3.5%); architecture is wrong"
+            )
+    return {
+        "inference_cost_cents": inf,
+        "net_pnl_cents": net,
+        "notional_traded_cents": notional,
+        "inference_over_net_pnl": over_net,
+        "inference_over_net_pnl_target": 0.20,
+        "inference_over_notional": over_notional,
+        "inference_over_notional_target": 0.01,
+        "flags": flags,
+    }
+
+
 def compute_metrics(result: BacktestResult) -> dict[str, Any]:
     return {
         "pnl": pnl_summary(result),
@@ -232,6 +446,7 @@ def compute_metrics(result: BacktestResult) -> dict[str, Any]:
         "drawdown": max_drawdown(result.equity_curve),
         "concentration": concentration(result),
         "trade_stats": trade_stats(result),
+        "cost_ratios": cost_ratios(result),
         "splits": splits(result),
     }
 
@@ -248,16 +463,31 @@ def full_report(
     market_filters: dict | None = None,
     capacity_multipliers: tuple[float, ...] = (1.0, 3.0, 10.0),
     fee_stress_multiplier: float = 1.5,
+    inference_stress_multiplier: float = 2.0,
+    fee_schedule=None,
     label: str = "backtest",
 ) -> dict[str, Any]:
     """Run base + capacity + fee-stress backtests and build the full report.
 
     strategy_factory must return a FRESH strategy per call (reruns must not
     share state). Writes report.json and report.md to out_dir when given.
+    fee_schedule (a fees.FeeSchedule) switches the engine to the exact
+    per-series fee model — pass FeeSchedule.load_default() for real-data
+    runs. The inference stress (SPEC §7) re-prices the inference line at
+    x2 without a rerun (inference is an additive P&L line item).
     """
     config = config or EngineConfig()
+    if fee_schedule is not None:
+        config = replace(config, fee_schedule=fee_schedule)
     base = run_backtest(provider, strategy_factory(), config, market_filters)
-    report: dict[str, Any] = {"label": label, "base": compute_metrics(base)}
+    report: dict[str, Any] = {
+        "label": label,
+        "fee_mode": (
+            "exact-per-series" if config.fee_schedule is not None
+            else "legacy-per-contract-ceil"
+        ),
+        "base": compute_metrics(base),
+    }
 
     capacity = []
     for mult in capacity_multipliers:
@@ -282,6 +512,20 @@ def full_report(
         "multiplier": fee_stress_multiplier,
         "net_pnl_cents_after_inference": stressed.net_pnl_after_inference_cents,
         "still_positive": stressed.net_pnl_after_inference_cents > 0,
+    }
+
+    # Inference stress (SPEC §7): inference is an additive P&L line, so
+    # x2 model prices = subtract the inference line twice — no rerun needed.
+    stressed_net = base.net_pnl_cents - round(
+        inference_stress_multiplier * base.inference_cost_cents
+    )
+    report["inference_stress"] = {
+        "multiplier": inference_stress_multiplier,
+        "inference_cost_cents": round(
+            inference_stress_multiplier * base.inference_cost_cents
+        ),
+        "net_pnl_cents_after_inference": stressed_net,
+        "still_positive": stressed_net > 0,
     }
 
     if out_dir is not None:
@@ -328,14 +572,52 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"{_pct(pnl['annualized_return_on_avg_deployed'])}",
         "",
         "## Forecast quality",
-        f"- Brier (n={b['brier']['n']}): strategy {_num(b['brier']['strategy'])} "
-        f"vs market baseline {_num(b['brier']['market_baseline'])} -> "
-        f"{'BEATS' if b['brier']['beats_baseline'] else 'does NOT beat'} baseline"
-        if b["brier"]["n"]
-        else "- Brier: no scored p_hat decisions",
-        f"- Calibration ECE: {_num(b['calibration']['ece'])} "
-        f"(n={b['calibration']['n']})",
     ]
+    br = b["brier"]
+    if br["n"]:
+        ci = br.get("delta_ci95")
+        ci_txt = f" (95% CI [{ci[0]:+.4f}, {ci[1]:+.4f}])" if ci else ""
+        lines += [
+            "The three-number block (always read together, SPEC §6.2):",
+            f"- (a) Pooled dBrier (n={br['n']}): {br['delta_brier']:+.4f}{ci_txt} "
+            f"— strategy {_num(br['strategy'])} vs market {_num(br['market_baseline'])} "
+            f"-> {'BEATS' if br['beats_baseline'] else 'does NOT beat'} baseline",
+        ]
+        tr_sub = br.get("traded_subset") or {}
+        if tr_sub.get("n"):
+            tci = tr_sub.get("delta_ci95")
+            tci_txt = f" (95% CI [{tci[0]:+.4f}, {tci[1]:+.4f}])" if tci else ""
+            lines.append(
+                f"- (b) Traded-subset dBrier (|p_hat-mid| >= "
+                f"{tr_sub.get('gate_cents', 4):g}c, n={tr_sub['n']}): "
+                f"{tr_sub['delta_brier']:+.4f}{tci_txt}"
+            )
+        else:
+            lines.append("- (b) Traded-subset dBrier: no decisions past the gate")
+        tp = br.get("trade_pnl") or {}
+        lines.append(
+            f"- (c) Trade P&L (the number that pays rent): "
+            f"{_usd(tp.get('net_pnl_cents_after_fees_and_inference'))} after "
+            f"fees+inference across {tp.get('n_markets_traded', 0)} traded markets"
+        )
+        if not br.get("meets_n_gate", True):
+            lines.append(
+                f"- n gate: {br['n']} < {br.get('n_gate', 500)} resolved — "
+                "NOT enough for a forecast-skill claim (SPEC §7)"
+            )
+        for fl in br.get("flags", []):
+            lines.append(f"- FLAG: {fl}")
+    else:
+        lines.append("- Brier: no scored p_hat decisions")
+    cal = b["calibration"]
+    lines.append(f"- Calibration ECE: {_num(cal['ece'])} (n={cal['n']})")
+    if cal.get("reliability") is not None:
+        lines.append(
+            f"- Murphy decomposition: reliability {_num(cal['reliability'])} "
+            f"(miscalibration, lower better) | resolution "
+            f"{_num(cal['resolution'])} (sharpness, higher better) | "
+            f"uncertainty {_num(cal['uncertainty'])}"
+        )
     if b["calibration"]["curve"]:
         lines += [
             "",
@@ -364,6 +646,8 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"{ts['contracts_ordered']}/{ts['contracts_filled']} "
         f"(fill rate vs ordered: {_pct(ts['fill_rate_vs_ordered'])})",
         f"- Maker share of filled contracts: {_pct(ts['maker_share'])}",
+        f"- Simulated maker fill rate: {_pct(ts.get('maker_fill_rate'))} "
+        f"(sanity band 40-50%; >60% = fill model lying)",
         f"- Avg edge at entry: "
         f"{_num(ts['avg_edge_at_entry_cents'], 2)}c/contract",
         f"- Avg holding period: "
@@ -372,6 +656,28 @@ def render_markdown(report: dict[str, Any]) -> str:
             if ts["avg_holding_period_s"] is not None
             else "n/a"
         ),
+    ]
+    life = ts.get("opportunity_lifetime_s") or {}
+    if life.get("n"):
+        lines.append(
+            f"- Opportunity lifetime (s): median {life['median']} "
+            f"[p25 {life['p25']}, p75 {life['p75']}] over {life['n']} orders"
+        )
+    for fl in ts.get("flags", []):
+        lines.append(f"- FLAG: {fl}")
+    cr = b.get("cost_ratios") or {}
+    if cr.get("inference_cost_cents"):
+        lines += [
+            "",
+            "## Cost ratios (LLM strategies)",
+            f"- Inference / net P&L: {_pct(cr['inference_over_net_pnl'])} "
+            f"(target < 20%)",
+            f"- Inference / notional traded: {_pct(cr['inference_over_notional'])} "
+            f"(target < 1%; fee drag is ~3.5% at mid)",
+        ]
+        for fl in cr.get("flags", []):
+            lines.append(f"- FLAG: {fl}")
+    lines += [
         "",
         "## Capacity curve (depth caps scaled)",
         "| depth x | net P&L (after inference) | contracts filled |",
@@ -389,6 +695,15 @@ def render_markdown(report: dict[str, Any]) -> str:
             f"## Fee stress (x{fs['multiplier']:g})",
             f"- Net P&L after inference: {_usd(fs['net_pnl_cents_after_inference'])} "
             f"-> {'still positive' if fs['still_positive'] else 'NEGATIVE'}",
+        ]
+    infs = report.get("inference_stress")
+    if infs:
+        lines += [
+            "",
+            f"## Inference stress (x{infs['multiplier']:g} model prices)",
+            f"- Net P&L after stressed inference: "
+            f"{_usd(infs['net_pnl_cents_after_inference'])} "
+            f"-> {'still positive' if infs['still_positive'] else 'NEGATIVE'}",
         ]
     sp = b["splits"]
     if sp.get("time"):

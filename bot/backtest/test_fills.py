@@ -16,7 +16,7 @@ from bot.backtest.fills import (
     trade_qualifies,
     volume_cap,
 )
-from bot.backtest.types import OrderIntent
+from bot.backtest.types import Candle, OrderIntent, Trade
 from bot.backtest.testkit import mk_candle, mk_trade
 
 
@@ -322,3 +322,112 @@ class TestSettlement:
             settlement_payout_cents(1, 50, "scalar")
         with pytest.raises(ValueError):
             settlement_payout_cents(1, 50, "scalar", 101)
+
+
+# ---------------------------------------------------------------------------
+# Price tick structures (types.PriceStructure) + opportunity lifetime
+# ---------------------------------------------------------------------------
+
+class TestPriceStructure:
+    def tapered(self):
+        from bot.backtest.types import PriceRange, PriceStructure
+
+        return PriceStructure(
+            "tapered_deci_cent",
+            (
+                PriceRange(0, 1000, 10),      # <=10c: 0.1c ticks
+                PriceRange(1000, 9000, 100),  # mid: 1c ticks
+                PriceRange(9000, 10000, 10),  # >=90c: 0.1c ticks
+            ),
+        )
+
+    def test_from_raw_parses_dollar_strings(self):
+        from bot.backtest.types import PriceStructure
+
+        ps = PriceStructure.from_raw(
+            "tapered_deci_cent",
+            [
+                {"start": "0.0000", "end": "0.1000", "step": "0.0010"},
+                {"start": "0.1000", "end": "0.9000", "step": "0.0100"},
+                {"start": "0.9000", "end": "1.0000", "step": "0.0010"},
+            ],
+        )
+        assert ps == self.tapered()
+
+    def test_whole_cents_always_valid(self):
+        ps = self.tapered()
+        for cents in range(0, 101):
+            assert ps.is_valid_tick(cents * 100)
+
+    def test_deci_cent_ticks_valid_only_in_tails(self):
+        ps = self.tapered()
+        assert ps.is_valid_tick(150)    # 1.5c: in the 0.1c tail
+        assert ps.is_valid_tick(9550)   # 95.5c
+        assert not ps.is_valid_tick(5550)  # 55.5c: mid-range is 1c ticks
+        assert not ps.is_valid_tick(155)   # 1.55c: below 0.1c granularity
+
+    def test_quantize_directions(self):
+        ps = self.tapered()
+        # 55.5c in the 1c mid-range: buys snap down to 55, sells up to 56
+        assert ps.quantize_cc(5550, round_down=True) == 5500
+        assert ps.quantize_cc(5550, round_down=False) == 5600
+        # 1.55c in the 0.1c tail: snaps to 1.5c / 1.6c
+        assert ps.quantize_cc(155, round_down=True) == 150
+        assert ps.quantize_cc(155, round_down=False) == 160
+
+    def test_quantize_clamps_out_of_range(self):
+        ps = self.tapered()
+        assert ps.quantize_cc(-50, round_down=True) == 0
+        assert ps.quantize_cc(11_000, round_down=False) == 10_000
+
+    def test_linear_default(self):
+        from bot.backtest.types import LINEAR_CENT
+
+        assert LINEAR_CENT.is_valid_tick(6100)
+        assert not LINEAR_CENT.is_valid_tick(6150)
+        assert LINEAR_CENT.quantize_cc(6150, round_down=True) == 6100
+
+
+class TestOpportunityLifetimeFn:
+    def norm_buy(self, limit=40):
+        return fills.NormalizedIntent("T", True, limit, 10)
+
+    def norm_sell(self, limit=60):
+        return fills.NormalizedIntent("T", False, limit, 10)
+
+    def test_trades_condition_dies_on_adverse_print(self):
+        trades = [
+            Trade("T", 100, 39, 5),
+            Trade("T", 200, 40, 5),
+            Trade("T", 300, 41, 5),  # > 40: buy opportunity gone
+        ]
+        assert fills.opportunity_lifetime_s(
+            self.norm_buy(), [], trades, 0, 10_000
+        ) == 300
+
+    def test_sell_side_symmetric(self):
+        trades = [Trade("T", 100, 61, 5), Trade("T", 250, 59, 5)]
+        assert fills.opportunity_lifetime_s(
+            self.norm_sell(), [], trades, 0, 10_000
+        ) == 250
+
+    def test_never_dies_runs_to_end(self):
+        trades = [Trade("T", 100, 39, 5)]
+        assert fills.opportunity_lifetime_s(
+            self.norm_buy(), [], trades, 0, 10_000
+        ) == 10_000
+
+    def test_trades_before_placement_ignored(self):
+        trades = [Trade("T", 50, 99, 5), Trade("T", 300, 41, 5)]
+        assert fills.opportunity_lifetime_s(
+            self.norm_buy(), [], trades, 100, 10_000
+        ) == 200
+
+    def test_candles_used_when_no_trades(self):
+        candles = [
+            Candle("T", 0, 100, 40, 41, 39, 40, 10),     # low 39 <= 40: alive
+            Candle("T", 100, 100, 42, 43, 41, 42, 10),   # low 41 > 40: dead
+        ]
+        assert fills.opportunity_lifetime_s(
+            self.norm_buy(), candles, [], 0, 10_000
+        ) == 200

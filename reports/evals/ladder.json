@@ -1,0 +1,43 @@
+{
+  "eval": "ladder",
+  "generated_at": "2026-08-11T22:47:30+00:00",
+  "results": [
+    {
+      "rung": "0",
+      "name": "harness self-tests",
+      "command": "pytest -q bot/backtest bot/evals",
+      "ok": true,
+      "detail": "345 passed in 8.88s"
+    },
+    {
+      "rung": "1",
+      "name": "fs_trade_replay",
+      "command": "python -m bot.evals.fs_trade_replay --quiet",
+      "ok": true,
+      "detail": "PASS \u2014 harness economics reproduce the external book"
+    },
+    {
+      "rung": "2",
+      "name": "forecastbench",
+      "command": "python -m bot.evals.forecastbench --quiet",
+      "ok": true,
+      "detail": "SELF-TEST PASS \u2014 baseline established, no forecaster scored"
+    },
+    {
+      "rung": "2a",
+      "name": "fs_replication",
+      "command": "python -m bot.evals.fs_replication --quiet",
+      "ok": true,
+      "detail": "UNDERPOWERED \u2014 n=61 resolved of 153 (gate is n\u2265500); numbers are directional only"
+    },
+    {
+      "rung": "3",
+      "name": "Kalshi tournament replay",
+      "command": "(owned by bot/backtest)",
+      "ok": null,
+      "detail": "NOT IMPLEMENTED HERE \u2014 see README rung 3"
+    }
+  ],
+  "stopped_at": null,
+  "verdict": "PASS"
+}

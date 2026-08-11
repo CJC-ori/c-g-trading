@@ -167,6 +167,53 @@ def maker_fill_from_candle(
 
 
 # ---------------------------------------------------------------------------
+# Opportunity lifetime (SYNTHESIS §2.2; research/oss-arb.md §7.3)
+# ---------------------------------------------------------------------------
+
+def opportunity_lifetime_s(
+    norm: NormalizedIntent,
+    candles: list[Candle],
+    trades: list[Trade],
+    placed_ts: int,
+    end_ts: int,
+) -> int:
+    """How long the order's trigger condition persisted in the tape, seconds.
+
+    Diagnostic only (uses future data; never visible to strategies). The
+    condition for a yes-buy at limit L is "the market still offered a price
+    <= L": it dies at the first data point after placement showing price
+    strictly beyond the limit (trade print > L, or candle low > L; symmetric
+    for sells vs high). Returns end_ts - placed_ts if it never dies. A
+    strategy whose median lifetime is < ~5s is not ours to trade — the
+    opportunity is gone before any non-colocated bot can act.
+    """
+    death_ts: int | None = None
+    if trades:
+        for tr in trades:
+            if tr.ts <= placed_ts:
+                continue
+            gone = tr.yes_price > norm.yes_limit if norm.yes_buy else (
+                tr.yes_price < norm.yes_limit
+            )
+            if gone:
+                death_ts = tr.ts
+                break
+    else:
+        for c in candles:
+            if c.start_ts < placed_ts:
+                continue
+            gone = c.low > norm.yes_limit if norm.yes_buy else (
+                c.high < norm.yes_limit
+            )
+            if gone:
+                death_ts = c.end_ts
+                break
+    if death_ts is None:
+        death_ts = end_ts
+    return max(0, death_ts - placed_ts)
+
+
+# ---------------------------------------------------------------------------
 # Position accounting (signed yes-equivalent qty + premium cost basis)
 # ---------------------------------------------------------------------------
 

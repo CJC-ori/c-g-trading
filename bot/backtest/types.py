@@ -59,8 +59,87 @@ class Trade:
 
 
 @dataclass(frozen=True, slots=True)
+class PriceRange:
+    """One tick-size band of a market's price structure, in CENTICENTS
+    ($0.0001 units; 1 cent = 100 centicents, a 0.1c tick = 10)."""
+    start_cc: int
+    end_cc: int
+    step_cc: int
+
+
+@dataclass(frozen=True, slots=True)
+class PriceStructure:
+    """Per-market tick structure (Kalshi ``price_level_structure`` +
+    ``price_ranges``; research/kalshi-api.md §2).
+
+    Most markets are ``linear_cent`` (1c ticks everywhere); election-style
+    markets are ``tapered_deci_cent`` (0.1c ticks below 10c and above 90c).
+    Every observed structure admits all whole-cent prices, so an
+    integer-cent limit is always on-grid — the quantizer exists for
+    sub-cent (centicent) prices in the tapered tails.
+    """
+    kind: str = "linear_cent"
+    ranges: tuple[PriceRange, ...] = (PriceRange(0, 10_000, 100),)
+
+    @classmethod
+    def from_raw(cls, kind: str | None, price_ranges) -> "PriceStructure":
+        """Build from the market record's raw fields (dollar strings)."""
+        ranges = tuple(
+            PriceRange(
+                start_cc=round(float(r["start"]) * 10_000),
+                end_cc=round(float(r["end"]) * 10_000),
+                step_cc=round(float(r["step"]) * 10_000),
+            )
+            for r in (price_ranges or [])
+        )
+        if not ranges:
+            return LINEAR_CENT
+        return cls(kind or "linear_cent", ranges)
+
+    def is_valid_tick(self, price_cc: int) -> bool:
+        for r in self.ranges:
+            if r.start_cc <= price_cc <= r.end_cc and (
+                (price_cc - r.start_cc) % r.step_cc == 0
+            ):
+                return True
+        return False
+
+    def quantize_cc(self, price_cc: int, round_down: bool) -> int:
+        """Snap a centicent price to the nearest valid tick.
+
+        round_down=True snaps toward 0 (conservative for buy limits — never
+        pay more than intended); False snaps up (conservative for sells).
+        Out-of-range prices clamp to the structure's bounds.
+        """
+        lo = min(r.start_cc for r in self.ranges)
+        hi = max(r.end_cc for r in self.ranges)
+        price_cc = max(lo, min(hi, price_cc))
+        if self.is_valid_tick(price_cc):
+            return price_cc
+        for r in self.ranges:
+            if r.start_cc <= price_cc <= r.end_cc:
+                offset = price_cc - r.start_cc
+                snapped = r.start_cc + (
+                    (offset // r.step_cc) * r.step_cc
+                    if round_down
+                    else -((-offset) // r.step_cc) * r.step_cc
+                )
+                return max(lo, min(hi, snapped))
+        # Between ranges (shouldn't happen with contiguous ranges): clamp.
+        return lo if round_down else hi
+
+
+LINEAR_CENT = PriceStructure()
+
+
+@dataclass(frozen=True, slots=True)
 class MarketInfo:
-    """Static market data known at listing time (visible at any t >= open_ts)."""
+    """Static market data known at listing time (visible at any t >= open_ts).
+
+    series_ticker and price_structure are optional (additive, 2026-08-11):
+    when absent the harness derives the series from the ticker prefix and
+    assumes linear 1c ticks.
+    """
     ticker: str
     event_ticker: str = ""
     category: str = ""
@@ -68,6 +147,8 @@ class MarketInfo:
     open_ts: int = 0
     close_ts: int = FAR_FUTURE
     rules_summary: str = ""
+    series_ticker: str = ""
+    price_structure: PriceStructure | None = None
 
 
 @dataclass(frozen=True, slots=True)

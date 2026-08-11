@@ -176,3 +176,178 @@ class TestReportRendering:
         md = render_markdown(report)
         assert "# Backtest report - tiny" in md
         assert "Brier" in md and "Capacity curve" in md and "Fee stress" in md
+
+
+# ---------------------------------------------------------------------------
+# Three-number Brier block, decomposition, gates, flags (SPEC §6-7 amended)
+# ---------------------------------------------------------------------------
+
+class TestThreeNumberBrierBlock:
+    def test_pooled_delta_and_paired_ci(self):
+        b = brier_vs_baseline(tiny_result())
+        # diffs: M1 (0.16-0.04)=0.12, M2 (0.16-0.09)=0.07 -> mean 0.095
+        assert b["delta_brier"] == pytest.approx(0.095)
+        lo, hi = b["delta_ci95"]
+        # sd 0.035355, half-width 1.96*sd/sqrt(2) = 0.049
+        assert lo == pytest.approx(0.095 - 0.049, abs=1e-3)
+        assert hi == pytest.approx(0.095 + 0.049, abs=1e-3)
+
+    def test_traded_subset_present_with_gate(self):
+        b = brier_vs_baseline(tiny_result())
+        t = b["traded_subset"]
+        # both decisions clear the 4c gate (20c and 10c disagreements)
+        assert t["n"] == 2 and t["gate_cents"] == 4.0
+        assert t["delta_brier"] == pytest.approx(0.095)
+
+    def test_traded_subset_respects_gate(self):
+        b = brier_vs_baseline(tiny_result(), traded_gate_cents=15.0)
+        assert b["traded_subset"]["n"] == 1  # only M1's 20c disagreement
+
+    def test_trade_pnl_third_number(self):
+        b = brier_vs_baseline(tiny_result())
+        tp = b["trade_pnl"]
+        assert tp["n_markets_traded"] == 3
+        assert tp["net_pnl_cents_after_fees"] == 120
+        assert tp["net_pnl_cents_after_fees_and_inference"] == 90
+
+    def test_n_gate_is_500_not_100(self):
+        b = brier_vs_baseline(tiny_result())
+        assert b["n_gate"] == 500
+        assert b["meets_n_gate"] is False
+        assert any("< 500" in f for f in b["flags"])
+
+    def test_leak_flag_fires_above_0_05(self):
+        b = brier_vs_baseline(tiny_result())  # delta 0.095 > 0.05
+        assert any("LEAK" in f for f in b["flags"])
+
+    def test_no_leak_flag_for_sane_delta(self):
+        r = tiny_result()
+        # p_hat == mid: delta 0
+        r.decisions = [DecisionRecord(10, "M1", 0.6, 60.0),
+                       DecisionRecord(12, "M2", 0.4, 40.0)]
+        b = brier_vs_baseline(r)
+        assert not any("LEAK" in f for f in b["flags"])
+
+
+class TestCalibrationDecomposition:
+    def test_murphy_identity_on_tiny_result(self):
+        c = calibration(tiny_result())
+        # single-decision bins: reliability == raw Brier gap terms
+        assert c["reliability"] == pytest.approx(0.065)
+        assert c["resolution"] == pytest.approx(0.25)
+        assert c["uncertainty"] == pytest.approx(0.25)
+        # Brier = REL - RES + UNC = strategy Brier here
+        assert c["brier_from_decomposition"] == pytest.approx(0.065)
+
+
+class TestCostRatios:
+    def test_hand_computed(self):
+        from bot.backtest.metrics import cost_ratios
+
+        cr = cost_ratios(tiny_result())
+        assert cr["inference_cost_cents"] == 30
+        # inference/net-P&L: 30/100 = 30% > 20% target -> flag
+        assert cr["inference_over_net_pnl"] == pytest.approx(0.30)
+        assert any("20%" in f for f in cr["flags"])
+        # inference/notional: 30 / (40*60) = 1.25% > 1% target -> flag
+        assert cr["notional_traded_cents"] == 2400
+        assert cr["inference_over_notional"] == pytest.approx(0.0125)
+        assert any("1%" in f for f in cr["flags"])
+
+    def test_silent_when_no_inference(self):
+        from bot.backtest.metrics import cost_ratios
+
+        r = tiny_result()
+        r.inference_cost_cents = 0
+        assert cost_ratios(r)["flags"] == []
+
+
+class TestMakerFillRateFlag:
+    def test_flags_above_60pct(self):
+        from bot.backtest.types import Fill
+
+        r = tiny_result()
+        r.orders = {
+            1: {"p_hat": 0.8, "size": 100, "tif": "rest",
+                "is_taker_at_entry": False},
+        }
+        r.fills = [
+            Fill(order_id=1, ticker="M1", side="yes", action="buy",
+                 price_cents=60, count=70, ts=10, is_taker=False, fee_cents=0),
+        ]
+        ts = trade_stats(r)
+        assert ts["maker_fill_rate"] == pytest.approx(0.70)
+        assert any("fill model is lying" in f for f in ts["flags"])
+
+    def test_sane_fill_rate_no_flag(self):
+        from bot.backtest.types import Fill
+
+        r = tiny_result()
+        r.orders = {
+            1: {"p_hat": 0.8, "size": 100, "tif": "rest",
+                "is_taker_at_entry": False},
+        }
+        r.fills = [
+            Fill(order_id=1, ticker="M1", side="yes", action="buy",
+                 price_cents=60, count=45, ts=10, is_taker=False, fee_cents=0),
+        ]
+        ts = trade_stats(r)
+        assert ts["maker_fill_rate"] == pytest.approx(0.45)
+        assert not any("fill model" in f for f in ts["flags"])
+
+    def test_none_when_no_size_info(self):
+        # legacy orders dicts without size/tif keys must not crash
+        assert trade_stats(tiny_result())["maker_fill_rate"] is None
+
+
+class TestOpportunityLifetimeAggregation:
+    def test_median_and_short_lifetime_flag(self):
+        r = tiny_result()
+        r.orders = {
+            1: {"p_hat": 0.8, "opportunity_lifetime_s": 3},
+            2: {"p_hat": 0.8, "opportunity_lifetime_s": 4},
+            3: {"p_hat": 0.8, "opportunity_lifetime_s": 100},
+        }
+        ts = trade_stats(r)
+        assert ts["opportunity_lifetime_s"]["median"] == 4
+        assert any("colocated" in f for f in ts["flags"])
+
+    def test_long_lifetimes_no_flag(self):
+        r = tiny_result()
+        r.orders = {1: {"p_hat": 0.8, "opportunity_lifetime_s": 600}}
+        ts = trade_stats(r)
+        assert ts["opportunity_lifetime_s"]["median"] == 600
+        assert not any("colocated" in f for f in ts["flags"])
+
+
+class TestInferenceStressAndFeeMode:
+    def test_full_report_sections(self, tmp_path):
+        from bot.backtest.fees import FeeSchedule
+        from bot.backtest.metrics import full_report
+        from bot.backtest.testkit import ScriptedStrategy, synthetic_provider
+
+        report = full_report(
+            synthetic_provider(seed=7, n_random=1, n_favorites=1, hours=12),
+            lambda: ScriptedStrategy(inference_cost_cents=5),
+            fee_schedule=FeeSchedule({}),
+            label="stress-smoke",
+        )
+        assert report["fee_mode"] == "exact-per-series"
+        infs = report["inference_stress"]
+        assert infs["multiplier"] == 2.0
+        base_inf = report["base"]["pnl"]["inference_cost_cents"]
+        assert infs["inference_cost_cents"] == 2 * base_inf
+        # no trades, only inference cost: x2 stress doubles the loss
+        assert infs["net_pnl_cents_after_inference"] == -2 * base_inf
+        assert infs["still_positive"] is False
+
+    def test_default_fee_mode_is_legacy(self):
+        from bot.backtest.metrics import full_report
+        from bot.backtest.testkit import ScriptedStrategy, synthetic_provider
+
+        report = full_report(
+            synthetic_provider(seed=7, n_random=1, n_favorites=1, hours=6),
+            lambda: ScriptedStrategy(),
+            label="legacy-smoke",
+        )
+        assert report["fee_mode"] == "legacy-per-contract-ceil"

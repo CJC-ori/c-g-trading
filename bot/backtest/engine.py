@@ -51,11 +51,17 @@ DEFAULT_CANDLE_PERIOD_S = 3600
 
 @dataclass(frozen=True, slots=True)
 class EngineConfig:
+    """fee_schedule=None keeps the legacy per-contract-ceil fee path
+    (backward compatible, conservative on taker fees, but charges 0 maker
+    fees everywhere). Pass a fees.FeeSchedule (e.g. FeeSchedule.
+    load_default()) for the exact per-series centicent model — the honest
+    mode for real-data runs (SPEC §4)."""
     risk: RiskConfig = field(default_factory=RiskConfig)
     candle_period_s: int = DEFAULT_CANDLE_PERIOD_S
     fee_stress: float = 1.0
     event_log_path: str | None = None
     keep_events_in_memory: bool = True
+    fee_schedule: fees_mod.FeeSchedule | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -114,6 +120,7 @@ class _Order:
     __slots__ = (
         "order_id", "intent", "norm", "remaining", "placed_ts", "state",
         "taker_yes_price", "window_end", "maker_from_ts", "p_hat",
+        "fee_accrued_cc", "fee_charged_cents",
     )
 
     def __init__(self, order_id: int, intent: OrderIntent, norm, placed_ts: int):
@@ -127,6 +134,11 @@ class _Order:
         self.window_end: int | None = None
         self.maker_from_ts = placed_ts
         self.p_hat = intent.p_hat
+        # Exact-fee mode: per-order accumulator (centicents accrued, cents
+        # charged) so multi-fill orders converge to the single-fill fee —
+        # mirrors Kalshi's own per-order rounding accumulator.
+        self.fee_accrued_cc = 0
+        self.fee_charged_cents = 0
 
     @property
     def live(self) -> bool:
@@ -146,7 +158,7 @@ class _MarketState:
         "info", "candles", "candle_ends", "trades", "trade_ts", "settlement",
         "has_trades", "ci", "ti", "orders", "qty", "basis", "realized",
         "fees", "mark", "period_s", "first_entry_ts", "exit_ts",
-        "contracts_traded", "decision_times",
+        "contracts_traded", "decision_times", "fee_config",
     )
 
     def __init__(
@@ -177,6 +189,8 @@ class _MarketState:
         self.exit_ts: int | None = None
         self.contracts_traded = 0
         self.decision_times: list[int] = []
+        # Resolved by the engine when a fee schedule is configured.
+        self.fee_config: fees_mod.SeriesFeeConfig | None = None
 
     @property
     def effective_end_ts(self) -> int:
@@ -313,6 +327,29 @@ class _Engine:
             stress_multiplier=self.config.fee_stress,
         )
 
+    def _fill_fee_cents(
+        self, ms: _MarketState, order: _Order, count: int,
+        exec_side_price: int, is_taker: bool,
+    ) -> int:
+        """Fee charged for this fill, in whole cents.
+
+        Exact mode (fee_schedule set): centicent-ceiled per-series fee,
+        accrued per order; each fill charges the delta of the order's
+        ceil-to-cent running total, so the order's total fee converges to
+        the single-fill-equivalent cost (fee_rounding accumulator).
+        Legacy mode: per-contract cent-ceil (unchanged behavior)."""
+        if self.config.fee_schedule is None:
+            return self._fee_for(is_taker, exec_side_price, count, ms.info.category)
+        assert ms.fee_config is not None
+        order.fee_accrued_cc += fees_mod.trade_fee_centicents(
+            exec_side_price, count, is_taker=is_taker, config=ms.fee_config,
+            stress_multiplier=self.config.fee_stress,
+        )
+        total_cents = fees_mod.cents_ceil_from_centicents(order.fee_accrued_cc)
+        fee = total_cents - order.fee_charged_cents
+        order.fee_charged_cents = total_cents
+        return fee
+
     def _apply_fill(
         self, ms: _MarketState, order: _Order, count: int, yes_price: int,
         ts: int, is_taker: bool,
@@ -320,7 +357,7 @@ class _Engine:
         if count <= 0:
             return
         exec_side_price = fills.side_price(order.intent.side, yes_price)
-        fee = self._fee_for(is_taker, exec_side_price, count, ms.info.category)
+        fee = self._fill_fee_cents(ms, order, count, exec_side_price, is_taker)
         delta = count * order.norm.qty_sign
         ms.qty, ms.basis, cash_delta, realized = fills.apply_fill_to_position(
             ms.qty, ms.basis, delta, yes_price
@@ -533,6 +570,26 @@ class _Engine:
         except ValueError as e:
             self._log(t, "intent_rejected", ticker=intent.ticker, reason=str(e))
             return
+        # Quantize the limit to the market's tick structure (SYNTHESIS §2.2).
+        # Whole-cent limits are on-grid for every observed Kalshi structure
+        # (0.1c/0.5c/1c steps all divide 1c and ranges start at 0), so this
+        # only moves prices when a future sub-cent price path feeds through;
+        # direction is conservative (buys snap down, sells snap up).
+        ps = ms.info.price_structure
+        if ps is not None:
+            cc = norm.yes_limit * 100
+            qcc = ps.quantize_cc(cc, round_down=norm.yes_buy)
+            if qcc != cc:
+                q_cents = qcc // 100 if norm.yes_buy else -(-qcc // 100)
+                q_cents = max(1, min(99, q_cents))
+                self._log(
+                    t, "price_quantized", ticker=intent.ticker,
+                    structure=ps.kind, yes_limit_from=norm.yes_limit,
+                    yes_limit_to=q_cents,
+                )
+                norm = fills.NormalizedIntent(
+                    norm.ticker, norm.yes_buy, q_cents, norm.size
+                )
         if intent.p_hat is not None:
             self.decisions.append(
                 DecisionRecord(t, intent.ticker, intent.p_hat, view.mid_cents)
@@ -540,21 +597,33 @@ class _Engine:
         bid, ask = view.best_bid, view.best_ask
         is_taker = fills.crosses(norm, bid, ask)
         est_yes_price = fills.taker_price(norm, bid, ask) if is_taker else norm.yes_limit
-        cat = ms.info.category.lower()
-        est_rate = (
-            fees_mod.CATEGORY_TAKER_RATES.get(cat, fees_mod.DEFAULT_TAKER_RATE)
-            if is_taker
-            else fees_mod.CATEGORY_MAKER_RATES.get(cat, fees_mod.DEFAULT_MAKER_RATE)
-        )
-        fee_pc = (
-            fees_mod.per_contract_fee_cents(
-                fills.side_price(intent.side, est_yes_price),
-                rate=est_rate,
-                stress_multiplier=self.config.fee_stress,
+        if self.config.fee_schedule is not None:
+            # Exact mode: conservative per-contract estimate for sizing
+            # (ceil-to-cent of the exact per-contract fee).
+            assert ms.fee_config is not None
+            fee_pc = fees_mod.cents_ceil_from_centicents(
+                fees_mod.trade_fee_centicents(
+                    fills.side_price(intent.side, est_yes_price), 1,
+                    is_taker=is_taker, config=ms.fee_config,
+                    stress_multiplier=self.config.fee_stress,
+                )
             )
-            if est_rate > 0
-            else 0
-        )
+        else:
+            cat = ms.info.category.lower()
+            est_rate = (
+                fees_mod.CATEGORY_TAKER_RATES.get(cat, fees_mod.DEFAULT_TAKER_RATE)
+                if is_taker
+                else fees_mod.CATEGORY_MAKER_RATES.get(cat, fees_mod.DEFAULT_MAKER_RATE)
+            )
+            fee_pc = (
+                fees_mod.per_contract_fee_cents(
+                    fills.side_price(intent.side, est_yes_price),
+                    rate=est_rate,
+                    stress_multiplier=self.config.fee_stress,
+                )
+                if est_rate > 0
+                else 0
+            )
         clamp: ClampResult = clamp_intent_size(
             norm,
             intent.p_hat,
@@ -599,16 +668,25 @@ class _Engine:
             order.window_end = t + ms.period_s
             order.maker_from_ts = order.window_end
         ms.orders.append(order)
+        # Opportunity lifetime (diagnostic; uses the future tape, never
+        # visible to the strategy): how long the trigger condition persisted.
+        tail_trades = ms.trades[bisect_right(ms.trade_ts, t):]
+        tail_candles = ms.candles[bisect_right(ms.candle_ends, t):]
+        lifetime_s = fills.opportunity_lifetime_s(
+            order.norm, tail_candles, tail_trades, t, ms.effective_end_ts
+        )
         self.orders_info[order.order_id] = {
             "ts": t, "ticker": intent.ticker, "side": intent.side,
             "action": intent.action, "limit_price_cents": intent.limit_price_cents,
             "size": clamp.size, "tif": intent.tif, "p_hat": intent.p_hat,
             "is_taker_at_entry": is_taker,
+            "opportunity_lifetime_s": lifetime_s,
         }
         self._log(
             t, "order_placed", order_id=order.order_id, ticker=intent.ticker,
             is_taker=is_taker, size=clamp.size,
             taker_yes_price=order.taker_yes_price, yes_limit=norm.yes_limit,
+            opportunity_lifetime_s=lifetime_s,
         )
 
     # -- close / settlement ---------------------------------------------------
@@ -655,6 +733,10 @@ class _Engine:
             trades = list(self.provider.trades(info.ticker))
             settlement = self.provider.settlement(info.ticker)
             ms = _MarketState(info, candles, trades, settlement, period)
+            if cfg.fee_schedule is not None:
+                ms.fee_config = cfg.fee_schedule.for_series(
+                    info.series_ticker or fees_mod.series_ticker_of(info.ticker)
+                )
             self.markets[info.ticker] = ms
             ms.decision_times = build_decision_times(
                 candles, interval, trigger, ms.effective_end_ts

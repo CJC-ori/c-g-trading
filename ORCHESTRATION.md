@@ -9,12 +9,21 @@ decisions, and status. Subagents: read this first.
 
 1. **Deterministic benchmark first.** Everything is judged by a reproducible
    backtest: strategy sees only info ≤ t, fills simulated against real historical
-   trades/candles, Kalshi fees applied (taker ≈ round(0.07·P·(1−P),2)/contract —
-   verify vs official schedule), Kelly-fraction sizing capped by book depth.
-2. **Contamination discipline.** Model training cutoff is Jan 2026. LLM-forecast
-   strategies may only be backtested on markets resolving AFTER Feb 2026, with
-   point-in-time retrieval discipline (no post-resolution sources). Price-only
-   strategies backtest cleanly on any period.
+   trades/candles, Kalshi fees applied (taker = 0.07 · fee_multiplier ·
+   contracts · P·(1−P), **ceiling-rounded to $0.0001** — not round-to-cent;
+   per-series fee_type/fee_multiplier from the API, maker fees on the 130
+   `quadratic_with_maker_fees` series only — corrected 2026-08-11 per
+   research/kalshi-api.md §3), Kelly-fraction sizing capped by book depth.
+2. **Contamination discipline.** Model cutoffs differ: **Fable 5 / Opus 5
+   know things through ~May 2026; Sonnet 5's cutoff is Jan 2026** (corrected
+   2026-08-11 per research/cost-architecture.md §8 — the old "cutoff Jan
+   2026" was wrong for Opus 5). LLM-forecast strategies may only be
+   backtested on markets resolving AFTER Feb 2026, judged by a model that
+   postdates its own cutoff: Sonnet 5 for the Feb–May 2026 window; Opus 5 /
+   Fable 5 only for markets resolving June 2026+ (and forward
+   paper-trading). Point-in-time retrieval discipline throughout (no
+   post-resolution sources). Price-only strategies backtest cleanly on any
+   period.
 3. **Inference cost is a P&L line item.** Every strategy's backtest must charge
    per-question inference cost (log token usage; use real API pricing). Prefer
    cheap-model retrieval + one expensive judge.

@@ -124,3 +124,55 @@ class TestScalarInRealData:
             s = provider.settlement(t)
             assert s.result == "scalar"
             assert 0 <= s.settlement_value_cents <= 100
+
+
+class TestFeeAndTickWiring:
+    """New per-series fee config + price-structure plumbing (SYNTHESIS §2.1-2.2)."""
+
+    def test_michigan_market_carries_tapered_structure(self, provider):
+        (mi,) = provider.iter_markets(tickers=["KXSENATEMID-26-AELS"])
+        assert mi.series_ticker == "KXSENATEMID"
+        ps = mi.price_structure
+        assert ps is not None and ps.kind == "tapered_deci_cent"
+        # 0.1c ticks in the tails: the ~1.5-2c NO region is on-grid
+        assert ps.is_valid_tick(150)   # 1.5c
+        assert ps.is_valid_tick(9990)  # 99.9c
+        assert not ps.is_valid_tick(5550)  # 55.5c mid-range stays 1c
+
+    def test_linear_cent_markets_have_no_structure_object(self, provider):
+        import sqlite3
+
+        conn = sqlite3.connect(f"file:{DB}?mode=ro", uri=True)
+        (ticker,) = conn.execute(
+            "SELECT ticker FROM markets WHERE"
+            " json_extract(raw_json,'$.price_level_structure')='linear_cent'"
+            " LIMIT 1"
+        ).fetchone()
+        conn.close()
+        (mi,) = provider.iter_markets(tickers=[ticker])
+        assert mi.price_structure is None  # default = 1c grid
+
+    def test_fee_schedule_from_store_matches_bundled_snapshot(self):
+        from bot.backtest.fees import FeeSchedule
+
+        db = FeeSchedule.from_store(str(DB))
+        bundled = FeeSchedule.load_default()
+        assert db.overrides == bundled.overrides
+        assert len(db) == 162
+
+    def test_full_db_fee_coverage(self):
+        """Every series in the DB has a resolvable fee config; multipliers
+        are only ever 0, 0.5 or 1 (no >1 exists — prior-art correction)."""
+        import sqlite3
+
+        conn = sqlite3.connect(f"file:{DB}?mode=ro", uri=True)
+        n_total, n_with_fee = conn.execute(
+            "SELECT COUNT(*), SUM(fee_type IS NOT NULL AND fee_multiplier"
+            " IS NOT NULL) FROM series"
+        ).fetchone()
+        mults = {r[0] for r in conn.execute(
+            "SELECT DISTINCT fee_multiplier FROM series"
+        )}
+        conn.close()
+        assert n_total == n_with_fee > 12_000
+        assert mults <= {0.0, 0.5, 1.0}
