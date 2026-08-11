@@ -1,0 +1,4858 @@
+[
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXLEADERSOUT-27JAN01-MDIACPC",
+   "title": "Which leaders will leave office in 2026? [Subquestion: Miguel D\u00c3\u00adaz-Canel]",
+   "url": "https://kalshi.com/markets/kxleadersout/kxleadersout-27jan01",
+   "position": "NO",
+   "shares": 7962.88,
+   "avgPricePaid": 0.428,
+   "marketPrice": 0.84,
+   "value": 6688.8192,
+   "probabilityYes": 0.29,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-01-02",
+   "trades": [
+    {
+     "date": "2026-06-20T18:46:44Z",
+     "type": "open",
+     "shares": 7000,
+     "price": 0.4071
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "CONTROLH-2026-R",
+   "title": "Will Republicans win the House in 2026?",
+   "url": "https://kalshi.com/markets/controlh/controlh-2026",
+   "position": "YES",
+   "shares": 39000,
+   "avgPricePaid": 0.17989999999999998,
+   "marketPrice": 0.16,
+   "value": 6240,
+   "probabilityYes": 0.21,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-11-13",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 39000,
+     "price": 0.17
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXLEADERSOUT-27JAN01-BNETISR",
+   "title": "Which leaders will leave office in 2026? [Subquestion: Benjamin Netanyahu]",
+   "url": "https://kalshi.com/markets/kxleadersout/kxleadersout-27jan01",
+   "position": "NO",
+   "shares": 7853.72,
+   "avgPricePaid": 0.483,
+   "marketPrice": 0.55,
+   "value": 4319.546,
+   "probabilityYes": 0.29,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-01-02",
+   "trades": [
+    {
+     "date": "2026-06-25T20:53:46Z",
+     "type": "open",
+     "shares": 7853.72,
+     "price": 0.4656
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXHORMUZNORM-26MAR17-B261201",
+   "title": "Will the 7-day moving average of transit calls through the Strait of Hormuz as reported by the IMF PortWatch be above 60 before December 1, 2026?",
+   "url": "https://kalshi.com/markets/kxhormuznorm/kxhormuznorm-26mar17",
+   "position": "NO",
+   "shares": 5336.9,
+   "avgPricePaid": 0.4661,
+   "marketPrice": 0.74,
+   "value": 3949.306,
+   "probabilityYes": 0.29,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-09-01",
+   "trades": [
+    {
+     "date": "2026-06-10T19:13:12Z",
+     "type": "open",
+     "shares": 5336.9,
+     "price": 0.47
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXSUSPENDGASTAX-26MAY-JAN01",
+   "title": "Will the federal gas tax be suspended? [Subquestion: Before Jan 1, 2027]",
+   "url": "https://kalshi.com/markets/kxsuspendgastax/kxsuspendgastax-26may",
+   "position": "NO",
+   "shares": 4400,
+   "avgPricePaid": 0.6748999999999999,
+   "marketPrice": 0.85,
+   "value": 3740,
+   "probabilityYes": 0.12,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-01-01",
+   "trades": [
+    {
+     "date": "2026-06-10T19:13:12Z",
+     "type": "open",
+     "shares": 4400,
+     "price": 0.6748999999999999
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXNASDAQ100Y-26DEC31H1600-T19000",
+   "title": "Will the Nasdaq-100 be below 19000 at the end of Dec 31, 2026 at 4pm EST?",
+   "url": "https://kalshi.com/markets/kxnasdaq100y/kxnasdaq100y-26dec31h1600",
+   "position": "YES",
+   "shares": 51411.39,
+   "avgPricePaid": 0.1061,
+   "marketPrice": 0.06,
+   "value": 3084.6834,
+   "probabilityYes": 0.13,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-12-31",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 51411.39,
+     "price": 0.0998
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXMESENOUTCOME-27JAN-GPR",
+   "title": "Will Dem Nominee be Graham Platner AND General Election Winner be Republican for Jan 2027?",
+   "url": "https://kalshi.com/markets/kxmesenoutcome/kxmesenoutcome-27jan",
+   "position": "YES",
+   "shares": 8000,
+   "avgPricePaid": 0.3965,
+   "marketPrice": 0.36,
+   "value": 2880,
+   "probabilityYes": 0.41,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-11-05",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 8000,
+     "price": 0.38
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXSCRSENS-26-RNOR",
+   "title": "Who will win the 2026 South Carolina Republican Senate special primary?",
+   "url": "https://kalshi.com/markets/kxscrsens/kxscrsens-26",
+   "position": "YES",
+   "shares": 9241.48,
+   "avgPricePaid": 0.2057,
+   "marketPrice": 0.31,
+   "value": 2864.8588,
+   "probabilityYes": 0.24,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-08-11",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 9241.48,
+     "price": 0.1947
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXSCRSENS-26-DNOR",
+   "title": "Who will win the 2026 South Carolina Republican Senate special primary?",
+   "url": "https://kalshi.com/markets/kxscrsens/kxscrsens-26",
+   "position": "NO",
+   "shares": 5779,
+   "avgPricePaid": 0.3455,
+   "marketPrice": 0.49,
+   "value": 2831.71,
+   "probabilityYes": 0.62,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-08-11",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 5779,
+     "price": 0.33
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXMESENOUTCOME-27JAN-GPD",
+   "title": "Will Dem Nominee be Graham Platner AND General Election Winner be Democrat for Jan 2027?",
+   "url": "https://kalshi.com/markets/kxmesenoutcome/kxmesenoutcome-27jan",
+   "position": "NO",
+   "shares": 7000,
+   "avgPricePaid": 0.4371,
+   "marketPrice": 0.37,
+   "value": 2590,
+   "probabilityYes": 0.58,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-11-05",
+   "trades": [
+    {
+     "date": "2026-06-10T19:13:12Z",
+     "type": "open",
+     "shares": 7000,
+     "price": 0.4371
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXGOVOKNOMR-26-GDRU",
+   "title": "Will Genter Drummond be the Republican nominee for Governor in Oklahoma?",
+   "url": "https://kalshi.com/markets/kxgovoknomr/kxgovoknomr-26",
+   "position": "YES",
+   "shares": 7591.6,
+   "avgPricePaid": 0.1936,
+   "marketPrice": 0.29,
+   "value": 2201.564,
+   "probabilityYes": 0.2,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-09-01T14:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-20T18:46:44Z",
+     "type": "open",
+     "shares": 1329.13,
+     "price": 0.22
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXH200MS-27JAN-6.500",
+   "title": "Will the monthly average compute price of NVIDIA's H200 be above $6.50 in January 2027?",
+   "url": "https://kalshi.com/markets/kxh200ms/kxh200ms-27jan",
+   "position": "NO",
+   "shares": 2402,
+   "avgPricePaid": 0.7535,
+   "marketPrice": 0.87,
+   "value": 2089.74,
+   "probabilityYes": 0.1,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-02-01T04:59:59Z",
+   "trades": [
+    {
+     "date": "2026-06-20T18:46:44Z",
+     "type": "open",
+     "shares": 2402,
+     "price": 0.74
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXHORMUZNORM-26MAR17-B260901",
+   "title": "Will the 7-day moving average of transit calls through the Strait of Hormuz as reported by the IMF PortWatch be above 60 before September 1, 2026?",
+   "url": "https://kalshi.com/markets/kxhormuznorm/kxhormuznorm-26mar17",
+   "position": "NO",
+   "shares": 2068.97,
+   "avgPricePaid": 0.6835,
+   "marketPrice": 0.98,
+   "value": 2027.5906,
+   "probabilityYes": 0.06,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-09-01",
+   "trades": [
+    {
+     "date": "2026-06-10T19:13:12Z",
+     "type": "open",
+     "shares": 2068.97,
+     "price": 0.68
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXGOVOKNOMR-26-MMAZ",
+   "title": "Will Mike Mazzei be the Republican nominee for Governor in Oklahoma?",
+   "url": "https://kalshi.com/markets/kxgovoknomr/kxgovoknomr-26",
+   "position": "NO",
+   "shares": 6501.88,
+   "avgPricePaid": 0.2237,
+   "marketPrice": 0.31,
+   "value": 2015.5828,
+   "probabilityYes": 0.79,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-09-01T14:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-10T19:13:12Z",
+     "type": "open",
+     "shares": 1102.8,
+     "price": 0.21
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXMISENATE-26-AELS",
+   "title": "Who will win the 2026 Michigan Senate race?",
+   "url": "https://kalshi.com/markets/kxmisenate/kxmisenate-26",
+   "position": "NO",
+   "shares": 4343.8,
+   "avgPricePaid": 0.4252,
+   "marketPrice": 0.44,
+   "value": 1911.272,
+   "probabilityYes": 0.41,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-11-03",
+   "trades": [
+    {
+     "date": "2026-06-25T20:53:46Z",
+     "type": "open",
+     "shares": 310,
+     "price": 0.38
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "SENATEGA-26-D",
+   "title": "Will Democratics win the Senate race in Georgia?",
+   "url": "https://kalshi.com/markets/senatega/senatega-26",
+   "position": "NO",
+   "shares": 22382.67,
+   "avgPricePaid": 0.1478,
+   "marketPrice": 0.081,
+   "value": 1812.99627,
+   "probabilityYes": 0.81,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-01-04",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 22382.67,
+     "price": 0.1394
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXGOVMNNOMR-26-LDEM",
+   "title": "Will Lisa Demuth be the Republican nominee for Governor in Minnesota?",
+   "url": "https://kalshi.com/markets/kxgovmnnomr/kxgovmnnomr-26",
+   "position": "NO",
+   "shares": 4667.09,
+   "avgPricePaid": 0.5603,
+   "marketPrice": 0.3,
+   "value": 1400.127,
+   "probabilityYes": 0.31,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-11-03",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 4667.09,
+     "price": 0.5429999999999999
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXFISAEXTEND-26JUN-26OCT01",
+   "title": "When will FISA be reauthorized again: Before Oct 1, 2026",
+   "url": "https://kalshi.com/markets/kxfisaextend/kxfisaextend-26may",
+   "position": "NO",
+   "shares": 2371.22,
+   "avgPricePaid": 0.4292,
+   "marketPrice": 0.55,
+   "value": 1304.171,
+   "probabilityYes": 0.59,
+   "forecastAt": "2026-07-02T12:08:30Z",
+   "endDate": "2026-10-01",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 2371.22,
+     "price": 0.4122
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXH200MS-27JAN-5.000",
+   "title": "Will the monthly average compute price of NVIDIA's H200 be above $5.00 in January 2027?",
+   "url": "https://kalshi.com/markets/kxh200ms/kxh200ms-27jan",
+   "position": "NO",
+   "shares": 1866.81,
+   "avgPricePaid": 0.6463,
+   "marketPrice": 0.69,
+   "value": 1288.0989,
+   "probabilityYes": 0.26,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-02-01T04:59:59Z",
+   "trades": [
+    {
+     "date": "2026-06-20T18:46:44Z",
+     "type": "open",
+     "shares": 1866.81,
+     "price": 0.63
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXCA14SWINNER-26-AWAH",
+   "title": "Who will win the 2026 CA-14 special election?",
+   "url": "https://kalshi.com/markets/kxca14swinner/kxca14swinner-26",
+   "position": "NO",
+   "shares": 9047.04,
+   "avgPricePaid": 0.042699999999999995,
+   "marketPrice": 0.14,
+   "value": 1266.5856000000003,
+   "probabilityYes": 0.94,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-11-03T15:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-20T18:46:44Z",
+     "type": "open",
+     "shares": 9047.04,
+     "price": 0.04
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXREACTOR-26DEC31",
+   "title": "Will a new nuclear reactor be approved by Dec 31, 2026? [Subquestion: Grants license]",
+   "url": "https://kalshi.com/markets/kxreactor/kxreactor-26dec31",
+   "position": "NO",
+   "shares": 1238.11,
+   "avgPricePaid": 0.8236,
+   "marketPrice": 0.902,
+   "value": 1116.77522,
+   "probabilityYes": 0.03,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-12-31",
+   "trades": [
+    {
+     "date": "2026-06-10T19:13:12Z",
+     "type": "open",
+     "shares": 1238.11,
+     "price": 0.8236
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXUSAIRANAGREEMENT-27-26SEP",
+   "title": "Will the US agree to a new Iranian nuclear deal this year?",
+   "url": "https://kalshi.com/markets/kxusairanagreement/kxusairanagreement-27",
+   "position": "NO",
+   "shares": 992.91,
+   "avgPricePaid": 0.7895,
+   "marketPrice": 0.98,
+   "value": 973.0518,
+   "probabilityYes": 0.02,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-09-01",
+   "trades": [
+    {
+     "date": "2026-06-10T19:13:12Z",
+     "type": "open",
+     "shares": 992.91,
+     "price": 0.79
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXDIAZOUT-MDC-26SEP01",
+   "title": "Will Miguel D\u00c3\u00adaz-Canel leave office before 2026-09-01T14:00:00.000Z?",
+   "url": "https://kalshi.com/markets/kxdiazout/kxdiazout-mdc",
+   "position": "NO",
+   "shares": 1037,
+   "avgPricePaid": 0.6613,
+   "marketPrice": 0.912,
+   "value": 945.744,
+   "probabilityYes": 0.09,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-08-01T14:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-20T18:46:44Z",
+     "type": "open",
+     "shares": 233,
+     "price": 0.6086
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXUSACOMPANYSTAKE-27JAN01-ANTH",
+   "title": "Will any part of the United States federal government take a stake of above 0% in Anthropic? [Subquestion: Anthropic]",
+   "url": "https://kalshi.com/markets/kxusacompanystake/kxusacompanystake-27jan01",
+   "position": "NO",
+   "shares": 790.4,
+   "avgPricePaid": 0.7104,
+   "marketPrice": 0.8,
+   "value": 632.32,
+   "probabilityYes": 0.14,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-01-01T15:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-10T19:13:12Z",
+     "type": "open",
+     "shares": 790.4,
+     "price": 0.7103
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXH200MS-27JAN-1.500",
+   "title": "Will the monthly average compute price of NVIDIA's H200 be above $1.50 in January 2027?",
+   "url": "https://kalshi.com/markets/kxh200ms/kxh200ms-27jan",
+   "position": "YES",
+   "shares": 638,
+   "avgPricePaid": 0.792,
+   "marketPrice": 0.96,
+   "value": 612.48,
+   "probabilityYes": 0.94,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-02-01T04:59:59Z",
+   "trades": [
+    {
+     "date": "2026-07-07T15:34:57Z",
+     "type": "open",
+     "shares": 638,
+     "price": 0.792
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXLOSEREELECTIONDSEN-2026-1",
+   "title": "Will exactly 1 Senate Democrats lose re-election in 2026?",
+   "url": "https://kalshi.com/markets/kxlosereelectiondsen/kxlosereelectiondsen-2026",
+   "position": "YES",
+   "shares": 2004,
+   "avgPricePaid": 0.1851,
+   "marketPrice": 0.27,
+   "value": 541.08,
+   "probabilityYes": 0.26,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-12-31T15:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-20T18:46:44Z",
+     "type": "open",
+     "shares": 1000,
+     "price": 0.18
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXSENATEMND-26-ACRA",
+   "title": "Will Angie Craig be the Democratic nominee for the Senate in Minnesota?",
+   "url": "https://kalshi.com/markets/kxsenatemnd/kxsenatemnd-26",
+   "position": "YES",
+   "shares": 1510.46,
+   "avgPricePaid": 0.2389,
+   "marketPrice": 0.31,
+   "value": 468.2426,
+   "probabilityYes": 0.3,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-11-03",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 1510.46,
+     "price": 0.2266
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXNYSECIRCUIT-27",
+   "title": "Will a NYSE marketwide circuitbreaker happen before 2027? [Subquestion: Before 2027]",
+   "url": "https://kalshi.com/markets/kxnysecircuit/kxnysecircuit-27",
+   "position": "NO",
+   "shares": 525,
+   "avgPricePaid": 0.8208,
+   "marketPrice": 0.885,
+   "value": 464.625,
+   "probabilityYes": 0.08,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-01-01T15:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-10T19:13:12Z",
+     "type": "open",
+     "shares": 525,
+     "price": 0.8208
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXH200MS-27FEB-1.500",
+   "title": "Will the monthly average compute price of NVIDIA's H200 be above $1.50 in February 2027?",
+   "url": "https://kalshi.com/markets/kxh200ms/kxh200ms-27feb",
+   "position": "YES",
+   "shares": 437,
+   "avgPricePaid": 0.6757,
+   "marketPrice": 0.94,
+   "value": 410.78,
+   "probabilityYes": 0.94,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-03-01T04:59:59Z",
+   "trades": [
+    {
+     "date": "2026-07-07T15:34:57Z",
+     "type": "open",
+     "shares": 437,
+     "price": 0.6757
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXTOPMONTHLY-26AUG-TAY",
+   "title": "Artist with the most monthly Spotify listeners at the end of Aug 2026?",
+   "url": "https://kalshi.com/markets/kxtopmonthly/kxtopmonthly-26aug",
+   "position": "NO",
+   "shares": 420.99,
+   "avgPricePaid": 0.9027,
+   "marketPrice": 0.97,
+   "value": 408.3603,
+   "probabilityYes": 0.02,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-08-31",
+   "trades": [
+    {
+     "date": "2026-07-07T15:34:57Z",
+     "type": "open",
+     "shares": 420.99,
+     "price": 0.9027
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXH200MS-27FEB-2.000",
+   "title": "Will the monthly average compute price of NVIDIA's H200 be above $2.00 in February 2027?",
+   "url": "https://kalshi.com/markets/kxh200ms/kxh200ms-27feb",
+   "position": "YES",
+   "shares": 429,
+   "avgPricePaid": 0.6951999999999999,
+   "marketPrice": 0.84,
+   "value": 360.36,
+   "probabilityYes": 0.89,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-03-01T04:59:59Z",
+   "trades": [
+    {
+     "date": "2026-07-07T15:34:57Z",
+     "type": "open",
+     "shares": 429,
+     "price": 0.6951999999999999
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXH200MS-27FEB-2.500",
+   "title": "Will the monthly average compute price of NVIDIA's H200 be above $2.50 in February 2027?",
+   "url": "https://kalshi.com/markets/kxh200ms/kxh200ms-27feb",
+   "position": "YES",
+   "shares": 470,
+   "avgPricePaid": 0.6855,
+   "marketPrice": 0.75,
+   "value": 352.5,
+   "probabilityYes": 0.81,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-03-01T04:59:59Z",
+   "trades": [
+    {
+     "date": "2026-07-07T15:34:57Z",
+     "type": "open",
+     "shares": 470,
+     "price": 0.6855
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXH200MS-27JAN-2.500",
+   "title": "Will the monthly average compute price of NVIDIA's H200 be above $2.50 in January 2027?",
+   "url": "https://kalshi.com/markets/kxh200ms/kxh200ms-27jan",
+   "position": "YES",
+   "shares": 415,
+   "avgPricePaid": 0.6069,
+   "marketPrice": 0.83,
+   "value": 344.45,
+   "probabilityYes": 0.83,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-02-01T04:59:59Z",
+   "trades": [
+    {
+     "date": "2026-07-07T15:34:57Z",
+     "type": "open",
+     "shares": 415,
+     "price": 0.6069
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXH200MS-27JAN-2.000",
+   "title": "Will the monthly average compute price of NVIDIA's H200 be above $2.00 in January 2027?",
+   "url": "https://kalshi.com/markets/kxh200ms/kxh200ms-27jan",
+   "position": "YES",
+   "shares": 395,
+   "avgPricePaid": 0.7341,
+   "marketPrice": 0.85,
+   "value": 335.75,
+   "probabilityYes": 0.9,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-02-01T04:59:59Z",
+   "trades": [
+    {
+     "date": "2026-07-07T15:34:57Z",
+     "type": "open",
+     "shares": 395,
+     "price": 0.7341
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXMCDONALDCONF-26JUN17-OCT01",
+   "title": "Will James McDonald be confirmed as U.S. Attorney for the Southern District of New York before Oct 1, 2026?",
+   "url": "https://kalshi.com/markets/kxmcdonaldconf/kxmcdonaldconf-26jun17",
+   "position": "NO",
+   "shares": 330,
+   "avgPricePaid": 0.4557,
+   "marketPrice": 0.88,
+   "value": 290.4,
+   "probabilityYes": 0.12,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-08-08T03:59:00Z",
+   "trades": [
+    {
+     "date": "2026-06-20T18:46:44Z",
+     "type": "open",
+     "shares": 330,
+     "price": 0.4385
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXVOTEPRIMARY-GOVFLNOMR26JFIS-55",
+   "title": "Will James Fishback receive at least 10% of the popular vote in the 2026 Florida Republican Governor primary?",
+   "url": "https://kalshi.com/markets/kxvoteprimary/kxvoteprimary-govflnomr26jfis",
+   "position": "NO",
+   "shares": 684.17,
+   "avgPricePaid": 0.3752,
+   "marketPrice": 0.39,
+   "value": 266.8263,
+   "probabilityYes": 0.24,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-08-18",
+   "trades": [
+    {
+     "date": "2026-06-25T20:53:46Z",
+     "type": "open",
+     "shares": 684.17,
+     "price": 0.3591
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXCODINGMODEL-26DEC-ANTH",
+   "title": "Which AI company will have the best coding model on Dec 31, 2026?",
+   "url": "https://kalshi.com/markets/kxcodingmodel/kxcodingmodel-26dec",
+   "position": "NO",
+   "shares": 662.41,
+   "avgPricePaid": 0.4325,
+   "marketPrice": 0.39,
+   "value": 258.3399,
+   "probabilityYes": 0.56,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-12-31T15:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-25T20:53:46Z",
+     "type": "open",
+     "shares": 156.36,
+     "price": 0.4657
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXMCDONALDCONF-26JUN17-JAN01",
+   "title": "Will James McDonald be confirmed as U.S. Attorney for the Southern District of New York before Jan 1, 2027?",
+   "url": "https://kalshi.com/markets/kxmcdonaldconf/kxmcdonaldconf-26jun17",
+   "position": "NO",
+   "shares": 300,
+   "avgPricePaid": 0.2975,
+   "marketPrice": 0.84,
+   "value": 252,
+   "probabilityYes": 0.24,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-08-08T03:59:00Z",
+   "trades": [
+    {
+     "date": "2026-06-20T18:46:44Z",
+     "type": "open",
+     "shares": 300,
+     "price": 0.2833
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXH200MS-27FEB-4.500",
+   "title": "Will the monthly average compute price of NVIDIA's H200 be above $4.50 in February 2027?",
+   "url": "https://kalshi.com/markets/kxh200ms/kxh200ms-27feb",
+   "position": "NO",
+   "shares": 409,
+   "avgPricePaid": 0.5871999999999999,
+   "marketPrice": 0.56,
+   "value": 229.04,
+   "probabilityYes": 0.38,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-03-01T04:59:59Z",
+   "trades": [
+    {
+     "date": "2026-07-07T15:34:57Z",
+     "type": "open",
+     "shares": 409,
+     "price": 0.5871999999999999
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXH200MS-27FEB-5.000",
+   "title": "Will the monthly average compute price of NVIDIA's H200 be above $5.00 in February 2027?",
+   "url": "https://kalshi.com/markets/kxh200ms/kxh200ms-27feb",
+   "position": "NO",
+   "shares": 415,
+   "avgPricePaid": 0.5971,
+   "marketPrice": 0.54,
+   "value": 224.1,
+   "probabilityYes": 0.25,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-03-01T04:59:59Z",
+   "trades": [
+    {
+     "date": "2026-07-07T15:34:57Z",
+     "type": "open",
+     "shares": 415,
+     "price": 0.5971
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXH200MS-27JAN-4.500",
+   "title": "Will the monthly average compute price of NVIDIA's H200 be above $4.50 in January 2027?",
+   "url": "https://kalshi.com/markets/kxh200ms/kxh200ms-27jan",
+   "position": "NO",
+   "shares": 415,
+   "avgPricePaid": 0.5871999999999999,
+   "marketPrice": 0.52,
+   "value": 215.8,
+   "probabilityYes": 0.41,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-02-01T04:59:59Z",
+   "trades": [
+    {
+     "date": "2026-07-07T15:34:57Z",
+     "type": "open",
+     "shares": 415,
+     "price": 0.5871999999999999
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXGRAMBNA-69-ELL",
+   "title": "Will Ella Langley win Best New Artist at the Grammys?",
+   "url": "https://kalshi.com/markets/kxgrambna/kxgrambna-69",
+   "position": "NO",
+   "shares": 518,
+   "avgPricePaid": 0.16899999999999998,
+   "marketPrice": 0.41,
+   "value": 212.38,
+   "probabilityYes": 0.74,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-02-09",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 518,
+     "price": 0.1597
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRT-BUD-65",
+   "title": "Buddy Rotten Tomatoes score?",
+   "url": "https://kalshi.com/markets/kxrt/kxrt-bud",
+   "position": "YES",
+   "shares": 222,
+   "avgPricePaid": 0.8493999999999999,
+   "marketPrice": 0.9,
+   "value": 199.8,
+   "probabilityYes": 0.89,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-08-31",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 222,
+     "price": 0.84
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXH200MS-27JAN-4.000",
+   "title": "Will the monthly average compute price of NVIDIA's H200 be above $4.00 in January 2027?",
+   "url": "https://kalshi.com/markets/kxh200ms/kxh200ms-27jan",
+   "position": "NO",
+   "shares": 419,
+   "avgPricePaid": 0.4371,
+   "marketPrice": 0.41,
+   "value": 171.79,
+   "probabilityYes": 0.53,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-02-01T04:59:59Z",
+   "trades": [
+    {
+     "date": "2026-07-07T15:34:57Z",
+     "type": "open",
+     "shares": 419,
+     "price": 0.4371
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRT-BUD-75",
+   "title": "Buddy Rotten Tomatoes score?",
+   "url": "https://kalshi.com/markets/kxrt/kxrt-bud",
+   "position": "YES",
+   "shares": 287,
+   "avgPricePaid": 0.6168,
+   "marketPrice": 0.59,
+   "value": 169.32999999999998,
+   "probabilityYes": 0.65,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-08-31",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 287,
+     "price": 0.6
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXGOVWINOMD-26-FHON",
+   "title": "Will Francesca Hong be the Democratic nominee for Governor in Wisconsin?",
+   "url": "https://kalshi.com/markets/kxgovwinomd/kxgovwinomd-26",
+   "position": "NO",
+   "shares": 3517.2,
+   "avgPricePaid": 0.2424,
+   "marketPrice": 0.048,
+   "value": 168.8256,
+   "probabilityYes": 0.72,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-08-31",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 3517.2,
+     "price": 0.23
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXH200MS-27JAN-3.500",
+   "title": "Will the monthly average compute price of NVIDIA's H200 be above $3.50 in January 2027?",
+   "url": "https://kalshi.com/markets/kxh200ms/kxh200ms-27jan",
+   "position": "NO",
+   "shares": 483,
+   "avgPricePaid": 0.4371,
+   "marketPrice": 0.34,
+   "value": 164.22,
+   "probabilityYes": 0.62,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-02-01T04:59:59Z",
+   "trades": [
+    {
+     "date": "2026-07-07T15:34:57Z",
+     "type": "open",
+     "shares": 483,
+     "price": 0.4371
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXGOVMNNOMR-26-MLIN",
+   "title": "Will Mike Lindell be the Republican nominee for Governor in Minnesota?",
+   "url": "https://kalshi.com/markets/kxgovmnnomr/kxgovmnnomr-26",
+   "position": "YES",
+   "shares": 401,
+   "avgPricePaid": 0.5375,
+   "marketPrice": 0.31,
+   "value": 124.31,
+   "probabilityYes": 0.61,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-11-03",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 401,
+     "price": 0.52
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXHOUSEPOPVOTEMARGIN-27NOV03-B3",
+   "title": "Will the Democratic margin of victory in the 2026 U.S. House of Representatives national popular vote be between 2 and 4%?",
+   "url": "https://kalshi.com/markets/kxhousepopvotemargin/kxhousepopvotemargin-27nov03",
+   "position": "YES",
+   "shares": 2328,
+   "avgPricePaid": 0.06309999999999999,
+   "marketPrice": 0.047,
+   "value": 109.416,
+   "probabilityYes": 0.09,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-01-31",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 2328,
+     "price": 0.0592
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXUSVIGOV-26-TROA",
+   "title": "Who will win the 2026 U.S. Virgin Islands gubernatorial election?",
+   "url": "https://kalshi.com/markets/kxusvigov/kxusvigov-26",
+   "position": "YES",
+   "shares": 3560,
+   "avgPricePaid": 0.1274,
+   "marketPrice": 0.03,
+   "value": 106.8,
+   "probabilityYes": 0.15,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-11-03",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 3560,
+     "price": 0.12
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXWTIMAX-26DEC31-T135",
+   "title": "Will the maximum WTI front month settle price reach $135.01 by Dec 31, 2026?",
+   "url": "https://kalshi.com/markets/kxwtimax/kxwtimax-26dec31",
+   "position": "NO",
+   "shares": 109,
+   "avgPricePaid": 0.6951999999999999,
+   "marketPrice": 0.831,
+   "value": 90.579,
+   "probabilityYes": 0.24,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-01-01",
+   "trades": [
+    {
+     "date": "2026-06-10T19:13:12Z",
+     "type": "open",
+     "shares": 109,
+     "price": 0.7
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXFLPRIMARY-11R26-CBAK",
+   "title": "Will Carey Baker be the Republican nominee for FL-11?",
+   "url": "https://kalshi.com/markets/kxflprimary/kxflprimary-11r26",
+   "position": "NO",
+   "shares": 100,
+   "avgPricePaid": 0.3761,
+   "marketPrice": 0.76,
+   "value": 76,
+   "probabilityYes": 0.24,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-11-03T15:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-20T18:46:44Z",
+     "type": "open",
+     "shares": 100,
+     "price": 0.36
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXECONSTATU3-26AUG-T4.3",
+   "title": "Unemployment rate in Aug 2026?",
+   "url": "https://kalshi.com/markets/kxeconstatu3/kxeconstatu3-26aug",
+   "position": "YES",
+   "shares": 300,
+   "avgPricePaid": 0.1834,
+   "marketPrice": 0.25,
+   "value": 75,
+   "probabilityYes": 0.22,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-09-04",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 300,
+     "price": 0.17329999999999998
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXECONSTATU3-26AUG-T4.2",
+   "title": "Unemployment rate in Aug 2026?",
+   "url": "https://kalshi.com/markets/kxeconstatu3/kxeconstatu3-26aug",
+   "position": "YES",
+   "shares": 264,
+   "avgPricePaid": 0.1419,
+   "marketPrice": 0.28,
+   "value": 73.92,
+   "probabilityYes": 0.18,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-09-04",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 264,
+     "price": 0.1338
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXGOVTSHUTDOWN-26OCT01",
+   "title": "Government shutdown on Oct 1, 2026?",
+   "url": "https://kalshi.com/markets/kxgovtshutdown/kxgovtshutdown-26oct01",
+   "position": "NO",
+   "shares": 82.45,
+   "avgPricePaid": 0.5275,
+   "marketPrice": 0.83,
+   "value": 68.4335,
+   "probabilityYes": 0.42,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-10-02",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 82.45,
+     "price": 0.51
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXNWSAYLOR-26-2.0",
+   "title": "Michael Saylor net worth on Dec 31, 2026?",
+   "url": "https://kalshi.com/markets/kxnwsaylor/kxnwsaylor-26",
+   "position": "YES",
+   "shares": 100,
+   "avgPricePaid": 0.5474,
+   "marketPrice": 0.68,
+   "value": 68,
+   "probabilityYes": 0.77,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-12-31T15:00:00Z",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 100,
+     "price": 0.53
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXSENATEMND-26-PFLA",
+   "title": "Will Peggy Flanagan be the Democratic nominee for the Senate in Minnesota?",
+   "url": "https://kalshi.com/markets/kxsenatemnd/kxsenatemnd-26",
+   "position": "NO",
+   "shares": 219,
+   "avgPricePaid": 0.2186,
+   "marketPrice": 0.3,
+   "value": 65.7,
+   "probabilityYes": 0.69,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-11-03",
+   "trades": [
+    {
+     "date": "2026-07-07T15:34:57Z",
+     "type": "open",
+     "shares": 179,
+     "price": 0.2112
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXFED-26SEP-T3.50",
+   "title": "Will the upper bound of the federal funds rate be above 3.50% following the Fed's Sep 16, 2026 meeting?",
+   "url": "https://kalshi.com/markets/kxfed/kxfed-26sep",
+   "position": "NO",
+   "shares": 2828.8,
+   "avgPricePaid": 0.048499999999999995,
+   "marketPrice": 0.02,
+   "value": 56.57600000000001,
+   "probabilityYes": 0.88,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-09-16",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 2828.8,
+     "price": 0.0454
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXROBOTAXIAREA-26DEC-AZ",
+   "title": "Which states will robotaxi be offered to in 2026? [Subquestion: Arizona]",
+   "url": "https://kalshi.com/markets/kxrobotaxiarea/kxrobotaxiarea-26dec",
+   "position": "NO",
+   "shares": 200,
+   "avgPricePaid": 0.2008,
+   "marketPrice": 0.19,
+   "value": 38,
+   "probabilityYes": 0.61,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-01-31",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 200,
+     "price": 0.19
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXNWSAYLOR-26-6.0",
+   "title": "Michael Saylor net worth on Dec 31, 2026?",
+   "url": "https://kalshi.com/markets/kxnwsaylor/kxnwsaylor-26",
+   "position": "YES",
+   "shares": 908,
+   "avgPricePaid": 0.032,
+   "marketPrice": 0.04,
+   "value": 36.32,
+   "probabilityYes": 0.04,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-12-31T15:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-25T20:53:46Z",
+     "type": "open",
+     "shares": 908,
+     "price": 0.03
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXNWSAYLOR-26-4.5",
+   "title": "Michael Saylor net worth on Dec 31, 2026?",
+   "url": "https://kalshi.com/markets/kxnwsaylor/kxnwsaylor-26",
+   "position": "YES",
+   "shares": 443,
+   "avgPricePaid": 0.1323,
+   "marketPrice": 0.07,
+   "value": 31.01,
+   "probabilityYes": 0.13,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-12-31T15:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-25T20:53:46Z",
+     "type": "open",
+     "shares": 243,
+     "price": 0.17
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXMISENATE-26-HSTE",
+   "title": "Who will win the 2026 Michigan Senate race?",
+   "url": "https://kalshi.com/markets/kxmisenate/kxmisenate-26",
+   "position": "YES",
+   "shares": 2417.19,
+   "avgPricePaid": 0.1752,
+   "marketPrice": 0.01,
+   "value": 24.1719,
+   "probabilityYes": 0.25,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-11-03",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 2417.19,
+     "price": 0.1655
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXMEASLES-26-3000",
+   "title": "Will there be more than 3000 measles cases in 2026?",
+   "url": "https://kalshi.com/markets/kxmeasles/kxmeasles-26",
+   "position": "NO",
+   "shares": 559,
+   "avgPricePaid": 0.1263,
+   "marketPrice": 0.04,
+   "value": 22.36,
+   "probabilityYes": 0.84,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-12-31",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 559,
+     "price": 0.1189
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXNWSAYLOR-26-4.0",
+   "title": "Michael Saylor net worth on Dec 31, 2026?",
+   "url": "https://kalshi.com/markets/kxnwsaylor/kxnwsaylor-26",
+   "position": "YES",
+   "shares": 213,
+   "avgPricePaid": 0.0735,
+   "marketPrice": 0.07,
+   "value": 14.910000000000002,
+   "probabilityYes": 0.21,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-12-31T15:00:00Z",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 213,
+     "price": 0.069
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXGOVMNNOMR-26-KQUA",
+   "title": "Will Kendall Qualls be the Republican nominee for Governor in Minnesota?",
+   "url": "https://kalshi.com/markets/kxgovmnnomr/kxgovmnnomr-26",
+   "position": "YES",
+   "shares": 1750,
+   "avgPricePaid": 0.044800000000000006,
+   "marketPrice": 0.008,
+   "value": 14,
+   "probabilityYes": 0.07,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-11-03",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 1750,
+     "price": 0.042
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXROBOTAXIAREA-26DEC-NV",
+   "title": "Which states will robotaxi be offered to in 2026? [Subquestion: Nevada]",
+   "url": "https://kalshi.com/markets/kxrobotaxiarea/kxrobotaxiarea-26dec",
+   "position": "NO",
+   "shares": 66,
+   "avgPricePaid": 0.2008,
+   "marketPrice": 0.21,
+   "value": 13.86,
+   "probabilityYes": 0.67,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-01-31",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 66,
+     "price": 0.19
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXGOVWINOMD-26-MBAR",
+   "title": "Will Mandela Barnes be the Democratic nominee for Governor in Wisconsin?",
+   "url": "https://kalshi.com/markets/kxgovwinomd/kxgovwinomd-26",
+   "position": "YES",
+   "shares": 9355.33,
+   "avgPricePaid": 0.1116,
+   "marketPrice": 0.001,
+   "value": 9.35533,
+   "probabilityYes": 0.15,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-08-31",
+   "trades": [
+    {
+     "date": "2026-07-27T17:56:40Z",
+     "type": "open",
+     "shares": 9355.33,
+     "price": 0.105
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXTOPMONTHLY-26AUG-BRU",
+   "title": "Artist with the most monthly Spotify listeners at the end of Aug 2026?",
+   "url": "https://kalshi.com/markets/kxtopmonthly/kxtopmonthly-26aug",
+   "position": "NO",
+   "shares": 157.76,
+   "avgPricePaid": 0.1795,
+   "marketPrice": 0.05,
+   "value": 7.888,
+   "probabilityYes": 0.84,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-08-31",
+   "trades": [
+    {
+     "date": "2026-07-07T15:34:57Z",
+     "type": "open",
+     "shares": 157.76,
+     "price": 0.1795
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXSENATEMNR-26-MTAF",
+   "title": "Will Michele Tafoya be the Republican nominee for the Senate in Minnesota?",
+   "url": "https://kalshi.com/markets/kxsenatemnr/kxsenatemnr-26",
+   "position": "NO",
+   "shares": 123.86,
+   "avgPricePaid": 0.1063,
+   "marketPrice": 0.006,
+   "value": 0.74316,
+   "probabilityYes": 0.95,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2026-08-11",
+   "trades": [
+    {
+     "date": "2026-06-25T20:53:46Z",
+     "type": "open",
+     "shares": 123.86,
+     "price": 0.1
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXSCREWWORMCOUNT-27JAN01-A10",
+   "title": "Above 10 New World screwworm infestation cases in the United States during 2026 [Subquestion: Above 10]",
+   "url": "https://kalshi.com/markets/kxscrewwormcount/kxscrewwormcount-27jan01",
+   "position": "YES",
+   "shares": 0.01,
+   "avgPricePaid": 0.1422,
+   "marketPrice": 0.1,
+   "value": 0.001,
+   "probabilityYes": 0.01,
+   "forecastAt": "2026-07-23T14:18:06Z",
+   "endDate": "2027-01-08T15:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-10T19:13:12Z",
+     "type": "open",
+     "shares": 1183.11,
+     "price": 0.1422
+    }
+   ],
+   "artifactUrl": "https://futuresearch.ai/app/p/a/kalshi-kxscrewwormcount-27jan01-a10-jun25"
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xe846dd72f8a654ef137a3e23a88226400b42cc0ca817ab4390a615860e08cafa",
+   "title": "Iran agrees to surrender enriched uranium stockpile by December 31, 2026?",
+   "url": "https://polymarket.com/event/iran-agrees-to-surrender-enriched-uranium-stockpile-by/iran-agrees-to-surrender-enriched-uranium-stockpile-by-december-31-2026-752-299",
+   "position": "NO",
+   "shares": 5680,
+   "avgPricePaid": 0.6419,
+   "marketPrice": 0.915,
+   "value": 5197.2,
+   "probabilityYes": 0.12,
+   "forecastAt": "2026-07-02T10:28:51Z",
+   "endDate": "2026-12-31T00:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-09T13:44:26Z",
+     "type": "buy",
+     "shares": 5680,
+     "price": 0.6419
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x5c19f205507ce03ff5f3be08a8090a5969ea6870cc07b902a4ca2e61dfe48fdd",
+   "title": "Russia x Ukraine ceasefire agreement by December 31, 2026?",
+   "url": "https://polymarket.com/event/russia-x-ukraine-ceasefire-agreement-by/russia-x-ukraine-ceasefire-agreement-by-december-31-2026",
+   "position": "NO",
+   "shares": 6519,
+   "avgPricePaid": 0.557,
+   "marketPrice": 0.695,
+   "value": 4530.705,
+   "probabilityYes": 0.39,
+   "forecastAt": "2026-07-02T10:28:51Z",
+   "endDate": "2026-12-31T00:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-09T13:44:26Z",
+     "type": "buy",
+     "shares": 6519,
+     "price": 0.557
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x05297f854d3b757d5e51a1a29c7f225a80b14b2a161d6b7f9a61677da7a80ced",
+   "title": "Brazil Presidential Election: Will Renan Santos win the 2026 Brazilian presidential election?",
+   "url": "https://polymarket.com/event/brazil-presidential-election/will-renan-santos-win-the-2026-brazilian-presidential-election",
+   "position": "NO",
+   "shares": 4394,
+   "avgPricePaid": 0.8298,
+   "marketPrice": 0.9215,
+   "value": 4049.071,
+   "probabilityYes": 0.04,
+   "forecastAt": "2026-07-02T10:28:51Z",
+   "endDate": "2026-10-04T00:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-09T13:44:26Z",
+     "type": "buy",
+     "shares": 4394,
+     "price": 0.8298
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x83030b249525db4c0bcd83a915776442f4ea32d2fba10825fca4abeb51512d8f",
+   "title": "Will Renan Santos finish in second place in the first round of the 2026 Brazilian presidential election?",
+   "url": "https://polymarket.com/event/brazil-presidential-election-first-round-2nd-place/will-renan-santos-finish-in-second-place-in-the-first-round-of-the-2026-brazilian-presidential-election",
+   "position": "NO",
+   "shares": 3803,
+   "avgPricePaid": 0.892,
+   "marketPrice": 0.9145,
+   "value": 3477.8435,
+   "probabilityYes": 0.07,
+   "forecastAt": "2026-07-02T10:28:51Z",
+   "endDate": "2026-10-04T00:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-09T13:44:26Z",
+     "type": "buy",
+     "shares": 3803,
+     "price": 0.892
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xd1796c09d0d6f876f8580086ae9808ec991784e3a74b25a1830a25de71a78c96",
+   "title": "Netanyahu out by...: Netanyahu out by end of 2026?",
+   "url": "https://polymarket.com/event/netanyahu-out-before-2027/netanyahu-out-before-2027-684-719-226-657",
+   "position": "NO",
+   "shares": 5504,
+   "avgPricePaid": 0.5444,
+   "marketPrice": 0.575,
+   "value": 3164.8,
+   "probabilityYes": 0.4,
+   "forecastAt": "2026-07-02T10:28:51Z",
+   "endDate": "2026-12-31T00:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-09T13:44:26Z",
+     "type": "buy",
+     "shares": 5504,
+     "price": 0.5444
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x9345d5142a67f5541264c96515496affee02580f1c572680759eac9fd2a1588a",
+   "title": "Billionaire one-time wealth tax passes in California election 2026?",
+   "url": "https://polymarket.com/event/billionaire-one-time-wealth-tax-passes-in-california-election-2026/billionaire-one-time-wealth-tax-passes-in-california-election-2026",
+   "position": "NO",
+   "shares": 4551.33,
+   "avgPricePaid": 0.6324,
+   "marketPrice": 0.695,
+   "value": 3163.1744,
+   "probabilityYes": 0.29,
+   "forecastAt": "2026-07-02T10:28:51Z",
+   "endDate": "2026-11-03T00:00:00Z",
+   "trades": [
+    {
+     "date": "2026-04-24T19:44:50Z",
+     "type": "buy",
+     "shares": 6324,
+     "price": 0.6324
+    },
+    {
+     "date": "2026-06-09T13:44:26Z",
+     "type": "sell",
+     "shares": 1772.67,
+     "price": 0.6
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x58998da8fa20593cf07618032acd580344a79279a8bcc3ed128b668d793c3d6f",
+   "title": "US obtains Iranian enriched uranium by December 31?",
+   "url": "https://polymarket.com/event/us-obtains-iranian-enriched-uranium-by/us-obtains-iranian-enriched-uranium-by-december-31-725-733-123-574-634",
+   "position": "NO",
+   "shares": 3151.65,
+   "avgPricePaid": 0.8259,
+   "marketPrice": 0.925,
+   "value": 2915.2763,
+   "probabilityYes": 0.08,
+   "forecastAt": "2026-07-02T10:28:51Z",
+   "endDate": "2026-12-31T00:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-09T13:44:26Z",
+     "type": "buy",
+     "shares": 4414,
+     "price": 0.8259
+    },
+    {
+     "date": "2026-07-02T10:28:52Z",
+     "type": "sell",
+     "shares": 1262.35,
+     "price": 0.88
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x25fb28382075f418a944a781a9f8840e2f541152eea0d9798d1cabfa1466adbb",
+   "title": "Will Mojtaba Khamenei be head of state in Iran end of 2026?",
+   "url": "https://polymarket.com/event/iran-leader-end-of-2026/will-mojtaba-khamenei-be-head-of-state-in-iran-end-of-2026",
+   "position": "NO",
+   "shares": 15211,
+   "avgPricePaid": 0.3654,
+   "marketPrice": 0.1895,
+   "value": 2882.4845,
+   "probabilityYes": 0.72,
+   "forecastAt": "2026-07-02T10:28:51Z",
+   "endDate": "2026-12-31T00:00:00Z",
+   "trades": [
+    {
+     "date": "2026-04-24T19:44:50Z",
+     "type": "buy",
+     "shares": 8719,
+     "price": 0.4587
+    },
+    {
+     "date": "2026-06-09T13:44:26Z",
+     "type": "buy",
+     "shares": 3468,
+     "price": 0.3034
+    },
+    {
+     "date": "2026-07-02T10:28:52Z",
+     "type": "buy",
+     "shares": 3024,
+     "price": 0.1674
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xd8b94a79241263ba30e9cd7f58e88bf2a9013ce2ccdce73606916b2f53033466",
+   "title": "Will James Fishback be the Republican nominee for Florida Governor?",
+   "url": "https://polymarket.com/event/republican-nominee-for-florida-governor/will-james-fishback-be-the-republican-nominee-for-florida-governor",
+   "position": "NO",
+   "shares": 2554,
+   "avgPricePaid": 0.9346,
+   "marketPrice": 0.9895,
+   "value": 2527.183,
+   "probabilityYes": 0.02,
+   "forecastAt": "2026-07-02T10:28:51Z",
+   "endDate": "2026-08-18T00:00:00Z",
+   "trades": [
+    {
+     "date": "2026-04-24T19:44:50Z",
+     "type": "buy",
+     "shares": 427,
+     "price": 0.9079
+    },
+    {
+     "date": "2026-06-09T13:44:26Z",
+     "type": "buy",
+     "shares": 2127,
+     "price": 0.9399
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x1a01bf78f56a507fcb666d564d8c8b91b0750679163ed6e96746102c9b7d285d",
+   "title": "Brazil Presidential Election: Will Fl\u00c3\u00a1vio Bolsonaro win the 2026 Brazilian presidential election?",
+   "url": "https://polymarket.com/event/brazil-presidential-election/will-flvio-bolsonaro-win-the-2026-brazilian-presidential-election",
+   "position": "YES",
+   "shares": 9063,
+   "avgPricePaid": 0.2198,
+   "marketPrice": 0.2725,
+   "value": 2469.6675,
+   "probabilityYes": 0.23,
+   "forecastAt": "2026-07-02T10:28:51Z",
+   "endDate": "2026-10-04T00:00:00Z",
+   "trades": [
+    {
+     "date": "2026-07-02T10:28:52Z",
+     "type": "buy",
+     "shares": 9063,
+     "price": 0.2198
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x67f3f8d0a0ecdfc008c99650284a4674388a8c3029b0eb7ca0abd65dde8d996f",
+   "title": "Venezuela leader end of 2026: Will Nicol\u00c3\u00a1s Maduro be the leader of Venezuela end of 2026?",
+   "url": "https://polymarket.com/event/venezuela-leader-end-of-2026/will-nicols-maduro-be-the-leader-of-venezuela-end-of-2026",
+   "position": "NO",
+   "shares": 12823,
+   "avgPricePaid": 0.3003,
+   "marketPrice": 0.1795,
+   "value": 2301.7285,
+   "probabilityYes": 0.78,
+   "forecastAt": "2026-07-02T10:28:51Z",
+   "endDate": "2026-12-31T00:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-09T13:44:26Z",
+     "type": "buy",
+     "shares": 11799,
+     "price": 0.309
+    },
+    {
+     "date": "2026-07-02T10:28:52Z",
+     "type": "buy",
+     "shares": 1024,
+     "price": 0.2
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xe67f4d31f0eba1b009b49d7a7739b2a5f53a2d7d979a0902b465a510492c33bb",
+   "title": "Will 2026 be the hottest year on record?",
+   "url": "https://polymarket.com/event/where-will-2026-rank-among-the-hottest-years-on-record/will-2026-be-the-hottest-year-on-record",
+   "position": "NO",
+   "shares": 5483,
+   "avgPricePaid": 0.7294,
+   "marketPrice": 0.34,
+   "value": 1864.22,
+   "probabilityYes": 0.12,
+   "forecastAt": "2026-07-02T10:28:51Z",
+   "endDate": "2026-12-31T00:00:00Z",
+   "trades": [
+    {
+     "date": "2026-04-24T19:44:50Z",
+     "type": "buy",
+     "shares": 5483,
+     "price": 0.7294
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x7e50b661a2bedc670bcf32fc9ece12616f6fc4fba5dbe8526292bf3447374009",
+   "title": "Will Russia capture Kostyantynivka by December 31, 2026?",
+   "url": "https://polymarket.com/event/will-russia-capture-kostyantynivka-by/will-russia-capture-kostyantynivka-by-december-31-2026-936-942-271-276-578-687-312-238-912",
+   "position": "NO",
+   "shares": 20564,
+   "avgPricePaid": 0.2243,
+   "marketPrice": 0.086,
+   "value": 1768.504,
+   "probabilityYes": 0.85,
+   "forecastAt": "2026-07-02T10:28:51Z",
+   "endDate": "2026-12-31T12:00:00Z",
+   "trades": [
+    {
+     "date": "2026-04-24T19:44:50Z",
+     "type": "buy",
+     "shares": 17329,
+     "price": 0.2308
+    },
+    {
+     "date": "2026-06-09T13:44:26Z",
+     "type": "buy",
+     "shares": 3235,
+     "price": 0.1898
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xa01d48a973e40770719dab42faf1aeae5da4376d9eca46e77265c7551d1be0f7",
+   "title": "Venezuela leader end of 2026: Will Delcy Rodr\u00c3\u00adguez be the leader of Venezuela end of 2026?",
+   "url": "https://polymarket.com/event/venezuela-leader-end-of-2026/will-delcy-rodrguez-be-the-leader-of-venezuela-end-of-2026",
+   "position": "YES",
+   "shares": 10930,
+   "avgPricePaid": 0.188,
+   "marketPrice": 0.095,
+   "value": 1038.35,
+   "probabilityYes": 0.14,
+   "forecastAt": "2026-07-02T10:28:51Z",
+   "endDate": "2026-12-31T00:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-09T13:44:26Z",
+     "type": "buy",
+     "shares": 10930,
+     "price": 0.188
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xe29c8bf245ab35d14c722503922e6086da7dcfb08f357d1e8012331573d9e633",
+   "title": "Ukraine election held by December 31, 2026?",
+   "url": "https://polymarket.com/event/ukraine-election-held-in-2025/ukraine-election-held-by-december-31-2026-344-142",
+   "position": "NO",
+   "shares": 443.25,
+   "avgPricePaid": 0.8488,
+   "marketPrice": 0.94,
+   "value": 416.655,
+   "probabilityYes": 0.05,
+   "forecastAt": "2026-07-02T10:28:51Z",
+   "endDate": "2026-12-31T12:00:00Z",
+   "trades": [
+    {
+     "date": "2026-04-24T19:44:50Z",
+     "type": "buy",
+     "shares": 709,
+     "price": 0.8465
+    },
+    {
+     "date": "2026-05-08T18:03:04Z",
+     "type": "sell",
+     "shares": 295.75,
+     "price": 0.911
+    },
+    {
+     "date": "2026-07-02T10:28:52Z",
+     "type": "buy",
+     "shares": 30,
+     "price": 0.88
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "open",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x3d20f26deb9b9cc7e24e5e06c10234a722d93bac095ce1105c59b44b503078d7",
+   "title": "Will the upper bound of the target federal funds rate be \u00e2\u0089\u00a5 4.5% at the end of 2026?",
+   "url": "https://polymarket.com/event/what-will-the-fed-rate-be-at-the-end-of-2026/will-the-upper-bound-of-the-target-federal-funds-rate-be-4pt5-at-the-end-of-2026-139",
+   "position": "YES",
+   "shares": 219.99,
+   "avgPricePaid": 0.0418,
+   "marketPrice": 0.0685,
+   "value": 15.0693,
+   "probabilityYes": 0.08,
+   "forecastAt": "2026-07-02T10:28:51Z",
+   "endDate": "2026-12-09T00:00:00Z",
+   "trades": [
+    {
+     "date": "2026-06-09T13:44:26Z",
+     "type": "buy",
+     "shares": 290,
+     "price": 0.0418
+    },
+    {
+     "date": "2026-07-02T10:28:52Z",
+     "type": "sell",
+     "shares": 70.01,
+     "price": 0.077
+    }
+   ],
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXDHSFUNDING-26APR01",
+   "title": "When will DHS receive full-year funding: Before Apr 1, 2026",
+   "url": "https://kalshi.com/markets/kxdhsfunding/",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 3379,
+   "entryPrice": 0.7011,
+   "proceeds": 3379,
+   "pnl": 1009.98,
+   "probabilityYes": 0.21,
+   "marketYes": 0.3249999999999999,
+   "resolvedBy": "2026-04-03T21:48:10Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXDHSFUND-26APR01",
+   "title": "When will DHS be funded again: Before Apr 1, 2026",
+   "url": "https://kalshi.com/markets/kxdhsfund/",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 7652.6,
+   "entryPrice": 0.4772,
+   "proceeds": 7652.6,
+   "pnl": 4000.78,
+   "probabilityYes": 0.28,
+   "marketYes": 0.355,
+   "resolvedBy": "2026-04-03T21:48:10Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXNOEMOUT-26MAY01",
+   "title": "Kristi Noem out as DHS Secretary: Before May 1, 2026",
+   "url": "https://kalshi.com/markets/kxnoemout/",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 147689.6,
+   "entryPrice": 0.01,
+   "proceeds": 0,
+   "pnl": -1476.9,
+   "probabilityYes": 0.25,
+   "marketYes": 0.22,
+   "resolvedBy": "2026-04-03T21:48:10Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXTESLA-26-Q1-330000",
+   "title": "Tesla deliveries in Q1 2026: 330000 or more",
+   "url": "https://kalshi.com/markets/kxtesla/",
+   "position": "YES",
+   "outcome": "YES",
+   "won": true,
+   "shares": 806,
+   "entryPrice": 0.5299,
+   "proceeds": 806,
+   "pnl": 378.9,
+   "probabilityYes": 0.57,
+   "marketYes": 0.53,
+   "resolvedBy": "2026-04-03T21:48:10Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXAAAGASM-26MAR31-4.50",
+   "title": "Gas prices in the US in Mar 2026: Above 4.50",
+   "url": "https://kalshi.com/markets/kxaaagasm/",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 7144,
+   "entryPrice": 0.1264,
+   "proceeds": 0,
+   "pnl": -903,
+   "probabilityYes": 0.2,
+   "marketYes": 0.095,
+   "resolvedBy": "2026-04-03T21:48:10Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXAAAGASM-26MAR31-3.50",
+   "title": "Gas prices in the US in Mar 2026: Above 3.50",
+   "url": "https://kalshi.com/markets/kxaaagasm/",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 13342,
+   "entryPrice": 0.024,
+   "proceeds": 0,
+   "pnl": -320.21,
+   "probabilityYes": 0.97,
+   "marketYes": 0.99,
+   "resolvedBy": "2026-04-03T21:48:10Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXBONDIOUT-26APR16",
+   "title": "When will Pam Bondi depart as Attorney General: Before Apr 16, 2026",
+   "url": "https://kalshi.com/markets/kxbondiout/",
+   "position": "YES",
+   "outcome": "YES",
+   "won": true,
+   "shares": 5499,
+   "entryPrice": 0.7417,
+   "proceeds": 5499,
+   "pnl": 1420.39,
+   "probabilityYes": 0.93,
+   "marketYes": 0.73,
+   "resolvedBy": "2026-04-10T19:13:53Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXCPIYOY-26MAR-T3.0",
+   "title": "Will the rate of CPI inflation be above 3.0% for the year ending in March 2026?",
+   "url": "https://kalshi.com/markets/kxcpiyoy-26mar/kxcpiyoy-26mar",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 103,
+   "entryPrice": 0.1858,
+   "proceeds": 0,
+   "pnl": -19.14,
+   "probabilityYes": 0.8,
+   "marketYes": 0.855,
+   "resolvedBy": "2026-04-10T19:13:53Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXTRUMPADMINLEAVE-26DEC31-PBON",
+   "title": "Who will leave the Trump administration in 2026: Pam Bondi",
+   "url": "https://kalshi.com/markets/kxtrumpadminleave/",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 381,
+   "entryPrice": 0.4986,
+   "proceeds": 0,
+   "pnl": -189.97,
+   "probabilityYes": 0.99,
+   "marketYes": 0.99,
+   "resolvedBy": "2026-04-10T19:13:53Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXBONDIOUT-26MAY01",
+   "title": "When will Pam Bondi depart as Attorney General: Before May 1, 2026",
+   "url": "https://kalshi.com/markets/kxbondiout/",
+   "position": "YES",
+   "outcome": "YES",
+   "won": true,
+   "shares": 4798,
+   "entryPrice": 0.85,
+   "proceeds": 4798,
+   "pnl": 719.7,
+   "probabilityYes": 0.99,
+   "marketYes": 0.845,
+   "resolvedBy": "2026-04-10T19:13:53Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXGA14S-26-CFUL",
+   "title": "GA-14 special election winner: Clayton Fuller",
+   "url": "https://kalshi.com/markets/kxga14s/",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 15195,
+   "entryPrice": 0.05,
+   "proceeds": 0,
+   "pnl": -759.75,
+   "probabilityYes": 0.94,
+   "marketYes": 0.955,
+   "resolvedBy": "2026-04-10T19:13:53Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXDHSFUND-26APR15",
+   "title": "Will legislation that, upon becoming law, results in the Department of Homeland Security being funded at 12:01 AM ET the calendar day after enactment become law before Apr 15, 2026?",
+   "url": "https://kalshi.com/markets/kxdhsfund/kxdhsfund",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 330,
+   "entryPrice": 0.0948,
+   "proceeds": 0,
+   "pnl": -31.28,
+   "probabilityYes": 0.06,
+   "marketYes": 0.0455,
+   "resolvedBy": "2026-04-24T16:55:27Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXDHSFUND-26APR22",
+   "title": "When will DHS be funded again: Before Apr 22, 2026",
+   "url": "https://kalshi.com/markets/kxdhsfund/",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 4786,
+   "entryPrice": 0.6981,
+   "proceeds": 4786,
+   "pnl": 1444.89,
+   "probabilityYes": 0.21,
+   "marketYes": 0.3249999999999999,
+   "resolvedBy": "2026-04-24T16:55:27Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXGDP-26APR30-T2.0",
+   "title": "Will **real GDP** increase by more than 2.0% in Q1 2026: Above 2.0%",
+   "url": "https://kalshi.com/markets/kxgdp-26apr30/kxgdp-26apr30",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 8504,
+   "entryPrice": 0.4002,
+   "proceeds": 8504,
+   "pnl": 5100.7,
+   "probabilityYes": 0.45,
+   "marketYes": 0.522,
+   "resolvedBy": "2026-05-02T12:18:12Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXGOLDCARDS-26-B3.0",
+   "title": "How many Gold Cards will Trump sell this year: 1 to 5",
+   "url": "https://kalshi.com/markets/kxgoldcards-26/kxgoldcards-26",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 15021,
+   "entryPrice": 0.1075,
+   "proceeds": 0,
+   "pnl": -1614.76,
+   "probabilityYes": 0.08,
+   "marketYes": 0.062,
+   "resolvedBy": "2026-05-02T12:18:12Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXDHSFUND-26JUN01",
+   "title": "When will DHS be funded again: Before Jun 1, 2026",
+   "url": "https://kalshi.com/markets/kxdhsfund/",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 644,
+   "entryPrice": 0.32,
+   "proceeds": 0,
+   "pnl": -206.08,
+   "probabilityYes": 0.67,
+   "marketYes": 0.685,
+   "resolvedBy": "2026-05-02T12:18:12Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXAAAGASM-26APR30-4.50",
+   "title": "Will average **gas prices** be above $4.50: Above 4.50",
+   "url": "https://kalshi.com/markets/kxaaagasm-26apr30/kxaaagasm-26apr30",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 155,
+   "entryPrice": 0.1598,
+   "proceeds": 0,
+   "pnl": -24.77,
+   "probabilityYes": 0.18,
+   "marketYes": 0.12,
+   "resolvedBy": "2026-05-02T12:18:12Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXDHSFUND-26MAY01",
+   "title": "Will DHS funding bill become law before May 1, 2026?",
+   "url": "https://kalshi.com/markets/kxdhsfund/kxdhsfund",
+   "position": "YES",
+   "outcome": "YES",
+   "won": true,
+   "shares": 95.76,
+   "entryPrice": 0.6857,
+   "proceeds": 95.76,
+   "pnl": 30.1,
+   "probabilityYes": 0.37,
+   "marketYes": 0.53,
+   "resolvedBy": "2026-05-02T12:18:12Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "LEAVEPOWELL-25-26APR30",
+   "title": "Powell leaves before May 2026?",
+   "url": "https://kalshi.com/markets/leavepowell-25/leavepowell-25",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 1396,
+   "entryPrice": 0.04,
+   "proceeds": 0,
+   "pnl": -55.84,
+   "probabilityYes": 0.03,
+   "marketYes": 0.025,
+   "resolvedBy": "2026-05-02T12:18:12Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXAAAGASM-26APR30-4.30",
+   "title": "Will average **gas prices** be above $4.30: Above 4.30",
+   "url": "https://kalshi.com/markets/kxaaagasm-26apr30/kxaaagasm-26apr30",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 49,
+   "entryPrice": 0.5945,
+   "proceeds": 49,
+   "pnl": 19.87,
+   "probabilityYes": 0.38,
+   "marketYes": 0.42,
+   "resolvedBy": "2026-05-02T12:18:12Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXGOVTSHUTLENGTH-26FEB07-G90",
+   "title": "How long will the government shutdown last: At least 90 days",
+   "url": "https://kalshi.com/markets/kxgovtshutlength/",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 1454,
+   "entryPrice": 0.6646,
+   "proceeds": 0,
+   "pnl": -966.33,
+   "probabilityYes": 0.35,
+   "marketYes": 0.29,
+   "resolvedBy": "2026-05-02T12:18:12Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXFEDCHAIRCONFIRMED-26MAY15",
+   "title": "Will Trump\u00e2\u0080\u0099s first officially announced pick for Chairman of the Federal Reserve be confirmed as Chairman of the Federal Reserve before May 15, 2026?",
+   "url": "https://kalshi.com/markets/kxfedchairconfirmed/kxfedchairconfirmed",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 16170,
+   "entryPrice": 0.0479,
+   "proceeds": 0,
+   "pnl": -774.54,
+   "probabilityYes": 0.95,
+   "marketYes": null,
+   "resolvedBy": "2026-05-18T14:31:37Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXHORMUZNORM-26MAR17-B260501",
+   "title": "Will the 7-day moving average of transit calls through the Strait of Hormuz as reported by the IMF PortWatch be above 60 before May 1, 2026?",
+   "url": "https://kalshi.com/markets/kxhormuznorm-26mar17/kxhormuznorm-26mar17",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 3825,
+   "entryPrice": 0.808,
+   "proceeds": 3825,
+   "pnl": 734.4,
+   "probabilityYes": 0.08,
+   "marketYes": null,
+   "resolvedBy": "2026-05-18T14:31:37Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXMOVVAREDISTRICT-26APR21-YES-P4",
+   "title": "Will the margin of victory for Yes in the 2026 Virginia redistricting amendment be between 3% and 6%: Yes, 3-6%",
+   "url": "https://kalshi.com/markets/kxmovvaredistrict-26apr21/kxmovvaredistrict-26apr21",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 9260.06,
+   "entryPrice": 0.0577,
+   "proceeds": 9260.06,
+   "pnl": 8725.75,
+   "probabilityYes": 0.92,
+   "marketYes": null,
+   "resolvedBy": "2026-05-18T14:31:37Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXMNDAYCARECHARGE-26SEP01",
+   "title": "Will any individual in connection with the Minnesota daycare fraud investigations be charged with a fraud, theft, embezzlement, bribery, money laundering, or conspiracy crime before Sep 1, 2026?",
+   "url": "https://kalshi.com/markets/kxmndaycarecharge/kxmndaycarecharge",
+   "position": "YES",
+   "outcome": "YES",
+   "won": true,
+   "shares": 2065.78,
+   "entryPrice": 0.5166,
+   "proceeds": 2065.78,
+   "pnl": 998.6,
+   "probabilityYes": null,
+   "marketYes": null,
+   "resolvedBy": "2026-05-27T17:09:09Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXSENATETXR-26-JC",
+   "title": "Texas Republican Senate nominee: John Cornyn",
+   "url": "https://kalshi.com/markets/kxsenatetxr/",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 2230.76,
+   "entryPrice": 0.275,
+   "proceeds": 2230.76,
+   "pnl": 1617.3,
+   "probabilityYes": null,
+   "marketYes": null,
+   "resolvedBy": "2026-05-27T17:09:09Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXKY4R-26-TMAS",
+   "title": "KY-04 Republican nominee: Thomas Massie",
+   "url": "https://kalshi.com/markets/kxky4r/",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 337,
+   "entryPrice": 0.38,
+   "proceeds": 0,
+   "pnl": -128.06,
+   "probabilityYes": null,
+   "marketYes": null,
+   "resolvedBy": "2026-05-27T17:09:09Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXHORMUZNORM-26MAR17-B260515",
+   "title": "Will the 7-day moving average of transit calls through the Strait of Hormuz as reported by the IMF PortWatch be above 60 before May 15, 2026?",
+   "url": "https://kalshi.com/markets/kxhormuznorm-26mar17/kxhormuznorm-26mar17",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 4856,
+   "entryPrice": 0.8485,
+   "proceeds": 4856,
+   "pnl": 735.68,
+   "probabilityYes": 0.05,
+   "marketYes": null,
+   "resolvedBy": "2026-05-27T17:09:09Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXHORMUZNORM-26MAR17-B260601",
+   "title": "Will the 7-day moving average of transit calls through the Strait of Hormuz as reported by the IMF PortWatch be above 60 before June 1, 2026: Before Jun 1, 2026",
+   "url": "https://kalshi.com/markets/kxhormuznorm-26mar17/kxhormuznorm-26mar17",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 6172,
+   "entryPrice": 0.7306,
+   "proceeds": 6172,
+   "pnl": 1662.74,
+   "probabilityYes": 0.01,
+   "marketYes": null,
+   "resolvedBy": "2026-06-09T16:00:00Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXDIAZOUT-MDC-26JUN01",
+   "title": "Will Miguel D\u00c3\u00adaz-Canel leave office before 2026-06-01T14:00:00.000Z: Before June 1, 2026",
+   "url": "https://kalshi.com/markets/kxdiazout-mdc/kxdiazout-mdc",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 5993,
+   "entryPrice": 0.8341,
+   "proceeds": 5993,
+   "pnl": 994.24,
+   "probabilityYes": 0.02,
+   "marketYes": null,
+   "resolvedBy": "2026-06-09T16:00:00Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXUSAIRANAGREEMENT-27-26JUN",
+   "title": "Will the US agree to a new Iranian nuclear deal this year: Before June",
+   "url": "https://kalshi.com/markets/kxusairanagreement-27/kxusairanagreement-27",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 5099,
+   "entryPrice": 0.7944,
+   "proceeds": 5099,
+   "pnl": 1048.35,
+   "probabilityYes": 0.03,
+   "marketYes": null,
+   "resolvedBy": "2026-06-09T16:00:00Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXSENATEREC-26MAY-JUN14",
+   "title": "When will a reconciliation bill pass the Senate: Before Jun 14, 2026",
+   "url": "https://kalshi.com/markets/kxsenaterec/",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 2319,
+   "entryPrice": 0.4307,
+   "proceeds": 0,
+   "pnl": -998.79,
+   "probabilityYes": 0.52,
+   "marketYes": null,
+   "resolvedBy": "2026-06-09T16:00:00Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXSENATEREC-26MAY-26JUL01",
+   "title": "When will a reconciliation bill pass the Senate: Before Jul 1, 2026",
+   "url": "https://kalshi.com/markets/kxsenaterec/",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 2867,
+   "entryPrice": 0.2405,
+   "proceeds": 0,
+   "pnl": -689.51,
+   "probabilityYes": 0.74,
+   "marketYes": null,
+   "resolvedBy": "2026-06-09T16:00:00Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXCRYPTOSTRUCTURE-26JAN-JUN",
+   "title": "Will a crypto market structure bill becomes law before Jun 1, 2026: Before June",
+   "url": "https://kalshi.com/markets/kxcryptostructure-26jan/kxcryptostructure-26jan",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 27,
+   "entryPrice": 0.86,
+   "proceeds": 27,
+   "pnl": 3.78,
+   "probabilityYes": 0,
+   "marketYes": null,
+   "resolvedBy": "2026-06-09T16:00:00Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXCRYPTOSTRUCTURE-26JAN-JUL",
+   "title": "Will a crypto market structure bill becomes law before Jul 1, 2026: Before July",
+   "url": "https://kalshi.com/markets/kxcryptostructure/kxcryptostructure-26jan",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 2431,
+   "entryPrice": 0.9019,
+   "proceeds": 2431,
+   "pnl": 238.48,
+   "probabilityYes": 0.03,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T12:11:38Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXKASHOUT-26APR-JUL01",
+   "title": "Will Kash Patel leaves as FBI Director before Jul 1, 2026?",
+   "url": "https://kalshi.com/markets/kxkashout-26apr/kxkashout-26apr",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 4398.06,
+   "entryPrice": 0.7105,
+   "proceeds": 4398.06,
+   "pnl": 1273.24,
+   "probabilityYes": 0.25,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T12:11:38Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXHORMUZNORM-26MAR17-B260701",
+   "title": "Will the 7-day moving average of transit calls through the Strait of Hormuz as reported by the IMF PortWatch be above 60 before July 1, 2026: Before Jul 1, 2026",
+   "url": "https://kalshi.com/markets/kxhormuznorm/kxhormuznorm-26mar17",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 4138,
+   "entryPrice": 0.7144,
+   "proceeds": 4138,
+   "pnl": 1181.81,
+   "probabilityYes": 0.1,
+   "marketYes": null,
+   "resolvedBy": "2026-07-27T17:55:37Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXECONSTATCPIYOY-26JUN-T3.7",
+   "title": "CPI year-over-year in Jun 2026: Exactly 3.7%",
+   "url": "https://kalshi.com/markets/kxeconstatcpiyoy/kxeconstatcpiyoy-26jun",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 5306,
+   "entryPrice": 0.7724,
+   "proceeds": 5306,
+   "pnl": 1207.65,
+   "probabilityYes": 0.18,
+   "marketYes": null,
+   "resolvedBy": "2026-07-27T17:55:37Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXECONSTATCPIYOY-26JUN-T3.8",
+   "title": "CPI year-over-year in Jun 2026: Exactly 3.8%",
+   "url": "https://kalshi.com/markets/kxeconstatcpiyoy/kxeconstatcpiyoy-26jun",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 204,
+   "entryPrice": 0.5968,
+   "proceeds": 204,
+   "pnl": 82.25,
+   "probabilityYes": 0.32,
+   "marketYes": null,
+   "resolvedBy": "2026-07-27T17:55:37Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXB200WS-26JUL17-6.500",
+   "title": "Week 29: Price of NVIDIA's B200 compute at end of week: Above $6.50",
+   "url": "https://kalshi.com/markets/kxb200ws/kxb200ws-26jul17",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 57,
+   "entryPrice": 0.9158,
+   "proceeds": 0,
+   "pnl": -52.2,
+   "probabilityYes": 0.05,
+   "marketYes": null,
+   "resolvedBy": "2026-07-27T17:55:37Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXB200WS-26JUL24-6.000",
+   "title": "Week 30: Price of NVIDIA's B200 compute at end of week: Above $6.00",
+   "url": "https://kalshi.com/markets/kxb200ws/kxb200ws-26jul24",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 62,
+   "entryPrice": 0.6113,
+   "proceeds": 0,
+   "pnl": -37.9,
+   "probabilityYes": 0.31,
+   "marketYes": null,
+   "resolvedBy": "2026-07-27T17:55:37Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXPERUPRES-26-KFUJ",
+   "title": "Who will win the next Peruvian presidential election: Keiko Fujimori",
+   "url": "https://kalshi.com/markets/kxperupres/kxperupres-26",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 9858,
+   "entryPrice": 0.3933,
+   "proceeds": 0,
+   "pnl": -3877.15,
+   "probabilityYes": 0.6,
+   "marketYes": null,
+   "resolvedBy": "2026-07-27T17:55:37Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXECONSTATCPIYOY-26JUN-T3.9",
+   "title": "CPI year-over-year in Jun 2026: Exactly 3.9%",
+   "url": "https://kalshi.com/markets/kxeconstatcpiyoy/kxeconstatcpiyoy-26jun",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 132,
+   "entryPrice": 0.2083,
+   "proceeds": 0,
+   "pnl": -27.5,
+   "probabilityYes": 0.28,
+   "marketYes": null,
+   "resolvedBy": "2026-07-27T17:55:37Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXECONSTATCORECPIYOY-26JUN-T2.3",
+   "title": "CPI core year-over-year in Jun 2026: Exactly 2.3%",
+   "url": "https://kalshi.com/markets/kxeconstatcorecpiyoy/kxeconstatcorecpiyoy-26jun",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 1603,
+   "entryPrice": 0.0288,
+   "proceeds": 0,
+   "pnl": -46.17,
+   "probabilityYes": null,
+   "marketYes": null,
+   "resolvedBy": "2026-07-27T17:55:37Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXECONSTATCPIYOY-26JUN-T2.3",
+   "title": "CPI year-over-year in Jun 2026: Exactly 2.3%",
+   "url": "https://kalshi.com/markets/kxeconstatcpiyoy/kxeconstatcpiyoy-26jun",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 206,
+   "entryPrice": 0.0397,
+   "proceeds": 0,
+   "pnl": -8.18,
+   "probabilityYes": null,
+   "marketYes": null,
+   "resolvedBy": "2026-07-27T17:55:37Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXUSAIRANAGREEMENT-27-26AUG",
+   "title": "US-Iran nuclear deal? [Subquestion: Before August]",
+   "url": "https://kalshi.com/markets/kxusairanagreement/kxusairanagreement-27",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 7801,
+   "entryPrice": 0.7272,
+   "proceeds": 7801,
+   "pnl": 2128.11,
+   "probabilityYes": null,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXHORMUZNORM-26MAR17-B260801",
+   "title": "Will the 7-day moving average of transit calls through the Strait of Hormuz as reported by the IMF PortWatch be above 60 before August 1, 2026?",
+   "url": "https://kalshi.com/markets/kxhormuznorm/kxhormuznorm-26mar17",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 1771,
+   "entryPrice": 0.4447,
+   "proceeds": 1771,
+   "pnl": 983.44,
+   "probabilityYes": 0.38,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXMO01D-26-CBUS",
+   "title": "Will Cori Bush be the Democratic nominee for MO-01?",
+   "url": "https://kalshi.com/markets/kxmo01d/kxmo01d-26",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 2868,
+   "entryPrice": 0.4477,
+   "proceeds": 2868,
+   "pnl": 1584,
+   "probabilityYes": 0.46,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRAINMIAM-26JUL-5",
+   "title": "Rain in Miami in Jul 2026: Above 5 inches",
+   "url": "https://kalshi.com/markets/kxrainmiam/kxrainmiam-26jul",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 1143,
+   "entryPrice": 0.7097,
+   "proceeds": 0,
+   "pnl": -811.19,
+   "probabilityYes": 0.76,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRT-SPI-95",
+   "title": "Spider-Man: Brand New Day Rotten Tomatoes score?",
+   "url": "https://kalshi.com/markets/kxrt/kxrt-spi",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 1050,
+   "entryPrice": 0.7696,
+   "proceeds": 1050,
+   "pnl": 241.92,
+   "probabilityYes": 0.13,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": "https://futuresearch.ai/app/p/a/kalshi-kxrt-spi-jun25"
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRT-SPI-90",
+   "title": "Spider-Man: Brand New Day Rotten Tomatoes score?",
+   "url": "https://kalshi.com/markets/kxrt/kxrt-spi",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 1789,
+   "entryPrice": 0.3862,
+   "proceeds": 1789,
+   "pnl": 1098.09,
+   "probabilityYes": 0.56,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRTX5090WS-26AUG07-0.500",
+   "title": "Week 32: Price of NVIDIA's RTX 5090 compute at end of week: Above $0.50",
+   "url": "https://kalshi.com/markets/kxrtx5090ws/kxrtx5090ws-26aug07",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 1495,
+   "entryPrice": 0.3863,
+   "proceeds": 1495,
+   "pnl": 917.48,
+   "probabilityYes": 0.59,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXMO01D-26-WBEL",
+   "title": "Will Wesley Bell be the Democratic nominee for MO-01?",
+   "url": "https://kalshi.com/markets/kxmo01d/kxmo01d-26",
+   "position": "YES",
+   "outcome": "YES",
+   "won": true,
+   "shares": 1326,
+   "entryPrice": 0.4336,
+   "proceeds": 1326,
+   "pnl": 751.05,
+   "probabilityYes": 0.52,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRAINMIAM-26JUL-6",
+   "title": "Rain in Miami in Jul 2026: Above 6 inches",
+   "url": "https://kalshi.com/markets/kxrainmiam/kxrainmiam-26jul",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 1009,
+   "entryPrice": 0.5284,
+   "proceeds": 0,
+   "pnl": -533.16,
+   "probabilityYes": 0.59,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRAINSEAM-26JUL-2",
+   "title": "Rain in Seattle in Jul 2026: Above 2 inches",
+   "url": "https://kalshi.com/markets/kxrainseam/kxrainseam-26jul",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 384,
+   "entryPrice": 0.932,
+   "proceeds": 384,
+   "pnl": 26.11,
+   "probabilityYes": 0.02,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXCODEAI-26JUL31-CHAT",
+   "title": "Top Coding AI this month?",
+   "url": "https://kalshi.com/markets/kxcodeai/kxcodeai-26jul31",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 674,
+   "entryPrice": 0.5084,
+   "proceeds": 674,
+   "pnl": 331.34,
+   "probabilityYes": 0.31,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXCODEAI-26JUL31-CLAU",
+   "title": "Top Coding AI this month: Claude",
+   "url": "https://kalshi.com/markets/kxcodeai/kxcodeai-26jul31",
+   "position": "YES",
+   "outcome": "YES",
+   "won": true,
+   "shares": 769,
+   "entryPrice": 0.4888,
+   "proceeds": 769,
+   "pnl": 393.11,
+   "probabilityYes": 0.57,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXTOPMONTHLY-26JUL-TAY",
+   "title": "Artist with the most monthly Spotify listeners at the end of Jul 2026: Taylor Swift",
+   "url": "https://kalshi.com/markets/kxtopmonthly/kxtopmonthly-26jul",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 374,
+   "entryPrice": 0.9068,
+   "proceeds": 374,
+   "pnl": 34.86,
+   "probabilityYes": 0.02,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRAINMIAM-26JUL-7",
+   "title": "Rain in Miami in Jul 2026: Above 7 inches",
+   "url": "https://kalshi.com/markets/kxrainmiam/kxrainmiam-26jul",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 933,
+   "entryPrice": 0.3757,
+   "proceeds": 0,
+   "pnl": -350.53,
+   "probabilityYes": 0.43,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXAAAGASM-26JUL31-3.70",
+   "title": "Will average **gas prices** be above $3.70?",
+   "url": "https://kalshi.com/markets/kxaaagasm/kxaaagasm-26jul31",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 645,
+   "entryPrice": 0.5004,
+   "proceeds": 0,
+   "pnl": -322.76,
+   "probabilityYes": 0.46,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXFISAEXTEND-26MAY-26AUG01",
+   "title": "When will FISA be reauthorized again: Before Aug 1, 2026",
+   "url": "https://kalshi.com/markets/kxfisaextend/kxfisaextend-26may",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 489,
+   "entryPrice": 0.555,
+   "proceeds": 489,
+   "pnl": 217.6,
+   "probabilityYes": 0.34,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRAINMIAM-26JUL-4",
+   "title": "Rain in Miami in Jul 2026: Above 4 inches",
+   "url": "https://kalshi.com/markets/kxrainmiam/kxrainmiam-26jul",
+   "position": "YES",
+   "outcome": "YES",
+   "won": true,
+   "shares": 223,
+   "entryPrice": 0.8119,
+   "proceeds": 223,
+   "pnl": 41.95,
+   "probabilityYes": 0.88,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRAINCHIM-26JUL-6",
+   "title": "Rain in Chicago in Jul 2026: Above 6 inches",
+   "url": "https://kalshi.com/markets/kxrainchim/kxrainchim-26jul",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 211,
+   "entryPrice": 0.7824,
+   "proceeds": 0,
+   "pnl": -165.09,
+   "probabilityYes": 0.19,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRAINCHIM-26JUL-7",
+   "title": "Rain in Chicago in Jul 2026: Above 7 inches",
+   "url": "https://kalshi.com/markets/kxrainchim/kxrainchim-26jul",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 188,
+   "entryPrice": 0.8399,
+   "proceeds": 188,
+   "pnl": 30.1,
+   "probabilityYes": 0.12,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXAAAGASM-26JUL31-3.80",
+   "title": "Gas prices in the US in Jul 2026: Above 3.80",
+   "url": "https://kalshi.com/markets/kxaaagasm/kxaaagasm-26jul31",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 253,
+   "entryPrice": 0.6134,
+   "proceeds": 0,
+   "pnl": -155.19,
+   "probabilityYes": 0.32,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXSPACEXCOUNT-26JUL-14",
+   "title": "How many launches will SpaceX have in July: Above 14",
+   "url": "https://kalshi.com/markets/kxspacexcount/kxspacexcount-26jul",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 437,
+   "entryPrice": 0.1931,
+   "proceeds": 0,
+   "pnl": -84.38,
+   "probabilityYes": 0.23,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRAINDENM-26JUL-2",
+   "title": "Rain in Denver in Jul 2026: Above 2 inches",
+   "url": "https://kalshi.com/markets/kxraindenm/kxraindenm-26jul",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 289,
+   "entryPrice": 0.2631,
+   "proceeds": 0,
+   "pnl": -76.04,
+   "probabilityYes": 0.29,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXMIPRIMARY-07D26-BBRI",
+   "title": "MI-07 Democratic nominee: Bridget Brink",
+   "url": "https://kalshi.com/markets/kxmiprimary/kxmiprimary-07d26",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 250,
+   "entryPrice": 0.2424,
+   "proceeds": 250,
+   "pnl": 189.4,
+   "probabilityYes": 0.73,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRAINDALM-26JUL-4",
+   "title": "Rain in Dallas in Jul 2026: Above 4 inches",
+   "url": "https://kalshi.com/markets/kxraindalm/kxraindalm-26jul",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 677,
+   "entryPrice": 0.0852,
+   "proceeds": 0,
+   "pnl": -57.68,
+   "probabilityYes": 0.12,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXB200WS-26AUG07-6.000",
+   "title": "Week 32: Price of NVIDIA's B200 compute at end of week: Above $6.00",
+   "url": "https://kalshi.com/markets/kxb200ws/kxb200ws-26aug07",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 100,
+   "entryPrice": 0.6831,
+   "proceeds": 100,
+   "pnl": 31.69,
+   "probabilityYes": 0.19,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRAINDALM-26JUL-2",
+   "title": "Rain in Dallas in Jul 2026: Above 2 inches",
+   "url": "https://kalshi.com/markets/kxraindalm/kxraindalm-26jul",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 150,
+   "entryPrice": 0.325,
+   "proceeds": 0,
+   "pnl": -48.75,
+   "probabilityYes": 0.37,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXGDP-26JUL30-T2.0",
+   "title": "US GDP growth in Q2 2026: Above 2.0%",
+   "url": "https://kalshi.com/markets/kxgdp/kxgdp-26jul30",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 105,
+   "entryPrice": 0.483,
+   "proceeds": 105,
+   "pnl": 54.29,
+   "probabilityYes": 0.46,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXB200WS-26AUG07-5.500",
+   "title": "Week 32: Price of NVIDIA's B200 compute at end of week: Above $5.50",
+   "url": "https://kalshi.com/markets/kxb200ws/kxb200ws-26aug07",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 100,
+   "entryPrice": 0.5946,
+   "proceeds": 0,
+   "pnl": -59.46,
+   "probabilityYes": 0.34,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRAINDENM-26JUL-3",
+   "title": "Rain in Denver in Jul 2026: Above 3 inches",
+   "url": "https://kalshi.com/markets/kxraindenm/kxraindenm-26jul",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 493,
+   "entryPrice": 0.0957,
+   "proceeds": 0,
+   "pnl": -47.18,
+   "probabilityYes": 0.13,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRAINDALM-26JUL-1",
+   "title": "Rain in Dallas in Jul 2026: Above 1 inch",
+   "url": "https://kalshi.com/markets/kxraindalm/kxraindalm-26jul",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 99,
+   "entryPrice": 0.4052,
+   "proceeds": 0,
+   "pnl": -40.11,
+   "probabilityYes": 0.55,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRAINDALM-26JUL-3",
+   "title": "Rain in Dallas in Jul 2026: Above 3 inches",
+   "url": "https://kalshi.com/markets/kxraindalm/kxraindalm-26jul",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 206,
+   "entryPrice": 0.1799,
+   "proceeds": 0,
+   "pnl": -37.06,
+   "probabilityYes": 0.21,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXB200MS-26JUL-3.50",
+   "title": "NVIDIA B200 \u00c2\u00b7 Average hourly price in July: Above $3.50",
+   "url": "https://kalshi.com/markets/kxb200ms/kxb200ms-26jul",
+   "position": "YES",
+   "outcome": "YES",
+   "won": true,
+   "shares": 30,
+   "entryPrice": 0.9033,
+   "proceeds": 30,
+   "pnl": 2.9,
+   "probabilityYes": 0.96,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXB200MS-26JUL-5.500",
+   "title": "NVIDIA B200 \u00c2\u00b7 Average hourly price in July: Above $5.50",
+   "url": "https://kalshi.com/markets/kxb200ms/kxb200ms-26jul",
+   "position": "YES",
+   "outcome": "YES",
+   "won": true,
+   "shares": 136,
+   "entryPrice": 0.1274,
+   "proceeds": 136,
+   "pnl": 118.67,
+   "probabilityYes": 0.15,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXSKEXPYOY-26JULY31-T60.0",
+   "title": "South Korea exports YoY for July: Above 60.0%",
+   "url": "https://kalshi.com/markets/kxskexpyoy/kxskexpyoy-26july31",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 136,
+   "entryPrice": 0.1063,
+   "proceeds": 0,
+   "pnl": -14.46,
+   "probabilityYes": 0.85,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXGDP-26JUL30-T1.5",
+   "title": "US GDP growth in Q2 2026: Above 1.5%",
+   "url": "https://kalshi.com/markets/kxgdp/kxgdp-26jul30",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 10,
+   "entryPrice": 0.294,
+   "proceeds": 10,
+   "pnl": 7.06,
+   "probabilityYes": 0.68,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXRAINCHIM-26JUL-2",
+   "title": "Rain in Chicago in Jul 2026: Above 2 inches",
+   "url": "https://kalshi.com/markets/kxrainchim/kxrainchim-26jul",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 23,
+   "entryPrice": 0.1483,
+   "proceeds": 0,
+   "pnl": -3.41,
+   "probabilityYes": 0.82,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXB200WS-26AUG07-3.500",
+   "title": "Week 32: Price of NVIDIA's B200 compute at end of week: Above $3.50",
+   "url": "https://kalshi.com/markets/kxb200ws/kxb200ws-26aug07",
+   "position": "YES",
+   "outcome": "YES",
+   "won": true,
+   "shares": 1,
+   "entryPrice": 0.84,
+   "proceeds": 1,
+   "pnl": 0.16,
+   "probabilityYes": 0.9,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Kalshi",
+  "p": {
+   "id": "KXB200WS-26AUG07-5.000",
+   "title": "Week 32: Price of NVIDIA's B200 compute at end of week: Above $5.00",
+   "url": "https://kalshi.com/markets/kxb200ws/kxb200ws-26aug07",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 1,
+   "entryPrice": 0.49,
+   "proceeds": 0,
+   "pnl": -0.49,
+   "probabilityYes": 0.49,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:41:03Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xc84dfa2ab4a808d1b96a2cf439f8b88a1c5c37762253280deb7663a195d9b859",
+   "title": "Trump announces end of military operations against Iran by ...: Trump announces end of military operations against Iran by June 30th?",
+   "url": "https://polymarket.com/event/trump-announces-end-of-military-operations-against-iran-by/trump-announces-end-of-military-operations-against-iran-by-june-30th-566-326-653-781-167-426-752-225-438",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 10772,
+   "entryPrice": 0.3713,
+   "proceeds": 0,
+   "pnl": -3999.64,
+   "probabilityYes": 0.58,
+   "marketYes": null,
+   "resolvedBy": "2026-05-18T09:54:02Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x57c1e8de9d359a76055fe1be95e46a1e72d0537811dcc2ccf070cdfa73d8ba33",
+   "title": "Trump announces end of military operations against Iran by ...: Trump announces end of military operations against Iran by May 31st?",
+   "url": "https://polymarket.com/event/trump-announces-end-of-military-operations-against-iran-by/trump-announces-end-of-military-operations-against-iran-by-may-31st-651-724-212-638",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 591,
+   "entryPrice": 0.62,
+   "proceeds": 0,
+   "pnl": -366.42,
+   "probabilityYes": 0.36,
+   "marketYes": null,
+   "resolvedBy": "2026-05-18T09:54:02Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xaeea5f917fc5746387b5f9c0a4263dba035dbb3f0ac6ad72bf92183d21e26739",
+   "title": "Russia x Ukraine ceasefire by end of 2026?",
+   "url": "https://polymarket.com/event/russia-x-ukraine-ceasefire-before-2027/russia-x-ukraine-ceasefire-before-2027",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 2882,
+   "entryPrice": 0.74,
+   "proceeds": 0,
+   "pnl": -2132.68,
+   "probabilityYes": 0.17,
+   "marketYes": null,
+   "resolvedBy": "2026-05-18T09:54:02Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xe43f857dfb0198020e4c4c05e1704ae961719d0f472bdd66b2661a0a0a519c36",
+   "title": "U.S. anti-cartel ground operation in Mexico by...: U.S. anti-cartel ground operation in Mexico by June 30?",
+   "url": "https://polymarket.com/event/us-anti-cartel-ground-operation-in-mexico-by-march-31/us-anti-cartel-ground-operation-in-mexico-by-june-30",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 5010,
+   "entryPrice": 0.7984,
+   "proceeds": 0,
+   "pnl": -3999.98,
+   "probabilityYes": 0.13,
+   "marketYes": null,
+   "resolvedBy": "2026-05-18T09:54:02Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x02f8dd15d4c674a75fccbd0e00f0cf1256101c45ef41f6d0c5dfde9c36d4141e",
+   "title": "Israel x Hezbollah Ceasefire extended by...: Israel x Hezbollah Ceasefire extended by April 26, 2026?",
+   "url": "https://polymarket.com/event/israel-x-hezbollah-ceasefire-extended-by/israel-x-hezbollah-ceasefire-extended-by-april-26-2026",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 5723,
+   "entryPrice": 0.6989,
+   "proceeds": 0,
+   "pnl": -3999.8,
+   "probabilityYes": 0.1,
+   "marketYes": null,
+   "resolvedBy": "2026-05-18T09:54:02Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xb75c07f4252992808d7ca7d9828169c524b0fef44bf5adf78c327ef88469c986",
+   "title": "US x Iran diplomatic meeting by May 5, 2026?",
+   "url": "https://polymarket.com/event/us-x-iran-diplomatic-meeting-by-329/us-x-iran-diplomatic-meeting-by-may-5-2026",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 5385,
+   "entryPrice": 0.7428,
+   "proceeds": 0,
+   "pnl": -3999.98,
+   "probabilityYes": 0.96,
+   "marketYes": null,
+   "resolvedBy": "2026-05-18T09:54:02Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x781a06aa5779f97724b75ed8128aaf72c4a8955c893a6fefdc0efd7cb001c513",
+   "title": "Will John Cornyn win the 2026 Texas Republican Primary?",
+   "url": "https://polymarket.com/event/texas-republican-senate-primary-winner/will-john-cornyn-win-the-2026-republican-primary",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 1143,
+   "entryPrice": 0.6,
+   "proceeds": 1143,
+   "pnl": 457.2,
+   "probabilityYes": 0.38,
+   "marketYes": null,
+   "resolvedBy": "2026-05-27T16:10:09Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x99a0fdc1bb6308873bf87eb75a47e21c8340fe20fb6b033444c1d21392da10a9",
+   "title": "Will Ken Paxton win the 2026 Texas Republican Primary?",
+   "url": "https://polymarket.com/event/texas-republican-senate-primary-winner/will-ken-paxton-win-the-2026-republican-primary",
+   "position": "YES",
+   "outcome": "YES",
+   "won": true,
+   "shares": 3884.37,
+   "entryPrice": 0.5821,
+   "proceeds": 3884.37,
+   "pnl": 1623.28,
+   "probabilityYes": 0.61,
+   "marketYes": null,
+   "resolvedBy": "2026-05-27T16:10:09Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x22014d44b787385b7baddb2b9d56cdcf5904fd7783b83c28403962dd71e51a51",
+   "title": "Will Donald Trump announce that the United States blockade of the Strait of Hormuz has been lifted by May 22, 2026?",
+   "url": "https://polymarket.com/event/trump-announces-us-blockade-of-hormuz-lifted-by/will-donald-trump-announce-that-the-united-states-blockade-of-the-strait-of-hormuz-has-been-lifted-by-may-22-2026",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 446,
+   "entryPrice": 0.71,
+   "proceeds": 446,
+   "pnl": 129.34,
+   "probabilityYes": 0.24,
+   "marketYes": null,
+   "resolvedBy": "2026-05-27T16:10:09Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x1b1a75d6305f5edee255b3f368cca945bde401fea4b2a7e34f2fcca3b3e56cf0",
+   "title": "Will Chong Won-oh win the 2026 Seoul Mayoral Election",
+   "url": "https://polymarket.com/event/2026-seoul-mayoral-election-winner/will-chong-won-oh-win-the-2026-seoul-mayoral-election",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 29565.68,
+   "entryPrice": 0.1,
+   "proceeds": 29565.68,
+   "pnl": 26609.11,
+   "probabilityYes": 0.87,
+   "marketYes": null,
+   "resolvedBy": "2026-06-09T13:44:26Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x4bab360a81b57047b48c0dd7c6c1377706129e3e6b9fa3f079cc28d310ec4cec",
+   "title": "Will WTI Crude Oil (WTI) hit (HIGH) $110 in May?",
+   "url": "https://polymarket.com/event/what-price-will-wti-hit-in-may-2026/will-wti-reach-110-in-may-2026-116-472",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 101,
+   "entryPrice": 0.54,
+   "proceeds": 101,
+   "pnl": 46.46,
+   "probabilityYes": 0.32,
+   "marketYes": null,
+   "resolvedBy": "2026-06-09T13:44:26Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x416e3cbe25a60b8210f4e67c056ea2b03f4d511e7b969826d69ef90b753ff214",
+   "title": "Will WTI Crude Oil (WTI) hit (HIGH) $120 in May?",
+   "url": "https://polymarket.com/event/what-price-will-wti-hit-in-may-2026/will-wti-reach-120-in-may-2026-592-217",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 114,
+   "entryPrice": 0.83,
+   "proceeds": 114,
+   "pnl": 19.38,
+   "probabilityYes": 0.06,
+   "marketYes": null,
+   "resolvedBy": "2026-06-09T13:44:26Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x518a5b030b205706b8ffe6bbad9bd3de59548348e5c0471827f5de21e513333c",
+   "title": "Strait of Hormuz traffic returns to normal by end of May?",
+   "url": "https://polymarket.com/event/strait-of-hormuz-traffic-returns-to-normal-by-end-of-may/strait-of-hormuz-traffic-returns-to-normal-by-end-of-may",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 6346,
+   "entryPrice": 0.6303,
+   "proceeds": 6346,
+   "pnl": 2346.12,
+   "probabilityYes": 0.18,
+   "marketYes": null,
+   "resolvedBy": "2026-06-09T13:44:26Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x65f5c4e3c6853a68fb50b59054dfe4c9e5ca5b705e04ed008185648334d1931d",
+   "title": "Trump announces US blockade of Hormuz lifted by...: Will Donald Trump announce that the United States blockade of the Strait of Hormuz has been lifted by June 7, 2026?",
+   "url": "https://polymarket.com/event/trump-announces-us-blockade-of-hormuz-lifted-by/will-donald-trump-announce-that-the-united-states-blockade-of-the-strait-of-hormuz-has-been-lifted-by-june-7-2026",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 1054,
+   "entryPrice": 0.6628,
+   "proceeds": 1054,
+   "pnl": 355.41,
+   "probabilityYes": 0.28,
+   "marketYes": null,
+   "resolvedBy": "2026-06-09T13:44:26Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x7f7546918378d63097393ed497ab60d8f911b742abc42b8263bb2504816b4741",
+   "title": "US x Iran diplomatic meeting by...: US x Iran diplomatic meeting by June 7, 2026?",
+   "url": "https://polymarket.com/event/us-x-iran-diplomatic-meeting-by-329/us-x-iran-diplomatic-meeting-by-june-7-2026",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 4194,
+   "entryPrice": 0.6693,
+   "proceeds": 4194,
+   "pnl": 1386.96,
+   "probabilityYes": 0.25,
+   "marketYes": null,
+   "resolvedBy": "2026-06-09T13:44:26Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x8b369e10358094a99ffe7f85a81a8e8ca68c611eee0fe63a2efa790ad045bcd6",
+   "title": "Will Donald Trump announce that the United States blockade of the Strait of Hormuz has been lifted by May 31, 2026?",
+   "url": "https://polymarket.com/event/trump-announces-us-blockade-of-hormuz-lifted-by/will-donald-trump-announce-that-the-united-states-blockade-of-the-strait-of-hormuz-has-been-lifted-by-may-31-2026-313-388-459-589-533",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 4918,
+   "entryPrice": 0.6146,
+   "proceeds": 4918,
+   "pnl": 1895.4,
+   "probabilityYes": 0.1,
+   "marketYes": null,
+   "resolvedBy": "2026-06-09T13:44:26Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xbcacd5a055f5a9ced6f69f122216c073dd6987d08253fc07bbcc168fa5b81d55",
+   "title": "US obtains Iranian enriched uranium by May 31?",
+   "url": "https://polymarket.com/event/us-obtains-iranian-enriched-uranium-by/us-obtains-iranian-enriched-uranium-by-may-31-396",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 4444,
+   "entryPrice": 0.9,
+   "proceeds": 4444,
+   "pnl": 444.4,
+   "probabilityYes": 0.07,
+   "marketYes": null,
+   "resolvedBy": "2026-06-09T13:44:26Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xa1d97efb8a19de58d995edf58b882c4f99ef356c8a564af8daf888a7610edea1",
+   "title": "Kharg Island no longer under Iranian control by May 31?",
+   "url": "https://polymarket.com/event/kharg-island-no-longer-under-iranian-control-by-march-31/kharg-island-no-longer-under-iranian-control-by-may-31-689",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 4520,
+   "entryPrice": 0.8849,
+   "proceeds": 4520,
+   "pnl": 520.25,
+   "probabilityYes": 0.06,
+   "marketYes": null,
+   "resolvedBy": "2026-06-09T13:44:26Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x0e4a0c937b8934c2475613b6322b3f8edc8dedc24762e01e42b0e6f87424a089",
+   "title": "US x Iran permanent peace deal by May 31, 2026?",
+   "url": "https://polymarket.com/event/us-x-iran-permanent-peace-deal-by/us-x-iran-permanent-peace-deal-by-may-31-2026-333-871-241-192-799-449-125",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 6086,
+   "entryPrice": 0.6572,
+   "proceeds": 6086,
+   "pnl": 2086.28,
+   "probabilityYes": 0.1,
+   "marketYes": null,
+   "resolvedBy": "2026-06-09T13:44:26Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xa48ee32a0cbe5bc1a48844bd14e1691701d3bf8f45f4dd8cb8d1d304561393b6",
+   "title": "US announces new Iran agreement/ceasefire extension by...: US announces new Iran agreement/ceasefire extension by June 30?",
+   "url": "https://polymarket.com/event/us-announces-new-iran-agreementceasefire-extension-by/us-announces-new-iran-agreementceasefire-extension-by-june-30-848-925-757-129-337-165",
+   "position": "YES",
+   "outcome": "YES",
+   "won": true,
+   "shares": 2675,
+   "entryPrice": 0.4631,
+   "proceeds": 2675,
+   "pnl": 1436.21,
+   "probabilityYes": 0.5,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": "https://futuresearch.ai/app/p/a/us-announces-new-iran-agreementceasefire-extension-by-june-30"
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x79afea6a94f0b3dffb5e0886fa1dbd740d688029f7aba351dc46911bcb1b1f95",
+   "title": "Largest Company end of June: Will NVIDIA be the largest company in the world by market cap on June 30?",
+   "url": "https://polymarket.com/event/largest-company-end-of-june-712/will-nvidia-be-the-largest-company-in-the-world-by-market-cap-on-june-30-824",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 85,
+   "entryPrice": 0.07,
+   "proceeds": 0,
+   "pnl": -5.95,
+   "probabilityYes": 0.92,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": "https://futuresearch.ai/app/p/a/will-nvidia-be-the-largest-company-in-the-world-by-market-cap-on-june-30"
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x6897736d782ce70f47126dfcec6669073f563d6e757e60bc61c0367370d6f73e",
+   "title": "Kharg Island no longer under Iranian control by June 30?",
+   "url": "https://polymarket.com/event/kharg-island-no-longer-under-iranian-control-by-march-31/kharg-island-no-longer-under-iranian-control-by-june-30-561-854-897",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 11.1,
+   "entryPrice": 0.85,
+   "proceeds": 11.1,
+   "pnl": 1.67,
+   "probabilityYes": 0.07,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x898e9ff5045fcd05c26ea1e956d926c191d5aecae1bc184283c94e665f0f7be5",
+   "title": "Will Silver (SI) hit__ by end of June: Will Silver (SI) hit (LOW) $60 by end of June?",
+   "url": "https://polymarket.com/event/si-hit-jun-2026/will-silver-si-hit-low-60-by-end-of-june-167-538",
+   "position": "YES",
+   "outcome": "YES",
+   "won": true,
+   "shares": 33,
+   "entryPrice": 0.36,
+   "proceeds": 33,
+   "pnl": 21.12,
+   "probabilityYes": 0.38,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": "https://futuresearch.ai/app/p/a/will-silver-si-hit-low-60-by-end-of-june"
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x8cf61b7b84b6ac2e0c619867dd6966e688b43e4fd4c866423da2f757c58f0a9f",
+   "title": "What will Gold (GC) hit__ by end of June: Will Gold (GC) hit (LOW) $4,200 by end of June?",
+   "url": "https://polymarket.com/event/gc-hit-jun-2026/gc-hit-4200-low-jun-2026-737-562-112-239-328-831-356-185-544-513-223-988",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 34,
+   "entryPrice": 0.5176,
+   "proceeds": 0,
+   "pnl": -17.6,
+   "probabilityYes": 0.44,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": "https://futuresearch.ai/app/p/a/gc-hit-4200-low-jun-2026"
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x0f3062f421a43ab9af2f3dc9c3eef48e2aab38a4c9858aca7651947642c4c964",
+   "title": "Where will the next US-Iran diplomatic meeting happen: Will the next diplomatic US-Iran meeting be in Pakistan?",
+   "url": "https://polymarket.com/event/where-will-the-next-us-iran-diplomatic-meeting-happen-455/will-the-next-diplomatic-us-iran-meeting-be-in-pakistan-295",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 391,
+   "entryPrice": 0.8135,
+   "proceeds": 391,
+   "pnl": 72.92,
+   "probabilityYes": 0.16,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": "https://futuresearch.ai/app/p/a/will-the-next-diplomatic-us-iran-meeting-be-in-pakistan"
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x676e7cda423f5826bcbb3c141e808ad7c66bc2d055e4d0aca79c26779712062c",
+   "title": "Israel closes its airspace by...: Israel closes its airspace by June 30?",
+   "url": "https://polymarket.com/event/israel-closes-its-airspace-by/israel-closes-its-airspace-by-june-30-324-253-464-332-827-713-671-846",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 1384,
+   "entryPrice": 0.7591,
+   "proceeds": 1384,
+   "pnl": 333.41,
+   "probabilityYes": 0.21,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": "https://futuresearch.ai/app/p/a/israel-closes-its-airspace-by-june-30"
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x20af55ab35186377b81219db6cb8615240cba42cea41731091be9484a5f5b122",
+   "title": "US x Iran permanent peace deal by...: US x Iran permanent peace deal by July 31, 2026?",
+   "url": "https://polymarket.com/event/us-x-iran-permanent-peace-deal-by/us-x-iran-permanent-peace-deal-by-july-31-2026-831-252",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 5379,
+   "entryPrice": 0.6779,
+   "proceeds": 0,
+   "pnl": -3646.42,
+   "probabilityYes": 0.12,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": "https://futuresearch.ai/app/p/a/us-x-iran-permanent-peace-deal-by-july-31-2026"
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xfbe85201ab2b4acff01cd5a3639039fc813d3448c64db081f70926bd9b9e74e9",
+   "title": "Colombia Presidential Election: Will Abelardo de la Espriella  win the 2026 Colombian presidential election?",
+   "url": "https://polymarket.com/event/colombia-presidential-election/will-abelardo-de-la-espriella-win-the-2026-colombian-presidential-election",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 23062,
+   "entryPrice": 0.2305,
+   "proceeds": 0,
+   "pnl": -5315.79,
+   "probabilityYes": 0.23,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x0549eb8269570dea333fe47ffff241827d93a22caed18f64f9a1eb4c3239c7f8",
+   "title": "Trump announces US blockade of Hormuz lifted by...: Will Donald Trump announce that the United States blockade of the Strait of Hormuz has been lifted by July 31, 2026?",
+   "url": "https://polymarket.com/event/trump-announces-us-blockade-of-hormuz-lifted-by/will-donald-trump-announce-that-the-united-states-blockade-of-the-strait-of-hormuz-has-been-lifted-by-july-31-2026-495",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 3467,
+   "entryPrice": 0.4598,
+   "proceeds": 0,
+   "pnl": -1594.13,
+   "probabilityYes": 0.52,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": "https://futuresearch.ai/app/p/a/trump-announces-strait-of-hormuz-blockade-lifted-by-july-31-2026"
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x7ef13602915dcf8f51d5f95b712ecdb9fe3ff71c7f89e76afb098dbdaab973bf",
+   "title": "Will Russia capture all of Kupiansk by June 30?",
+   "url": "https://polymarket.com/event/will-russia-capture-all-of-kupiansk-by/will-russia-capture-all-of-kupiansk-by-june-30",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 1751.04,
+   "entryPrice": 0.95,
+   "proceeds": 1751.04,
+   "pnl": 87.55,
+   "probabilityYes": 0.02,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xd86a816093fcd0a0e1ca440bc5ce199bd3c5a8d6139e044b076958164f8c5423",
+   "title": "US x Iran permanent peace deal by June 15, 2026?",
+   "url": "https://polymarket.com/event/us-x-iran-permanent-peace-deal-by/us-x-iran-permanent-peace-deal-by-june-15-2026-734-856-129",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 4458,
+   "entryPrice": 0.6296,
+   "proceeds": 0,
+   "pnl": -2806.76,
+   "probabilityYes": 0.05,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x60c6fe27d5b273f54fe30b4003c3b2553acd5f76220d9ea289343d536d6dd9ad",
+   "title": "Russia x Ukraine ceasefire agreement by...: Russia x Ukraine ceasefire agreement by June 30, 2026?",
+   "url": "https://polymarket.com/event/russia-x-ukraine-ceasefire-agreement-by/russia-x-ukraine-ceasefire-agreement-by-june-30-2026",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 46497,
+   "entryPrice": 0.0784,
+   "proceeds": 0,
+   "pnl": -3645.36,
+   "probabilityYes": 0.88,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": "https://futuresearch.ai/app/p/a/russia-x-ukraine-ceasefire-agreement-by-june-30-2026"
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xa70fc3695a65833b91b45df6db6015096f3e1471b70352ca411b4209010e7633",
+   "title": "US-Iran nuclear deal by June 30?",
+   "url": "https://polymarket.com/event/us-iran-nuclear-deal-by-june-30/us-iran-nuclear-deal-by-june-30",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 7414,
+   "entryPrice": 0.5395,
+   "proceeds": 0,
+   "pnl": -3999.85,
+   "probabilityYes": 0.41,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x0fb006e0c06caa4db12f7e30ec8c2483d658f83eb57b2ee8eb478e39beca3dfd",
+   "title": "Colombia Presidential Election: Will Ivan Cepeda Castro win the 2026 Colombian presidential election?",
+   "url": "https://polymarket.com/event/colombia-presidential-election/will-ivan-cepeda-castro-win-the-2026-colombian-presidential-election",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 22046,
+   "entryPrice": 0.1654,
+   "proceeds": 0,
+   "pnl": -3646.41,
+   "probabilityYes": 0.18,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": "https://futuresearch.ai/app/p/a/will-ivan-cepeda-castro-win-the-2026-colombian-presidential-election"
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xb23587fc1e319cdf9aaa12c503f6b2149c820c3d64ded3c98b4ff6719cac78fe",
+   "title": "Will Russia capture Kostyantynivka by...: Will Russia capture Kostyantynivka by June 30?",
+   "url": "https://polymarket.com/event/will-russia-capture-kostyantynivka-by/will-russia-capture-kostyantynivka-by-june-30-382-954-769",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 4607,
+   "entryPrice": 0.7251,
+   "proceeds": 4607,
+   "pnl": 1266.46,
+   "probabilityYes": 0.38,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x6cb3ec9e0fb1c258898f648f8b33422f59ba3e8a71aee551449d7cb147bb8ead",
+   "title": "Iran agrees to surrender enriched uranium stockpile by June 30, 2026?",
+   "url": "https://polymarket.com/event/iran-agrees-to-surrender-enriched-uranium-stockpile-by/iran-agrees-to-surrender-enriched-uranium-stockpile-by-june-30-2026",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 4067,
+   "entryPrice": 0.8751,
+   "proceeds": 4067,
+   "pnl": 507.97,
+   "probabilityYes": 0.24,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x9769f78cbc95a5ed11895e6064bac471d8fd8f930b260cf581b68d3f58630d27",
+   "title": "US x Iran permanent peace deal by...: US x Iran permanent peace deal by December 31, 2026?",
+   "url": "https://polymarket.com/event/us-x-iran-permanent-peace-deal-by/us-x-iran-permanent-peace-deal-by-december-31-2026-961-587-341-574-555-817",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 11395,
+   "entryPrice": 0.32,
+   "proceeds": 0,
+   "pnl": -3646.4,
+   "probabilityYes": 0.42,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": "https://futuresearch.ai/app/p/a/us-x-iran-permanent-peace-deal-by-december-31-2026"
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x6114a8a3f9ac214f48a7e20d169f1c7a5c84082cb6f7058ed9fe1137b11fd0e7",
+   "title": "US x Iran permanent peace deal by June 30, 2026?",
+   "url": "https://polymarket.com/event/us-x-iran-permanent-peace-deal-by/us-x-iran-permanent-peace-deal-by-june-30-2026-837-641-896-877-363-892-537-597",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 8510,
+   "entryPrice": 0.47,
+   "proceeds": 0,
+   "pnl": -3999.7,
+   "probabilityYes": 0.25,
+   "marketYes": null,
+   "resolvedBy": "2026-07-02T10:28:52Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x2cd4df599867b14e835436e67e524cd04bbd67eaa6454c07b294d9dd0470e6b7",
+   "title": "Will Hamas agree to disarm by June 30?",
+   "url": "https://polymarket.com/event/will-hamaz-disarm-by-december-31/will-hamas-agree-to-disarm-by-june-30",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 4793,
+   "entryPrice": 0.8345,
+   "proceeds": 4793,
+   "pnl": 793.24,
+   "probabilityYes": 0.08,
+   "marketYes": null,
+   "resolvedBy": "2026-07-27T18:15:00Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x348cd9adf4f6855f58bd9c6dbf9ff251c4142ef77233a5dc95c65b4b61cd2187",
+   "title": "Strait of Hormuz traffic returns to normal by end of June?",
+   "url": "https://polymarket.com/event/strait-of-hormuz-traffic-returns-to-normal-by-end-of-june/strait-of-hormuz-traffic-returns-to-normal-by-end-of-june",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 4678,
+   "entryPrice": 0.6,
+   "proceeds": 4678,
+   "pnl": 1871.2,
+   "probabilityYes": 0.15,
+   "marketYes": null,
+   "resolvedBy": "2026-07-27T18:15:00Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x763a7f1e440693b54c56da02d338c2092053567dd865174387d06ee5612fdc9e",
+   "title": "Will Andy Burnham be the next Prime Minister of the United Kingdom in 2026?",
+   "url": "https://polymarket.com/event/next-uk-prime-minister-in-2026-122/will-andy-burnham-be-the-next-prime-minister-of-the-united-kingdom-in-2026-882",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 34331,
+   "entryPrice": 0.123,
+   "proceeds": 0,
+   "pnl": -4222.71,
+   "probabilityYes": 0.42,
+   "marketYes": null,
+   "resolvedBy": "2026-07-27T18:15:00Z",
+   "artifactUrl": "https://futuresearch.ai/app/p/a/will-andy-burnham-be-the-next-prime-minister-of-the-united-kingdom-in-2026"
+  }
+ },
+ {
+  "status": "won",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x26ebe9f65bd68ddedda46fd178b35f849aae4607e1265df3ef7243f99829f195",
+   "title": "Israel x Hamas ceasefire cancelled by June 30?",
+   "url": "https://polymarket.com/event/israel-x-hamas-ceasefire-cancelled-by-october-31/israel-x-hamas-ceasefire-cancelled-by-june-30",
+   "position": "NO",
+   "outcome": "NO",
+   "won": true,
+   "shares": 105.87,
+   "entryPrice": 0.7396,
+   "proceeds": 105.87,
+   "pnl": 27.57,
+   "probabilityYes": 0.23,
+   "marketYes": null,
+   "resolvedBy": "2026-07-27T18:15:00Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0x2cd24d17f5680dc6e7b7d67c712a223ae85550745597e81bd2d2b8d073443951",
+   "title": "Will Roberto S\u00c3\u00a1nchez Palomino win the 2026 Peruvian presidential election?",
+   "url": "https://polymarket.com/event/peru-presidential-election-winner/will-roberto-snchez-palomino-win-the-2026-peruvian-presidential-election",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 11405,
+   "entryPrice": 0.3451,
+   "proceeds": 0,
+   "pnl": -3935.87,
+   "probabilityYes": 0.45,
+   "marketYes": null,
+   "resolvedBy": "2026-07-27T18:15:00Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xc4c3dbcc37a957a817599b0bf9fb5bd6b62b19210b0f527fec57cb75c7ed150a",
+   "title": "Will Keiko Fujimori win the 2026 Peruvian presidential election?",
+   "url": "https://polymarket.com/event/peru-presidential-election-winner/will-keiko-fujimori-win-the-2026-peruvian-presidential-election",
+   "position": "NO",
+   "outcome": "YES",
+   "won": false,
+   "shares": 11245,
+   "entryPrice": 0.35,
+   "proceeds": 0,
+   "pnl": -3935.75,
+   "probabilityYes": 0.54,
+   "marketYes": null,
+   "resolvedBy": "2026-07-27T18:15:00Z",
+   "artifactUrl": null
+  }
+ },
+ {
+  "status": "lost",
+  "venue": "Polymarket",
+  "p": {
+   "id": "0xb5c0abeecb5502e6e8d83155c27819174d8317af3c425c3afc5a8c45257a3793",
+   "title": "Will the Fed increase interest rates by 25 bps after the July 2026 meeting?",
+   "url": "https://polymarket.com/event/fed-decision-in-july-181/will-the-fed-increase-interest-rates-by-25-bps-after-the-july-2026-meeting",
+   "position": "YES",
+   "outcome": "NO",
+   "won": false,
+   "shares": 20231,
+   "entryPrice": 0.0618,
+   "proceeds": 0,
+   "pnl": -1250.28,
+   "probabilityYes": 0.08,
+   "marketYes": null,
+   "resolvedBy": "2026-08-11T16:40:59Z",
+   "artifactUrl": "https://futuresearch.ai/app/p/a/will-the-fed-increase-interest-rates-by-25-bps-after-the-july-2026-meeting"
+  }
+ }
+]
