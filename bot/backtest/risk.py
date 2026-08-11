@@ -81,7 +81,9 @@ def kelly_max_contracts(
     f_star = p_win - (1.0 - p_win) / b
     if f_star <= 0:
         return 0
-    stake_cents = bankroll_cents * kelly_fraction * f_star
+    # round(.., 6) shields the floor division from float dust
+    # (e.g. 0.6 - 0.4/1 == 0.19999999999999996).
+    stake_cents = round(bankroll_cents * kelly_fraction * f_star, 6)
     return int(stake_cents // cost)
 
 
