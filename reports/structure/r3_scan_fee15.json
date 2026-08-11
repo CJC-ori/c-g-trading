@@ -1,0 +1,92 @@
+{
+  "params": {
+    "db": "data/kalshi.db",
+    "store": "data/structure/structure.db",
+    "staleness_h": 24,
+    "buffer_cents": 1.0,
+    "depth_frac": 0.25,
+    "fee_stress": 1.5,
+    "out": "reports/structure/r3_scan_fee15.json",
+    "firings_out": "reports/structure/r3_firings_fee15.json"
+  },
+  "coverage": {
+    "events_in_universe": 2896,
+    "events_with_complete_leg_candles": 2871,
+    "events_skipped_incomplete": 25,
+    "event_hours_scanned": 377092,
+    "structurally_exhaustive_events": 806
+  },
+  "no_set_executable": {
+    "kind": "no_set",
+    "n_events_scanned": 2871,
+    "n_event_hours_scanned": 377092,
+    "n_firing_hours": 66,
+    "n_firing_events": 29,
+    "pct_hours_firing": 0.0175,
+    "pct_events_firing": 1.01,
+    "calendar_span_weeks": 86.9,
+    "firing_events_per_week": 0.334,
+    "net_edge_cents": {
+      "mean": 2.183,
+      "median": 0.79,
+      "p90": 4.98,
+      "max": 32.19
+    },
+    "fillable_dollars_same_hour": {
+      "median": 0.0,
+      "mean": 0.5,
+      "p90": 0.33,
+      "max": 15.82,
+      "pct_zero": 75.8
+    },
+    "fillable_dollars_trailing24h": {
+      "median": 1.45,
+      "p90": 70.22,
+      "max": 142.54
+    },
+    "by_category": {
+      "Elections": 56,
+      "Economics": 5,
+      "Politics": 3,
+      "Financials": 2
+    }
+  },
+  "yes_set_exhaustive_only": {
+    "kind": "yes_set",
+    "n_events_scanned": 806,
+    "n_event_hours_scanned": 43814,
+    "n_firing_hours": 22,
+    "n_firing_events": 4,
+    "pct_hours_firing": 0.0502,
+    "pct_events_firing": 0.496,
+    "calendar_span_weeks": 46.2,
+    "firing_events_per_week": 0.087,
+    "net_edge_cents": {
+      "mean": 3.844,
+      "median": 3.56,
+      "p90": 4.49,
+      "max": 11.22
+    },
+    "fillable_dollars_same_hour": {
+      "median": 0.0,
+      "mean": 0.0,
+      "p90": 0.0,
+      "max": 0.04,
+      "pct_zero": 90.9
+    },
+    "fillable_dollars_trailing24h": {
+      "median": 0.0,
+      "p90": 0.13,
+      "max": 0.14
+    },
+    "by_category": {
+      "Politics": 16,
+      "Financials": 6
+    }
+  },
+  "literal_ask_sum_diagnostic": {
+    "n_firing_hours": 277949,
+    "pct_hours_firing": 73.71,
+    "note": "\u03a3 best-ask YES > 100c + fees + 1c \u2014 NOT executable (buying NO takes the NO ask = 100 \u2212 yes_bid). Diagnostic only."
+  }
+}

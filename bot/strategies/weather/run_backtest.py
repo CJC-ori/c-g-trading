@@ -29,8 +29,8 @@ from collections import defaultdict
 from dataclasses import replace
 from typing import Any
 
-from bot.backtest.dataport import SqliteHistoryProvider
 from bot.backtest.engine import BacktestResult, EngineConfig, run_backtest
+from bot.strategies.weather.dataport_ext import TradeSynthCandleProvider
 from bot.backtest.metrics import compute_metrics, render_markdown
 from bot.backtest.risk import RiskConfig
 from bot.groundtruth import weather as wx
@@ -69,6 +69,13 @@ def discover_universe(db_path: str = DB_PATH) -> tuple[dict, list[str], list[str
             r[0] for r in conn.execute(
                 "SELECT DISTINCT ticker FROM candlesticks"
                 " WHERE period_interval = 60 AND ticker LIKE 'KXHIGH%'"
+            )
+        }
+        # trade tape alone is enough: the runner's provider synthesizes
+        # the decision-clock candles from prints (dataport_ext)
+        have_candles |= {
+            r[0] for r in conn.execute(
+                "SELECT DISTINCT ticker FROM trades WHERE ticker LIKE 'KXHIGH%'"
             )
         }
         settled = {
@@ -169,18 +176,29 @@ def build_max16(window_dates: list[str]) -> dict[tuple[str, str], float]:
 # Scoring extensions beyond bot.backtest.metrics
 # ---------------------------------------------------------------------------
 
+MAX_SCORING_SPREAD_CENTS = 20
+
+
 def brier_table(
     p_hat_log: list[dict],
     settlements: dict,
     traded: set[tuple[str, str]],
 ) -> dict[str, Any]:
     """Ours-vs-market Brier on strike outcomes, per phase + pooled +
-    traded subset, deduped to the FIRST look per (ticker, phase)."""
+    traded subset, deduped to the FIRST look per (ticker, phase).
+
+    Rows where the book is wider than MAX_SCORING_SPREAD_CENTS are
+    excluded: a 0/100 just-opened book makes 'mid=50' a fake market
+    forecast that would flatter us.
+    """
     seen: set[tuple[str, str]] = set()
     rows = []
     for r in p_hat_log:
         key = (r["ticker"], r["phase"])
         if key in seen or r["mid_cents"] is None:
+            continue
+        bid, ask = r.get("bid"), r.get("ask")
+        if bid is None or ask is None or ask - bid > MAX_SCORING_SPREAD_CENTS:
             continue
         s = settlements.get(r["ticker"])
         if s is None or s.result not in ("yes", "no"):
@@ -325,7 +343,7 @@ def run_variant(
             return WeatherDayAheadStrategy(strikes, models)
         return WeatherIntradayStrategy(strikes, models, max16, rise_pmf)
 
-    provider = SqliteHistoryProvider(db_path)
+    provider = TradeSynthCandleProvider(db_path)
     filters = {"tickers": train_tickers}
     # event logs are large and auditable-but-disposable: keep them under
     # the gitignored data/ tree, not reports/

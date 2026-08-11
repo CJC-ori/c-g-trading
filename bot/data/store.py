@@ -575,8 +575,12 @@ class Store:
                  source = COALESCE(source, 'live')
                WHERE price_ranges IS NULL OR source IS NULL"""
         )
+        n = cur.rowcount
+        # Rows written before the tier split existed all came from the live API.
+        self.conn.execute("UPDATE trades SET source='live' WHERE source IS NULL")
+        self.conn.execute("UPDATE candlesticks SET source='live' WHERE source IS NULL")
         self.conn.commit()
-        return cur.rowcount
+        return n
 
     # -- readers -----------------------------------------------------------
     def counts(self) -> dict[str, int]:

@@ -215,7 +215,7 @@ class WeatherDayAheadStrategy:
         mid = view.mid_cents
         self.p_hat_log.append(
             {"t": view.t, "ticker": ticker, "phase": phase,
-             "p_hat": fair, "mid_cents": mid}
+             "p_hat": fair, "mid_cents": mid, "bid": bid, "ask": ask}
         )
         if (ticker, phase) in self.placed:
             return []

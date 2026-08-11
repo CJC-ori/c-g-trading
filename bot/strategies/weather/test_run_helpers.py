@@ -13,12 +13,20 @@ def _settle(ticker, result):
 
 def test_brier_table_dedupes_and_scores():
     log = [
-        # first look wins; second look on same (ticker, phase) ignored
-        {"t": 1, "ticker": "A", "phase": "d1", "p_hat": 0.9, "mid_cents": 60.0},
-        {"t": 2, "ticker": "A", "phase": "d1", "p_hat": 0.5, "mid_cents": 70.0},
-        {"t": 3, "ticker": "B", "phase": "d1", "p_hat": 0.2, "mid_cents": 40.0},
+        # wide-open book (0/100): excluded from scoring, does not burn
+        # the (ticker, phase) slot
+        {"t": 0, "ticker": "A", "phase": "d1", "p_hat": 0.9, "mid_cents": 50.0,
+         "bid": 0, "ask": 100},
+        # first scoreable look wins; later look on same key ignored
+        {"t": 1, "ticker": "A", "phase": "d1", "p_hat": 0.9, "mid_cents": 60.0,
+         "bid": 58, "ask": 62},
+        {"t": 2, "ticker": "A", "phase": "d1", "p_hat": 0.5, "mid_cents": 70.0,
+         "bid": 68, "ask": 72},
+        {"t": 3, "ticker": "B", "phase": "d1", "p_hat": 0.2, "mid_cents": 40.0,
+         "bid": 38, "ask": 42},
         # no mid -> skipped
-        {"t": 4, "ticker": "C", "phase": "d1", "p_hat": 0.5, "mid_cents": None},
+        {"t": 4, "ticker": "C", "phase": "d1", "p_hat": 0.5, "mid_cents": None,
+         "bid": None, "ask": None},
     ]
     settlements = {"A": _settle("A", "yes"), "B": _settle("B", "no"),
                    "C": _settle("C", "yes")}
@@ -36,7 +44,8 @@ def test_brier_table_dedupes_and_scores():
 
 
 def test_brier_table_unsettled_skipped():
-    log = [{"t": 1, "ticker": "X", "phase": "d1", "p_hat": 0.7, "mid_cents": 50.0}]
+    log = [{"t": 1, "ticker": "X", "phase": "d1", "p_hat": 0.7,
+            "mid_cents": 50.0, "bid": 48, "ask": 52}]
     out = brier_table(log, {}, traded=set())
     assert out["pooled"]["n"] == 0
 
@@ -62,6 +71,26 @@ def test_walk_forward_offsets_point_in_time():
     for i, d in enumerate(dates):
         k = max(0, i - 2 + 1)  # residuals from dates[0..i-2]
         assert off[d] == pytest.approx(2.0 * k / (WALK_FORWARD_PRIOR_N + k))
+
+
+def test_synthesize_candles_from_trades():
+    from bot.backtest.types import Trade
+    from bot.strategies.weather.dataport_ext import synthesize_candles
+    trades = [
+        Trade("X", 3600 + 10, 50, 5),
+        Trade("X", 3600 + 900, 55, 3),
+        Trade("X", 3600 + 1800, 48, 2),
+        # gap of two hours, then one more print
+        Trade("X", 3 * 3600 + 60, 60, 7),
+    ]
+    candles = synthesize_candles(trades, 3600)
+    assert len(candles) == 2  # empty hours produce no candles
+    c0, c1 = candles
+    assert (c0.start_ts, c0.open, c0.high, c0.low, c0.close, c0.volume) == (
+        3600, 50, 55, 48, 48, 10
+    )
+    assert (c1.start_ts, c1.close, c1.volume) == (3 * 3600, 60, 7)
+    assert c0.yes_bid_close is None  # no fake quotes
 
 
 def test_calibration_curve():

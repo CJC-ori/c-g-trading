@@ -531,14 +531,20 @@ def _pmap(
             except BaseException as exc:  # noqa: BLE001 - reported, not raised
                 yield it, None, exc
         return
-    with cf.ThreadPoolExecutor(max_workers=workers) as pool:
-        futures = {pool.submit(fn, it): it for it in items}
+    pool = cf.ThreadPoolExecutor(max_workers=workers)
+    futures = {pool.submit(fn, it): it for it in items}
+    try:
         for fut in cf.as_completed(futures):
             it = futures[fut]
             try:
                 yield it, fut.result(), None
             except BaseException as exc:  # noqa: BLE001
                 yield it, None, exc
+    finally:
+        # Callers stop early on row/size caps; drop the queued work instead of
+        # blocking on it (and instead of tearing down mid-flight generators,
+        # which surfaces as a spurious "generator ignored GeneratorExit").
+        pool.shutdown(wait=False, cancel_futures=True)
 
 
 def _over_budget(store: Store, limit_mb: float) -> bool:
