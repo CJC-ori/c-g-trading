@@ -43,13 +43,17 @@ early returns → 74¢ trough at 11:17pm ET → back to ~98¢ within two hours �
 resolved YES** (he won by ~1 point over Haley Stevens; ~$98M in ad spend,
 mostly against him). Chris called 98.5% "too high" *before* election night.
 
-Two honest wrinkles the verification surfaced (details in `docs/viability.md`):
+The instinct was monetizable three ways (details in `docs/viability.md`):
 
-- The naive expression of Chris's instinct — buy NO at 1.5¢ — would have
-  **lost 100%**. The instinct was monetizable two other ways: buying the
-  election-night dip (+24% in 5 hours after fees, with ~$230k of notional
-  actually trading near the trough), or better,
-- **the victory-margin markets were the real mispricing**: Kalshi priced
+- **Cheap NO + sell into the panic**: positions are tradeable until resolution,
+  so NO bought at ~1.5–2¢ pre-election and sold at the trough (NO ≈ 26¢) paid
+  ~11–14x net — you didn't need him to lose, only for the market to panic once.
+  The catch: in the no-scare world NO bleeds to 0 (total loss), and the trough
+  lasted ~3 minutes, so it takes resting limit orders — bot territory. Only
+  *holding NO to resolution* lost 100%.
+- **Buying the dip the other way**: YES at 77¢ → +24% in 5 hours after fees,
+  with ~$230k of notional actually trading near the trough.
+- **The victory-margin markets — the biggest mispricing**: Kalshi priced
   "wins by ≥15" at 62% that morning (polling said anywhere from tie to +15) and
   the bracket that actually happened (0–3%) at 2–5¢. NO on ≥15 paid ~+150%
   overnight. That's a *pre-event forecasting* edge, not a reflexes edge —
