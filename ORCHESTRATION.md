@@ -58,8 +58,14 @@ ORCHESTRATION.md
       price-only systematic (longshot/favorite bias, time-decay, election-night
       overcorrection/panic-dip); LLM forecaster vs market; ground-truth-data
       strategies (elections: FEC, poll aggregates); cross-venue divergence
-- [ ] P5 Iterate: backtest all variants, ablate, improve; guard against overfit
-      (train/test split by time and by market category)
+- [ ] P5 Tournament (per Chris's mid-run instruction): run a workflow tournament
+      between strategy variants — every variant backtested on the SAME train
+      window under identical harness settings; judge panel ranks on the SPEC.md
+      metrics + robustness; then an integration round folds the losers'
+      demonstrated strengths (signals, filters, sizing tweaks) into the winner;
+      adversarial verifier attacks each round's winner (lookahead, overfit,
+      fill optimism); loop until improvements go dry (2 consecutive rounds
+      without held-out-safe gains). Only final champions touch the test split.
 - [ ] P6 Final report + commit + push + draft PR
 
 ## Decisions log
