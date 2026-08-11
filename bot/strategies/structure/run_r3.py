@@ -101,36 +101,40 @@ def main() -> None:
         ("train", [e for e in events if (e.close_ts or 0) <= cut]),
         ("test", [e for e in events if (e.close_ts or 0) > cut]),
     ):
-        legs = {e.event_ticker: e.tickers for e in keep}
-        provider = build_provider(keep, args.store)
-        for name, factory in (
-            ("no_set_sweep", lambda: NoSetSweep(legs, size=args.size)),
-            ("bracket_fade", lambda: BracketFade(legs, size=args.size)),
-        ):
-            res = run_backtest(
-                provider,
-                factory(),
-                EngineConfig(
-                    risk=RiskConfig(), candle_period_s=3600,
-                    keep_events_in_memory=False, fee_schedule=fee_sched,
-                ),
-            )
-            pm = {
-                tk: v["net_pnl_cents"]
-                for tk, v in res.per_market.items()
-                if v["contracts_traded"]
-            }
+        for name, cls in (("no_set_sweep", NoSetSweep), ("bracket_fade", BracketFade)):
+            # One engine run PER EVENT: the engine advances every loaded
+            # market on every clock event, so a single 500-market hourly run
+            # is quadratic. Events are independent for a set arb anyway, and
+            # each gets the full bankroll (P&L is summed; the per-event and
+            # concentration stats below are what the verdict rests on).
+            net = fees = n_fills = n_orders = contracts = 0
+            pm: dict[str, int] = {}
             by_event: dict[str, int] = defaultdict(int)
-            for tk, v in res.per_market.items():
-                if v["contracts_traded"]:
-                    by_event[v["event_ticker"]] += v["net_pnl_cents"]
+            for ev in keep:
+                res = run_backtest(
+                    build_provider([ev], args.store),
+                    cls({ev.event_ticker: ev.tickers}, size=args.size),
+                    EngineConfig(
+                        risk=RiskConfig(), candle_period_s=3600,
+                        keep_events_in_memory=False, fee_schedule=fee_sched,
+                    ),
+                )
+                net += res.net_pnl_cents
+                fees += res.fees_cents
+                n_fills += len(res.fills)
+                n_orders += len(res.orders)
+                contracts += sum(f.count for f in res.fills)
+                for tk, v in res.per_market.items():
+                    if v["contracts_traded"]:
+                        pm[tk] = v["net_pnl_cents"]
+                        by_event[ev.event_ticker] += v["net_pnl_cents"]
             out["runs"][f"{name}|{split}"] = {
                 "n_events": len(keep),
-                "net_pnl_dollars": round(res.net_pnl_cents / 100, 2),
-                "fees_dollars": round(res.fees_cents / 100, 2),
-                "n_fills": len(res.fills),
-                "n_orders": len(res.orders),
-                "contracts": sum(f.count for f in res.fills),
+                "net_pnl_dollars": round(net / 100, 2),
+                "fees_dollars": round(fees / 100, 2),
+                "n_fills": n_fills,
+                "n_orders": n_orders,
+                "contracts": contracts,
                 "markets_traded": len(pm),
                 "events_traded": len(by_event),
                 "events_positive": sum(1 for v in by_event.values() if v > 0),

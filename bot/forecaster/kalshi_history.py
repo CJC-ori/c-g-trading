@@ -19,6 +19,7 @@ import time
 from pathlib import Path
 from typing import Sequence
 
+import certifi
 import requests
 
 from bot.backtest.dataport import SqliteHistoryProvider
@@ -82,7 +83,11 @@ def backfill_candles(
             for _ in range(max_attempts):
                 time.sleep(min_spacing_s)
                 try:
-                    r = requests.get(url, headers=UA, timeout=60)
+                    # api.elections.kalshi.com is tunneled (not MITM'd) by
+                    # the egress proxy, so the proxy CA bundle in
+                    # REQUESTS_CA_BUNDLE cannot verify it — use certifi.
+                    r = requests.get(url, headers=UA, timeout=60,
+                                     verify=certifi.where())
                 except requests.RequestException:
                     time.sleep(backoff)
                     backoff *= 1.8

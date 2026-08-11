@@ -3,51 +3,51 @@
   "base": {
     "pnl": {
       "bankroll_cents": 1000000,
-      "net_pnl_cents_gross_of_inference": -63816,
-      "net_pnl_cents_after_inference": -63816,
-      "net_pnl_pct_of_bankroll": -0.063816,
+      "net_pnl_cents_gross_of_inference": -58816,
+      "net_pnl_cents_after_inference": -58816,
+      "net_pnl_pct_of_bankroll": -0.058816,
       "fees_cents": 0,
       "inference_cost_cents": 0,
-      "avg_deployed_cents": 658.3098552804611,
+      "avg_deployed_cents": 590.3585740937863,
       "run_span_s": 4653069,
-      "annualized_return_on_avg_deployed": -657.0014627829673
+      "annualized_return_on_avg_deployed": -675.2222184661771
     },
     "brier": {
-      "n": 10,
-      "strategy": 0.34343328814710605,
-      "market_baseline": 0.04479,
-      "delta_brier": -0.29864328814710606,
+      "n": 8,
+      "strategy": 0.3720459902887858,
+      "market_baseline": 0.056353125,
+      "delta_brier": -0.3156928652887858,
       "delta_ci95": [
-        -0.45793120280099087,
-        -0.13935537349322125
+        -0.5086639957911608,
+        -0.12272173478641082
       ],
       "beats_baseline": false,
       "n_gate": 500,
       "meets_n_gate": false,
       "traded_subset": {
-        "n": 9,
-        "strategy": 0.3813339482060162,
-        "market_baseline": 0.049055555555555554,
-        "delta_brier": -0.3322783926504606,
+        "n": 7,
+        "strategy": 0.4248629392419102,
+        "market_baseline": 0.06348928571428572,
+        "delta_brier": -0.3613736535276245,
         "delta_ci95": [
-          -0.4943993346326784,
-          -0.17015745066824287
+          -0.5587614555218208,
+          -0.16398585153342832
         ],
         "beats_baseline": false,
         "gate_cents": 4.0
       },
       "trade_pnl": {
-        "n_markets_traded": 10,
-        "net_pnl_cents_after_fees": -63816,
-        "net_pnl_cents_after_fees_and_inference": -63816
+        "n_markets_traded": 8,
+        "net_pnl_cents_after_fees": -58816,
+        "net_pnl_cents_after_fees_and_inference": -58816
       },
       "flags": [
-        "n=10 < 500: below the forecast-strategy gate (minimum detectable dBrier at n=100 is ~0.0137, 3x the superforecaster edge)"
+        "n=8 < 500: below the forecast-strategy gate (minimum detectable dBrier at n=100 is ~0.0137, 3x the superforecaster edge)"
       ]
     },
     "calibration": {
-      "n": 10,
-      "ece": 0.3436112454750275,
+      "n": 8,
+      "ece": 0.5435906271536871,
       "curve": [
         {
           "bin": "[0.0,0.1)",
@@ -63,9 +63,9 @@
         },
         {
           "bin": "[0.3,0.4)",
-          "n": 2,
-          "mean_p_hat": 0.321157822191592,
-          "observed_freq": 0.5
+          "n": 1,
+          "mean_p_hat": 0.3301171605789111,
+          "observed_freq": 1.0
         },
         {
           "bin": "[0.5,0.6)",
@@ -75,9 +75,9 @@
         },
         {
           "bin": "[0.6,0.7)",
-          "n": 3,
-          "mean_p_hat": 0.6320240818188262,
-          "observed_freq": 0.6666666666666666
+          "n": 2,
+          "mean_p_hat": 0.6478290833907652,
+          "observed_freq": 1.0
         },
         {
           "bin": "[0.8,0.9)",
@@ -86,17 +86,17 @@
           "observed_freq": 0.0
         }
       ],
-      "reliability": 0.2343889183141902,
-      "resolution": 0.13333333333333336,
-      "uncertainty": 0.25,
-      "brier_from_decomposition": 0.35105558498085687
+      "reliability": 0.37163894194027647,
+      "resolution": 0.234375,
+      "uncertainty": 0.234375,
+      "brier_from_decomposition": 0.37163894194027647
     },
     "drawdown": {
-      "max_drawdown_cents": 75772,
-      "max_drawdown_frac_of_peak": 0.0748767732984438
+      "max_drawdown_cents": 135000,
+      "max_drawdown_frac_of_peak": 0.12544323275573693
     },
     "concentration": {
-      "n_markets_traded": 10,
+      "n_markets_traded": 8,
       "top5_share_of_net": null,
       "worst_market_loss_cents": -26000,
       "top5": [
@@ -109,44 +109,44 @@
           "net_pnl_cents": -732
         },
         {
-          "ticker": "KXHIGHMIA-26JUL06-B91.5",
-          "net_pnl_cents": -3000
-        },
-        {
-          "ticker": "KXHIGHNY-26JUL02-B101.5",
-          "net_pnl_cents": -3000
+          "ticker": "KXHIGHMIA-26MAY31-T93",
+          "net_pnl_cents": -1000
         },
         {
           "ticker": "KXHIGHMIA-26JUL06-B93.5",
           "net_pnl_cents": -4000
+        },
+        {
+          "ticker": "KXHIGHMIA-26JUL06-B91.5",
+          "net_pnl_cents": -7000
         }
       ]
     },
     "trade_stats": {
-      "n_decision_calls": 2049,
-      "n_intents": 10,
-      "n_orders": 10,
-      "contracts_requested": 10000,
-      "contracts_ordered": 7568,
-      "contracts_filled": 7568,
+      "n_decision_calls": 2448,
+      "n_intents": 8,
+      "n_orders": 8,
+      "contracts_requested": 8000,
+      "contracts_ordered": 5568,
+      "contracts_filled": 5568,
       "fill_rate_vs_ordered": 1.0,
-      "fill_rate_vs_requested": 0.7568,
+      "fill_rate_vs_requested": 0.696,
       "order_any_fill_rate": 1.0,
       "taker_contracts": 0,
-      "maker_contracts": 7568,
+      "maker_contracts": 5568,
       "maker_share": 1.0,
       "maker_fill_rate": 1.0,
       "maker_fill_rate_sanity_band": [
         0.4,
         0.5
       ],
-      "avg_edge_at_entry_cents": 48.20700920118279,
-      "avg_holding_period_s": 45098.6,
+      "avg_edge_at_entry_cents": 50.030421944437805,
+      "avg_holding_period_s": 41471.0,
       "opportunity_lifetime_s": {
-        "n": 10,
-        "p25": 259,
-        "median": 2970,
-        "p75": 25200
+        "n": 8,
+        "p25": 322,
+        "median": 14400,
+        "p75": 28800
       },
       "flags": [
         "maker fill rate 100% > 60% \u2014 the fill model is lying (sanity band is 40-50%); do not trust maker P&L"
@@ -154,8 +154,8 @@
     },
     "cost_ratios": {
       "inference_cost_cents": 0,
-      "net_pnl_cents": -63816,
-      "notional_traded_cents": 69916,
+      "net_pnl_cents": -58816,
+      "notional_traded_cents": 64916,
       "inference_over_net_pnl": null,
       "inference_over_net_pnl_target": 0.2,
       "inference_over_notional": 0.0,
@@ -166,18 +166,18 @@
       "time": {
         "split_ts": 1782081041,
         "train": {
-          "net_pnl_cents": -8244,
-          "n_markets": 4
+          "net_pnl_cents": -1244,
+          "n_markets": 3
         },
         "test": {
-          "net_pnl_cents": -55572,
-          "n_markets": 6
+          "net_pnl_cents": -57572,
+          "n_markets": 5
         }
       },
       "category": {
         "Climate and Weather": {
-          "net_pnl_cents": -63816,
-          "n_markets": 10
+          "net_pnl_cents": -58816,
+          "n_markets": 8
         }
       }
     }
@@ -185,34 +185,34 @@
   "capacity_curve": [
     {
       "depth_multiplier": 1.0,
-      "net_pnl_cents_after_inference": -63816,
-      "contracts_filled": 7568
+      "net_pnl_cents_after_inference": -58816,
+      "contracts_filled": 5568
     },
     {
       "depth_multiplier": 3.0,
-      "net_pnl_cents_after_inference": -87498,
-      "contracts_filled": 8707
+      "net_pnl_cents_after_inference": -82498,
+      "contracts_filled": 6707
     },
     {
       "depth_multiplier": 10.0,
-      "net_pnl_cents_after_inference": -96977,
-      "contracts_filled": 9224
+      "net_pnl_cents_after_inference": -91977,
+      "contracts_filled": 7224
     }
   ],
   "fee_stress": {
     "multiplier": 1.5,
-    "net_pnl_cents_after_inference": -63816,
+    "net_pnl_cents_after_inference": -58816,
     "still_positive": false
   },
   "brier_vs_market": {
     "pooled": {
       "n": 61,
       "brier_ours": 0.10617557855335695,
-      "brier_market": 0.002344262295081969,
-      "delta_market_minus_ours": -0.10383131625827496,
+      "brier_market": 0.00223073770491803,
+      "delta_market_minus_ours": -0.10394484084843893,
       "delta_ci95": [
-        -0.15754806385834239,
-        -0.050114568658207535
+        -0.15763221438246883,
+        -0.050257467314409034
       ],
       "we_beat_market": false
     },
@@ -220,23 +220,23 @@
       "pm4": {
         "n": 61,
         "brier_ours": 0.10617557855335695,
-        "brier_market": 0.002344262295081969,
-        "delta_market_minus_ours": -0.10383131625827496,
+        "brier_market": 0.00223073770491803,
+        "delta_market_minus_ours": -0.10394484084843893,
         "delta_ci95": [
-          -0.15754806385834239,
-          -0.050114568658207535
+          -0.15763221438246883,
+          -0.050257467314409034
         ],
         "we_beat_market": false
       }
     },
     "traded_subset": {
-      "n": 10,
-      "brier_ours": 0.34343328814710605,
-      "brier_market": 0.0132525,
-      "delta_market_minus_ours": -0.33018078814710605,
+      "n": 8,
+      "brier_ours": 0.3720459902887858,
+      "brier_market": 0.01676875,
+      "delta_market_minus_ours": -0.3552772402887858,
       "delta_ci95": [
-        -0.5081576314067864,
-        -0.15220394488742567
+        -0.5714192205443837,
+        -0.139135260033188
       ],
       "we_beat_market": false
     }
@@ -291,25 +291,18 @@
   },
   "per_city": {
     "KXHIGHLAX": {
-      "net_pnl_cents": -8000,
+      "net_pnl_cents": -9000,
       "fees_cents": 0,
       "n_markets_traded": 1,
       "contracts": 1000,
       "n_dates": 1
     },
     "KXHIGHMIA": {
-      "net_pnl_cents": -15000,
+      "net_pnl_cents": -12000,
       "fees_cents": 0,
-      "n_markets_traded": 4,
-      "contracts": 4000,
+      "n_markets_traded": 3,
+      "contracts": 3000,
       "n_dates": 2
-    },
-    "KXHIGHNY": {
-      "net_pnl_cents": -3000,
-      "fees_cents": 0,
-      "n_markets_traded": 1,
-      "contracts": 1000,
-      "n_dates": 1
     },
     "KXHIGHTBOS": {
       "net_pnl_cents": 488,
@@ -342,17 +335,17 @@
   },
   "kill_criteria": {
     "a_postfee_pnl": {
-      "net_pnl_cents": -63816,
-      "n_resolved_days": 7,
-      "n_cities": 7,
+      "net_pnl_cents": -58816,
+      "n_resolved_days": 6,
+      "n_cities": 6,
       "fired": false,
       "note": "fires only with >=60 days across >=6 cities of evidence"
     },
     "b_brier_vs_market": {
-      "delta_market_minus_ours": -0.10383131625827496,
+      "delta_market_minus_ours": -0.10394484084843893,
       "ci95": [
-        -0.15754806385834239,
-        -0.050114568658207535
+        -0.15763221438246883,
+        -0.050257467314409034
       ],
       "fired": true
     },
@@ -361,7 +354,7 @@
       "fired": true
     },
     "d_capacity": {
-      "avg_deployed_usd_per_day_per_city": 14.268571428571429,
+      "avg_deployed_usd_per_day_per_city": 18.03222222222222,
       "fired": true,
       "note": ">$200/day/city deployable required"
     }
