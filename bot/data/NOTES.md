@@ -455,3 +455,32 @@ markets chosen for volume and outcome variety — `KXTRUMPATTEND` (51,882),
 * `test_smoke.py` — pytest smoke tests over the local DB, skipped if absent.
 
 The DB lives at `data/kalshi.db`; `data/` is gitignored.
+
+---
+
+## Appendix: backtest-harness access paths and indexing (2026-08-11)
+
+`bot/backtest/dataport.SqliteHistoryProvider` reads this store read-only
+(`mode=ro`, WAL-safe against a live pull). Its hot queries and the indexes
+that serve them:
+
+| query | served by |
+|---|---|
+| candles by `(ticker, period_interval)` ordered by `ts` | the `candlesticks` PRIMARY KEY `(ticker, period_interval, ts)` — WITHOUT ROWID, so this is a pure index-range scan |
+| trades by `ticker` ordered by `ts` | `idx_trades_ticker_ts` |
+| market/settlement lookups by `ticker` | `markets` PK |
+| universe scans (category/result/volume/series prefix) | full scan of `markets` (173k rows, ~0.2s) with `idx_markets_category` / `idx_markets_result` assisting |
+
+**No additional indexes were needed.** Measured on the real 940MB DB: the
+full research-universe HoldFavorite baseline (278 markets, 296k decision
+points over 322k hourly candles) runs in ~55s end to end, of which data
+loading is a small fraction — the bound is the Python replay loop, not
+SQLite. (The engine gained a fast-path skip for markets with no pending
+data at an event timestamp, which is what makes multi-market replays
+scale; before that the loop was O(events x markets).)
+
+Unit/vocabulary mapping decisions made at the provider boundary (integer-
+cent conversion with conservative directional rounding, scalar settlements,
+`''` = never-settled, no-trade candle OHLC synthesized from bid/ask mids)
+are documented in `bot/backtest/dataport.py`'s section header and verified
+by `python -m bot.backtest.validate_wiring` against this DB.

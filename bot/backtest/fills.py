@@ -211,12 +211,22 @@ def apply_fill_to_position(
 # Settlement
 # ---------------------------------------------------------------------------
 
-def settlement_payout_cents(qty: int, cost_basis_cents: int, result: Outcome) -> int:
+def settlement_payout_cents(
+    qty: int,
+    cost_basis_cents: int,
+    result: Outcome,
+    settlement_value_cents: int | None = None,
+) -> int:
     """Cash paid out at settlement for an open position.
 
-    yes  -> 100c per long YES contract (long NO gets nothing).
-    no   -> 100c per long NO contract (long YES gets nothing).
-    void -> refund at cost (the premium actually paid).
+    yes    -> 100c per long YES contract (long NO gets nothing).
+    no     -> 100c per long NO contract (long YES gets nothing).
+    void   -> refund at cost (the premium actually paid).
+    scalar -> settlement_value_cents per long YES contract,
+              (100 - settlement_value_cents) per long NO contract.
+              This is Kalshi's fractional-payout outcome (ties/pushes,
+              settlement_value_dollars in the API); "yes" is the v=100
+              special case and "no" the v=0 one.
     """
     if result == "void":
         return cost_basis_cents
@@ -224,4 +234,11 @@ def settlement_payout_cents(qty: int, cost_basis_cents: int, result: Outcome) ->
         return 100 * qty if qty > 0 else 0
     if result == "no":
         return -100 * qty if qty < 0 else 0
+    if result == "scalar":
+        if settlement_value_cents is None:
+            raise ValueError("scalar settlement requires settlement_value_cents")
+        v = settlement_value_cents
+        if not (0 <= v <= 100):
+            raise ValueError(f"settlement value out of range: {v}")
+        return qty * v if qty > 0 else -qty * (100 - v)
     raise ValueError(f"unknown settlement result: {result}")

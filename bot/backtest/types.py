@@ -20,7 +20,7 @@ Action = Literal["buy", "sell"]
 # "rest": rest until canceled (canceled automatically at market close).
 # "ioc":  this tick only - fills in the immediate taker window, remainder dies.
 Tif = Literal["rest", "ioc"]
-Outcome = Literal["yes", "no", "void"]
+Outcome = Literal["yes", "no", "void", "scalar"]
 
 FAR_FUTURE = 2**62
 
@@ -72,9 +72,18 @@ class MarketInfo:
 
 @dataclass(frozen=True, slots=True)
 class SettlementResult:
+    """Terminal outcome of a market.
+
+    result "scalar" is a real Kalshi outcome (~0.3% of settled markets,
+    mostly sports pushes/ties): the contract pays a *fractional* value per
+    YES contract, carried here as settlement_value_cents (0..100, integer
+    cents; NO contracts pay the 100-complement). For "yes"/"no" the field
+    is implied (100/0) and may be left None.
+    """
     ticker: str
     result: Outcome
     settled_ts: int
+    settlement_value_cents: int | None = None
 
 
 # ---------------------------------------------------------------------------

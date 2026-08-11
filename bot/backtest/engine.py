@@ -378,6 +378,18 @@ class _Engine:
 
     def _advance_market(self, ms: _MarketState, t: int) -> None:
         """Replay this market's data with timestamps <= t against live orders."""
+        # Fast path: nothing pending at or before t. This is the overwhelmingly
+        # common case in multi-market runs (every event advances every market)
+        # and makes full-universe replays tractable. Semantics are identical:
+        # with no data <= t the loop below would only fall through to the
+        # taker-window expiry check, which we still perform.
+        if (ms.ti >= len(ms.trades) or ms.trade_ts[ms.ti] > t) and (
+            ms.ci >= len(ms.candles) or ms.candle_ends[ms.ci] > t
+        ):
+            for o in ms.orders:
+                if o.state == _TAKER and (o.window_end or 0) <= t:
+                    self._finalize_taker_window(ms, o, t)
+            return
         vf = self.risk.depth_cap_frac
         vm = self.risk.depth_multiplier
         while True:
@@ -417,7 +429,15 @@ class _Engine:
             else:
                 candle = ms.candles[ms.ci]
                 ms.ci += 1
-                ms.mark = candle.close
+                # Mark to the bid/ask midpoint when the candle carries quotes:
+                # on Kalshi ~86.5% of hourly candles have no trade at all, so
+                # the trade close is stale most of the time while bid/ask OHLC
+                # is always present. (Symmetric synthetic candles keep
+                # mid == close, so this changes nothing for close-only data.)
+                if candle.yes_bid_close is not None and candle.yes_ask_close is not None:
+                    ms.mark = (candle.yes_bid_close + candle.yes_ask_close) // 2
+                else:
+                    ms.mark = candle.close
                 if not ms.has_trades:  # candles are the (conservative) fill stream
                     for o in ms.live_orders():
                         if (
@@ -604,7 +624,9 @@ class _Engine:
     def _handle_settlement(self, ms: _MarketState, t: int) -> None:
         s = ms.settlement
         assert s is not None
-        payout = fills.settlement_payout_cents(ms.qty, ms.basis, s.result)
+        payout = fills.settlement_payout_cents(
+            ms.qty, ms.basis, s.result, s.settlement_value_cents
+        )
         realized = payout - ms.basis
         self.cash += payout
         ms.realized += realized

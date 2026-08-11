@@ -296,3 +296,29 @@ class TestSettlement:
     def test_unknown_result_raises(self):
         with pytest.raises(ValueError):
             settlement_payout_cents(1, 50, "maybe")
+
+    # -- scalar (fractional payout: Kalshi pushes/ties) ---------------------
+
+    def test_scalar_pays_value_to_long_yes(self):
+        assert settlement_payout_cents(10, 600, "scalar", 50) == 500
+
+    def test_scalar_pays_complement_to_long_no(self):
+        assert settlement_payout_cents(-10, 700, "scalar", 50) == 500
+        assert settlement_payout_cents(-10, 700, "scalar", 30) == 700
+
+    def test_scalar_extremes_match_yes_no(self):
+        assert settlement_payout_cents(10, 600, "scalar", 100) == settlement_payout_cents(
+            10, 600, "yes"
+        )
+        assert settlement_payout_cents(10, 600, "scalar", 0) == settlement_payout_cents(
+            10, 600, "no"
+        )
+
+    def test_scalar_flat_position(self):
+        assert settlement_payout_cents(0, 0, "scalar", 50) == 0
+
+    def test_scalar_requires_value(self):
+        with pytest.raises(ValueError):
+            settlement_payout_cents(1, 50, "scalar")
+        with pytest.raises(ValueError):
+            settlement_payout_cents(1, 50, "scalar", 101)

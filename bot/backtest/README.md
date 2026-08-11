@@ -12,8 +12,11 @@ Implements `SPEC.md` (the contract; read it first). Python 3.11, stdlib only.
 | `risk.py` | harness-enforced sizing: fee-aware fractional Kelly, per-market/event/total caps, depth cap, no-borrowing floor |
 | `engine.py` | the replay loop: decision clock, point-in-time `MarketView`s, risk clamps, order lifecycle, settlements, inference cost, JSONL event log |
 | `metrics.py` | SPEC §6 metrics + `report.json` / `report.md` writer, capacity-curve and fee-stress re-runs |
-| `dataport.py` | `HistoryProvider` protocol, `InMemoryHistoryProvider` (tests), `SqliteHistoryProvider` (stub for bot/data) |
+| `dataport.py` | `HistoryProvider` protocol, `InMemoryHistoryProvider` (tests), `SqliteHistoryProvider` (wired to the real `data/kalshi.db`; unit conversion + settlement vocabulary documented in its section header) |
+| `universe.py` | reusable market-universe filters over the DB; `research_universe()` is the documented default (settled, non-sports/crypto, no parlays/HF ladders, volume >= 1000 contracts, hourly candles present) |
+| `validate_wiring.py` | validation gauntlet vs the real DB: Michigan-primary replay, HoldFavorite baseline, exact cash-conservation check, spread/rounding reality checks (`python -m bot.backtest.validate_wiring`) |
 | `testkit.py` | builders + deterministic synthetic history for tests/smoke runs |
+| `test_realdata.py` | fast integration pins against `data/kalshi.db` (skipped when absent) |
 
 Reference strategies proving the loop live in `bot/strategies/baseline.py`
 (`HoldFavorite`, `CoinFlip`).
@@ -40,13 +43,22 @@ print(open("runs/hold-favorite/report.md").read())
 PY
 ```
 
-Against real data once `bot/data/` lands:
+Against real data (universe selection keeps runs comparable across
+strategies — always pass an explicit ticker list):
 
 ```python
 from bot.backtest.dataport import SqliteHistoryProvider
+from bot.backtest.universe import research_universe
+
 provider = SqliteHistoryProvider("data/kalshi.db")
-report = full_report(provider, lambda: MyStrategy(), out_dir="runs/my-strategy")
+report = full_report(
+    provider, lambda: MyStrategy(), out_dir="runs/my-strategy",
+    market_filters={"tickers": research_universe()},
+)
 ```
+
+A full-universe (278-market, ~296k decision) HoldFavorite replay takes ~55s;
+`full_report` runs base + 2 capacity + 1 fee-stress passes, so budget ~4 min.
 
 Full auditability: pass `EngineConfig(event_log_path="runs/x/events.jsonl")`
 to get every decision/intent/clamp/order/fill/cancel/settlement as JSONL.
@@ -111,20 +123,41 @@ holding period), 60/40 time split and category split, capacity curve
 (fresh runs at 1×/3×/10× depth multiplier), and fee stress (×1.5 re-run).
 Reruns take a `strategy_factory` so state never leaks between runs.
 
-## What remains to wire (once bot/data/ lands)
+## Real-data wiring decisions (validated by `validate_wiring.py`)
 
-- `dataport.SqliteHistoryProvider`: written against the *assumed* schema
-  (`markets` / `candlesticks` / `trades`, see `TODO(wire)` markers and the
-  schema fixture in `test_dataport.py`). Validate table/column names, units
-  (cents vs dollars, unix vs ISO times), and the settlement-result vocabulary
-  against the real `data/kalshi.db`, then run the suite's sqlite tests over a
-  real fixture.
-- `fees.py TODO(verify)`: confirm per-category multipliers and the
-  per-contract vs per-order ceil against Kalshi's official fee schedule
-  (current implementation is the conservative upper bound).
-- Bid/ask estimates assume bot/data stores candle-close bid/ask when Kalshi
-  provides them; if absent the ±1c fallback stays (conservative-ish for
-  liquid markets, optimistic for very wide books — revisit with real data).
+- **Units.** The harness stays integer-cent; the store's decimal-dollar,
+  deci-cent-tick prices are converted at the `SqliteHistoryProvider`
+  boundary with conservative directional rounding: bids floor / asks ceil
+  (never a tighter book than reality), candle-price lows ceil / highs floor
+  (the strictly-through maker rule can only under-fill), trade prints and
+  closes round to nearest (unbiased marks), sizes/volumes floor. ~5% of
+  quotes and ~32% of prints carry sub-cent parts; mean |delta| ~0.24c on
+  those, max 0.5c, pessimistic wherever it touches execution.
+- **Settlement vocabulary** (`markets.result`): `yes`/`no` map directly;
+  `scalar` (483 markets, sports pushes/ties) is a fractional payout —
+  `SettlementResult.settlement_value_cents` pays v per YES contract and
+  100−v per NO; `''` means *not settled* (active, or closed-without-
+  settling zombies) → `settlement()` returns `None` and no payout event
+  exists. `status='determined'` (outcome known, payout pending) counts as
+  settled with `close_time` standing in for its NULL `settlement_ts`.
+- **No-trade candles** (86.5% of all candles): the API omits trade OHLC;
+  the provider synthesizes OHLC from bid/ask midpoints and their volume is
+  0, so they can never produce a fill — they only drive clocks, quotes and
+  marks. The engine marks to the bid/ask mid whenever a candle carries
+  quotes (100% of real candles do), so the ±1c fallback is effectively dead
+  code on real data — which matters, because 57% of real candles have
+  spreads wider than the 2c the fallback would assume.
+- **Trade tape**: exists only from 2026-05-25 and only for explicitly
+  pulled markets (22 so far). When a market has a tape, trades are its fill
+  stream from the engine's perspective for the *whole* replay — resting
+  orders placed before the tape's global start can only fill once it
+  begins. Conservative, but be aware when backtesting long-dated markets.
+
+Still open:
+
+- `fees.py TODO(verify)`: per-category multipliers and per-contract vs
+  per-order ceil vs Kalshi's official fee schedule (current implementation
+  is the conservative upper bound).
 - LLM-strategy contamination gate (only markets resolving after 2026-02-01)
-  is a `market_filters`/provider concern; enforce at run configuration when
-  wiring forecaster strategies.
+  is a run-configuration concern (`universe.UniverseConfig(close_after=...)`
+  or settled-window filters); enforce when wiring forecaster strategies.
