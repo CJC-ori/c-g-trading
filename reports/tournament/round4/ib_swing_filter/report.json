@@ -1,0 +1,408 @@
+{
+ "label": "ib_swing_filter",
+ "description": "RUNNER-UP ib_swing_filter: R5-6h, entries blocked within 24h of a >=20c/24h adverse swing (X20_T24)",
+ "fee_mode": "exact-per-series",
+ "n_markets_replayed": 48247,
+ "n_shards": 4,
+ "base": {
+  "net_pnl_cents_after_inference": -203513,
+  "fees_cents": 795,
+  "contracts_filled": 233147,
+  "concentration": {
+   "n_markets_traded": 1158,
+   "top5_share_of_net": null,
+   "worst_market_loss_cents": -49980,
+   "top5": [
+    {
+     "ticker": "KXAAAGASD-26AUG06-4.070",
+     "net_pnl_cents": 3250
+    },
+    {
+     "ticker": "KXAAAGASW-26APR20-4.050",
+     "net_pnl_cents": 3250
+    },
+    {
+     "ticker": "KXARREST-27JAN-JCOM",
+     "net_pnl_cents": 3250
+    },
+    {
+     "ticker": "KXWTI-26AUG1014-T79.99",
+     "net_pnl_cents": 3250
+    },
+    {
+     "ticker": "KXWTI-26JUL2014-T82.99",
+     "net_pnl_cents": 3250
+    }
+   ]
+  }
+ },
+ "capacity_curve": [
+  {
+   "depth_multiplier": 1.0,
+   "net_pnl_cents_after_inference": -203513,
+   "contracts_filled": 233147
+  },
+  {
+   "depth_multiplier": 3.0,
+   "net_pnl_cents_after_inference": null,
+   "contracts_filled": null
+  },
+  {
+   "depth_multiplier": 10.0,
+   "net_pnl_cents_after_inference": null,
+   "contracts_filled": null
+  }
+ ],
+ "fee_stress": {
+  "multiplier": 1.5,
+  "net_pnl_cents_after_inference": null,
+  "still_positive": null
+ },
+ "runs_missing": [
+  "cap3",
+  "cap10",
+  "stress"
+ ],
+ "inference_stress": {
+  "multiplier": 2.0,
+  "inference_cost_cents": 0,
+  "net_pnl_cents_after_inference": -203513,
+  "still_positive": false
+ },
+ "fill_stats": {
+  "n_maker_orders": 4841,
+  "n_taker_orders": 0,
+  "maker_order_fill_rate": 0.23920677545961577,
+  "maker_contract_fill_rate": 0.22616769121674254,
+  "taker_order_fill_rate": null,
+  "taker_contract_fill_rate": null,
+  "maker_contracts_filled": 233147,
+  "taker_contracts_filled": 0
+ },
+ "merge_diagnostics": {
+  "s0of4:base": {
+   "clamp_reason_counts": {
+    "kelly": 215,
+    "per-market-cap": 205,
+    "per-event-cap": 10
+   },
+   "max_concurrent_deployed_cents": 280753,
+   "final_cash_cents": 798646
+  },
+  "s1of4:base": {
+   "clamp_reason_counts": {
+    "kelly": 230,
+    "per-market-cap": 232,
+    "per-event-cap": 10
+   },
+   "max_concurrent_deployed_cents": 338197,
+   "final_cash_cents": 1078234
+  },
+  "s2of4:base": {
+   "clamp_reason_counts": {
+    "per-market-cap": 247,
+    "kelly": 255,
+    "per-event-cap": 16
+   },
+   "max_concurrent_deployed_cents": 296845,
+   "final_cash_cents": 929909
+  },
+  "s3of4:base": {
+   "clamp_reason_counts": {
+    "kelly": 283,
+    "per-market-cap": 262,
+    "per-event-cap": 14
+   },
+   "max_concurrent_deployed_cents": 210332,
+   "final_cash_cents": 989698
+  }
+ },
+ "episode_stats": {
+  "n": 1158,
+  "n_clusters": 767,
+  "mean": -0.013958361933851278,
+  "se": 0.008736962248140996,
+  "ci95_lo": -0.03108280794020763,
+  "ci95_hi": 0.003166084072505076,
+  "distribution": {
+   "min": -1.0053763440860215,
+   "p25": 0.02040816326530612,
+   "median": 0.041666666666666664,
+   "p75": 0.06382978723404255,
+   "max": 0.1111111111111111,
+   "sd": 0.2537577985173666,
+   "frac_positive": 0.9369602763385146
+  },
+  "dollar_weighted_return": -0.009160713483519826,
+  "total_basis_cents": 22215846,
+  "total_net_pnl_cents": -203513
+ },
+ "per_category": {
+  "Climate and Weather": {
+   "n": 339,
+   "n_clusters": 275,
+   "mean": -0.027347543836673493,
+   "se": 0.014008840672625408,
+   "ci95_lo": -0.05480487155501929,
+   "ci95_hi": 0.0001097838816723068,
+   "distribution": {
+    "min": -1.0,
+    "p25": 0.02040816326530612,
+    "median": 0.030927835051546393,
+    "p75": 0.05263157894736842,
+    "max": 0.1111111111111111,
+    "sd": 0.2639581659601151,
+    "frac_positive": 0.9321533923303835
+   },
+   "dollar_weighted_return": -0.05741670833143948,
+   "total_basis_cents": 5280240,
+   "total_net_pnl_cents": -303174
+  },
+  "Commodities": {
+   "n": 155,
+   "n_clusters": 65,
+   "mean": -0.024748254560139103,
+   "se": 0.036351190216939194,
+   "ci95_lo": -0.09599658738533992,
+   "ci95_hi": 0.04650007826506172,
+   "distribution": {
+    "min": -1.0,
+    "p25": 0.030927835051546393,
+    "median": 0.05263157894736842,
+    "p75": 0.07526881720430108,
+    "max": 0.1111111111111111,
+    "sd": 0.2848329391271741,
+    "frac_positive": 0.9225806451612903
+   },
+   "dollar_weighted_return": 0.004502536020925199,
+   "total_basis_cents": 3139564,
+   "total_net_pnl_cents": 14136
+  },
+  "Companies": {
+   "n": 8,
+   "n_clusters": 2,
+   "mean": 0.057520405370317516,
+   "se": 0.0015773454659312614,
+   "ci95_lo": 0.054428808257092245,
+   "ci95_hi": 0.06061200248354279,
+   "distribution": {
+    "min": 0.02040816326530612,
+    "p25": 0.041666666666666664,
+    "median": 0.05263157894736842,
+    "p75": 0.08695652173913043,
+    "max": 0.1111111111111111,
+    "sd": 0.029669326577334714,
+    "frac_positive": 1.0
+   },
+   "dollar_weighted_return": 0.05722962066795755,
+   "total_basis_cents": 328973,
+   "total_net_pnl_cents": 18827
+  },
+  "Economics": {
+   "n": 276,
+   "n_clusters": 176,
+   "mean": 0.017644548819930436,
+   "se": 0.014450086295602708,
+   "ci95_lo": -0.01067762031945087,
+   "ci95_hi": 0.045966717959311745,
+   "distribution": {
+    "min": -1.0053763440860215,
+    "p25": 0.02040816326530612,
+    "median": 0.041666666666666664,
+    "p75": 0.07526881720430108,
+    "max": 0.1111111111111111,
+    "sd": 0.18972467597785808,
+    "frac_positive": 0.967391304347826
+   },
+   "dollar_weighted_return": 0.023599972194730902,
+   "total_basis_cents": 5998863,
+   "total_net_pnl_cents": 141573
+  },
+  "Elections": {
+   "n": 95,
+   "n_clusters": 57,
+   "mean": 0.00900395146293393,
+   "se": 0.025682292328408473,
+   "ci95_lo": -0.041333341500746676,
+   "ci95_hi": 0.05934124442661454,
+   "distribution": {
+    "min": -1.0,
+    "p25": 0.02040816326530612,
+    "median": 0.041666666666666664,
+    "p75": 0.07526881720430108,
+    "max": 0.1111111111111111,
+    "sd": 0.21471986635543636,
+    "frac_positive": 0.9578947368421052
+   },
+   "dollar_weighted_return": 0.01808032842515601,
+   "total_basis_cents": 2230767,
+   "total_net_pnl_cents": 40333
+  },
+  "Entertainment": {
+   "n": 2,
+   "n_clusters": 1,
+   "mean": 0.02040816326530612,
+   "se": 0.0,
+   "ci95_lo": 0.02040816326530612,
+   "ci95_hi": 0.02040816326530612,
+   "distribution": {
+    "min": 0.02040816326530612,
+    "p25": 0.02040816326530612,
+    "median": 0.02040816326530612,
+    "p75": 0.02040816326530612,
+    "max": 0.02040816326530612,
+    "sd": 0.0,
+    "frac_positive": 1.0
+   },
+   "dollar_weighted_return": 0.02040816326530612,
+   "total_basis_cents": 99960,
+   "total_net_pnl_cents": 2040
+  },
+  "Financials": {
+   "n": 69,
+   "n_clusters": 46,
+   "mean": -0.134959329607058,
+   "se": 0.056345167546951395,
+   "ci95_lo": -0.24539585799908276,
+   "ci95_hi": -0.024522801215033266,
+   "distribution": {
+    "min": -1.0,
+    "p25": 0.02040816326530612,
+    "median": 0.06382978723404255,
+    "p75": 0.08695652173913043,
+    "max": 0.1111111111111111,
+    "sd": 0.4209514645665286,
+    "frac_positive": 0.782608695652174
+   },
+   "dollar_weighted_return": -0.1308462623777505,
+   "total_basis_cents": 1161661,
+   "total_net_pnl_cents": -151999
+  },
+  "Politics": {
+   "n": 198,
+   "n_clusters": 133,
+   "mean": 0.0020112987056944043,
+   "se": 0.017124676992395806,
+   "ci95_lo": -0.031553068199401374,
+   "ci95_hi": 0.03557566561079019,
+   "distribution": {
+    "min": -1.0,
+    "p25": 0.02040816326530612,
+    "median": 0.041666666666666664,
+    "p75": 0.06382978723404255,
+    "max": 0.1111111111111111,
+    "sd": 0.22116268986528462,
+    "frac_positive": 0.9545454545454546
+   },
+   "dollar_weighted_return": 0.014691764255015378,
+   "total_basis_cents": 3611343,
+   "total_net_pnl_cents": 53057
+  },
+  "Science and Technology": {
+   "n": 15,
+   "n_clusters": 11,
+   "mean": 0.04204799096272865,
+   "se": 0.006733319368146137,
+   "ci95_lo": 0.028850685001162217,
+   "ci95_hi": 0.05524529692429508,
+   "distribution": {
+    "min": 0.020041718344796483,
+    "p25": 0.02040816326530612,
+    "median": 0.030927835051546393,
+    "p75": 0.05263157894736842,
+    "max": 0.08695652173913043,
+    "sd": 0.022170402525406023,
+    "frac_positive": 1.0
+   },
+   "dollar_weighted_return": 0.03264672980833768,
+   "total_basis_cents": 335225,
+   "total_net_pnl_cents": 10944
+  },
+  "World": {
+   "n": 1,
+   "n_clusters": 1,
+   "mean": -1.0,
+   "se": null,
+   "ci95_lo": null,
+   "ci95_hi": null,
+   "distribution": {
+    "min": -1.0,
+    "p25": -1.0,
+    "median": -1.0,
+    "p75": -1.0,
+    "max": -1.0,
+    "sd": null,
+    "frac_positive": 0.0
+   },
+   "dollar_weighted_return": -1.0,
+   "total_basis_cents": 29250,
+   "total_net_pnl_cents": -29250
+  }
+ },
+ "f2_breakout": {
+  "flb_pull_window_start_ts": 1779708761,
+  "clean": {
+   "n": 719,
+   "n_clusters": 508,
+   "mean": -0.012716835384912611,
+   "se": 0.009913824821662068,
+   "ci95_lo": -0.032147932035370266,
+   "ci95_hi": 0.006714261265545043,
+   "distribution": {
+    "min": -1.0053763440860215,
+    "p25": 0.02040816326530612,
+    "median": 0.030927835051546393,
+    "p75": 0.06382978723404255,
+    "max": 0.1111111111111111,
+    "sd": 0.24455832517576725,
+    "frac_positive": 0.9429763560500696
+   },
+   "dollar_weighted_return": -0.01656279610012506,
+   "total_basis_cents": 13476227,
+   "total_net_pnl_cents": -223204
+  },
+  "contaminated": {
+   "n": 439,
+   "n_clusters": 259,
+   "mean": -0.015991750518559486,
+   "se": 0.016372739559073226,
+   "ci95_lo": -0.04808232005434301,
+   "ci95_hi": 0.016098819017224035,
+   "distribution": {
+    "min": -1.0,
+    "p25": 0.02040816326530612,
+    "median": 0.05263157894736842,
+    "p75": 0.07526881720430108,
+    "max": 0.1111111111111111,
+    "sd": 0.2684179129750533,
+    "frac_positive": 0.9271070615034168
+   },
+   "dollar_weighted_return": 0.00225307304586161,
+   "total_basis_cents": 8739619,
+   "total_net_pnl_cents": 19691
+  },
+  "flb_train_ticker_episodes": {
+   "n": 9,
+   "n_clusters": 8,
+   "mean": 0.049497275688481175,
+   "se": 0.008441544161513265,
+   "ci95_lo": 0.03295184913191518,
+   "ci95_hi": 0.06604270224504717,
+   "distribution": {
+    "min": 0.02040816326530612,
+    "p25": 0.030927835051546393,
+    "median": 0.05263157894736842,
+    "p75": 0.05263157894736842,
+    "max": 0.0989010989010989,
+    "sd": 0.025575567337887715,
+    "frac_positive": 1.0
+   },
+   "dollar_weighted_return": 0.061866556137805805,
+   "total_basis_cents": 101331,
+   "total_net_pnl_cents": 6269
+  },
+  "n_clean": 719,
+  "n_contaminated": 439,
+  "n_flb_train_ticker_episodes": 9
+ }
+}

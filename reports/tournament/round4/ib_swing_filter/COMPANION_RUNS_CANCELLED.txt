@@ -1,0 +1,10 @@
+Cancelled 2026-08-12 ~17:45Z, after all 4 BASE shards completed.
+Reason: the base run determined the gate verdict (net -203,513c < 0 fails
+'Net P&L > 0'). Fee-stress x1.5 strictly raises costs for this maker-only
+buy-and-hold strategy and cannot flip a negative net; the capacity 3x/10x
+curve is diagnostic-only and gates no decision. The remaining 12 shard-units
+(cap3/cap10/stress x 4 shards, ~40 CPU-hours) were cancelled per the Round-4
+efficiency mandate. This cancels companion diagnostics of a failed config;
+it is NOT an extra evaluation or iteration. To reproduce them later: run the
+lane script with runs cap3,cap10,stress (idempotent resume skips the 4
+completed base units).

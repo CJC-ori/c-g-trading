@@ -125,8 +125,8 @@ per config; **no iteration afterward** regardless of outcome.
   `reports/tournament/round4/<variant>/shards/<shard>_<run>.json`; completed
   units are detected and skipped on restart. All long runs under `nohup`
   with timestamped logs.
-- `ib_swing_filter` (48,247 markets) is sharded into 4 contiguous
-  alphabetical parts per run-type. Shards are merged by: summing net P&L /
+- `ib_swing_filter` (48,247 markets) is sharded into 4 strided alphabetical
+  parts (`tickers[i::4]`, i = 0..3) per run-type. Shards are merged by: summing net P&L /
   fees / contract counts, concatenating episode rows (episode stats and
   event-clustered SEs are functions of the episode rows), recomputing
   concentration from merged per-market P&L, and recomputing fill rates from
