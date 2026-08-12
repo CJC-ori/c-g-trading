@@ -669,6 +669,27 @@ def cmd_hist_markets(args: argparse.Namespace, client: KalshiClient, store: Stor
         targets = [r["series_ticker"] for r in store.query(q, p)]
     prefixes = DEFAULT_EXCLUDE_PREFIXES if args.exclude_default_prefixes else ()
     targets = [t for t in targets if not any(t.startswith(x) for x in prefixes)]
+
+    # The prefix list only catches spam families someone thought to name. The
+    # series catalog's `frequency` is the principled filter and the live
+    # `markets --by-series` path has always applied it; without it here, one
+    # unlisted hourly ladder (`KXUSDJPYH`, frequency=hourly) dragged in 390k
+    # archived strike rows, 94% of them zero-volume — ~1 GB of untradeable
+    # spam. Same default as the live path.
+    excl_freq = {f.strip() for f in (args.exclude_frequency or "").split(",") if f.strip()}
+    if excl_freq:
+        spam = {
+            r["series_ticker"]
+            for r in store.query(
+                "SELECT series_ticker FROM series WHERE frequency IN (%s)"
+                % ",".join("?" * len(excl_freq)),
+                sorted(excl_freq),
+            )
+        }
+        dropped = sum(1 for t in targets if t in spam)
+        targets = [t for t in targets if t not in spam]
+        if dropped:
+            log.info("hist-markets: dropped %d %s series", dropped, "/".join(sorted(excl_freq)))
     log.info("hist-markets: %d series", len(targets))
 
     def fetch(series_ticker: str) -> list[dict[str, Any]]:
@@ -1071,6 +1092,8 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--min-volume", type=float, default=0.0)
     sp.add_argument("--max-pages", type=int, default=None)
     sp.add_argument("--workers", type=int, default=8)
+    sp.add_argument("--exclude-frequency", default="fifteen_min,hourly",
+                    help="drop series at these catalog frequencies; empty string disables")
     sp.add_argument("--full-json", action="store_true",
                     help="keep the untrimmed payload in raw_json (~2x the disk)")
     sp.add_argument("--exclude-default-prefixes", action="store_true", default=True)

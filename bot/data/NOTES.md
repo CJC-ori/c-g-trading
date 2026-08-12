@@ -604,15 +604,16 @@ So pushing past ~5 req/s buys almost nothing: the server gives back roughly
 a ~3.3-hour job, not a 15-minute one, and there is no batch endpoint that
 avoids the per-market round trip.
 
-### Closing statistics (snapshot 2026-08-12 02:30Z)
+
+### Closing statistics (backfill complete, 2026-08-12 04:20Z)
 
 | table | before backfill (2026-08-11) | after |
 |---|---:|---:|
-| markets | 173,135 | **318,082** (153,766 `hist` + 164,316 `live`) |
-| candlesticks | 435,101 | **5,731,167** |
+| markets | 173,135 | **344,138** (184,079 `hist` + 160,059 `live`) |
+| candlesticks | 435,101 | **6,440,944** |
 | trades | 260,669 | **5,233,804** |
 | series / events | 12,174 / 49,744 | unchanged |
-| **DB size** | 940 MB | **3.75 GB** (`data/` total 4.75 GB) |
+| **DB size** | 940 MB | **3.48 GB** (`data/` total 4.4 GB) |
 
 Reach, by table:
 
@@ -623,6 +624,9 @@ Reach, by table:
 | hourly candles | **2021-07-08** | 2026-08-11 |
 | 1-minute candles | **2021-08-10** | 2026-08-11 |
 
+Candles by grain and tier: 1-min **2,824,391** rows over 4,658 markets;
+hourly **3,616,553** rows over 66,321 markets.
+
 Trade tape by calendar year — note the shape, it is not uniform:
 
 | year | trades | markets |
@@ -631,87 +635,132 @@ Trade tape by calendar year — note the shape, it is not uniform:
 | 2022 | 491,135 | 4,344 |
 | 2023 | 240,897 | 3,472 |
 | 2024 | 1,573,894 | 7,121 |
-| 2025 | 485,611 | 218 |
+| 2025 | 485,611 | **218** |
 | 2026 | 2,330,223 | 833 |
 
 **2025 is the thin year** (218 markets), because the deep sweep was aimed at
 `--closed-before 2024-11-01` and the live tier only reaches 2026-05-25. If a
-strategy needs 2025 tape, that is a known hole and one more `hist-trades
---closed-after 2024-11-01 --closed-before 2026-01-01` sweep away.
+strategy needs 2025 tape, that is a known hole and one more
+`hist-trades --closed-after 2024-11-01 --closed-before 2026-01-01` sweep away.
 
 ### Empirical answers the backfill produced
 
-**1. History depth is per-category, and it is not what the category sizes
-suggest.** Earliest settled market actually held, by category:
+**1. History depth is per-category, and the archive reaches 2021 in almost
+every domain that matters.** Earliest settled market actually held:
 
-| category | earliest settled | note |
-|---|---|---|
-| Economics | **2021-07-01** | CPI/FED ladders, the deepest series on the exchange |
-| World | 2021-07-18 | |
-| Climate and Weather | 2021-07-26 | legacy `HIGH*` tickers under modern `KXHIGH*` series |
-| Politics | 2021-08-13 | **the 2022 midterms live here, not in Elections** |
-| Companies | 2023-11-22 | |
-| Financials, Commodities, Crypto, Entertainment | 2024-11-04 | **artefact** — see below |
-| Elections | 2024-11-07 | the `Elections` category itself only starts at the 2024 cycle |
-| Health | 2024-11-11 | |
-| Science and Technology | 2024-11-20 | |
-| Sports | 2026-05-24 | live tier only; never swept historically (deliberate) |
+| category | earliest settled | markets | settled |
+|---|---|---:|---:|
+| Economics | **2021-07-01** | 28,056 | 24,508 |
+| Health | 2021-07-10 | 625 | 616 |
+| World | 2021-07-18 | 820 | 807 |
+| Transportation | 2021-07-18 | 187 | 187 |
+| Climate and Weather | 2021-07-26 | 97,959 | 96,906 |
+| Politics | 2021-08-13 | 15,009 | 12,923 |
+| Financials | 2021-09-26 | 53,107 | 46,782 |
+| Science and Technology | 2021-11-01 | 3,996 | 2,938 |
+| Commodities | 2022-09-09 | 27,054 | 25,172 |
+| Companies | 2023-11-22 | 603 | 211 |
+| Entertainment / Crypto | 2024-11-04 | 6,946 / 6,688 | 340 / 6,522 |
+| Elections | 2024-11-07 | 18,687 | 7,061 |
+| Sports | 2026-05-24 | 83,485 | 38,850 |
 
-The **2024-11-04 cluster is an artefact, not a fact about the exchange**: those
-rows arrived via the election-night `discover` firehose, which stored whatever
-tickers happened to print that night. `hist-markets` has still not been run for
-`Financials, Science and Technology, Crypto, Health, Commodities, Transportation`
-(1,592 series), so their pre-2024-11 archive is simply unpulled. **Do not read
-these four dates as history depth limits.** Fix:
+Two of these are facts about Kalshi's taxonomy rather than about retention:
 
-```bash
-python -m bot.data.pull hist-markets \
-    --categories "Financials,Science and Technology,Crypto,Health,Commodities,Transportation"
-```
+* **The 2022 midterms are in `Politics`, not `Elections`.** The `Elections`
+  category itself does not start until the 2024 cycle, so a query filtered to
+  `category='Elections'` silently misses every pre-2024 race.
+* **`Sports` is live-tier only** — it was never swept historically (deliberate;
+  see gaps below), not purged.
 
 **2. `price_ranges` is on *every* market, archived included — 100%.**
-153,766/153,766 `hist` rows and 164,316/164,316 `live` rows carry both
-`price_ranges` and `price_level_structure`. So the fill simulator can quantize
-to the real tick grid for the entire five-year history, with no fallback path
-needed. The grid distribution:
+184,079/184,079 `hist` rows and 160,059/160,059 `live` rows carry both
+`price_ranges` and `price_level_structure`. The fill simulator can quantize to
+the real tick grid across the whole five-year history with no fallback path.
 
 | `price_level_structure` | markets |
 |---|---:|
-| `linear_cent` | 304,648 |
-| `tapered_deci_cent` | 12,613 |
-| `deci_cent` | 791 |
+| `linear_cent` | 331,758 |
+| `tapered_deci_cent` | 11,514 |
+| `deci_cent` | 836 |
 | `center_half_edge_half_cent` | 30 |
 
 `expiration_value` (the settled observation — the `58` in a `KXHIGHNY` market,
-free weather ground truth) is present on **75% of archived markets**
-(115,165/153,766) and 51% of live ones.
+free weather ground truth) is on **63% of archived** markets (116,702/184,079)
+and 50% of live ones.
 
 **3. The no-price-candle finding got *better*, not worse, at scale.** Over
-5.73 M candles: **41.8% carry a last-trade price, 100% carry a `yes_bid`
-quote.** Split by grain — hourly 54.3% priced, 1-minute 28.9% priced. The
-original 13.5% figure came from a 435k-candle sample dominated by illiquid
-final-48h windows. The rule is unchanged and now rests on 13x the data:
-**mark to the bid/ask midpoint, never to `price_close`.**
+6.44 M candles: **42.0% carry a last-trade price, 100% carry a `yes_bid`
+quote** (hourly 52.3% priced, 1-minute 28.9%). The original 13.5% figure came
+from a 435k sample dominated by illiquid final-48h windows. The rule is
+unchanged and now rests on 15x the data: **mark to the bid/ask midpoint, never
+to `price_close`.**
 
 **4. Election night 2024 is fully reconstructable.** 340,884 one-minute candles
 over 585 markets for 2024-11-05..07, plus 1.01 M ticks from the firehose.
 `PRES-2024-DJT` runs **0.54 → 0.99** across the window; `PRES-2024-KH` runs
 0.46 → 0.01. This is the P-3 panic-ladder test bed.
 
+**5. Weather is now essentially complete: 57,214 of 59,712 settled `KXHIGH*`
+markets (95.8%) carry hourly candles**, up from 8,008 before this backfill.
+
+| series | settled | with hourly candles | span |
+|---|---:|---:|---|
+| KXHIGHNY | 9,352 | 8,803 | 2021-08-07 → 2026-08-13 |
+| KXHIGHCHI | 9,349 | 8,832 | 2021-08-20 → |
+| KXHIGHMIA | 7,120 | 6,383 | 2023-05-12 → |
+| KXHIGHAUS | 7,101 | 6,671 | 2023-05-12 → |
+| KXHIGHDEN | 3,774 | 3,753 | 2024-11-21 → |
+| KXHIGHPHIL | 3,774 | 3,720 | 2024-11-21 → |
+| KXHIGHLAX | 3,498 | 3,442 | 2025-01-06 → |
+| 13 × `KXHIGHT*` (2026 stations) | ~1,100 ea | ~99% | 2026-01-15 → |
+
+The 4.2% shortfall is zero-volume strikes (excluded by `--min-volume 1`), 10
+fetch failures, and `KXHIGHUS` (a 2023 experiment, 64/174). 9,077 weather
+markets also carry a tick tape.
+
+### The spam trap this backfill walked into (and the fix)
+
+`hist-markets` for `Financials,Science and Technology,Crypto,Health,Commodities,Transportation`
+returned **541,722 rows** and pushed `data/` to the 5.5 GB ceiling. The cause
+was a single series: **`KXUSDJPYH`, an hourly FX strike ladder, 390,148
+archived markets, 94% of them zero-volume.**
+
+`DEFAULT_EXCLUDE_PREFIXES` did not catch it — that list only names spam
+families someone thought of, and `KXEURUSDH` was on it while `KXUSDJPYH` was
+not. The **principled** filter is the series catalog's `frequency` field, which
+the live `markets --by-series` path has always applied via
+`--exclude-frequency fifteen_min,hourly`. `hist-markets` was missing it. It now
+has the same flag and the same default.
+
+The junk was then pruned — 511,097 rows deleted, restricted to rows that had
+**no candles and no trades**, so nothing referenced by price data was touched:
+
+| rule | rows |
+|---|---:|
+| `hourly` / `fifteen_min` frequency series, `source='hist'`, no price data | 424,269 |
+| zero-volume archived rows in the six new categories, no price data | 86,828 |
+
+DB went 4.60 GB → **3.48 GB** after `VACUUM`. Note this also removed 34k
+`KXTEMP*H` / `KXHIGHNYD` **hourly intraday temperature** markets — those are
+not the daily-high weather universe, and all 59,961 `KXHIGH*` markets survive
+intact.
+
+**Lesson for future sweeps:** a whole-category `hist-markets` run is unbounded
+until you filter by frequency. Always check `SELECT frequency, COUNT(*) FROM
+series WHERE category=?` before pointing it at a new category.
+
 ### Known gaps, stated plainly
 
-* **Weather hourly sweep was still in flight at this snapshot** — 30,158 of
-  59,712 settled `KXHIGH*` markets had 60-minute candles at 02:30Z, running at
-  ~4 markets/sec toward full coverage. Re-run the phase-(e) command above to
-  confirm/complete; it is idempotent and `--skip-existing` makes a finished
-  sweep a no-op.
-* **`hist-markets` never run for 6 categories** (see finding 1).
 * **2025 trade tape is thin** (218 markets — see the year table).
 * **Sports and Entertainment were never swept historically.** Deliberate: 5,676
-  series, tracking toward ~490k markets, and the 83k live-tier sports markets
+  series tracking toward ~490k markets, and the 83k live-tier sports markets
   are already an ample favorite-longshot sample.
-* **`KXHIGHUS` (174 markets, 2023) has zero candles** — the only weather series
-  that returned nothing from either tier.
+* **Trade tapes exist for 16,390 markets**, not for the whole universe — the
+  deep sweep was bounded at `--min-volume 1000` and `--max-pages 40`
+  (40k prints/market). Very high-volume markets may be truncated at 40 pages.
+* **1-minute candles cover 4,658 markets**, concentrated on election night 2024
+  and the final 72 h of Elections/Politics markets. Everything else is hourly.
+* **`Sports` has essentially no candle coverage** (5 markets).
 * **The cutoff advances.** `/historical/cutoff` was 2026-06-12 throughout; it
-  moves forward, and the live tier keeps purging behind it. Whatever this store
+  moves forward and the live tier keeps purging behind it. Whatever this store
   does not hold locally will eventually be unreachable.
