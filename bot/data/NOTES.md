@@ -9,6 +9,15 @@ All findings below were established by probing the live public API
 
 ## TL;DR — the things that change backtest design
 
+> **SUPERSEDED IN PART (2026-08-12).** Everything in this section describes the
+> **live** tier only. Kalshi also serves an unauthenticated `/historical/*`
+> archive that reaches back to **2021**, which removes the ~90-day wall for
+> settled markets *and* for the tick tape. The store now holds ~5 years of
+> history. Read the final appendix, **"The `/historical/*` tier and the
+> multi-year backfill"**, before designing anything around the horizons below.
+> The one claim here that survives unchanged is #4 (no-trade candles carry
+> quotes but no price) — it is if anything stronger on the archive tier.
+
 **There are three *different* retention horizons, and they do not agree.**
 This is the single most important result of the probe.
 
@@ -542,3 +551,55 @@ in January at 1-minute grain and missed the 54c -> 97c run entirely — the pull
 takes `--min-ts` / `--max-ts` to pin an **absolute** window, which is the right
 tool for any event study. Rule of thumb: use `final-Nh` only when
 `close_time` is the event; otherwise name the window.
+
+### The backfill, as run (2026-08-11 22:34 → 2026-08-12, ~5 h wall clock)
+
+```bash
+# (a) archived market metadata — series-driven, whole history
+python -m bot.data.pull hist-markets --categories "Elections,Politics,Economics,World,Companies"
+python -m bot.data.pull hist-markets --categories "Climate and Weather"
+python -m bot.data.pull hist-markets --categories "Financials,Science and Technology,Crypto,Health,Commodities,Transportation"
+
+# (b) tick tape: election universe, then the deep pre-cutoff sweep
+python -m bot.data.pull hist-trades --categories "Elections,Politics" --min-volume 5000
+python -m bot.data.pull hist-trades --closed-before 2024-11-01 --settled-only \
+    --min-volume 1000 --skip-existing --max-pages 40
+
+# (c) 1-minute candles: final 72 h of each election/politics market ...
+python -m bot.data.pull hist-candles --categories "Elections,Politics" --interval 1 --window final-72h
+#     ... plus the absolute election-night window for the markets that traded it
+python -m bot.data.pull hist-candles --tickers "<581 tickers with >=100 prints 11-04..11-07>" \
+    --interval 1 --min-ts 2024-11-05 --max-ts 2024-11-07
+
+# (d) hourly candles, final 15 days, favorite-longshot universe
+python -m bot.data.pull hist-candles --interval 60 --window final-15d \
+    --categories "Politics,Economics,Elections,Commodities,Financials,..." --min-volume 5000
+
+# (e) weather: full hourly history for every settled KXHIGH* market
+python -m bot.data.pull hist-candles --series-like 'KXHIGH%' --settled-only \
+    --min-volume 1 --skip-existing --interval 60 --window full
+
+# event-night ticker discovery (exchange-wide firehose)
+python -m bot.data.pull discover --min-ts 2024-11-04T12:00 --max-ts 2024-11-07T00:00 --store-trades
+```
+
+Every one of these is **idempotent** — `--skip-existing` skips tickers that
+already carry rows in the target table, and all writes are upserts, so an
+interrupted run is resumed by re-issuing the same command. `pull_log` records
+each completed phase with row counts and per-tier splits.
+
+### Rate limiting, re-measured on the archive tier
+
+The archive endpoints throttle **harder** than the live ones. Measured on the
+weather sweep (one `/historical/markets/{t}/candlesticks` call per market):
+
+| requested rate | 429 share | net markets/sec |
+|---|---:|---:|
+| 9 req/s | **49%** | 4.4 |
+| 5 req/s | 21% | 4.05 |
+
+So pushing past ~5 req/s buys almost nothing: the server gives back roughly
+4 useful requests/second either way, and the extra pressure is just retries.
+**Plan archive sweeps at ~4 markets/sec** — the 49k-market weather backfill is
+a ~3.3-hour job, not a 15-minute one, and there is no batch endpoint that
+avoids the per-market round trip.
