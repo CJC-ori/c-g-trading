@@ -1,6 +1,9 @@
 # P-3 event-night panic-wick resting ladders — episode taxonomy + train backtest
 
-**2026-08-12.** Code: `bot/strategies/panic/` (episodes.py discovery, strategy.py R4/R4b,
+**2026-08-12 (rev 2 — re-run on the extended tape: tick trades to 2021-06-30 for
+12,970 additional markets, full 2024-election-night 1-min candles, pull_log 24-25;
+census, fills and P&L were re-generated and are IDENTICAL to rev 1 — see §5.1 for
+why the extra 3.5 years add zero qualifying episodes).** Code: `bot/strategies/panic/` (episodes.py discovery, strategy.py R4/R4b,
 provider.py, run_backtest.py). Engine: `bot/backtest/` with the exact per-series fee
 schedule, maker-queue fill model and tick quantization. Outputs:
 `reports/panic/{episodes.json, train_results.json, michigan_replay.json}`.
@@ -29,6 +32,10 @@ Brief: `research/SYNTHESIS.md` §1 P-3; verified Michigan timeline: `docs/viabil
   churn instead. Fixed 2026-08-12 (anchor = max-volume hour over covered life, per-hour
   MAX across hourly/1-min/tick sources) *before any strategy backtest was run*; this was
   a coverage fix decided from data-coverage inspection, not from results.
+- **Extended-tape re-run (rev 2):** after the deep backfill the full census and both
+  backtests were re-run with the byte-identical frozen configuration. Episode set
+  (136), taxonomy, train fills and P&L all reproduced exactly; no parameter, gate or
+  universe rule was changed in response to the extended data.
 
 ## 1. Episode taxonomy (the adverse-selection measurement)
 
@@ -36,7 +43,8 @@ Universe: settled binary Elections/Politics markets, lifetime volume >=1k, time-
 YES >=95c over the 24h entering a scheduled event window (window = max-volume hour -6h,
 +24h; admitted when >=3 distinct events cluster on the ET date or the date is a known
 event night). **Full covered history: 136 episodes across 29 event nights, 2024-11-05 ->
-2026-08-04** (earlier nights are a data gap, not an absence of events — §5).
+2026-08-04**. The extended tape (trades to 2021-06-30) confirms the earlier window is
+an absence of qualifying *markets*, not a data gap — §5.1.
 
 | Class | Definition | n | share |
 |---|---|---|---|
@@ -153,17 +161,29 @@ knowing the trough depth ex ante.)
 
 ## 5. Data gaps (verified against `data/kalshi.db`, pull_log rowid <=23)
 
-1. **2021-2023 event nights are missing locally, not historically dip-free.** The 2022
-   midterms (753 settled Politics markets, 650 with >=1k volume), the 2022 GA runoff and
-   the 2021/2023 governor nights have essentially no local price data (candles exist for
-   only ~20-30 markets per year, trades start 2024-11-02). The Kalshi API serves this
-   history (SYNTHESIS P-3 cites `/historical/trades` for 2022); it was not pulled. The
-   taxonomy therefore covers **Nov 2024 -> Aug 2026 only**, and kill-criterion counts
-   below use that window.
-2. 1-min candles exist only for the final-72h of 4,318 election/politics markets
-   (pull 19); tick trades for 708 + 40 selected markets. Six of nine dip episodes replay
-   on tick trades or 1-min candles; two (NEPALHOUSE, UTPRIMARY) only on hourly candles —
-   their fills use the conservative strictly-through candle rule.
+1. **RESOLVED (rev 2), with a structural answer: 2021-2023 election nights do not
+   exist on Kalshi.** The backfill (pull 25: tick trades for 12,970 more markets,
+   reaching 2021-06-30) was re-censused with the frozen gates. Pre-Nov-2024 the
+   qualifying universe contains 1,520 settled Elections/Politics markets with data;
+   1,410 fail the >=95c pre-event gate, 95 fail data/volume gates, and only **15 pass
+   market-level gates — each a singleton on its own date** (debt-ceiling deadlines,
+   confirmation votes, a debate, approval brackets), so the frozen cluster/known-night
+   rule rejects all of them. There are no 2022-midterm, GA-runoff or 2021/2023
+   governor-night episodes because **Kalshi listed no candidate election markets before
+   Oct 2024** (CFTC litigation; markets settling around 2022-11-08 are CPI/approval/
+   legislation series only). rev 1's premise that pulling 2022 tick history would add
+   election-night episodes was wrong.
+   **Singleton sensitivity (taxonomy-level only, admitted nothing):** re-classing the
+   15 rejected windows adds **zero fillable episodes** — 14 no-dip, 1 died-without-dip
+   (ASYLUMCASES-24JUN-14000, settled NO without ever printing <=85c: no R4 fill; it
+   would have been a hold-to-settlement windfall for R4b's NO ticket, noted for honesty
+   and NOT added — its outcome is already known and the frozen universe rule stays).
+2. 1-min candles cover the final-72h of 4,318 election/politics markets (pull 19) plus
+   the full 2024 election night for 581 tickers (pull 24); tick trades for 708 + 40
+   selected markets plus the 12,970-market deep backfill (pull 25). Six of nine dip
+   episodes replay on tick trades or 1-min candles; two (NEPALHOUSE, UTPRIMARY) only on
+   hourly candles — their fills use the conservative strictly-through candle rule. The
+   re-run on this richer tape reproduced rev 1's fills exactly.
 3. No historical order books (SYNTHESIS §3 risk 3): maker queue position is estimated
    from trailing traded volume (calibrated on the FLB fill-rate anchor, never on P&L).
 4. Sub-cent (0.1c) execution is not representable in the integer-cent harness; per the
@@ -175,19 +195,20 @@ knowing the trough depth ex ante.)
 | Criterion | Threshold | Measured | Verdict |
 |---|---|---|---|
 | (a) adverse selection | fills dominated by non-reverting wicks (>~35%) | episode level 1/9 = **11.1%** full history; fill level 0/5 train | **PASS** (small n) |
-| (b) enough data | <10 episodes with simulated fills over full history -> park | **9 fillable episodes** (<=85c) full history; 5 filled on train, max possible <=9 incl. held-out | **FIRES -> PARK** |
+| (b) enough data | <10 episodes with simulated fills over full history -> park | **9 fillable episodes** (<=85c) full history — unchanged on the extended 2021-2026 tape (+0 from 3.5 extra years, §5.1); 5 filled on train, max possible <=9 incl. held-out | **FIRES -> PARK** |
 | (c) economics | EV per episode <= 0 | R4: **+$80.58**/entered (+$4.97/episode); R4b: **-$11.43**/entered | R4 pass, **R4b KILL** |
 
-**R4 (dip-side ladder): PARK until the Nov 2026 midterms, per criterion (b).** Every
-measurable sign is positive — 5/5 train hits at +10.6..+25.3%, 0% fill-level adverse
-selection, fee-stress-immune (zero maker fees), and the held-out-window Michigan case
-study confirms the mechanism end-to-end — but nine fillable episodes in 21 months is
-below the pre-registered evidence bar, and the single historical dip-and-die sits in the
-same night-cluster as the founding win. Action: keep the discovery + strategy code warm,
-paper-trade the ladder live on 2026-11-03 (the pre-registered next scheduled event
-night with real n), and backfill the 2021-2023 tick history (gap §5.1) — if the
-2022-midterm nights add >=5 fillable episodes with the same revert rate, re-run this
-exact frozen configuration on them before Nov.
+**R4 (dip-side ladder): PARK until the Nov 2026 midterms, per criterion (b) — now
+final on the data question.** Every measurable sign is positive — 5/5 train hits at
++10.6..+25.3%, 0% fill-level adverse selection, fee-stress-immune (zero maker fees),
+and the held-out-window Michigan case study confirms the mechanism end-to-end — but
+nine fillable episodes remain below the pre-registered 10-episode bar, and the extended
+tape closes the escape hatch rev 1 hoped for: the bar **cannot** be cleared by more
+history, because Kalshi's election-market class only exists from Oct 2024 (§5.1). The
+evidence deficit is structural until new event nights occur. Action: keep the discovery
++ strategy code warm and paper-trade the ladder live on 2026-11-03 — the midterms are
+the first night that can move n materially (dozens of >=95c favorites in one window,
+like 2024-11-05's 30 episodes).
 
 **R4b (cheap-NO convexity): KILL as a standalone strategy, per criterion (c).** The
 measured arm rate (3.8%) is ~1/3 of breakeven (~10%) at the observed payoff; 25 of 26
