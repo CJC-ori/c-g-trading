@@ -1,0 +1,19 @@
+{
+ "variant": "ia_econ_only",
+ "run": "cap10",
+ "shard": "all",
+ "n_markets": 2169,
+ "duration_s": 777.2,
+ "net_pnl_cents_after_inference": 172486,
+ "fees_cents": 865,
+ "contracts_filled": 68074,
+ "diagnostics": {
+  "clamp_reason_counts": {
+   "kelly": 327,
+   "per-market-cap": 213,
+   "per-event-cap": 151
+  },
+  "max_concurrent_deployed_cents": 228222,
+  "final_cash_cents": 1172486
+ }
+}

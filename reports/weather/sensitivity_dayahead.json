@@ -1,0 +1,348 @@
+{
+  "label": "weather-dayahead sensitivity grid (train split only)",
+  "selection_metric": "pooled Brier delta (market - ours), higher is better",
+  "cells": [
+    {
+      "ensemble": "gfs",
+      "buffer_cents": 1,
+      "net_pnl_cents": -1000000,
+      "fees_cents": 0,
+      "contracts_filled": 174718,
+      "maker_fill_rate": 0.8994445331040767,
+      "n_markets_traded": 315,
+      "brier_n": 1772,
+      "brier_ours": 0.20572751401145162,
+      "brier_market": 0.18350918453724635,
+      "brier_delta": -0.0222183294742053,
+      "brier_ci95": [
+        -0.03080241096385746,
+        -0.013634247984553136
+      ],
+      "ece": 0.09440979167437936,
+      "kill_b_fired": true,
+      "kill_d_fired": true,
+      "capacity_curve": [
+        {
+          "depth_multiplier": 1.0,
+          "net_pnl_cents_after_inference": -1000000,
+          "contracts_filled": 174718,
+          "premium_deployed_cents": 7361300
+        }
+      ]
+    },
+    {
+      "ensemble": "gfs",
+      "buffer_cents": 2,
+      "net_pnl_cents": -1000000,
+      "fees_cents": 0,
+      "contracts_filled": 193425,
+      "maker_fill_rate": 0.8855361287752888,
+      "n_markets_traded": 329,
+      "brier_n": 1772,
+      "brier_ours": 0.20572751401145162,
+      "brier_market": 0.18350918453724635,
+      "brier_delta": -0.0222183294742053,
+      "brier_ci95": [
+        -0.03080241096385746,
+        -0.013634247984553136
+      ],
+      "ece": 0.09440979167437936,
+      "kill_b_fired": true,
+      "kill_d_fired": true,
+      "capacity_curve": [
+        {
+          "depth_multiplier": 1.0,
+          "net_pnl_cents_after_inference": -1000000,
+          "contracts_filled": 193425,
+          "premium_deployed_cents": 8150300
+        }
+      ]
+    },
+    {
+      "ensemble": "gfs",
+      "buffer_cents": 3,
+      "net_pnl_cents": -1000000,
+      "fees_cents": 0,
+      "contracts_filled": 176991,
+      "maker_fill_rate": 0.8920242925182068,
+      "n_markets_traded": 312,
+      "brier_n": 1772,
+      "brier_ours": 0.20572751401145162,
+      "brier_market": 0.18350918453724635,
+      "brier_delta": -0.0222183294742053,
+      "brier_ci95": [
+        -0.03080241096385746,
+        -0.013634247984553136
+      ],
+      "ece": 0.09440979167437936,
+      "kill_b_fired": true,
+      "kill_d_fired": true,
+      "capacity_curve": [
+        {
+          "depth_multiplier": 1.0,
+          "net_pnl_cents_after_inference": -1000000,
+          "contracts_filled": 176991,
+          "premium_deployed_cents": 7705900
+        }
+      ]
+    },
+    {
+      "ensemble": "ecmwf",
+      "buffer_cents": 1,
+      "net_pnl_cents": -541304,
+      "fees_cents": 0,
+      "contracts_filled": 332809,
+      "maker_fill_rate": 0.8765212948355645,
+      "n_markets_traded": 554,
+      "brier_n": 1772,
+      "brier_ours": 0.2103214641326134,
+      "brier_market": 0.18350918453724635,
+      "brier_delta": -0.02681227959536702,
+      "brier_ci95": [
+        -0.03586348918259812,
+        -0.01776107000813592
+      ],
+      "ece": 0.10860558637298535,
+      "kill_b_fired": true,
+      "kill_d_fired": true,
+      "capacity_curve": [
+        {
+          "depth_multiplier": 1.0,
+          "net_pnl_cents_after_inference": -541304,
+          "contracts_filled": 332809,
+          "premium_deployed_cents": 13739604
+        }
+      ]
+    },
+    {
+      "ensemble": "ecmwf",
+      "buffer_cents": 2,
+      "net_pnl_cents": -532901,
+      "fees_cents": 0,
+      "contracts_filled": 325833,
+      "maker_fill_rate": 0.8739522620411075,
+      "n_markets_traded": 527,
+      "brier_n": 1772,
+      "brier_ours": 0.2103214641326134,
+      "brier_market": 0.18350918453724635,
+      "brier_delta": -0.02681227959536702,
+      "brier_ci95": [
+        -0.03586348918259812,
+        -0.01776107000813592
+      ],
+      "ece": 0.10860558637298535,
+      "kill_b_fired": true,
+      "kill_d_fired": true,
+      "capacity_curve": [
+        {
+          "depth_multiplier": 1.0,
+          "net_pnl_cents_after_inference": -532901,
+          "contracts_filled": 325833,
+          "premium_deployed_cents": 13524101
+        }
+      ]
+    },
+    {
+      "ensemble": "ecmwf",
+      "buffer_cents": 3,
+      "net_pnl_cents": -1000000,
+      "fees_cents": 0,
+      "contracts_filled": 237750,
+      "maker_fill_rate": 0.8941398581410916,
+      "n_markets_traded": 396,
+      "brier_n": 1772,
+      "brier_ours": 0.2103214641326134,
+      "brier_market": 0.18350918453724635,
+      "brier_delta": -0.02681227959536702,
+      "brier_ci95": [
+        -0.03586348918259812,
+        -0.01776107000813592
+      ],
+      "ece": 0.10860558637298535,
+      "kill_b_fired": true,
+      "kill_d_fired": true,
+      "capacity_curve": [
+        {
+          "depth_multiplier": 1.0,
+          "net_pnl_cents_after_inference": -1000000,
+          "contracts_filled": 237750,
+          "premium_deployed_cents": 10329900
+        }
+      ]
+    },
+    {
+      "ensemble": "both",
+      "buffer_cents": 1,
+      "net_pnl_cents": -472201,
+      "fees_cents": 0,
+      "contracts_filled": 385783,
+      "maker_fill_rate": 0.8855159654684054,
+      "n_markets_traded": 625,
+      "brier_n": 1772,
+      "brier_ours": 0.20332007422038226,
+      "brier_market": 0.18350918453724635,
+      "brier_delta": -0.01981088968313681,
+      "brier_ci95": [
+        -0.027752175173877115,
+        -0.011869604192396504
+      ],
+      "ece": 0.08830855290297834,
+      "kill_b_fired": true,
+      "kill_d_fired": true,
+      "capacity_curve": [
+        {
+          "depth_multiplier": 1.0,
+          "net_pnl_cents_after_inference": -472201,
+          "contracts_filled": 385783,
+          "premium_deployed_cents": 15258001
+        }
+      ]
+    },
+    {
+      "ensemble": "both",
+      "buffer_cents": 2,
+      "net_pnl_cents": -1000000,
+      "fees_cents": 0,
+      "contracts_filled": 218367,
+      "maker_fill_rate": 0.8903889516369078,
+      "n_markets_traded": 344,
+      "brier_n": 1772,
+      "brier_ours": 0.20332007422038226,
+      "brier_market": 0.18350918453724635,
+      "brier_delta": -0.01981088968313681,
+      "brier_ci95": [
+        -0.027752175173877115,
+        -0.011869604192396504
+      ],
+      "ece": 0.08830855290297834,
+      "kill_b_fired": true,
+      "kill_d_fired": true,
+      "capacity_curve": [
+        {
+          "depth_multiplier": 1.0,
+          "net_pnl_cents_after_inference": -1000000,
+          "contracts_filled": 218367,
+          "premium_deployed_cents": 8991300
+        }
+      ]
+    },
+    {
+      "ensemble": "both",
+      "buffer_cents": 3,
+      "net_pnl_cents": -1000000,
+      "fees_cents": 0,
+      "contracts_filled": 209442,
+      "maker_fill_rate": 0.8931047716515287,
+      "n_markets_traded": 335,
+      "brier_n": 1772,
+      "brier_ours": 0.20332007422038226,
+      "brier_market": 0.18350918453724635,
+      "brier_delta": -0.01981088968313681,
+      "brier_ci95": [
+        -0.027752175173877115,
+        -0.011869604192396504
+      ],
+      "ece": 0.08830855290297834,
+      "kill_b_fired": true,
+      "kill_d_fired": true,
+      "capacity_curve": [
+        {
+          "depth_multiplier": 1.0,
+          "net_pnl_cents_after_inference": -1000000,
+          "contracts_filled": 209442,
+          "premium_deployed_cents": 8738800
+        }
+      ]
+    },
+    {
+      "ensemble": "best_match",
+      "buffer_cents": 1,
+      "net_pnl_cents": -1000000,
+      "fees_cents": 0,
+      "contracts_filled": 174718,
+      "maker_fill_rate": 0.8994445331040767,
+      "n_markets_traded": 315,
+      "brier_n": 1772,
+      "brier_ours": 0.20572751401145162,
+      "brier_market": 0.18350918453724635,
+      "brier_delta": -0.0222183294742053,
+      "brier_ci95": [
+        -0.03080241096385746,
+        -0.013634247984553136
+      ],
+      "ece": 0.09440979167437936,
+      "kill_b_fired": true,
+      "kill_d_fired": true,
+      "capacity_curve": [
+        {
+          "depth_multiplier": 1.0,
+          "net_pnl_cents_after_inference": -1000000,
+          "contracts_filled": 174718,
+          "premium_deployed_cents": 7361300
+        }
+      ]
+    },
+    {
+      "ensemble": "best_match",
+      "buffer_cents": 2,
+      "net_pnl_cents": -1000000,
+      "fees_cents": 0,
+      "contracts_filled": 193425,
+      "maker_fill_rate": 0.8855361287752888,
+      "n_markets_traded": 329,
+      "brier_n": 1772,
+      "brier_ours": 0.20572751401145162,
+      "brier_market": 0.18350918453724635,
+      "brier_delta": -0.0222183294742053,
+      "brier_ci95": [
+        -0.03080241096385746,
+        -0.013634247984553136
+      ],
+      "ece": 0.09440979167437936,
+      "kill_b_fired": true,
+      "kill_d_fired": true,
+      "capacity_curve": [
+        {
+          "depth_multiplier": 1.0,
+          "net_pnl_cents_after_inference": -1000000,
+          "contracts_filled": 193425,
+          "premium_deployed_cents": 8150300
+        }
+      ]
+    },
+    {
+      "ensemble": "best_match",
+      "buffer_cents": 3,
+      "net_pnl_cents": -1000000,
+      "fees_cents": 0,
+      "contracts_filled": 176991,
+      "maker_fill_rate": 0.8920242925182068,
+      "n_markets_traded": 312,
+      "brier_n": 1772,
+      "brier_ours": 0.20572751401145162,
+      "brier_market": 0.18350918453724635,
+      "brier_delta": -0.0222183294742053,
+      "brier_ci95": [
+        -0.03080241096385746,
+        -0.013634247984553136
+      ],
+      "ece": 0.09440979167437936,
+      "kill_b_fired": true,
+      "kill_d_fired": true,
+      "capacity_curve": [
+        {
+          "depth_multiplier": 1.0,
+          "net_pnl_cents_after_inference": -1000000,
+          "contracts_filled": 176991,
+          "premium_deployed_cents": 7705900
+        }
+      ]
+    }
+  ],
+  "best_by_train": {
+    "ensemble": "both",
+    "buffer_cents": 1,
+    "brier_delta": -0.01981088968313681,
+    "net_pnl_cents": -472201
+  }
+}

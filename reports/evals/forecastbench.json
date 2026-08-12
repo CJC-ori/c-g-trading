@@ -1,0 +1,228 @@
+{
+  "eval": "forecastbench",
+  "generated_at": "2026-08-11T22:47:30+00:00",
+  "window": {
+    "min_due": "2026-02-01",
+    "max_due": null
+  },
+  "self_test": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "pooled market Brier",
+        "expected": 0.1172,
+        "actual": 0.11723170488486033,
+        "tolerance": 0.005,
+        "pass": true
+      },
+      {
+        "check": "pooled sd",
+        "expected": 0.1785,
+        "actual": 0.17845507649694162,
+        "tolerance": 0.01,
+        "pass": true
+      },
+      {
+        "check": "n resolved market questions",
+        "expected": 1216,
+        "actual": 1216,
+        "tolerance": 60.800000000000004,
+        "pass": true
+      },
+      {
+        "check": "infer Brier",
+        "expected": 0.0651,
+        "actual": 0.06507028460784314,
+        "tolerance": 0.005,
+        "pass": true
+      },
+      {
+        "check": "manifold Brier",
+        "expected": 0.0963,
+        "actual": 0.0962670997742877,
+        "tolerance": 0.005,
+        "pass": true
+      },
+      {
+        "check": "polymarket Brier",
+        "expected": 0.1253,
+        "actual": 0.12528401966292146,
+        "tolerance": 0.005,
+        "pass": true
+      },
+      {
+        "check": "metaculus Brier",
+        "expected": 0.1554,
+        "actual": 0.15537023762587202,
+        "tolerance": 0.005,
+        "pass": true
+      }
+    ]
+  },
+  "baseline": {
+    "n": 1216,
+    "brier": 0.11723170488486033,
+    "sd": 0.17845507649694162,
+    "se": 0.005117550292184137,
+    "ci95": [
+      0.10720130631217942,
+      0.12726210345754124
+    ],
+    "brier_index": 65.76088422799731,
+    "base_rate": 0.35855263157894735,
+    "by_source": {
+      "infer": {
+        "n": 102,
+        "base_rate": 0.20588235294117646,
+        "brier": 0.06507028460784314,
+        "log_loss": 0.21714181014966863
+      },
+      "manifold": {
+        "n": 357,
+        "base_rate": 0.4005602240896359,
+        "brier": 0.0962670997742877,
+        "log_loss": 0.3110003294805449
+      },
+      "metaculus": {
+        "n": 223,
+        "base_rate": 0.30493273542600896,
+        "brier": 0.15537023762587202,
+        "log_loss": 0.4765385908843595
+      },
+      "polymarket": {
+        "n": 534,
+        "base_rate": 0.38202247191011235,
+        "brier": 0.12528401966292146,
+        "log_loss": 0.3878064368703013
+      }
+    },
+    "by_due": {
+      "2026-02-01": {
+        "n": 57,
+        "base_rate": 0.17543859649122806,
+        "brier": 0.06127099532857659,
+        "log_loss": 0.20765297479181022
+      },
+      "2026-02-15": {
+        "n": 61,
+        "base_rate": 0.19672131147540983,
+        "brier": 0.057468368667282575,
+        "log_loss": 0.19050789796414588
+      },
+      "2026-03-01": {
+        "n": 130,
+        "base_rate": 0.34615384615384615,
+        "brier": 0.11562743629077017,
+        "log_loss": 0.37144440777390353
+      },
+      "2026-03-15": {
+        "n": 147,
+        "base_rate": 0.2857142857142857,
+        "brier": 0.11334864499607764,
+        "log_loss": 0.35544021022134664
+      },
+      "2026-03-29": {
+        "n": 127,
+        "base_rate": 0.41732283464566927,
+        "brier": 0.15062121647197238,
+        "log_loss": 0.4592859137359849
+      },
+      "2026-04-12": {
+        "n": 119,
+        "base_rate": 0.4369747899159664,
+        "brier": 0.12888109288628433,
+        "log_loss": 0.3902475470399002
+      },
+      "2026-04-26": {
+        "n": 105,
+        "base_rate": 0.3523809523809524,
+        "brier": 0.15219791561496918,
+        "log_loss": 0.4587734328119942
+      },
+      "2026-05-10": {
+        "n": 96,
+        "base_rate": 0.3958333333333333,
+        "brier": 0.1440918063261678,
+        "log_loss": 0.4324441297209251
+      },
+      "2026-05-24": {
+        "n": 94,
+        "base_rate": 0.3829787234042553,
+        "brier": 0.1289075934057025,
+        "log_loss": 0.4020963718494822
+      },
+      "2026-06-07": {
+        "n": 103,
+        "base_rate": 0.39805825242718446,
+        "brier": 0.09951907383757552,
+        "log_loss": 0.322523518492338
+      },
+      "2026-06-21": {
+        "n": 76,
+        "base_rate": 0.39473684210526316,
+        "brier": 0.09358698410716014,
+        "log_loss": 0.31722516986948124
+      },
+      "2026-07-05": {
+        "n": 61,
+        "base_rate": 0.39344262295081966,
+        "brier": 0.0903212293086537,
+        "log_loss": 0.30815015221595565
+      },
+      "2026-07-19": {
+        "n": 40,
+        "base_rate": 0.4,
+        "brier": 0.11481487819157432,
+        "log_loss": 0.3539942617294915
+      }
+    },
+    "calibration": [
+      {
+        "bucket": "[0.00, 0.05)",
+        "n": 230,
+        "mean_forecast": 0.02201984192267196,
+        "realized_freq": 0.008695652173913044
+      },
+      {
+        "bucket": "[0.05, 0.15)",
+        "n": 173,
+        "mean_forecast": 0.10021039318377306,
+        "realized_freq": 0.03468208092485549
+      },
+      {
+        "bucket": "[0.15, 0.35)",
+        "n": 247,
+        "mean_forecast": 0.23947479876702485,
+        "realized_freq": 0.1862348178137652
+      },
+      {
+        "bucket": "[0.35, 0.65)",
+        "n": 239,
+        "mean_forecast": 0.4949441209260719,
+        "realized_freq": 0.4351464435146444
+      },
+      {
+        "bucket": "[0.65, 0.85)",
+        "n": 166,
+        "mean_forecast": 0.7385047412518555,
+        "realized_freq": 0.7590361445783133
+      },
+      {
+        "bucket": "[0.85, 0.95)",
+        "n": 79,
+        "mean_forecast": 0.8983924992311132,
+        "realized_freq": 0.9113924050632911
+      },
+      {
+        "bucket": "[0.95, 1.01)",
+        "n": 82,
+        "mean_forecast": 0.971901962387147,
+        "realized_freq": 0.975609756097561
+      }
+    ],
+    "always_half_brier": 0.25
+  },
+  "scored": null,
+  "licence": "ForecastBench datasets are CC BY-SA 4.0 \u2014 internal eval use only, attribute and share-alike if republished; never on a live-money path.",
+  "verdict": "SELF-TEST PASS \u2014 baseline established, no forecaster scored"
+}

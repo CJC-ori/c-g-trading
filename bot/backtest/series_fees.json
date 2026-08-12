@@ -1,0 +1,668 @@
+{
+ "_meta": {
+  "generated": "2026-08-11",
+  "source": "data/kalshi.db series table (from GET /series, fetched 2026-08-11; see research/kalshi-api.md \u00a73.1)",
+  "n_series_total": 12174,
+  "n_overrides": 162,
+  "default": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 1.0
+  },
+  "notes": [
+   "Only series deviating from the default (quadratic, x1) are listed.",
+   "fee_multiplier observed values: 0, 0.5, 1 - never >1.",
+   "quadratic_with_maker_fees series charge makers ~0.0175*C*P*(1-P) (coefficient UNVERIFIED - triangulated from secondary sources, official PDF unfetched; research/kalshi-api.md \u00a73.3).",
+   "Fee configs can change over time (/series/fee_changes). This snapshot is the config as of the generated date; point-in-time resolution is a known gap."
+  ]
+ },
+ "overrides": {
+  "KXAAAGASM": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXAOMENSINGLES": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXATPMATCH": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXBALLONDOR": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXBTCMAX125": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXBTCMAX150": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXBTCY": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.0
+  },
+  "KXBUNDESLIGA": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXBUNDESLIGAGAME": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXCITRINI": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.0
+  },
+  "KXCLUBWC": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXCONNSMYTHE": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXCPI": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXCPIYOY": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXDOED": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.0
+  },
+  "KXEGGS": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXELECTIRAN": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.0
+  },
+  "KXEMMYCACTO": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXEMMYCACTR": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXEMMYCSERIES": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXEMMYDACTO": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXEMMYDACTR": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXEMMYDSERIES": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXEPLGAME": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXEPLTOP4": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXETHY": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.0
+  },
+  "KXEXPAND": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.0
+  },
+  "KXF1RACE": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXF1RACEPODIUM": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXFED": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXFEDDECISION": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXFOMEN": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXFOMENSINGLES": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXFOWOMEN": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXFOWOMENSINGLES": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXGAMBLINGREPEAL": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.0
+  },
+  "KXGDP": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXGDPYEAR": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.0
+  },
+  "KXGREENLAND": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.0
+  },
+  "KXHEISMAN": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXINDY500": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXINXY": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXIPO": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXIRANDEMOCRACY": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.0
+  },
+  "KXLALIGA": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXLALIGAGAME": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXLAYOFFSYINFO": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.0
+  },
+  "KXLIGUE1": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXLIGUE1GAME": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXLLM1": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXMARMAD": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXMENWORLDCUP": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXMLB": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXMLBAL": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXMLBASGAME": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXMLBEXTRAS": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBF3": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBF5": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBF5SPREAD": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBF5TOTAL": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBF7": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBGAME": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBHIT": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBHR": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBHRDERBY": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXMLBHRR": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBKS": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBNL": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXMLBOUTS": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBRBI": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBRFI": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBSB": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBSERIES": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXMLBSPREAD": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBTB": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBTEAMTOTAL": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXMLBTOTAL": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.5
+  },
+  "KXNASCAR": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNASCARRACE": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNASCARRACEOLD": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNASDAQ100Y": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNATHANDOGS": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNATHANSHD": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNBA": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNBACOY": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNBAEAST": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNBAFINALSMVP": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNBAGAME": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNBAMVP": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNBAROY": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNBASERIES": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNBASPREAD": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNBATOTAL": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNBAWEST": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNCAAF": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNCAAFACC": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNCAAFB10": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNCAAFB12": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNCAAFGAME": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNCAAFPLAYOFF": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNCAAFSEC": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNCAAFSPREAD": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNCAAFTOTAL": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNCAAMBGAME": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNCAAMBSPREAD": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNCAAMBTOTAL": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNEXTIRANLEADER": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.0
+  },
+  "KXNFL2TD": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLAFCCHAMP": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLAFCEAST": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLAFCNORTH": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLAFCSOUTH": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLAFCWEST": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLANYTD": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLCOTY": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLCPOTY": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLDPOTY": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLDROTY": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLFIRSTTD": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLGAME": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLMVP": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLNFCCHAMP": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLNFCEAST": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLNFCNORTH": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLNFCSOUTH": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLNFCWEST": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLOPOTY": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLOROTY": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLSPREAD": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNFLTOTAL": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNHL": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNHLEAST": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNHLGAME": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNHLSERIES": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXNHLWEST": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXPAHLAVIHEAD": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.0
+  },
+  "KXPAYROLLS": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXPGA": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXPGARYDER": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXPGASOLHEIM": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXPGATOUR": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXRATECUTCOUNT": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXSB": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXSERIEA": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXSERIEAGAME": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXSUPERBOWLHEADLINE": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXTHEOPEN": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXTOURDEFRANCE": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXTRUMPOUT": {
+   "fee_type": "quadratic",
+   "fee_multiplier": 0.0
+  },
+  "KXU3": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXUCL": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXUCLGAME": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXUEFACL": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXUSOMENSINGLES": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXUSOPEN": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXUSOWOMENSINGLES": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXWCGAME": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXWMENSINGLES": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXWNBA": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXWNBAGAME": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXWTAMATCH": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  },
+  "KXWWOMENSINGLES": {
+   "fee_type": "quadratic_with_maker_fees",
+   "fee_multiplier": 1.0
+  }
+ }
+}

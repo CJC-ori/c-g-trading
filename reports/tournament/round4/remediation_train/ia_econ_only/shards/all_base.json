@@ -1,0 +1,1809 @@
+{
+ "variant": "ia_econ_only",
+ "run": "base",
+ "shard": "all",
+ "n_markets": 386,
+ "duration_s": 8.3,
+ "net_pnl_cents_after_inference": 14421,
+ "fees_cents": 234,
+ "contracts_filled": 4132,
+ "diagnostics": {
+  "clamp_reason_counts": {
+   "kelly": 29,
+   "per-market-cap": 11
+  },
+  "max_concurrent_deployed_cents": 135730,
+  "final_cash_cents": 1014421
+ },
+ "metrics": {
+  "pnl": {
+   "bankroll_cents": 1000000,
+   "net_pnl_cents_gross_of_inference": 14421,
+   "net_pnl_cents_after_inference": 14421,
+   "net_pnl_pct_of_bankroll": 0.014421,
+   "fees_cents": 234,
+   "inference_cost_cents": 0,
+   "avg_deployed_cents": 293.9605652030985,
+   "run_span_s": 95192401,
+   "annualized_return_on_avg_deployed": 16.25214277906552
+  },
+  "brier": {
+   "n": 65,
+   "strategy": 0.0014990347138461614,
+   "market_baseline": 0.0015592307692307707,
+   "delta_brier": 6.019605538461002e-05,
+   "delta_ci95": [
+    -0.0001506057334521023,
+    0.00027099784422132233
+   ],
+   "beats_baseline": true,
+   "n_gate": 500,
+   "meets_n_gate": false,
+   "traded_subset": {
+    "n": 0,
+    "strategy": null,
+    "market_baseline": null,
+    "delta_brier": null,
+    "delta_ci95": null,
+    "beats_baseline": null,
+    "gate_cents": 4.0
+   },
+   "trade_pnl": {
+    "n_markets_traded": 29,
+    "net_pnl_cents_after_fees": 14421,
+    "net_pnl_cents_after_fees_and_inference": 14421
+   },
+   "flags": [
+    "n=65 < 500: below the forecast-strategy gate (minimum detectable dBrier at n=100 is ~0.0137, 3x the superforecaster edge)"
+   ]
+  },
+  "calibration": {
+   "n": 65,
+   "ece": 0.030325230769230764,
+   "curve": [
+    {
+     "bin": "[0.0,0.1)",
+     "n": 42,
+     "mean_p_hat": 0.03716761904761915,
+     "observed_freq": 0.0
+    },
+    {
+     "bin": "[0.9,1.0)",
+     "n": 23,
+     "mean_p_hat": 0.9821695652173915,
+     "observed_freq": 1.0
+    }
+   ],
+   "reliability": 0.0010051138668068188,
+   "resolution": 0.22863905325443784,
+   "uncertainty": 0.22863905325443787,
+   "brier_from_decomposition": 0.0010051138668068504
+  },
+  "drawdown": {
+   "max_drawdown_cents": 539,
+   "max_drawdown_frac_of_peak": 0.0005360064042323622
+  },
+  "concentration": {
+   "n_markets_traded": 29,
+   "top5_share_of_net": 0.34997572983843006,
+   "worst_market_loss_cents": 7,
+   "top5": [
+    {
+     "ticker": "OIL-22JUL11-N100",
+     "net_pnl_cents": 1260
+    },
+    {
+     "ticker": "FED-24JUN-T5.25",
+     "net_pnl_cents": 992
+    },
+    {
+     "ticker": "FED-22JULY-T2.25",
+     "net_pnl_cents": 979
+    },
+    {
+     "ticker": "FED-23JUN-T5.25",
+     "net_pnl_cents": 979
+    },
+    {
+     "ticker": "FED-22MAY-T0.75",
+     "net_pnl_cents": 837
+    }
+   ]
+  },
+  "trade_stats": {
+   "n_decision_calls": 27980,
+   "n_intents": 65,
+   "n_orders": 65,
+   "contracts_requested": 45254,
+   "contracts_ordered": 15489,
+   "contracts_filled": 4132,
+   "fill_rate_vs_ordered": 0.266769965782168,
+   "fill_rate_vs_requested": 0.09130684580368587,
+   "order_any_fill_rate": 0.4461538461538462,
+   "taker_contracts": 0,
+   "maker_contracts": 4132,
+   "maker_share": 1.0,
+   "maker_fill_rate": 0.266769965782168,
+   "maker_fill_rate_sanity_band": [
+    0.4,
+    0.5
+   ],
+   "avg_edge_at_entry_cents": 1.2538927879961137,
+   "avg_holding_period_s": 40496.8275862069,
+   "opportunity_lifetime_s": {
+    "n": 65,
+    "p25": 497,
+    "median": 1509,
+    "p75": 4681
+   },
+   "flags": []
+  },
+  "cost_ratios": {
+   "inference_cost_cents": 0,
+   "net_pnl_cents": 14421,
+   "notional_traded_cents": 398545,
+   "inference_over_net_pnl": 0.0,
+   "inference_over_net_pnl_target": 0.2,
+   "inference_over_notional": 0.0,
+   "inference_over_notional_target": 0.01,
+   "flags": []
+  },
+  "splits": {
+   "time": {
+    "split_ts": 1684459440,
+    "train": {
+     "net_pnl_cents": 10394,
+     "n_markets": 18
+    },
+    "test": {
+     "net_pnl_cents": 4027,
+     "n_markets": 11
+    }
+   },
+   "category": {
+    "Economics": {
+     "net_pnl_cents": 14421,
+     "n_markets": 29
+    }
+   }
+  }
+ },
+ "episodes": [
+  {
+   "ticker": "CPI-21DEC-T0.8",
+   "event_ticker": "CPI-21DEC",
+   "category": "Economics",
+   "side": "no",
+   "contracts": 17,
+   "maker_contracts": 17,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 92.0,
+   "basis_cents": 1564,
+   "fees_cents": 3,
+   "net_pnl_cents": 133,
+   "return": 0.0850383631713555,
+   "entry_ts": 1641946366,
+   "exit_ts": 1642068007,
+   "holding_s": 121641,
+   "result": "no"
+  },
+  {
+   "ticker": "FED-22JULY-T2.25",
+   "event_ticker": "FED-22JUL",
+   "category": "Economics",
+   "side": "yes",
+   "contracts": 332,
+   "maker_contracts": 332,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 97.0,
+   "basis_cents": 32204,
+   "fees_cents": 17,
+   "net_pnl_cents": 979,
+   "return": 0.03039995031673084,
+   "entry_ts": 1658931567,
+   "exit_ts": 1658959200,
+   "holding_s": 27633,
+   "result": "yes"
+  },
+  {
+   "ticker": "FED-22JUN-T1.75",
+   "event_ticker": "FED-22JUN",
+   "category": "Economics",
+   "side": "no",
+   "contracts": 105,
+   "maker_contracts": 105,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 96.0,
+   "basis_cents": 10080,
+   "fees_cents": 8,
+   "net_pnl_cents": 412,
+   "return": 0.040873015873015874,
+   "entry_ts": 1655303948,
+   "exit_ts": 1655338500,
+   "holding_s": 34552,
+   "result": "no"
+  },
+  {
+   "ticker": "FED-22MAR-T0.25",
+   "event_ticker": "FED-22MAR",
+   "category": "Economics",
+   "side": "yes",
+   "contracts": 26,
+   "maker_contracts": 26,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 97.0,
+   "basis_cents": 2522,
+   "fees_cents": 2,
+   "net_pnl_cents": 76,
+   "return": 0.03013481363996828,
+   "entry_ts": 1647445135,
+   "exit_ts": 1647465424,
+   "holding_s": 20289,
+   "result": "yes"
+  },
+  {
+   "ticker": "FED-22MAR-T0.5",
+   "event_ticker": "FED-22MAR",
+   "category": "Economics",
+   "side": "no",
+   "contracts": 116,
+   "maker_contracts": 116,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 94.0,
+   "basis_cents": 10904,
+   "fees_cents": 12,
+   "net_pnl_cents": 684,
+   "return": 0.06272927366104182,
+   "entry_ts": 1647444209,
+   "exit_ts": 1647465424,
+   "holding_s": 21215,
+   "result": "no"
+  },
+  {
+   "ticker": "FED-22MAY-T0.75",
+   "event_ticker": "FED-22MAY",
+   "category": "Economics",
+   "side": "yes",
+   "contracts": 213,
+   "maker_contracts": 213,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 96.0,
+   "basis_cents": 20448,
+   "fees_cents": 15,
+   "net_pnl_cents": 837,
+   "return": 0.0409330985915493,
+   "entry_ts": 1651670747,
+   "exit_ts": 1651698360,
+   "holding_s": 27613,
+   "result": "yes"
+  },
+  {
+   "ticker": "FED-22MAY-T1",
+   "event_ticker": "FED-22MAY",
+   "category": "Economics",
+   "side": "no",
+   "contracts": 116,
+   "maker_contracts": 116,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 94.0,
+   "basis_cents": 10904,
+   "fees_cents": 12,
+   "net_pnl_cents": 684,
+   "return": 0.06272927366104182,
+   "entry_ts": 1651674783,
+   "exit_ts": 1651698360,
+   "holding_s": 23577,
+   "result": "no"
+  },
+  {
+   "ticker": "FED-22NOV-T3.75",
+   "event_ticker": "FED-22NOV",
+   "category": "Economics",
+   "side": "yes",
+   "contracts": 213,
+   "maker_contracts": 213,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 96.0,
+   "basis_cents": 20448,
+   "fees_cents": 15,
+   "net_pnl_cents": 837,
+   "return": 0.0409330985915493,
+   "entry_ts": 1667404125,
+   "exit_ts": 1667450161,
+   "holding_s": 46036,
+   "result": "yes"
+  },
+  {
+   "ticker": "FED-22NOV-T4.00",
+   "event_ticker": "FED-22NOV",
+   "category": "Economics",
+   "side": "no",
+   "contracts": 11,
+   "maker_contracts": 11,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 98.0,
+   "basis_cents": 1078,
+   "fees_cents": 1,
+   "net_pnl_cents": 21,
+   "return": 0.01948051948051948,
+   "entry_ts": 1667407518,
+   "exit_ts": 1667450160,
+   "holding_s": 42642,
+   "result": "no"
+  },
+  {
+   "ticker": "FED-22SEP-T3.00",
+   "event_ticker": "FED-22SEP",
+   "category": "Economics",
+   "side": "yes",
+   "contracts": 373,
+   "maker_contracts": 373,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 98.0,
+   "basis_cents": 36554,
+   "fees_cents": 13,
+   "net_pnl_cents": 733,
+   "return": 0.020052525031460305,
+   "entry_ts": 1663780387,
+   "exit_ts": 1663814280,
+   "holding_s": 33893,
+   "result": "yes"
+  },
+  {
+   "ticker": "FED-22SEP-T3.25",
+   "event_ticker": "FED-22SEP",
+   "category": "Economics",
+   "side": "no",
+   "contracts": 51,
+   "maker_contracts": 51,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 90.0,
+   "basis_cents": 4590,
+   "fees_cents": 9,
+   "net_pnl_cents": 501,
+   "return": 0.10915032679738562,
+   "entry_ts": 1663767203,
+   "exit_ts": 1663814280,
+   "holding_s": 47077,
+   "result": "no"
+  },
+  {
+   "ticker": "FED-23FEB-T4.75",
+   "event_ticker": "FED-23FEB",
+   "category": "Economics",
+   "side": "no",
+   "contracts": 8,
+   "maker_contracts": 8,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 97.0,
+   "basis_cents": 776,
+   "fees_cents": 1,
+   "net_pnl_cents": 23,
+   "return": 0.029639175257731958,
+   "entry_ts": 1675260219,
+   "exit_ts": 1675289460,
+   "holding_s": 29241,
+   "result": "no"
+  },
+  {
+   "ticker": "FED-23JUN-T5.25",
+   "event_ticker": "FED-23JUN",
+   "category": "Economics",
+   "side": "no",
+   "contracts": 332,
+   "maker_contracts": 332,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 97.0,
+   "basis_cents": 32204,
+   "fees_cents": 17,
+   "net_pnl_cents": 979,
+   "return": 0.03039995031673084,
+   "entry_ts": 1686761893,
+   "exit_ts": 1686780060,
+   "holding_s": 18167,
+   "result": "no"
+  },
+  {
+   "ticker": "FED-23MAR-T5.00",
+   "event_ticker": "FED-23MAR",
+   "category": "Economics",
+   "side": "no",
+   "contracts": 213,
+   "maker_contracts": 213,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 96.0,
+   "basis_cents": 20448,
+   "fees_cents": 15,
+   "net_pnl_cents": 837,
+   "return": 0.0409330985915493,
+   "entry_ts": 1679496591,
+   "exit_ts": 1679519221,
+   "holding_s": 22630,
+   "result": "no"
+  },
+  {
+   "ticker": "FED-23MAY-T5.00",
+   "event_ticker": "FED-23MAY",
+   "category": "Economics",
+   "side": "yes",
+   "contracts": 116,
+   "maker_contracts": 116,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 94.0,
+   "basis_cents": 10904,
+   "fees_cents": 12,
+   "net_pnl_cents": 684,
+   "return": 0.06272927366104182,
+   "entry_ts": 1683122358,
+   "exit_ts": 1683147961,
+   "holding_s": 25603,
+   "result": "yes"
+  },
+  {
+   "ticker": "FED-24JUN-T5.25",
+   "event_ticker": "FED-24JUN",
+   "category": "Economics",
+   "side": "yes",
+   "contracts": 505,
+   "maker_contracts": 505,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 98.0,
+   "basis_cents": 49490,
+   "fees_cents": 18,
+   "net_pnl_cents": 992,
+   "return": 0.02004445342493433,
+   "entry_ts": 1718201328,
+   "exit_ts": 1718265960,
+   "holding_s": 64632,
+   "result": "yes"
+  },
+  {
+   "ticker": "FEDDECISION-23JUL-H25",
+   "event_ticker": "FEDDECISION-23JUL",
+   "category": "Economics",
+   "side": "yes",
+   "contracts": 61,
+   "maker_contracts": 61,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 98.0,
+   "basis_cents": 5978,
+   "fees_cents": 3,
+   "net_pnl_cents": 119,
+   "return": 0.01990632318501171,
+   "entry_ts": 1690393087,
+   "exit_ts": 1690445640,
+   "holding_s": 52553,
+   "result": "yes"
+  },
+  {
+   "ticker": "FEDDECISION-23JUN-H0",
+   "event_ticker": "FEDDECISION-23JUN",
+   "category": "Economics",
+   "side": "yes",
+   "contracts": 2,
+   "maker_contracts": 2,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 96.0,
+   "basis_cents": 192,
+   "fees_cents": 1,
+   "net_pnl_cents": 7,
+   "return": 0.036458333333333336,
+   "entry_ts": 1686764853,
+   "exit_ts": 1686819720,
+   "holding_s": 54867,
+   "result": "yes"
+  },
+  {
+   "ticker": "FEDDECISION-23JUN-H25",
+   "event_ticker": "FEDDECISION-23JUN",
+   "category": "Economics",
+   "side": "no",
+   "contracts": 124,
+   "maker_contracts": 124,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 96.0,
+   "basis_cents": 11904,
+   "fees_cents": 9,
+   "net_pnl_cents": 487,
+   "return": 0.04091061827956989,
+   "entry_ts": 1686765097,
+   "exit_ts": 1686819720,
+   "holding_s": 54623,
+   "result": "no"
+  },
+  {
+   "ticker": "FEDDECISION-23MAY-H0",
+   "event_ticker": "FEDDECISION-23MAY",
+   "category": "Economics",
+   "side": "no",
+   "contracts": 116,
+   "maker_contracts": 116,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 94.0,
+   "basis_cents": 10904,
+   "fees_cents": 12,
+   "net_pnl_cents": 684,
+   "return": 0.06272927366104182,
+   "entry_ts": 1683134247,
+   "exit_ts": 1683148021,
+   "holding_s": 13774,
+   "result": "no"
+  },
+  {
+   "ticker": "FEDDECISION-23MAY-H25",
+   "event_ticker": "FEDDECISION-23MAY",
+   "category": "Economics",
+   "side": "yes",
+   "contracts": 92,
+   "maker_contracts": 92,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 93.0,
+   "basis_cents": 8556,
+   "fees_cents": 11,
+   "net_pnl_cents": 633,
+   "return": 0.07398316970546985,
+   "entry_ts": 1683122330,
+   "exit_ts": 1683148021,
+   "holding_s": 25691,
+   "result": "yes"
+  },
+  {
+   "ticker": "FEDDECISION-23NOV-H25",
+   "event_ticker": "FEDDECISION-23NOV",
+   "category": "Economics",
+   "side": "no",
+   "contracts": 123,
+   "maker_contracts": 123,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 98.0,
+   "basis_cents": 12054,
+   "fees_cents": 5,
+   "net_pnl_cents": 241,
+   "return": 0.019993363198938113,
+   "entry_ts": 1698857271,
+   "exit_ts": 1698914400,
+   "holding_s": 57129,
+   "result": "no"
+  },
+  {
+   "ticker": "FEDDECISION-23SEP-H25",
+   "event_ticker": "FEDDECISION-23SEP",
+   "category": "Economics",
+   "side": "no",
+   "contracts": 108,
+   "maker_contracts": 108,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 98.0,
+   "basis_cents": 10584,
+   "fees_cents": 4,
+   "net_pnl_cents": 212,
+   "return": 0.0200302343159486,
+   "entry_ts": 1695218032,
+   "exit_ts": 1695305040,
+   "holding_s": 87008,
+   "result": "no"
+  },
+  {
+   "ticker": "FEDDECISION-24JUL-C25",
+   "event_ticker": "FEDDECISION-24JUL",
+   "category": "Economics",
+   "side": "no",
+   "contracts": 125,
+   "maker_contracts": 125,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 97.0,
+   "basis_cents": 12125,
+   "fees_cents": 7,
+   "net_pnl_cents": 368,
+   "return": 0.030350515463917527,
+   "entry_ts": 1722432000,
+   "exit_ts": 1722457201,
+   "holding_s": 25201,
+   "result": "no"
+  },
+  {
+   "ticker": "FEDDECISION-24JUL-H0",
+   "event_ticker": "FEDDECISION-24JUL",
+   "category": "Economics",
+   "side": "yes",
+   "contracts": 58,
+   "maker_contracts": 58,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 97.0,
+   "basis_cents": 5626,
+   "fees_cents": 3,
+   "net_pnl_cents": 171,
+   "return": 0.0303945965161749,
+   "entry_ts": 1722433755,
+   "exit_ts": 1722457201,
+   "holding_s": 23446,
+   "result": "yes"
+  },
+  {
+   "ticker": "FEDDECISION-24JUN-C25",
+   "event_ticker": "FEDDECISION-24JUN",
+   "category": "Economics",
+   "side": "no",
+   "contracts": 70,
+   "maker_contracts": 70,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 98.0,
+   "basis_cents": 6860,
+   "fees_cents": 3,
+   "net_pnl_cents": 137,
+   "return": 0.019970845481049562,
+   "entry_ts": 1718210724,
+   "exit_ts": 1718223061,
+   "holding_s": 12337,
+   "result": "no"
+  },
+  {
+   "ticker": "FEDDECISION-24JUN-H0",
+   "event_ticker": "FEDDECISION-24JUN",
+   "category": "Economics",
+   "side": "yes",
+   "contracts": 160,
+   "maker_contracts": 160,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 98.0,
+   "basis_cents": 15680,
+   "fees_cents": 6,
+   "net_pnl_cents": 314,
+   "return": 0.020025510204081633,
+   "entry_ts": 1718209767,
+   "exit_ts": 1718223061,
+   "holding_s": 13294,
+   "result": "yes"
+  },
+  {
+   "ticker": "GASM-22JUL11-A4.60",
+   "event_ticker": "GASM-22JUL11",
+   "category": "Economics",
+   "side": "no",
+   "contracts": 94,
+   "maker_contracts": 94,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 96.0,
+   "basis_cents": 9024,
+   "fees_cents": 0,
+   "net_pnl_cents": 376,
+   "return": 0.041666666666666664,
+   "entry_ts": 1657570044,
+   "exit_ts": 1657645440,
+   "holding_s": 75396,
+   "result": "no"
+  },
+  {
+   "ticker": "OIL-22JUL11-N100",
+   "event_ticker": "OIL-22JUL11",
+   "category": "Economics",
+   "side": "no",
+   "contracts": 252,
+   "maker_contracts": 252,
+   "taker_contracts": 0,
+   "avg_entry_price_cents": 95.0,
+   "basis_cents": 23940,
+   "fees_cents": 0,
+   "net_pnl_cents": 1260,
+   "return": 0.05263157894736842,
+   "entry_ts": 1657745532,
+   "exit_ts": 1657818180,
+   "holding_s": 72648,
+   "result": "no"
+  }
+ ],
+ "fill_stats": {
+  "n_orders": 65,
+  "n_maker_orders": 65,
+  "n_taker_orders": 0,
+  "maker_order_fill_rate": 0.4461538461538462,
+  "taker_order_fill_rate": null,
+  "maker_contract_fill_rate": 0.266769965782168,
+  "taker_contract_fill_rate": null,
+  "maker_contracts_filled": 4132,
+  "taker_contracts_filled": 0,
+  "maker_fill_rate_flag_gt60": false
+ },
+ "fill_rate_raw": {
+  "maker": {
+   "n_orders": 65,
+   "n_orders_filled": 29,
+   "contracts_ordered": 15489,
+   "contracts_filled": 4132
+  },
+  "taker": {
+   "n_orders": 0,
+   "n_orders_filled": 0,
+   "contracts_ordered": 0,
+   "contracts_filled": 0
+  }
+ },
+ "per_market": {
+  "CPI-21DEC-T0.8": {
+   "net_pnl_cents": 133,
+   "contracts_traded": 17,
+   "category": "Economics",
+   "first_entry_ts": 1641946366
+  },
+  "FED-22JULY-T2.25": {
+   "net_pnl_cents": 979,
+   "contracts_traded": 332,
+   "category": "Economics",
+   "first_entry_ts": 1658931567
+  },
+  "FED-22JUN-T1.75": {
+   "net_pnl_cents": 412,
+   "contracts_traded": 105,
+   "category": "Economics",
+   "first_entry_ts": 1655303948
+  },
+  "FED-22MAR-T0.25": {
+   "net_pnl_cents": 76,
+   "contracts_traded": 26,
+   "category": "Economics",
+   "first_entry_ts": 1647445135
+  },
+  "FED-22MAR-T0.5": {
+   "net_pnl_cents": 684,
+   "contracts_traded": 116,
+   "category": "Economics",
+   "first_entry_ts": 1647444209
+  },
+  "FED-22MAY-T0.75": {
+   "net_pnl_cents": 837,
+   "contracts_traded": 213,
+   "category": "Economics",
+   "first_entry_ts": 1651670747
+  },
+  "FED-22MAY-T1": {
+   "net_pnl_cents": 684,
+   "contracts_traded": 116,
+   "category": "Economics",
+   "first_entry_ts": 1651674783
+  },
+  "FED-22NOV-T3.75": {
+   "net_pnl_cents": 837,
+   "contracts_traded": 213,
+   "category": "Economics",
+   "first_entry_ts": 1667404125
+  },
+  "FED-22NOV-T4.00": {
+   "net_pnl_cents": 21,
+   "contracts_traded": 11,
+   "category": "Economics",
+   "first_entry_ts": 1667407518
+  },
+  "FED-22SEP-T3.00": {
+   "net_pnl_cents": 733,
+   "contracts_traded": 373,
+   "category": "Economics",
+   "first_entry_ts": 1663780387
+  },
+  "FED-22SEP-T3.25": {
+   "net_pnl_cents": 501,
+   "contracts_traded": 51,
+   "category": "Economics",
+   "first_entry_ts": 1663767203
+  },
+  "FED-23FEB-T4.75": {
+   "net_pnl_cents": 23,
+   "contracts_traded": 8,
+   "category": "Economics",
+   "first_entry_ts": 1675260219
+  },
+  "FED-23JUN-T5.25": {
+   "net_pnl_cents": 979,
+   "contracts_traded": 332,
+   "category": "Economics",
+   "first_entry_ts": 1686761893
+  },
+  "FED-23MAR-T5.00": {
+   "net_pnl_cents": 837,
+   "contracts_traded": 213,
+   "category": "Economics",
+   "first_entry_ts": 1679496591
+  },
+  "FED-23MAY-T5.00": {
+   "net_pnl_cents": 684,
+   "contracts_traded": 116,
+   "category": "Economics",
+   "first_entry_ts": 1683122358
+  },
+  "FED-24JUN-T5.25": {
+   "net_pnl_cents": 992,
+   "contracts_traded": 505,
+   "category": "Economics",
+   "first_entry_ts": 1718201328
+  },
+  "FEDDECISION-23JUL-H25": {
+   "net_pnl_cents": 119,
+   "contracts_traded": 61,
+   "category": "Economics",
+   "first_entry_ts": 1690393087
+  },
+  "FEDDECISION-23JUN-H0": {
+   "net_pnl_cents": 7,
+   "contracts_traded": 2,
+   "category": "Economics",
+   "first_entry_ts": 1686764853
+  },
+  "FEDDECISION-23JUN-H25": {
+   "net_pnl_cents": 487,
+   "contracts_traded": 124,
+   "category": "Economics",
+   "first_entry_ts": 1686765097
+  },
+  "FEDDECISION-23MAY-H0": {
+   "net_pnl_cents": 684,
+   "contracts_traded": 116,
+   "category": "Economics",
+   "first_entry_ts": 1683134247
+  },
+  "FEDDECISION-23MAY-H25": {
+   "net_pnl_cents": 633,
+   "contracts_traded": 92,
+   "category": "Economics",
+   "first_entry_ts": 1683122330
+  },
+  "FEDDECISION-23NOV-H25": {
+   "net_pnl_cents": 241,
+   "contracts_traded": 123,
+   "category": "Economics",
+   "first_entry_ts": 1698857271
+  },
+  "FEDDECISION-23SEP-H25": {
+   "net_pnl_cents": 212,
+   "contracts_traded": 108,
+   "category": "Economics",
+   "first_entry_ts": 1695218032
+  },
+  "FEDDECISION-24JUL-C25": {
+   "net_pnl_cents": 368,
+   "contracts_traded": 125,
+   "category": "Economics",
+   "first_entry_ts": 1722432000
+  },
+  "FEDDECISION-24JUL-H0": {
+   "net_pnl_cents": 171,
+   "contracts_traded": 58,
+   "category": "Economics",
+   "first_entry_ts": 1722433755
+  },
+  "FEDDECISION-24JUN-C25": {
+   "net_pnl_cents": 137,
+   "contracts_traded": 70,
+   "category": "Economics",
+   "first_entry_ts": 1718210724
+  },
+  "FEDDECISION-24JUN-H0": {
+   "net_pnl_cents": 314,
+   "contracts_traded": 160,
+   "category": "Economics",
+   "first_entry_ts": 1718209767
+  },
+  "GASM-22JUL11-A4.60": {
+   "net_pnl_cents": 376,
+   "contracts_traded": 94,
+   "category": "Economics",
+   "first_entry_ts": 1657570044
+  },
+  "OIL-22JUL11-N100": {
+   "net_pnl_cents": 1260,
+   "contracts_traded": 252,
+   "category": "Economics",
+   "first_entry_ts": 1657745532
+  }
+ },
+ "fills": [
+  {
+   "ticker": "CPI-21DEC-T0.8",
+   "ts": 1641946366,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 92,
+   "count": 3,
+   "is_taker": false,
+   "order_id": 1
+  },
+  {
+   "ticker": "CPI-21DEC-T0.8",
+   "ts": 1641959008,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 92,
+   "count": 10,
+   "is_taker": false,
+   "order_id": 1
+  },
+  {
+   "ticker": "CPI-21DEC-T0.8",
+   "ts": 1641959008,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 92,
+   "count": 4,
+   "is_taker": false,
+   "order_id": 1
+  },
+  {
+   "ticker": "FED-22MAR-T0.25",
+   "ts": 1647445135,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 26,
+   "is_taker": false,
+   "order_id": 3
+  },
+  {
+   "ticker": "FED-22MAR-T0.5",
+   "ts": 1647444209,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 94,
+   "count": 38,
+   "is_taker": false,
+   "order_id": 2
+  },
+  {
+   "ticker": "FED-22MAR-T0.5",
+   "ts": 1647445117,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 94,
+   "count": 39,
+   "is_taker": false,
+   "order_id": 2
+  },
+  {
+   "ticker": "FED-22MAR-T0.5",
+   "ts": 1647451721,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 94,
+   "count": 39,
+   "is_taker": false,
+   "order_id": 2
+  },
+  {
+   "ticker": "FED-22MAY-T0.75",
+   "ts": 1651670747,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 26,
+   "is_taker": false,
+   "order_id": 4
+  },
+  {
+   "ticker": "FED-22MAY-T0.75",
+   "ts": 1651670747,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 106,
+   "is_taker": false,
+   "order_id": 4
+  },
+  {
+   "ticker": "FED-22MAY-T0.75",
+   "ts": 1651670747,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 37,
+   "is_taker": false,
+   "order_id": 4
+  },
+  {
+   "ticker": "FED-22MAY-T1",
+   "ts": 1651674783,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 94,
+   "count": 116,
+   "is_taker": false,
+   "order_id": 5
+  },
+  {
+   "ticker": "FED-22MAY-T0.75",
+   "ts": 1651676542,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 44,
+   "is_taker": false,
+   "order_id": 4
+  },
+  {
+   "ticker": "FED-22JUN-T1.75",
+   "ts": 1655303948,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 40,
+   "is_taker": false,
+   "order_id": 13
+  },
+  {
+   "ticker": "FED-22JUN-T1.75",
+   "ts": 1655304585,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 12,
+   "is_taker": false,
+   "order_id": 13
+  },
+  {
+   "ticker": "FED-22JUN-T1.75",
+   "ts": 1655304585,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 6,
+   "is_taker": false,
+   "order_id": 13
+  },
+  {
+   "ticker": "FED-22JUN-T1.75",
+   "ts": 1655305680,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 47,
+   "is_taker": false,
+   "order_id": 13
+  },
+  {
+   "ticker": "GASM-22JUL11-A4.60",
+   "ts": 1657570044,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 94,
+   "is_taker": false,
+   "order_id": 15
+  },
+  {
+   "ticker": "OIL-22JUL11-N100",
+   "ts": 1657745532,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 95,
+   "count": 115,
+   "is_taker": false,
+   "order_id": 18
+  },
+  {
+   "ticker": "OIL-22JUL11-N100",
+   "ts": 1657745532,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 95,
+   "count": 125,
+   "is_taker": false,
+   "order_id": 18
+  },
+  {
+   "ticker": "OIL-22JUL11-N100",
+   "ts": 1657745532,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 95,
+   "count": 12,
+   "is_taker": false,
+   "order_id": 18
+  },
+  {
+   "ticker": "FED-22JULY-T2.25",
+   "ts": 1658931567,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 67,
+   "is_taker": false,
+   "order_id": 19
+  },
+  {
+   "ticker": "FED-22JULY-T2.25",
+   "ts": 1658931567,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 3,
+   "is_taker": false,
+   "order_id": 19
+  },
+  {
+   "ticker": "FED-22JULY-T2.25",
+   "ts": 1658931567,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 6,
+   "is_taker": false,
+   "order_id": 19
+  },
+  {
+   "ticker": "FED-22JULY-T2.25",
+   "ts": 1658931567,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 13,
+   "is_taker": false,
+   "order_id": 19
+  },
+  {
+   "ticker": "FED-22JULY-T2.25",
+   "ts": 1658932069,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 25,
+   "is_taker": false,
+   "order_id": 19
+  },
+  {
+   "ticker": "FED-22JULY-T2.25",
+   "ts": 1658932093,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 218,
+   "is_taker": false,
+   "order_id": 19
+  },
+  {
+   "ticker": "FED-22SEP-T3.25",
+   "ts": 1663767203,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 90,
+   "count": 48,
+   "is_taker": false,
+   "order_id": 29
+  },
+  {
+   "ticker": "FED-22SEP-T3.25",
+   "ts": 1663767537,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 90,
+   "count": 3,
+   "is_taker": false,
+   "order_id": 29
+  },
+  {
+   "ticker": "FED-22SEP-T3.00",
+   "ts": 1663780387,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 111,
+   "is_taker": false,
+   "order_id": 28
+  },
+  {
+   "ticker": "FED-22SEP-T3.00",
+   "ts": 1663780387,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 22,
+   "is_taker": false,
+   "order_id": 28
+  },
+  {
+   "ticker": "FED-22SEP-T3.00",
+   "ts": 1663780685,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 125,
+   "is_taker": false,
+   "order_id": 28
+  },
+  {
+   "ticker": "FED-22SEP-T3.00",
+   "ts": 1663781068,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 35,
+   "is_taker": false,
+   "order_id": 28
+  },
+  {
+   "ticker": "FED-22SEP-T3.00",
+   "ts": 1663781242,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 25,
+   "is_taker": false,
+   "order_id": 28
+  },
+  {
+   "ticker": "FED-22SEP-T3.00",
+   "ts": 1663781387,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 5,
+   "is_taker": false,
+   "order_id": 28
+  },
+  {
+   "ticker": "FED-22SEP-T3.00",
+   "ts": 1663781650,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 50,
+   "is_taker": false,
+   "order_id": 28
+  },
+  {
+   "ticker": "FED-22NOV-T3.75",
+   "ts": 1667404125,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 52,
+   "is_taker": false,
+   "order_id": 31
+  },
+  {
+   "ticker": "FED-22NOV-T3.75",
+   "ts": 1667404125,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 35,
+   "is_taker": false,
+   "order_id": 31
+  },
+  {
+   "ticker": "FED-22NOV-T3.75",
+   "ts": 1667404125,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 15,
+   "is_taker": false,
+   "order_id": 31
+  },
+  {
+   "ticker": "FED-22NOV-T3.75",
+   "ts": 1667404125,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 111,
+   "is_taker": false,
+   "order_id": 31
+  },
+  {
+   "ticker": "FED-22NOV-T4.00",
+   "ts": 1667407518,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 11,
+   "is_taker": false,
+   "order_id": 32
+  },
+  {
+   "ticker": "FED-23FEB-T4.75",
+   "ts": 1675260219,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 1,
+   "is_taker": false,
+   "order_id": 36
+  },
+  {
+   "ticker": "FED-23FEB-T4.75",
+   "ts": 1675260253,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 7,
+   "is_taker": false,
+   "order_id": 36
+  },
+  {
+   "ticker": "FED-23MAR-T5.00",
+   "ts": 1679496591,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 9,
+   "is_taker": false,
+   "order_id": 38
+  },
+  {
+   "ticker": "FED-23MAR-T5.00",
+   "ts": 1679496591,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 12,
+   "is_taker": false,
+   "order_id": 38
+  },
+  {
+   "ticker": "FED-23MAR-T5.00",
+   "ts": 1679496591,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 192,
+   "is_taker": false,
+   "order_id": 38
+  },
+  {
+   "ticker": "FED-23MAY-T5.00",
+   "ts": 1683122358,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 94,
+   "count": 73,
+   "is_taker": false,
+   "order_id": 39
+  },
+  {
+   "ticker": "FED-23MAY-T5.00",
+   "ts": 1683122358,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 94,
+   "count": 20,
+   "is_taker": false,
+   "order_id": 39
+  },
+  {
+   "ticker": "FEDDECISION-23MAY-H25",
+   "ts": 1683122330,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 93,
+   "count": 8,
+   "is_taker": false,
+   "order_id": 41
+  },
+  {
+   "ticker": "FEDDECISION-23MAY-H25",
+   "ts": 1683122330,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 93,
+   "count": 1,
+   "is_taker": false,
+   "order_id": 41
+  },
+  {
+   "ticker": "FEDDECISION-23MAY-H25",
+   "ts": 1683122330,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 93,
+   "count": 6,
+   "is_taker": false,
+   "order_id": 41
+  },
+  {
+   "ticker": "FEDDECISION-23MAY-H25",
+   "ts": 1683122330,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 93,
+   "count": 23,
+   "is_taker": false,
+   "order_id": 41
+  },
+  {
+   "ticker": "FEDDECISION-23MAY-H25",
+   "ts": 1683122330,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 93,
+   "count": 1,
+   "is_taker": false,
+   "order_id": 41
+  },
+  {
+   "ticker": "FEDDECISION-23MAY-H25",
+   "ts": 1683122330,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 93,
+   "count": 1,
+   "is_taker": false,
+   "order_id": 41
+  },
+  {
+   "ticker": "FED-23MAY-T5.00",
+   "ts": 1683122819,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 94,
+   "count": 6,
+   "is_taker": false,
+   "order_id": 39
+  },
+  {
+   "ticker": "FED-23MAY-T5.00",
+   "ts": 1683123281,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 94,
+   "count": 2,
+   "is_taker": false,
+   "order_id": 39
+  },
+  {
+   "ticker": "FED-23MAY-T5.00",
+   "ts": 1683123281,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 94,
+   "count": 15,
+   "is_taker": false,
+   "order_id": 39
+  },
+  {
+   "ticker": "FEDDECISION-23MAY-H25",
+   "ts": 1683123147,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 93,
+   "count": 25,
+   "is_taker": false,
+   "order_id": 41
+  },
+  {
+   "ticker": "FEDDECISION-23MAY-H25",
+   "ts": 1683123149,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 93,
+   "count": 5,
+   "is_taker": false,
+   "order_id": 41
+  },
+  {
+   "ticker": "FEDDECISION-23MAY-H25",
+   "ts": 1683123301,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 93,
+   "count": 12,
+   "is_taker": false,
+   "order_id": 41
+  },
+  {
+   "ticker": "FEDDECISION-23MAY-H25",
+   "ts": 1683123301,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 93,
+   "count": 10,
+   "is_taker": false,
+   "order_id": 41
+  },
+  {
+   "ticker": "FEDDECISION-23MAY-H0",
+   "ts": 1683134247,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 94,
+   "count": 116,
+   "is_taker": false,
+   "order_id": 42
+  },
+  {
+   "ticker": "FED-23JUN-T5.25",
+   "ts": 1686761893,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 181,
+   "is_taker": false,
+   "order_id": 48
+  },
+  {
+   "ticker": "FED-23JUN-T5.25",
+   "ts": 1686762255,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 3,
+   "is_taker": false,
+   "order_id": 48
+  },
+  {
+   "ticker": "FED-23JUN-T5.25",
+   "ts": 1686762255,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 7,
+   "is_taker": false,
+   "order_id": 48
+  },
+  {
+   "ticker": "FED-23JUN-T5.25",
+   "ts": 1686762269,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 4,
+   "is_taker": false,
+   "order_id": 48
+  },
+  {
+   "ticker": "FED-23JUN-T5.25",
+   "ts": 1686762269,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 2,
+   "is_taker": false,
+   "order_id": 48
+  },
+  {
+   "ticker": "FED-23JUN-T5.25",
+   "ts": 1686762720,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 135,
+   "is_taker": false,
+   "order_id": 48
+  },
+  {
+   "ticker": "FEDDECISION-23JUN-H0",
+   "ts": 1686764853,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 2,
+   "is_taker": false,
+   "order_id": 47
+  },
+  {
+   "ticker": "FEDDECISION-23JUN-H25",
+   "ts": 1686765097,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 111,
+   "is_taker": false,
+   "order_id": 50
+  },
+  {
+   "ticker": "FEDDECISION-23JUN-H25",
+   "ts": 1686765097,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 96,
+   "count": 13,
+   "is_taker": false,
+   "order_id": 50
+  },
+  {
+   "ticker": "FEDDECISION-23JUL-H25",
+   "ts": 1690393087,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 3,
+   "is_taker": false,
+   "order_id": 51
+  },
+  {
+   "ticker": "FEDDECISION-23JUL-H25",
+   "ts": 1690393609,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 58,
+   "is_taker": false,
+   "order_id": 51
+  },
+  {
+   "ticker": "FEDDECISION-23SEP-H25",
+   "ts": 1695218032,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 38,
+   "is_taker": false,
+   "order_id": 55
+  },
+  {
+   "ticker": "FEDDECISION-23SEP-H25",
+   "ts": 1695218032,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 36,
+   "is_taker": false,
+   "order_id": 55
+  },
+  {
+   "ticker": "FEDDECISION-23SEP-H25",
+   "ts": 1695218911,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 23,
+   "is_taker": false,
+   "order_id": 55
+  },
+  {
+   "ticker": "FEDDECISION-23SEP-H25",
+   "ts": 1695221036,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 11,
+   "is_taker": false,
+   "order_id": 55
+  },
+  {
+   "ticker": "FEDDECISION-23NOV-H25",
+   "ts": 1698857271,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 123,
+   "is_taker": false,
+   "order_id": 57
+  },
+  {
+   "ticker": "FED-24JUN-T5.25",
+   "ts": 1718201328,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 97,
+   "is_taker": false,
+   "order_id": 60
+  },
+  {
+   "ticker": "FED-24JUN-T5.25",
+   "ts": 1718202767,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 62,
+   "is_taker": false,
+   "order_id": 60
+  },
+  {
+   "ticker": "FED-24JUN-T5.25",
+   "ts": 1718205197,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 138,
+   "is_taker": false,
+   "order_id": 60
+  },
+  {
+   "ticker": "FED-24JUN-T5.25",
+   "ts": 1718205197,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 13,
+   "is_taker": false,
+   "order_id": 60
+  },
+  {
+   "ticker": "FED-24JUN-T5.25",
+   "ts": 1718205197,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 83,
+   "is_taker": false,
+   "order_id": 60
+  },
+  {
+   "ticker": "FED-24JUN-T5.25",
+   "ts": 1718205197,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 112,
+   "is_taker": false,
+   "order_id": 60
+  },
+  {
+   "ticker": "FEDDECISION-24JUN-C25",
+   "ts": 1718210724,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 37,
+   "is_taker": false,
+   "order_id": 61
+  },
+  {
+   "ticker": "FEDDECISION-24JUN-H0",
+   "ts": 1718209767,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 127,
+   "is_taker": false,
+   "order_id": 62
+  },
+  {
+   "ticker": "FEDDECISION-24JUN-H0",
+   "ts": 1718209767,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 33,
+   "is_taker": false,
+   "order_id": 62
+  },
+  {
+   "ticker": "FEDDECISION-24JUN-C25",
+   "ts": 1718213342,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 25,
+   "is_taker": false,
+   "order_id": 61
+  },
+  {
+   "ticker": "FEDDECISION-24JUN-C25",
+   "ts": 1718214003,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 98,
+   "count": 8,
+   "is_taker": false,
+   "order_id": 61
+  },
+  {
+   "ticker": "FEDDECISION-24JUL-C25",
+   "ts": 1722432000,
+   "side": "no",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 125,
+   "is_taker": false,
+   "order_id": 63
+  },
+  {
+   "ticker": "FEDDECISION-24JUL-H0",
+   "ts": 1722433755,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 56,
+   "is_taker": false,
+   "order_id": 64
+  },
+  {
+   "ticker": "FEDDECISION-24JUL-H0",
+   "ts": 1722435080,
+   "side": "yes",
+   "action": "buy",
+   "price_cents": 97,
+   "count": 2,
+   "is_taker": false,
+   "order_id": 64
+  }
+ ]
+}

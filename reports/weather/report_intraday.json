@@ -1,0 +1,461 @@
+{
+  "label": "weather-intraday (train split)",
+  "config": {
+    "buffer_cents": 2,
+    "prev_runs_models": [
+      "best_match"
+    ],
+    "fee_model": "exact centicent (FeeSchedule.load_default)",
+    "maker_queue": "enabled (engine default)"
+  },
+  "base": {
+    "pnl": {
+      "bankroll_cents": 1000000,
+      "net_pnl_cents_gross_of_inference": -627085,
+      "net_pnl_cents_after_inference": -627085,
+      "net_pnl_pct_of_bankroll": -0.627085,
+      "fees_cents": 0,
+      "inference_cost_cents": 0,
+      "avg_deployed_cents": 23964.617808789168,
+      "run_span_s": 4395661,
+      "annualized_return_on_avg_deployed": -187.732005925559
+    },
+    "brier": {
+      "n": 140,
+      "strategy": 0.24946833217615746,
+      "market_baseline": 0.1497707142857143,
+      "delta_brier": -0.09969761789044314,
+      "delta_ci95": [
+        -0.15100695946425105,
+        -0.04838827631663522
+      ],
+      "beats_baseline": false,
+      "n_gate": 500,
+      "meets_n_gate": false,
+      "traded_subset": {
+        "n": 122,
+        "strategy": 0.27393330417664075,
+        "market_baseline": 0.15956516393442627,
+        "delta_brier": -0.11436814024221445,
+        "delta_ci95": [
+          -0.17280921018976486,
+          -0.05592707029466404
+        ],
+        "beats_baseline": false,
+        "gate_cents": 4.0
+      },
+      "trade_pnl": {
+        "n_markets_traded": 59,
+        "net_pnl_cents_after_fees": -627085,
+        "net_pnl_cents_after_fees_and_inference": -627085
+      },
+      "flags": [
+        "n=140 < 500: below the forecast-strategy gate (minimum detectable dBrier at n=100 is ~0.0137, 3x the superforecaster edge)"
+      ]
+    },
+    "calibration": {
+      "n": 140,
+      "ece": 0.169613598729077,
+      "curve": [
+        {
+          "bin": "[0.0,0.1)",
+          "n": 22,
+          "mean_p_hat": 0.03510121570050256,
+          "observed_freq": 0.3181818181818182
+        },
+        {
+          "bin": "[0.1,0.2)",
+          "n": 21,
+          "mean_p_hat": 0.15710959287246368,
+          "observed_freq": 0.2857142857142857
+        },
+        {
+          "bin": "[0.2,0.3)",
+          "n": 9,
+          "mean_p_hat": 0.2495596906348112,
+          "observed_freq": 0.4444444444444444
+        },
+        {
+          "bin": "[0.3,0.4)",
+          "n": 16,
+          "mean_p_hat": 0.3363044702993913,
+          "observed_freq": 0.5
+        },
+        {
+          "bin": "[0.5,0.6)",
+          "n": 7,
+          "mean_p_hat": 0.5739883823963768,
+          "observed_freq": 0.8571428571428571
+        },
+        {
+          "bin": "[0.6,0.7)",
+          "n": 18,
+          "mean_p_hat": 0.6451490979702408,
+          "observed_freq": 0.4444444444444444
+        },
+        {
+          "bin": "[0.7,0.8)",
+          "n": 12,
+          "mean_p_hat": 0.7301860785665059,
+          "observed_freq": 0.6666666666666666
+        },
+        {
+          "bin": "[0.8,0.9)",
+          "n": 25,
+          "mean_p_hat": 0.8281453261095487,
+          "observed_freq": 0.76
+        },
+        {
+          "bin": "[0.9,1.0)",
+          "n": 10,
+          "mean_p_hat": 0.9383709576080653,
+          "observed_freq": 0.7
+        }
+      ],
+      "reliability": 0.03499914670953378,
+      "resolution": 0.03590568954854669,
+      "uncertainty": 0.2495408163265306,
+      "brier_from_decomposition": 0.2486342734875177
+    },
+    "drawdown": {
+      "max_drawdown_cents": 726085,
+      "max_drawdown_frac_of_peak": 0.6606778889899909
+    },
+    "concentration": {
+      "n_markets_traded": 59,
+      "top5_share_of_net": null,
+      "worst_market_loss_cents": -50000,
+      "top5": [
+        {
+          "ticker": "KXHIGHCHI-26JUN28-B82.5",
+          "net_pnl_cents": 91000
+        },
+        {
+          "ticker": "KXHIGHTDAL-26JUN24-T95",
+          "net_pnl_cents": 63000
+        },
+        {
+          "ticker": "KXHIGHAUS-26MAY29-B89.5",
+          "net_pnl_cents": 44321
+        },
+        {
+          "ticker": "KXHIGHPHIL-26JUL02-B101.5",
+          "net_pnl_cents": 44321
+        },
+        {
+          "ticker": "KXHIGHCHI-26JUN15-B74.5",
+          "net_pnl_cents": 41040
+        }
+      ]
+    },
+    "trade_stats": {
+      "n_decision_calls": 34447,
+      "n_intents": 140,
+      "n_orders": 140,
+      "contracts_requested": 140000,
+      "contracts_ordered": 125924,
+      "contracts_filled": 46903,
+      "fill_rate_vs_ordered": 0.3724706966106541,
+      "fill_rate_vs_requested": 0.3350214285714286,
+      "order_any_fill_rate": 0.42142857142857143,
+      "taker_contracts": 0,
+      "maker_contracts": 46903,
+      "maker_share": 1.0,
+      "maker_fill_rate": 0.3724706966106541,
+      "maker_fill_rate_sanity_band": [
+        0.4,
+        0.5
+      ],
+      "avg_edge_at_entry_cents": 24.204271512899698,
+      "avg_holding_period_s": 39690.96610169492,
+      "opportunity_lifetime_s": {
+        "n": 140,
+        "p25": 7200,
+        "median": 28740,
+        "p75": 28740
+      },
+      "flags": []
+    },
+    "cost_ratios": {
+      "inference_cost_cents": 0,
+      "net_pnl_cents": -627085,
+      "notional_traded_cents": 1400485,
+      "inference_over_net_pnl": null,
+      "inference_over_net_pnl_target": 0.2,
+      "inference_over_notional": 0.0,
+      "inference_over_notional_target": 0.01,
+      "flags": []
+    },
+    "splits": {
+      "time": {
+        "split_ts": 1781926596,
+        "train": {
+          "net_pnl_cents": -371065,
+          "n_markets": 38
+        },
+        "test": {
+          "net_pnl_cents": -256020,
+          "n_markets": 21
+        }
+      },
+      "category": {
+        "Climate and Weather": {
+          "net_pnl_cents": -627085,
+          "n_markets": 59
+        }
+      }
+    }
+  },
+  "capacity_curve": [
+    {
+      "depth_multiplier": 1.0,
+      "net_pnl_cents_after_inference": -627085,
+      "contracts_filled": 46903
+    },
+    {
+      "depth_multiplier": 3.0,
+      "net_pnl_cents_after_inference": -556295,
+      "contracts_filled": 50587
+    },
+    {
+      "depth_multiplier": 10.0,
+      "net_pnl_cents_after_inference": -528786,
+      "contracts_filled": 51083
+    }
+  ],
+  "fee_stress": {
+    "multiplier": 1.5,
+    "net_pnl_cents_after_inference": -627085,
+    "still_positive": false
+  },
+  "brier_vs_market": {
+    "pooled": {
+      "n": 886,
+      "brier_ours": 0.1215080324745753,
+      "brier_market": 0.024821021444695522,
+      "delta_market_minus_ours": -0.09668701102988,
+      "delta_ci95": [
+        -0.11083160482214693,
+        -0.08254241723761307
+      ],
+      "we_beat_market": false
+    },
+    "by_phase": {
+      "pm4": {
+        "n": 886,
+        "brier_ours": 0.1215080324745753,
+        "brier_market": 0.024821021444695522,
+        "delta_market_minus_ours": -0.09668701102988,
+        "delta_ci95": [
+          -0.11083160482214693,
+          -0.08254241723761307
+        ],
+        "we_beat_market": false
+      }
+    },
+    "traded_subset": {
+      "n": 140,
+      "brier_ours": 0.24956991581419874,
+      "brier_market": 0.14530375,
+      "delta_market_minus_ours": -0.10426616581419876,
+      "delta_ci95": [
+        -0.15718789351734586,
+        -0.051344438111051674
+      ],
+      "we_beat_market": false
+    }
+  },
+  "calibration_all_strikes": {
+    "n": 886,
+    "ece": 0.05527986674895888,
+    "curve": [
+      {
+        "bin": "[0.0,0.1)",
+        "n": 406,
+        "mean_p_hat": 0.010681009982826051,
+        "observed_freq": 0.027093596059113302
+      },
+      {
+        "bin": "[0.1,0.2)",
+        "n": 76,
+        "mean_p_hat": 0.15807222613110453,
+        "observed_freq": 0.18421052631578946
+      },
+      {
+        "bin": "[0.2,0.3)",
+        "n": 23,
+        "mean_p_hat": 0.25310880052737245,
+        "observed_freq": 0.34782608695652173
+      },
+      {
+        "bin": "[0.3,0.4)",
+        "n": 115,
+        "mean_p_hat": 0.3309483536537692,
+        "observed_freq": 0.23478260869565218
+      },
+      {
+        "bin": "[0.5,0.6)",
+        "n": 20,
+        "mean_p_hat": 0.5727084769124738,
+        "observed_freq": 0.8
+      },
+      {
+        "bin": "[0.6,0.7)",
+        "n": 93,
+        "mean_p_hat": 0.6386142221427263,
+        "observed_freq": 0.6344086021505376
+      },
+      {
+        "bin": "[0.7,0.8)",
+        "n": 29,
+        "mean_p_hat": 0.737660115497041,
+        "observed_freq": 0.41379310344827586
+      },
+      {
+        "bin": "[0.8,0.9)",
+        "n": 86,
+        "mean_p_hat": 0.8272506105331549,
+        "observed_freq": 0.7441860465116279
+      },
+      {
+        "bin": "[0.9,1.0)",
+        "n": 38,
+        "mean_p_hat": 0.9636245774796162,
+        "observed_freq": 0.8157894736842105
+      }
+    ]
+  },
+  "per_city": {
+    "KXHIGHAUS": {
+      "net_pnl_cents": -36377,
+      "fees_cents": 0,
+      "n_markets_traded": 7,
+      "contracts": 5800,
+      "n_dates": 7
+    },
+    "KXHIGHCHI": {
+      "net_pnl_cents": 60164,
+      "fees_cents": 0,
+      "n_markets_traded": 9,
+      "contracts": 5979,
+      "n_dates": 7
+    },
+    "KXHIGHDEN": {
+      "net_pnl_cents": 26938,
+      "fees_cents": 0,
+      "n_markets_traded": 2,
+      "contracts": 368,
+      "n_dates": 1
+    },
+    "KXHIGHLAX": {
+      "net_pnl_cents": -9000,
+      "fees_cents": 0,
+      "n_markets_traded": 2,
+      "contracts": 2000,
+      "n_dates": 1
+    },
+    "KXHIGHMIA": {
+      "net_pnl_cents": -14540,
+      "fees_cents": 0,
+      "n_markets_traded": 2,
+      "contracts": 1836,
+      "n_dates": 2
+    },
+    "KXHIGHNY": {
+      "net_pnl_cents": -142916,
+      "fees_cents": 0,
+      "n_markets_traded": 13,
+      "contracts": 11066,
+      "n_dates": 10
+    },
+    "KXHIGHPHIL": {
+      "net_pnl_cents": 44321,
+      "fees_cents": 0,
+      "n_markets_traded": 1,
+      "contracts": 943,
+      "n_dates": 1
+    },
+    "KXHIGHTATL": {
+      "net_pnl_cents": -2000,
+      "fees_cents": 0,
+      "n_markets_traded": 1,
+      "contracts": 1000,
+      "n_dates": 1
+    },
+    "KXHIGHTBOS": {
+      "net_pnl_cents": -28000,
+      "fees_cents": 0,
+      "n_markets_traded": 1,
+      "contracts": 1000,
+      "n_dates": 1
+    },
+    "KXHIGHTDAL": {
+      "net_pnl_cents": 59000,
+      "fees_cents": 0,
+      "n_markets_traded": 2,
+      "contracts": 2000,
+      "n_dates": 2
+    },
+    "KXHIGHTDC": {
+      "net_pnl_cents": -23000,
+      "fees_cents": 0,
+      "n_markets_traded": 2,
+      "contracts": 2000,
+      "n_dates": 2
+    },
+    "KXHIGHTHOU": {
+      "net_pnl_cents": -4000,
+      "fees_cents": 0,
+      "n_markets_traded": 1,
+      "contracts": 1000,
+      "n_dates": 1
+    },
+    "KXHIGHTLV": {
+      "net_pnl_cents": -193933,
+      "fees_cents": 0,
+      "n_markets_traded": 4,
+      "contracts": 3119,
+      "n_dates": 3
+    },
+    "KXHIGHTSATX": {
+      "net_pnl_cents": -46000,
+      "fees_cents": 0,
+      "n_markets_traded": 2,
+      "contracts": 2000,
+      "n_dates": 1
+    },
+    "KXHIGHTSEA": {
+      "net_pnl_cents": -317742,
+      "fees_cents": 0,
+      "n_markets_traded": 10,
+      "contracts": 6792,
+      "n_dates": 7
+    }
+  },
+  "kill_criteria": {
+    "a_postfee_pnl": {
+      "net_pnl_cents": -627085,
+      "n_resolved_days": 33,
+      "n_cities": 15,
+      "fired": false,
+      "note": "fires only with >=60 days across >=6 cities of evidence"
+    },
+    "b_brier_vs_market": {
+      "delta_market_minus_ours": -0.09668701102988,
+      "ci95": [
+        -0.11083160482214693,
+        -0.08254241723761307
+      ],
+      "fired": true
+    },
+    "c_concentration": {
+      "top_city_share_of_positive_pnl": 0.3159492288221486,
+      "fired": false
+    },
+    "d_capacity": {
+      "avg_deployed_usd_per_day_per_city": 28.292626262626264,
+      "fired": true,
+      "note": ">$200/day/city deployable required"
+    }
+  }
+}

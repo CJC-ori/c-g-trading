@@ -1,0 +1,156 @@
+{
+ "scheduled_series": [
+  "KXAAAGASD",
+  "KXAAAGASM",
+  "KXAAAGASW",
+  "KXCBDECISIONBRAZIL",
+  "KXCBDECISIONCHINA",
+  "KXCBDECISIONJAPAN",
+  "KXCBDECISIONMEXICO",
+  "KXCPI",
+  "KXCPICOMBO",
+  "KXCPICORE",
+  "KXCPIYOY",
+  "KXECONSTATCPIYOY",
+  "KXEGGS",
+  "KXEMPLOYMENTCOMBO",
+  "KXFED",
+  "KXFEDCOMBO",
+  "KXFEDDECISION",
+  "KXFOMCDISSENTCOUNT",
+  "KXGDP",
+  "KXGDPYEAR",
+  "KXNYCRENTSY",
+  "KXOILRIGS",
+  "KXPAYROLLS",
+  "KXPCECORE",
+  "KXSPRLVL",
+  "KXTSAW",
+  "KXU3"
+ ],
+ "flagged": [
+  {
+   "ticker": "KXTOP3WEALTH-25DEC31-MZUC",
+   "series": "KXTOP3WEALTH",
+   "net_pnl_cents": 40,
+   "can_close_early": 1,
+   "close_time": "2025-12-31T15:00:00Z",
+   "result": "no",
+   "title": "Will  be one of the three wealthiest people in the world?"
+  },
+  {
+   "ticker": "KXDEBTGROWTH25-25DEC31-38",
+   "series": "KXDEBTGROWTH25",
+   "net_pnl_cents": 135,
+   "can_close_early": 1,
+   "close_time": "2026-01-10T22:30:55.294652Z",
+   "result": "yes",
+   "title": "How high will be national debt be during the Trump Administration?"
+  },
+  {
+   "ticker": "KXNURSESTRIKE-26-FEB15",
+   "series": "KXNURSESTRIKE",
+   "net_pnl_cents": 627,
+   "can_close_early": 1,
+   "close_time": "2026-02-15T04:59:00Z",
+   "result": "no",
+   "title": "Will all NYSNA-represented nurses participating in the NYC hospital strike that began on January 12, 2026 stop striking before Feb 15, 2026?"
+  },
+  {
+   "ticker": "KXMUSKNW-26MAR31-T660",
+   "series": "KXMUSKNW",
+   "net_pnl_cents": 1176,
+   "can_close_early": 1,
+   "close_time": "2026-03-31T21:25:00Z",
+   "result": "no",
+   "title": "Will Elon Musk's net worth on March 31, 2026 be above $660 billion?"
+  },
+  {
+   "ticker": "KXUSDEBTMON-26MAY01-T39.10",
+   "series": "KXUSDEBTMON",
+   "net_pnl_cents": 234,
+   "can_close_early": 1,
+   "close_time": "2026-05-01T19:59:00Z",
+   "result": "no",
+   "title": "Will Total Public Debt Outstanding for April 30, 2026 be above 39.10 trillion?"
+  },
+  {
+   "ticker": "KXTRUEV-26JUN05-T1260.77",
+   "series": "KXTRUEV",
+   "net_pnl_cents": 10,
+   "can_close_early": 1,
+   "close_time": "2026-06-05T23:59:00Z",
+   "result": "no",
+   "title": "Will the Truflation EV Commodity Index on Jun 5, 2026 be above 1260.77?"
+  },
+  {
+   "ticker": "KXMUSKNW-26JUN30-T1000",
+   "series": "KXMUSKNW",
+   "net_pnl_cents": 2510,
+   "can_close_early": 1,
+   "close_time": "2026-06-30T22:59:00Z",
+   "result": "yes",
+   "title": "Will Elon Musk's net worth for June be above $1.00 trillion?"
+  },
+  {
+   "ticker": "KXMUSKNW-26JUN30-T950",
+   "series": "KXMUSKNW",
+   "net_pnl_cents": 26,
+   "can_close_early": 1,
+   "close_time": "2026-06-30T22:59:00Z",
+   "result": "yes",
+   "title": "Will Elon Musk's net worth for June be above $950 billion?"
+  },
+  {
+   "ticker": "KXMUSKNW-26JUN30-T1100",
+   "series": "KXMUSKNW",
+   "net_pnl_cents": 1800,
+   "can_close_early": 1,
+   "close_time": "2026-06-30T22:59:00Z",
+   "result": "no",
+   "title": "Will Elon Musk's net worth for June be above $1.10 trillion?"
+  },
+  {
+   "ticker": "KXMUSKNW-26JUN30-T1200",
+   "series": "KXMUSKNW",
+   "net_pnl_cents": 174,
+   "can_close_early": 1,
+   "close_time": "2026-06-30T22:59:00Z",
+   "result": "no",
+   "title": "Will Elon Musk's net worth for June be above $1.20 trillion?"
+  },
+  {
+   "ticker": "KXMAJORPROTEST-26JUN",
+   "series": "KXMAJORPROTEST",
+   "net_pnl_cents": 115,
+   "can_close_early": 1,
+   "close_time": "2026-07-01T03:59:00Z",
+   "result": "no",
+   "title": "Will a protest within the United States that draws a combined estimated attendance of at least 250,000 people across all locations be confirmed?"
+  },
+  {
+   "ticker": "KXCREDITC-26JUL01-T4.25",
+   "series": "KXCREDITC",
+   "net_pnl_cents": 180,
+   "can_close_early": 1,
+   "close_time": "2026-07-01T11:55:00Z",
+   "result": "no",
+   "title": "Will SOFR be above 4.25 by end of Q2 2026?"
+  },
+  {
+   "ticker": "KXMUSKNW-26JUL31-T700",
+   "series": "KXMUSKNW",
+   "net_pnl_cents": 2080,
+   "can_close_early": 1,
+   "close_time": "2026-07-31T22:59:00Z",
+   "result": "no",
+   "title": "Will Elon Musk's net worth for July be above $700 billion?"
+  }
+ ],
+ "summary": {
+  "total_net_cents": 164214,
+  "n_flagged": 13,
+  "flagged_net_cents": 9107,
+  "net_excl_flagged_cents": 155107
+ }
+}

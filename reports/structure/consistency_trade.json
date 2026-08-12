@@ -1,0 +1,98 @@
+{
+  "senate-2024-R": {
+    "divergence": {
+      "net_pnl_dollars": 94.56,
+      "settled": true,
+      "n_signals": 70,
+      "n_orders": 5,
+      "n_fills": 9,
+      "contracts": 1228,
+      "fees_dollars": 1.26,
+      "ref_hits": 222,
+      "note": null
+    },
+    "no_signal": {
+      "net_pnl_dollars": 81.46,
+      "settled": true,
+      "n_signals": 64,
+      "n_orders": 35,
+      "n_fills": 10,
+      "contracts": 1400,
+      "fees_dollars": 1.19,
+      "ref_hits": 222,
+      "note": null
+    }
+  },
+  "house-2024-R": {
+    "divergence": {
+      "net_pnl_dollars": -0.8,
+      "settled": true,
+      "n_signals": 30,
+      "n_orders": 4,
+      "n_fills": 1,
+      "contracts": 40,
+      "fees_dollars": 0.0,
+      "ref_hits": 35,
+      "note": null
+    },
+    "no_signal": {
+      "net_pnl_dollars": -1.1,
+      "settled": true,
+      "n_signals": 29,
+      "n_orders": 7,
+      "n_fills": 4,
+      "contracts": 92,
+      "fees_dollars": 0.04,
+      "ref_hits": 35,
+      "note": null
+    }
+  },
+  "senate-2026-D": {
+    "divergence": {
+      "net_pnl_dollars": -3.96,
+      "settled": false,
+      "n_signals": 705,
+      "n_orders": 16,
+      "n_fills": 16,
+      "contracts": 2292,
+      "fees_dollars": 19.86,
+      "ref_hits": 3965,
+      "note": "unsettled: P&L is realized-only (open position marked out at 0)"
+    },
+    "no_signal": {
+      "net_pnl_dollars": -3.96,
+      "settled": false,
+      "n_signals": 705,
+      "n_orders": 17,
+      "n_fills": 17,
+      "contracts": 2292,
+      "fees_dollars": 19.86,
+      "ref_hits": 3965,
+      "note": "unsettled: P&L is realized-only (open position marked out at 0)"
+    }
+  },
+  "house-2026-D": {
+    "divergence": {
+      "net_pnl_dollars": -247.32,
+      "settled": false,
+      "n_signals": 1587,
+      "n_orders": 82,
+      "n_fills": 138,
+      "contracts": 26384,
+      "fees_dollars": 74.77,
+      "ref_hits": 3532,
+      "note": "unsettled: P&L is realized-only (open position marked out at 0)"
+    },
+    "no_signal": {
+      "net_pnl_dollars": -155.14,
+      "settled": false,
+      "n_signals": 246,
+      "n_orders": 105,
+      "n_fills": 178,
+      "contracts": 19584,
+      "fees_dollars": 41.18,
+      "ref_hits": 3532,
+      "note": "unsettled: P&L is realized-only (open position marked out at 0)"
+    }
+  }
+}

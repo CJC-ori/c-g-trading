@@ -1,0 +1,662 @@
+{
+ "t_split_ts": 1774008000,
+ "t_split_iso": "2026-03-20T12:00:00",
+ "config": "X10_T24",
+ "note": "train = episodes with ts0 < t_split (first 60% by episode order)",
+ "cells": {
+  "pol_panic_dip": {
+   "n_full": 1071,
+   "n_train": 621,
+   "train_per_week": 2.547,
+   "distinct_markets_train": 297,
+   "median_spread0_c": {
+    "n": 621,
+    "min": 1,
+    "p25": 4,
+    "median": 8,
+    "p75": 15,
+    "max": 84,
+    "mean": 11.916
+   },
+   "time_to_50_h": {
+    "n": 533,
+    "min": 1.0,
+    "p25": 1.0,
+    "median": 3.0,
+    "p75": 8.0,
+    "max": 70.0,
+    "mean": 7.799
+   },
+   "settled_with_move_train": 0.1127,
+   "revert50_U24_train": 0.7858,
+   "depths": {
+    "d0": {
+     "filled": 621,
+     "fill_rate": 1.0,
+     "mean_ev_c": -4.07,
+     "pnl_c": {
+      "n": 621,
+      "min": -97,
+      "p25": -6.0,
+      "median": -0.5,
+      "p75": 4.5,
+      "max": 71,
+      "mean": -4.068
+     },
+     "pct_pos": 0.457,
+     "death_rate_of_filled": 0.069,
+     "capturable_contracts": {
+      "n": 621,
+      "min": 0,
+      "p25": 10,
+      "median": 467,
+      "p75": 2751,
+      "max": 592407,
+      "mean": 7889.694
+     },
+     "capturable_ge_100": 0.654,
+     "capturable_dollar_pnl_total": -507424.0
+    },
+    "d5": {
+     "filled": 334,
+     "fill_rate": 0.538,
+     "mean_ev_c": 7.55,
+     "pnl_c": {
+      "n": 334,
+      "min": -83,
+      "p25": 10.5,
+      "median": 12.5,
+      "p75": 17.5,
+      "max": 54,
+      "mean": 7.552
+     },
+     "pct_pos": 0.886,
+     "death_rate_of_filled": 0.114,
+     "capturable_contracts": {
+      "n": 334,
+      "min": 0,
+      "p25": 260,
+      "median": 1192,
+      "p75": 4765,
+      "max": 390453,
+      "mean": 8927.066
+     },
+     "capturable_ge_100": 0.868,
+     "capturable_dollar_pnl_total": -242939.0
+    },
+    "d10": {
+     "filled": 269,
+     "fill_rate": 0.433,
+     "mean_ev_c": 10.84,
+     "pnl_c": {
+      "n": 269,
+      "min": -78,
+      "p25": 15.5,
+      "median": 17.5,
+      "p75": 23.5,
+      "max": 59,
+      "mean": 10.84
+     },
+     "pct_pos": 0.859,
+     "death_rate_of_filled": 0.141,
+     "capturable_contracts": {
+      "n": 269,
+      "min": 0,
+      "p25": 296,
+      "median": 1356,
+      "p75": 5272,
+      "max": 390453,
+      "mean": 10088.766
+     },
+     "capturable_ge_100": 0.877,
+     "capturable_dollar_pnl_total": -149222.0
+    }
+   }
+  },
+  "pol_spike_fade": {
+   "n_full": 1772,
+   "n_train": 969,
+   "train_per_week": 3.974,
+   "distinct_markets_train": 460,
+   "median_spread0_c": {
+    "n": 969,
+    "min": 1,
+    "p25": 3,
+    "median": 7,
+    "p75": 13,
+    "max": 91,
+    "mean": 11.699
+   },
+   "time_to_50_h": {
+    "n": 814,
+    "min": 1.0,
+    "p25": 1.0,
+    "median": 3.0,
+    "p75": 9.0,
+    "max": 72.0,
+    "mean": 8.644
+   },
+   "settled_with_move_train": 0.2982,
+   "revert50_U24_train": 0.7534,
+   "depths": {
+    "d0": {
+     "filled": 969,
+     "fill_rate": 1.0,
+     "mean_ev_c": -7.44,
+     "pnl_c": {
+      "n": 969,
+      "min": -98,
+      "p25": -7.5,
+      "median": -0.5,
+      "p75": 4.0,
+      "max": 43.5,
+      "mean": -7.438
+     },
+     "pct_pos": 0.459,
+     "death_rate_of_filled": 0.129,
+     "capturable_contracts": {
+      "n": 969,
+      "min": 0,
+      "p25": 116,
+      "median": 869,
+      "p75": 4185,
+      "max": 1019656,
+      "mean": 10707.74
+     },
+     "capturable_ge_100": 0.753,
+     "capturable_dollar_pnl_total": -2132634.0
+    },
+    "d5": {
+     "filled": 547,
+     "fill_rate": 0.564,
+     "mean_ev_c": 2.9,
+     "pnl_c": {
+      "n": 547,
+      "min": -82,
+      "p25": 10.0,
+      "median": 12.0,
+      "p75": 17.0,
+      "max": 49.0,
+      "mean": 2.905
+     },
+     "pct_pos": 0.81,
+     "death_rate_of_filled": 0.19,
+     "capturable_contracts": {
+      "n": 547,
+      "min": 4,
+      "p25": 511,
+      "median": 1612,
+      "p75": 5721,
+      "max": 992732,
+      "mean": 14801.133
+     },
+     "capturable_ge_100": 0.954,
+     "capturable_dollar_pnl_total": -1356445.0
+    },
+    "d10": {
+     "filled": 436,
+     "fill_rate": 0.45,
+     "mean_ev_c": 5.49,
+     "pnl_c": {
+      "n": 436,
+      "min": -77,
+      "p25": 15.0,
+      "median": 17.5,
+      "p75": 22.0,
+      "max": 52.5,
+      "mean": 5.492
+     },
+     "pct_pos": 0.775,
+     "death_rate_of_filled": 0.225,
+     "capturable_contracts": {
+      "n": 436,
+      "min": 0,
+      "p25": 511,
+      "median": 1532,
+      "p75": 6356,
+      "max": 992732,
+      "mean": 15065.72
+     },
+     "capturable_ge_100": 0.936,
+     "capturable_dollar_pnl_total": -1201508.0
+    }
+   }
+  },
+  "eco_spike_fade": {
+   "n_full": 902,
+   "n_train": 397,
+   "train_per_week": 1.628,
+   "distinct_markets_train": 193,
+   "median_spread0_c": {
+    "n": 397,
+    "min": 1,
+    "p25": 4,
+    "median": 7,
+    "p75": 13,
+    "max": 91,
+    "mean": 10.947
+   },
+   "time_to_50_h": {
+    "n": 326,
+    "min": 1.0,
+    "p25": 1.0,
+    "median": 3.0,
+    "p75": 11.0,
+    "max": 72.0,
+    "mean": 9.304
+   },
+   "settled_with_move_train": 0.1209,
+   "revert50_U24_train": 0.738,
+   "depths": {
+    "d0": {
+     "filled": 397,
+     "fill_rate": 1.0,
+     "mean_ev_c": -4.34,
+     "pnl_c": {
+      "n": 397,
+      "min": -96,
+      "p25": -5.5,
+      "median": -0.0,
+      "p75": 4.5,
+      "max": 52,
+      "mean": -4.341
+     },
+     "pct_pos": 0.471,
+     "death_rate_of_filled": 0.078,
+     "capturable_contracts": {
+      "n": 397,
+      "min": 0,
+      "p25": 46,
+      "median": 549,
+      "p75": 2234,
+      "max": 52912,
+      "mean": 3358.259
+     },
+     "capturable_ge_100": 0.693,
+     "capturable_dollar_pnl_total": -47282.0
+    },
+    "d5": {
+     "filled": 195,
+     "fill_rate": 0.491,
+     "mean_ev_c": 7.17,
+     "pnl_c": {
+      "n": 195,
+      "min": -80,
+      "p25": 10.5,
+      "median": 12.0,
+      "p75": 16.5,
+      "max": 57,
+      "mean": 7.167
+     },
+     "pct_pos": 0.877,
+     "death_rate_of_filled": 0.123,
+     "capturable_contracts": {
+      "n": 195,
+      "min": 0,
+      "p25": 316,
+      "median": 1149,
+      "p75": 3506,
+      "max": 44209,
+      "mean": 4007.456
+     },
+     "capturable_ge_100": 0.918,
+     "capturable_dollar_pnl_total": 22200.0
+    },
+    "d10": {
+     "filled": 153,
+     "fill_rate": 0.385,
+     "mean_ev_c": 10.46,
+     "pnl_c": {
+      "n": 153,
+      "min": -75,
+      "p25": 15.5,
+      "median": 17.0,
+      "p75": 22.5,
+      "max": 62,
+      "mean": 10.464
+     },
+     "pct_pos": 0.85,
+     "death_rate_of_filled": 0.15,
+     "capturable_contracts": {
+      "n": 153,
+      "min": 0,
+      "p25": 237,
+      "median": 956,
+      "p75": 3061,
+      "max": 38386,
+      "mean": 3259.837
+     },
+     "capturable_ge_100": 0.876,
+     "capturable_dollar_pnl_total": 2629.0
+    }
+   }
+  },
+  "weather_spike_fade": {
+   "n_full": 13218,
+   "n_train": 8907,
+   "train_per_week": 36.532,
+   "distinct_markets_train": 6692,
+   "median_spread0_c": {
+    "n": 8907,
+    "min": 1,
+    "p25": 3,
+    "median": 6,
+    "p75": 12,
+    "max": 98,
+    "mean": 10.571
+   },
+   "time_to_50_h": {
+    "n": 7077,
+    "min": 1.0,
+    "p25": 1.0,
+    "median": 2.0,
+    "p75": 5.0,
+    "max": 31.0,
+    "mean": 3.898
+   },
+   "settled_with_move_train": 0.2919,
+   "revert50_U24_train": 0.794,
+   "depths": {
+    "d0": {
+     "filled": 8907,
+     "fill_rate": 1.0,
+     "mean_ev_c": -10.5,
+     "pnl_c": {
+      "n": 8907,
+      "min": -99,
+      "p25": -11.0,
+      "median": 1.5,
+      "p75": 6.5,
+      "max": 97,
+      "mean": -10.498
+     },
+     "pct_pos": 0.542,
+     "death_rate_of_filled": 0.202,
+     "capturable_contracts": {
+      "n": 8907,
+      "min": 0,
+      "p25": 254,
+      "median": 1183,
+      "p75": 3505,
+      "max": 205236,
+      "mean": 3338.008
+     },
+     "capturable_ge_100": 0.822,
+     "capturable_dollar_pnl_total": -5339420.0
+    },
+    "d5": {
+     "filled": 6470,
+     "fill_rate": 0.726,
+     "mean_ev_c": -2.25,
+     "pnl_c": {
+      "n": 6470,
+      "min": -84,
+      "p25": -5,
+      "median": 12.0,
+      "p75": 15.5,
+      "max": 50.5,
+      "mean": -2.254
+     },
+     "pct_pos": 0.743,
+     "death_rate_of_filled": 0.257,
+     "capturable_contracts": {
+      "n": 6470,
+      "min": 0,
+      "p25": 606,
+      "median": 1732,
+      "p75": 4468,
+      "max": 205088,
+      "mean": 4053.361
+     },
+     "capturable_ge_100": 0.949,
+     "capturable_dollar_pnl_total": -2754902.0
+    },
+    "d10": {
+     "filled": 5714,
+     "fill_rate": 0.642,
+     "mean_ev_c": 0.65,
+     "pnl_c": {
+      "n": 5714,
+      "min": -79,
+      "p25": -20,
+      "median": 17.0,
+      "p75": 20.5,
+      "max": 53.0,
+      "mean": 0.652
+     },
+     "pct_pos": 0.72,
+     "death_rate_of_filled": 0.28,
+     "capturable_contracts": {
+      "n": 5714,
+      "min": 0,
+      "p25": 646,
+      "median": 1850,
+      "p75": 4611,
+      "max": 205088,
+      "mean": 4181.305
+     },
+     "capturable_ge_100": 0.949,
+     "capturable_dollar_pnl_total": -1720526.0
+    }
+   }
+  },
+  "weather_panic_dip": {
+   "n_full": 1054,
+   "n_train": 900,
+   "train_per_week": 3.691,
+   "distinct_markets_train": 794,
+   "median_spread0_c": {
+    "n": 900,
+    "min": 1,
+    "p25": 6,
+    "median": 14,
+    "p75": 34,
+    "max": 98,
+    "mean": 23.043
+   },
+   "time_to_50_h": {
+    "n": 684,
+    "min": 1.0,
+    "p25": 1.0,
+    "median": 1.0,
+    "p75": 2.0,
+    "max": 24.0,
+    "mean": 2.472
+   },
+   "settled_with_move_train": 0.2889,
+   "revert50_U24_train": 0.76,
+   "depths": {
+    "d0": {
+     "filled": 900,
+     "fill_rate": 1.0,
+     "mean_ev_c": -16.2,
+     "pnl_c": {
+      "n": 900,
+      "min": -99,
+      "p25": -20.5,
+      "median": -7.5,
+      "p75": 2.5,
+      "max": 95,
+      "mean": -16.204
+     },
+     "pct_pos": 0.29,
+     "death_rate_of_filled": 0.222,
+     "capturable_contracts": {
+      "n": 900,
+      "min": 0,
+      "p25": 0,
+      "median": 277,
+      "p75": 1513,
+      "max": 100020,
+      "mean": 2419.839
+     },
+     "capturable_ge_100": 0.598,
+     "capturable_dollar_pnl_total": -616803.0
+    },
+    "d5": {
+     "filled": 499,
+     "fill_rate": 0.554,
+     "mean_ev_c": -6.81,
+     "pnl_c": {
+      "n": 499,
+      "min": -84,
+      "p25": -42,
+      "median": 12.0,
+      "p75": 17.5,
+      "max": 51,
+      "mean": -6.81
+     },
+     "pct_pos": 0.643,
+     "death_rate_of_filled": 0.357,
+     "capturable_contracts": {
+      "n": 499,
+      "min": 0,
+      "p25": 274,
+      "median": 853,
+      "p75": 3037,
+      "max": 100020,
+      "mean": 3933.311
+     },
+     "capturable_ge_100": 0.878,
+     "capturable_dollar_pnl_total": -402002.0
+    },
+    "d10": {
+     "filled": 436,
+     "fill_rate": 0.484,
+     "mean_ev_c": -4.87,
+     "pnl_c": {
+      "n": 436,
+      "min": -79,
+      "p25": -43,
+      "median": 16.5,
+      "p75": 22.0,
+      "max": 56,
+      "mean": -4.874
+     },
+     "pct_pos": 0.617,
+     "death_rate_of_filled": 0.383,
+     "capturable_contracts": {
+      "n": 436,
+      "min": 1,
+      "p25": 277,
+      "median": 925,
+      "p75": 3222,
+      "max": 100020,
+      "mean": 4067.468
+     },
+     "capturable_ge_100": 0.883,
+     "capturable_dollar_pnl_total": -325862.0
+    }
+   }
+  },
+  "mid_range_all": {
+   "n_full": 40484,
+   "n_train": 24573,
+   "train_per_week": 100.785,
+   "distinct_markets_train": 12500,
+   "median_spread0_c": {
+    "n": 24573,
+    "min": 0,
+    "p25": 2,
+    "median": 5,
+    "p75": 9,
+    "max": 98,
+    "mean": 8.704
+   },
+   "time_to_50_h": {
+    "n": 18689,
+    "min": 1.0,
+    "p25": 1.0,
+    "median": 3.0,
+    "p75": 10.0,
+    "max": 72.0,
+    "mean": 6.877
+   },
+   "settled_with_move_train": 0.6648,
+   "revert50_U24_train": 0.7315,
+   "depths": {
+    "d0": {
+     "filled": 24573,
+     "fill_rate": 1.0,
+     "mean_ev_c": -5.53,
+     "pnl_c": {
+      "n": 24573,
+      "min": -99,
+      "p25": -12.0,
+      "median": 1.5,
+      "p75": 6.0,
+      "max": 92,
+      "mean": -5.531
+     },
+     "pct_pos": 0.545,
+     "death_rate_of_filled": 0.23,
+     "capturable_contracts": {
+      "n": 24573,
+      "min": 0,
+      "p25": 487,
+      "median": 1571,
+      "p75": 4085,
+      "max": 5831110,
+      "mean": 5134.342
+     },
+     "capturable_ge_100": 0.893,
+     "capturable_dollar_pnl_total": -10219348.0
+    },
+    "d5": {
+     "filled": 19783,
+     "fill_rate": 0.805,
+     "mean_ev_c": 4.26,
+     "pnl_c": {
+      "n": 19783,
+      "min": -55,
+      "p25": -2,
+      "median": 11.5,
+      "p75": 14.5,
+      "max": 95,
+      "mean": 4.259
+     },
+     "pct_pos": 0.748,
+     "death_rate_of_filled": 0.252,
+     "capturable_contracts": {
+      "n": 19783,
+      "min": 0,
+      "p25": 677,
+      "median": 1753,
+      "p75": 4308,
+      "max": 5620746,
+      "mean": 5360.068
+     },
+     "capturable_ge_100": 0.955,
+     "capturable_dollar_pnl_total": -1259209.0
+    },
+    "d10": {
+     "filled": 17308,
+     "fill_rate": 0.704,
+     "mean_ev_c": 8.35,
+     "pnl_c": {
+      "n": 17308,
+      "min": -50,
+      "p25": -3,
+      "median": 16.0,
+      "p75": 19.0,
+      "max": 94,
+      "mean": 8.355
+     },
+     "pct_pos": 0.745,
+     "death_rate_of_filled": 0.255,
+     "capturable_contracts": {
+      "n": 17308,
+      "min": 0,
+      "p25": 678,
+      "median": 1720,
+      "p75": 4253,
+      "max": 5499192,
+      "mean": 5202.345
+     },
+     "capturable_ge_100": 0.956,
+     "capturable_dollar_pnl_total": 2400182.0
+    }
+   }
+  }
+ }
+}

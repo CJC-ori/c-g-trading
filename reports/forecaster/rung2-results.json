@@ -1,0 +1,511 @@
+{
+ "selection": {
+  "keys": [
+   "2026-02-01|infer|1698",
+   "2026-02-01|metaculus|37307",
+   "2026-02-01|metaculus|41462",
+   "2026-02-01|polymarket|0x6987d084de71031819f82051ea62b29a354628c3e4a22076a2acc197c776080a",
+   "2026-02-15|infer|1698",
+   "2026-02-15|infer|1703",
+   "2026-02-15|infer|1725",
+   "2026-02-15|infer|1726",
+   "2026-02-15|manifold|0IUCA5s8EN",
+   "2026-02-15|polymarket|0x6680cae9b37261f6c1ec3313f9ad175708bb9722e94285b5b0a5b50a9972d312",
+   "2026-02-15|polymarket|0x6995678ed5f481941cc4de37512cfe77b1b20e6fd9ba35e284360061d2687d8f",
+   "2026-02-15|polymarket|0x797d586ad45522306490b0cc9b2f21bdf957f3843476fae99f3bcc2cec83b74b",
+   "2026-02-15|polymarket|0xf0d4ee47d3abe6161f1e8f93bfe46d06d1ffd63f48e71c49aa81b2250e152e8b",
+   "2026-02-15|polymarket|0xf8ce0003ad658f06891e30bea1da4ad188884cdd933367099c8d121ea671bbd6",
+   "2026-03-01|infer|1698",
+   "2026-03-01|infer|1723",
+   "2026-03-01|infer|1726",
+   "2026-03-01|manifold|8y9hsccOnU",
+   "2026-03-01|manifold|TeB8Z7GvhUdx2tB48bbO",
+   "2026-03-01|manifold|dLq1oGr6ndcwTPIUAV9t",
+   "2026-03-01|manifold|q8dtCdNgsn",
+   "2026-03-01|metaculus|40599",
+   "2026-03-01|metaculus|40864",
+   "2026-03-01|metaculus|41140",
+   "2026-03-01|metaculus|41316",
+   "2026-03-01|metaculus|41485",
+   "2026-03-01|metaculus|41489",
+   "2026-03-01|metaculus|41508",
+   "2026-03-01|metaculus|41512",
+   "2026-03-01|metaculus|41595",
+   "2026-03-01|metaculus|41869",
+   "2026-03-01|polymarket|0x02f0c60b4f9551c97fe67bc6f02df357de52ca969f0e9159e06a5aca69cd2bf6",
+   "2026-03-01|polymarket|0x38837354d63a13a8b8707988d10343c0b7c0bb4ed6b2208a1167cd134250fe2e",
+   "2026-03-01|polymarket|0x48d65cfb64a9351ff56ca2377041f9bf558ae4755991080694b254a64917345b",
+   "2026-03-01|polymarket|0x61ce3773237a948584e422de72265f937034af418a8b703e3a860ea62e59ff36",
+   "2026-03-01|polymarket|0x6987d084de71031819f82051ea62b29a354628c3e4a22076a2acc197c776080a",
+   "2026-03-01|polymarket|0x781a06aa5779f97724b75ed8128aaf72c4a8955c893a6fefdc0efd7cb001c513",
+   "2026-03-01|polymarket|0x8533de32e4bcfc22d1c8fe8d79be73b319505c2bc19733f62d2d217695df463d",
+   "2026-03-01|polymarket|0x99a0fdc1bb6308873bf87eb75a47e21c8340fe20fb6b033444c1d21392da10a9",
+   "2026-03-15|manifold|lnIC5ggZh6",
+   "2026-03-15|manifold|q8dtCdNgsn",
+   "2026-03-15|manifold|t0LUU2E2ZE",
+   "2026-03-15|metaculus|40852",
+   "2026-03-15|metaculus|41091",
+   "2026-03-15|metaculus|41485",
+   "2026-03-15|metaculus|41489",
+   "2026-03-15|metaculus|41561",
+   "2026-03-15|metaculus|41869",
+   "2026-03-15|metaculus|42135",
+   "2026-03-15|polymarket|0xa70a86d250db7b0eb5f19b7856d13acf2dbfc554b8792fe9e004b521e8f601f7",
+   "2026-03-15|polymarket|0xe443dab97ad8b7f58558cc7a6a3932d156031e962a451e0461e9a4578d78fe84",
+   "2026-03-29|manifold|LpP5sE6dnE",
+   "2026-03-29|manifold|OlQq8h8qOh",
+   "2026-03-29|manifold|ZJ9LlySKX4dldqcpdQ4G",
+   "2026-03-29|manifold|ccugdghNgy",
+   "2026-03-29|manifold|i0gxu4hz50xefKXiKCI8",
+   "2026-03-29|manifold|lOIsUpOuLg",
+   "2026-03-29|manifold|sIS2UNptC0",
+   "2026-03-29|manifold|t8dLUsqqNE",
+   "2026-03-29|manifold|ypNI2z6IRI",
+   "2026-03-29|metaculus|40005",
+   "2026-03-29|metaculus|40599",
+   "2026-03-29|metaculus|40865",
+   "2026-03-29|metaculus|41869",
+   "2026-03-29|metaculus|42139",
+   "2026-03-29|metaculus|42284",
+   "2026-03-29|metaculus|42430",
+   "2026-03-29|metaculus|42472",
+   "2026-03-29|metaculus|42489",
+   "2026-03-29|polymarket|0x1480b819d03d4b6388d70e848b0384adf38c38d955cb783cdbcf6d4a436dee14",
+   "2026-03-29|polymarket|0x4ccff8c606ad71080c7611d28f1593a528a8ca6c11c1fb63bfa24a7eb2ad30d7",
+   "2026-03-29|polymarket|0x5ec80dc407457301f282a2b44341947afc700dfaa7923d14c8894e04bc63b03f",
+   "2026-03-29|polymarket|0x81b06cb917c9a2aabc67a7765bc3c640e88a699bbf451b29915049c0766cde04",
+   "2026-03-29|polymarket|0xc4170a15840e61b89216fcdf6368f63486b51f037e5c0546d63ae75b14fa5c2a",
+   "2026-03-29|polymarket|0xc451f03563e65567ee326fcaf2128915afa777cb31805c40ddae0a19cf1013f7",
+   "2026-03-29|polymarket|0xc942d7049a9487c1fe5481c41e7014855fb7df7e69af2d5a7ea18af2d4c2052c",
+   "2026-03-29|polymarket|0xd08544f6162283dc8d0a82f16362aab837a8537379df9bbe604960eec9cd4618",
+   "2026-03-29|polymarket|0xe3033b163d0e0e30cb3154049f28295dada348030e5c6cdfe58ed0d4e393c7e9",
+   "2026-04-12|infer|1698",
+   "2026-04-12|metaculus|40695",
+   "2026-04-12|metaculus|41514",
+   "2026-04-12|metaculus|41869",
+   "2026-04-12|metaculus|42430",
+   "2026-04-12|metaculus|42485",
+   "2026-04-12|metaculus|42542",
+   "2026-04-12|metaculus|42616",
+   "2026-04-12|polymarket|0x00cf5f4a419743e3bbaea3d01537c895ecfd8edba5e539967fe662573de44f23",
+   "2026-04-12|polymarket|0x3b6e28dcff1d4cfed3e169baefd383fb2ac39698d695baaf9eeb73f0e83cd6f0",
+   "2026-04-12|polymarket|0x54b36f27449bac18ab792efb1fce8e923d6dc190a311cb28aef0926583ae5760",
+   "2026-04-12|polymarket|0xa6ddb7146f48a12dbf73456d654211b01d7493829932c31b7fe85d82120d338f",
+   "2026-04-12|polymarket|0xb564e5e20a0d3ab9b07d24ff25b19001d9d6b2d1d3121d4b9a2a0691713643cb",
+   "2026-04-12|polymarket|0xbef7518445fa4a7c6460d9157e2d4a8097320914988d13a809c486eff50e5c06",
+   "2026-04-12|polymarket|0xc11a6a29ad4dbe16920928339cd9ad3bf3f9a2ab63e52ff5bfb8d177cdfb4d35",
+   "2026-04-12|polymarket|0xcfeec50a34d9429bfdc60d180f391b828924b88bd40c5b2361a43b7375b7a533",
+   "2026-04-26|infer|1698",
+   "2026-04-26|infer|1703",
+   "2026-04-26|manifold|0q0RRPtScc",
+   "2026-04-26|manifold|6uQmk7jqqcG4gUvPkkTr",
+   "2026-04-26|manifold|RcRy5POOpq",
+   "2026-04-26|manifold|TeB8Z7GvhUdx2tB48bbO",
+   "2026-04-26|manifold|i0gxu4hz50xefKXiKCI8",
+   "2026-04-26|manifold|n0SOsuUccS",
+   "2026-04-26|manifold|yq9hpgsgsU",
+   "2026-04-26|metaculus|40417",
+   "2026-04-26|metaculus|41140",
+   "2026-04-26|metaculus|41480",
+   "2026-04-26|metaculus|41869",
+   "2026-04-26|metaculus|42485",
+   "2026-04-26|polymarket|0x2baed9d4160afbaf16209d5e2d309393904cd4815b1db17c27630bb34637cd13",
+   "2026-04-26|polymarket|0x939bf902c7ba884c1310f19b6be20576f823952460f6367c9f10c08cd449ee60",
+   "2026-04-26|polymarket|0xd84858f62672e3bde4cb7e5e59b3952673c75d0805d974c4c519700330b33dcf",
+   "2026-04-26|polymarket|0xe3033b163d0e0e30cb3154049f28295dada348030e5c6cdfe58ed0d4e393c7e9",
+   "2026-05-10|polymarket|0x3b408ff1bc692be77ce9c3b1044ca4f6a0af3c1d2f245cb096c299005c4a0d48",
+   "2026-05-10|polymarket|0x518a5b030b205706b8ffe6bbad9bd3de59548348e5c0471827f5de21e513333c",
+   "2026-05-10|polymarket|0x6a5695fb003f6ceb9075445d9a8d2b16c142c148de52cd8826c8dad60ff7483f",
+   "2026-05-10|polymarket|0xe3033b163d0e0e30cb3154049f28295dada348030e5c6cdfe58ed0d4e393c7e9",
+   "2026-05-24|manifold|lZ0tchC5N0",
+   "2026-05-24|metaculus|43091",
+   "2026-05-24|polymarket|0x4e7ab14e108ea5a9155cec536b435c098b72702639598f0c28349c8bac946d94",
+   "2026-05-24|polymarket|0x781a06aa5779f97724b75ed8128aaf72c4a8955c893a6fefdc0efd7cb001c513"
+  ],
+  "n_eligible": 614,
+  "n_tier0": 384,
+  "n_screened": 199,
+  "tier0_rejects": {
+   "price_band": 129,
+   "category:sports": 82,
+   "category:crypto": 18,
+   "category:entertainment_taped": 1
+  },
+  "screen_rejects": {
+   "personal": 15,
+   "sports": 41,
+   "taped": 8,
+   "crypto": 7,
+   "insider": 69,
+   "fan_minutiae": 14,
+   "other": 21,
+   "fin_price": 10
+  }
+ },
+ "gate": 0.04,
+ "baseline": {
+  "n": 120,
+  "brier_market": 0.15584552751533473,
+  "brier_always_half": 0.25,
+  "base_rate": 0.3333333333333333
+ },
+ "full": {
+  "n_scored": 120,
+  "coverage_of_question_set": 1.0,
+  "n_unmatched": 0,
+  "unmatched_keys": [],
+  "brier_ours": 0.1596386780560356,
+  "brier_market": 0.15584552751533473,
+  "brier_index_ours": 60.04519077056736,
+  "three_number_block": {
+   "pooled_delta_brier": {
+    "n": 120,
+    "delta": -0.0037931505407009995,
+    "sd": 0.0634211481798654,
+    "se": 0.0057895322468316645,
+    "t": -0.655173920617993,
+    "ci_low": -0.015140633744491061,
+    "ci_high": 0.0075543326630890615,
+    "baseline_brier": 0.15584552751533473,
+    "our_brier": 0.1596386780560356,
+    "significant": false,
+    "rms_disagreement_equivalent": 0.06158855852105161,
+    "tier": "fail (not better than the price)"
+   },
+   "traded_subset": {
+    "gate": 0.04,
+    "n": 45,
+    "delta_brier": {
+     "n": 45,
+     "delta": -0.016185367622837843,
+     "sd": 0.10016600613696242,
+     "se": 0.014931866583793937,
+     "t": -1.0839480470850424,
+     "ci_low": -0.04545182612707396,
+     "ci_high": 0.013081090881398274,
+     "baseline_brier": 0.21293695519743616,
+     "our_brier": 0.22912232282027406,
+     "significant": false,
+     "rms_disagreement_equivalent": 0.127221726221734,
+     "tier": "fail (not better than the price)"
+    }
+   },
+   "simulated_post_fee_pnl_usd": null,
+   "complete": false,
+   "notes": [
+    "number (c) simulated post-fee P&L not supplied \u2014 block is INCOMPLETE; wire the backtest harness before quoting (a) or (b)"
+   ]
+  },
+  "gate": {
+   "n": 120,
+   "min_n_required": 500,
+   "passes_n_gate": false,
+   "min_detectable_delta_at_this_n": 0.011347483203790061,
+   "min_detectable_rms_disagreement": 0.10652456619855376,
+   "delta": -0.0037931505407009995,
+   "ci": [
+    -0.015140633744491061,
+    0.0075543326630890615
+   ],
+   "ci_excludes_zero": false,
+   "tier": "fail (not better than the price)",
+   "verdict": "UNDERPOWERED"
+  },
+  "by_source": {
+   "infer": {
+    "n": 11,
+    "delta": 0.01781162957741841,
+    "sd": 0.02953948694761889,
+    "se": 0.00890649042771387,
+    "t": 1.9998482816525434,
+    "ci_low": 0.0003549083390992254,
+    "ci_high": 0.03526835081573759,
+    "baseline_brier": 0.09057309545454545,
+    "our_brier": 0.07276146587712705,
+    "significant": true,
+    "rms_disagreement_equivalent": 0.13346021720879375,
+    "tier": "superforecaster-class"
+   },
+   "manifold": {
+    "n": 25,
+    "delta": 0.012969943243896902,
+    "sd": 0.06150942248455068,
+    "se": 0.012301884496910135,
+    "t": 1.0543053990756102,
+    "ci_low": -0.011141750370046962,
+    "ci_high": 0.037081636857840765,
+    "baseline_brier": 0.1577720800736065,
+    "our_brier": 0.14480213682970955,
+    "significant": false,
+    "rms_disagreement_equivalent": 0.113885658640133,
+    "tier": "parity (CI spans 0, point estimate >= 0)"
+   },
+   "metaculus": {
+    "n": 41,
+    "delta": -0.014839716421262347,
+    "sd": 0.08274413758422254,
+    "se": 0.01292246324075643,
+    "t": -1.1483659225633587,
+    "ci_low": -0.04016774437314495,
+    "ci_high": 0.010488311530620256,
+    "baseline_brier": 0.19240243902439025,
+    "our_brier": 0.2072421554456526,
+    "significant": false,
+    "rms_disagreement_equivalent": 0.12181837472755228,
+    "tier": "fail (not better than the price)"
+   },
+   "polymarket": {
+    "n": 43,
+    "delta": -0.008533167396776481,
+    "sd": 0.04554610703287887,
+    "se": 0.006945716206729818,
+    "t": -1.228551115939427,
+    "ci_low": -0.022146771161966925,
+    "ci_high": 0.005080436368413963,
+    "baseline_brier": 0.1365664476744186,
+    "our_brier": 0.14509961507119504,
+    "significant": false,
+    "rms_disagreement_equivalent": 0.09237514490801343,
+    "tier": "fail (not better than the price)"
+   }
+  },
+  "calibration_ours": [
+   {
+    "bucket": "[0.00, 0.05)",
+    "n": 6,
+    "mean_forecast": 0.04219410725143798,
+    "realized_freq": 0.0
+   },
+   {
+    "bucket": "[0.05, 0.15)",
+    "n": 30,
+    "mean_forecast": 0.09211431447204627,
+    "realized_freq": 0.1
+   },
+   {
+    "bucket": "[0.15, 0.35)",
+    "n": 25,
+    "mean_forecast": 0.22853992725331496,
+    "realized_freq": 0.2
+   },
+   {
+    "bucket": "[0.35, 0.65)",
+    "n": 33,
+    "mean_forecast": 0.4503216406050161,
+    "realized_freq": 0.42424242424242425
+   },
+   {
+    "bucket": "[0.65, 0.85)",
+    "n": 15,
+    "mean_forecast": 0.7420870670590886,
+    "realized_freq": 0.5333333333333333
+   },
+   {
+    "bucket": "[0.85, 0.95)",
+    "n": 8,
+    "mean_forecast": 0.9021818631450265,
+    "realized_freq": 0.875
+   },
+   {
+    "bucket": "[0.95, 1.01)",
+    "n": 3,
+    "mean_forecast": 0.9568437267339741,
+    "realized_freq": 1.0
+   }
+  ]
+ },
+ "ablation": {
+  "n_scored": 120,
+  "coverage_of_question_set": 1.0,
+  "n_unmatched": 0,
+  "unmatched_keys": [],
+  "brier_ours": 0.16131060085838703,
+  "brier_market": 0.15584552751533473,
+  "brier_index_ours": 59.836509009003336,
+  "three_number_block": {
+   "pooled_delta_brier": {
+    "n": 120,
+    "delta": -0.005465073343052438,
+    "sd": 0.0688595357876536,
+    "se": 0.006285986841705357,
+    "t": -0.8694057879334967,
+    "ci_low": -0.017785607552794937,
+    "ci_high": 0.006855460866690061,
+    "baseline_brier": 0.15584552751533473,
+    "our_brier": 0.16131060085838703,
+    "significant": false,
+    "rms_disagreement_equivalent": 0.07392613437108989,
+    "tier": "fail (not better than the price)"
+   },
+   "traded_subset": {
+    "gate": 0.04,
+    "n": 42,
+    "delta_brier": {
+     "n": 42,
+     "delta": -0.013131954694128449,
+     "sd": 0.1147437179993427,
+     "se": 0.01770534007440416,
+     "t": -0.7416945757010759,
+     "ci_low": -0.0478344212399606,
+     "ci_high": 0.0215705118517037,
+     "baseline_brier": 0.22118457386771995,
+     "our_brier": 0.23431652856184843,
+     "significant": false,
+     "rms_disagreement_equivalent": 0.11459474112771689,
+     "tier": "fail (not better than the price)"
+    }
+   },
+   "simulated_post_fee_pnl_usd": null,
+   "complete": false,
+   "notes": [
+    "number (c) simulated post-fee P&L not supplied \u2014 block is INCOMPLETE; wire the backtest harness before quoting (a) or (b)"
+   ]
+  },
+  "gate": {
+   "n": 120,
+   "min_n_required": 500,
+   "passes_n_gate": false,
+   "min_detectable_delta_at_this_n": 0.0123205342097425,
+   "min_detectable_rms_disagreement": 0.1109979018258566,
+   "delta": -0.005465073343052438,
+   "ci": [
+    -0.017785607552794937,
+    0.006855460866690061
+   ],
+   "ci_excludes_zero": false,
+   "tier": "fail (not better than the price)",
+   "verdict": "UNDERPOWERED"
+  },
+  "by_source": {
+   "infer": {
+    "n": 11,
+    "delta": -0.020604424609083176,
+    "sd": 0.07921661018041384,
+    "se": 0.023884706648389136,
+    "t": -0.8626618242545092,
+    "ci_low": -0.06741844963992588,
+    "ci_high": 0.02620960042175953,
+    "baseline_brier": 0.09057309545454545,
+    "our_brier": 0.11117752006362865,
+    "significant": false,
+    "rms_disagreement_equivalent": 0.14354241397260664,
+    "tier": "fail (not better than the price)"
+   },
+   "manifold": {
+    "n": 25,
+    "delta": 0.005273762217464939,
+    "sd": 0.0628666497393675,
+    "se": 0.0125733299478735,
+    "t": 0.4194403741354834,
+    "ci_low": -0.019369964480367118,
+    "ci_high": 0.029917488915296997,
+    "baseline_brier": 0.1577720800736065,
+    "our_brier": 0.15249831785614154,
+    "significant": false,
+    "rms_disagreement_equivalent": 0.07262067348534396,
+    "tier": "parity (CI spans 0, point estimate >= 0)"
+   },
+   "metaculus": {
+    "n": 41,
+    "delta": -0.019406528351319893,
+    "sd": 0.07830654198277542,
+    "se": 0.012229427241938104,
+    "t": -1.5868714018567864,
+    "ci_low": -0.04337620574551858,
+    "ci_high": 0.00456314904287879,
+    "baseline_brier": 0.19240243902439025,
+    "our_brier": 0.2118089673757101,
+    "significant": false,
+    "rms_disagreement_equivalent": 0.13930731621605483,
+    "tier": "fail (not better than the price)"
+   },
+   "polymarket": {
+    "n": 43,
+    "delta": 0.0054572901511887074,
+    "sd": 0.05832363828093188,
+    "se": 0.008894271454438085,
+    "t": 0.6135735994953938,
+    "ci_low": -0.011975481899509938,
+    "ci_high": 0.022890062201887353,
+    "baseline_brier": 0.1365664476744186,
+    "our_brier": 0.13110915752322985,
+    "significant": false,
+    "rms_disagreement_equivalent": 0.07387347393475352,
+    "tier": "parity (CI spans 0, point estimate >= 0)"
+   }
+  },
+  "calibration_ours": [
+   {
+    "bucket": "[0.00, 0.05)",
+    "n": 8,
+    "mean_forecast": 0.04105377920119865,
+    "realized_freq": 0.0
+   },
+   {
+    "bucket": "[0.05, 0.15)",
+    "n": 32,
+    "mean_forecast": 0.09630198371670073,
+    "realized_freq": 0.125
+   },
+   {
+    "bucket": "[0.15, 0.35)",
+    "n": 24,
+    "mean_forecast": 0.2328795484121152,
+    "realized_freq": 0.25
+   },
+   {
+    "bucket": "[0.35, 0.65)",
+    "n": 30,
+    "mean_forecast": 0.4679231299264304,
+    "realized_freq": 0.4
+   },
+   {
+    "bucket": "[0.65, 0.85)",
+    "n": 16,
+    "mean_forecast": 0.7226584634199148,
+    "realized_freq": 0.5625
+   },
+   {
+    "bucket": "[0.85, 0.95)",
+    "n": 7,
+    "mean_forecast": 0.9146087621719668,
+    "realized_freq": 0.8571428571428571
+   },
+   {
+    "bucket": "[0.95, 1.01)",
+    "n": 3,
+    "mean_forecast": 0.9584218633669871,
+    "realized_freq": 1.0
+   }
+  ]
+ },
+ "cost_full": {
+  "n": 120,
+  "total_cents": 1135,
+  "mean_cents": 9.46
+ },
+ "cost_ablation": {
+  "n": 120,
+  "total_cents": 362,
+  "mean_cents": 3.02
+ },
+ "placebo": {
+  "n": 10,
+  "brier_at_D": 0.1689750524678647,
+  "brier_at_D_plus_14": 0.1456662829768892,
+  "note": "expect D+14 to be markedly better; flat = leaking"
+ },
+ "leak_audit": {
+  "n_ledger_rows": 1389,
+  "n_violations": 4,
+  "violation_kinds": [
+   "DATE_INCONSISTENT"
+  ],
+  "hard_fail_would_void_run": true
+ },
+ "judge_model": "sonnet (Claude Sonnet 5, Jan-2026 cutoff \u2014 probed)",
+ "window": {
+  "resolve_min": "2026-02-01",
+  "resolve_max": "2026-05-31"
+ }
+}

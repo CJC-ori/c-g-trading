@@ -2,3 +2,12 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .env
+
+# Local market-data store (SQLite, can reach ~1 GB).
+# Leading slash anchors this to the repo root — a bare `data/` would also
+# swallow the source directory bot/data/.
+/data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm

@@ -64,8 +64,12 @@ The instinct was monetizable three ways (details in `docs/viability.md`):
 **For:** People are already doing this. Preseen turned $35 into ~$1.9M on
 Kalshi in seven months and is the first bot to win a human forecasting
 tournament; FutureSearch runs real-money positions on Kalshi/Polymarket and
-published its whole pipeline (~$0.60/question). Best AIs and top human
-forecasters are now in a statistical dead heat on Metaculus. And a Feb 2026
+published its whole pipeline (~$0.60/question). The best bots now score
+around the top 3% of the public crowd on Metaculus — though pro forecasters
+still beat every bot decisively, and the gap is flat-to-widening (Q2 2025
+head-to-head −20.03, p≈0.00001; corrected 2026-08-11 per
+research/benchmarks.md §2.6 — an earlier draft called this a "statistical
+dead heat", which it is not). And a Feb 2026
 academic study of Kalshi found post-fee profitable patterns that persist
 *because the markets are too small for professional capital* — which is
 precisely the two-person-side-project niche.

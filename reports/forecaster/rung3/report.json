@@ -1,0 +1,232 @@
+{
+  "label": "rung3-forecaster",
+  "fee_mode": "exact-per-series",
+  "base": {
+    "pnl": {
+      "bankroll_cents": 1000000,
+      "net_pnl_cents_gross_of_inference": -43124,
+      "net_pnl_cents_after_inference": -43280,
+      "net_pnl_pct_of_bankroll": -0.04328,
+      "fees_cents": 0,
+      "inference_cost_cents": 156,
+      "avg_deployed_cents": 16209.846066889295,
+      "run_span_s": 26724127,
+      "annualized_return_on_avg_deployed": -3.150731837106977
+    },
+    "brier": {
+      "n": 15,
+      "strategy": 0.19234571674825426,
+      "market_baseline": 0.17636666666666664,
+      "delta_brier": -0.01597905008158759,
+      "delta_ci95": [
+        -0.058245322005110706,
+        0.026287221841935524
+      ],
+      "beats_baseline": false,
+      "n_gate": 500,
+      "meets_n_gate": false,
+      "traded_subset": {
+        "n": 14,
+        "strategy": 0.19877041080170102,
+        "market_baseline": 0.1833642857142857,
+        "delta_brier": -0.015406125087415276,
+        "delta_ci95": [
+          -0.06079135773929261,
+          0.02997910756446206
+        ],
+        "beats_baseline": false,
+        "gate_cents": 4.0
+      },
+      "trade_pnl": {
+        "n_markets_traded": 15,
+        "net_pnl_cents_after_fees": -43124,
+        "net_pnl_cents_after_fees_and_inference": -43280
+      },
+      "flags": [
+        "n=15 < 500: below the forecast-strategy gate (minimum detectable dBrier at n=100 is ~0.0137, 3x the superforecaster edge)"
+      ]
+    },
+    "calibration": {
+      "n": 15,
+      "ece": 0.1486705916335032,
+      "curve": [
+        {
+          "bin": "[0.0,0.1)",
+          "n": 1,
+          "mean_p_hat": 0.08949751194817468,
+          "observed_freq": 0.0
+        },
+        {
+          "bin": "[0.1,0.2)",
+          "n": 5,
+          "mean_p_hat": 0.13073329984181054,
+          "observed_freq": 0.2
+        },
+        {
+          "bin": "[0.2,0.3)",
+          "n": 1,
+          "mean_p_hat": 0.2,
+          "observed_freq": 1.0
+        },
+        {
+          "bin": "[0.3,0.4)",
+          "n": 5,
+          "mean_p_hat": 0.32497823585383334,
+          "observed_freq": 0.4
+        },
+        {
+          "bin": "[0.7,0.8)",
+          "n": 2,
+          "mean_p_hat": 0.7726661215598858,
+          "observed_freq": 1.0
+        },
+        {
+          "bin": "[0.8,0.9)",
+          "n": 1,
+          "mean_p_hat": 0.8355487158476357,
+          "observed_freq": 1.0
+        }
+      ],
+      "reliability": 0.0553697412206375,
+      "resolution": 0.11555555555555555,
+      "uncertainty": 0.24888888888888888,
+      "brier_from_decomposition": 0.18870307455397084
+    },
+    "drawdown": {
+      "max_drawdown_cents": 156009,
+      "max_drawdown_frac_of_peak": 0.14070266102084714
+    },
+    "concentration": {
+      "n_markets_traded": 15,
+      "top5_share_of_net": null,
+      "worst_market_loss_cents": -49950,
+      "top5": [
+        {
+          "ticker": "KXTORNADO-26APR-275",
+          "net_pnl_cents": 76314
+        },
+        {
+          "ticker": "KXRAINNYCM-26APR-2",
+          "net_pnl_cents": 50000
+        },
+        {
+          "ticker": "KXTXPRIMARY-35D26-MGAL",
+          "net_pnl_cents": 12474
+        },
+        {
+          "ticker": "KXECONSTATU3-26MAR-T4.2",
+          "net_pnl_cents": -358
+        },
+        {
+          "ticker": "KXLOSEPRIMARYHOUSED-26NOV03-1",
+          "net_pnl_cents": -1678
+        }
+      ]
+    },
+    "trade_stats": {
+      "n_decision_calls": 1700,
+      "n_intents": 15,
+      "n_orders": 15,
+      "contracts_requested": 15000,
+      "contracts_ordered": 13396,
+      "contracts_filled": 11474,
+      "fill_rate_vs_ordered": 0.8565243356225739,
+      "fill_rate_vs_requested": 0.7649333333333334,
+      "order_any_fill_rate": 1.0,
+      "taker_contracts": 0,
+      "maker_contracts": 11474,
+      "maker_share": 1.0,
+      "maker_fill_rate": 0.8565243356225739,
+      "maker_fill_rate_sanity_band": [
+        0.4,
+        0.5
+      ],
+      "avg_edge_at_entry_cents": 11.386490288575516,
+      "avg_holding_period_s": 813646.0,
+      "opportunity_lifetime_s": {
+        "n": 15,
+        "p25": 3600,
+        "median": 3600,
+        "p75": 10800
+      },
+      "flags": [
+        "maker fill rate 86% > 60% \u2014 the fill model is lying (sanity band is 40-50%); do not trust maker P&L"
+      ]
+    },
+    "cost_ratios": {
+      "inference_cost_cents": 156,
+      "net_pnl_cents": -43124,
+      "notional_traded_cents": 285924,
+      "inference_over_net_pnl": null,
+      "inference_over_net_pnl_target": 0.2,
+      "inference_over_notional": 0.0005455995299450204,
+      "inference_over_notional_target": 0.01,
+      "flags": [
+        "inference cost with non-positive net P&L"
+      ]
+    },
+    "splits": {
+      "time": {
+        "split_ts": 1769317276,
+        "train": {
+          "net_pnl_cents": 0,
+          "n_markets": 0
+        },
+        "test": {
+          "net_pnl_cents": -43124,
+          "n_markets": 15
+        }
+      },
+      "category": {
+        "Politics": {
+          "net_pnl_cents": -49950,
+          "n_markets": 1
+        },
+        "Financials": {
+          "net_pnl_cents": -23000,
+          "n_markets": 1
+        },
+        "Economics": {
+          "net_pnl_cents": -56074,
+          "n_markets": 3
+        },
+        "Elections": {
+          "net_pnl_cents": -40414,
+          "n_markets": 8
+        },
+        "Climate and Weather": {
+          "net_pnl_cents": 126314,
+          "n_markets": 2
+        }
+      }
+    }
+  },
+  "capacity_curve": [
+    {
+      "depth_multiplier": 1.0,
+      "net_pnl_cents_after_inference": -43280,
+      "contracts_filled": 11474
+    },
+    {
+      "depth_multiplier": 3.0,
+      "net_pnl_cents_after_inference": -52400,
+      "contracts_filled": 12632
+    },
+    {
+      "depth_multiplier": 10.0,
+      "net_pnl_cents_after_inference": -58896,
+      "contracts_filled": 12910
+    }
+  ],
+  "fee_stress": {
+    "multiplier": 1.5,
+    "net_pnl_cents_after_inference": -43280,
+    "still_positive": false
+  },
+  "inference_stress": {
+    "multiplier": 2.0,
+    "inference_cost_cents": 312,
+    "net_pnl_cents_after_inference": -43436,
+    "still_positive": false
+  }
+}

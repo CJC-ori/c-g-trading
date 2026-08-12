@@ -1,0 +1,254 @@
+{
+ "KXARREST-27JAN-JCOM": {
+  "p_yes": 0.13000000000000003,
+  "asof_ts": 1775673393,
+  "cost_cents": 11,
+  "error": null,
+  "price_at_asof": 0.165,
+  "result": "yes",
+  "cache_keys": [
+   "5c42263b3a1047f1d1d0fbd29c74f0bcf14ea8e8c55ee3c1d34aee0629122dba",
+   "90cc78f01b203f246e64c2c1b9b1c9faf6c88c3210daf4a4b98306983f35b1f3",
+   "23fd7eae3d24a006917ec80df3df65bd8957d3d27ac6254446289e2c8473444f",
+   "a3f3a882e830857d127f90178289f4637087f514daec6093c029d58b451c1914"
+  ]
+ },
+ "KXCOST-26MAYCARDS-150000000.0": {
+  "p_yes": 0.37,
+  "asof_ts": 1778188073,
+  "cost_cents": 11,
+  "error": null,
+  "price_at_asof": 0.375,
+  "result": "no",
+  "cache_keys": [
+   "2b6024975991accc085c6634a42261b282a335c318e9e8d22acdc8145223f1b2",
+   "e830895745e8a34c5bf29afd54980dc41c817c7dcc5fcb50dfeb0a63cb55bb32",
+   "8a24510a865285b5c1cf9de70f2d6bba4a2b64c935fd27eab2aed84f006605b7",
+   "a9838c370c1ec6eced9a9285f5e21c2d3b4a14f3bb612e3f2ba992ef1643dfc4"
+  ]
+ },
+ "KXECONSTATCORECPIYOY-26APR-T2.8": {
+  "p_yes": 0.2,
+  "asof_ts": 1776774540,
+  "cost_cents": 8,
+  "error": null,
+  "price_at_asof": 0.2,
+  "result": "yes",
+  "cache_keys": [
+   "d6740c218d96e97c1a3494804ec5cb35deb3c30b8b41c8ceb82b2bf1d628d4ea",
+   "ae026a471ee581261eb98faa84a3ab2458a0a8b0d1034c0c5cc5ce2322d56061",
+   "67eeb1db288b9531f6a43e77a58bf9d790788dfb95343734427652e38ef1c741",
+   "0b66d66d2bc2a9214517bdc3232f2265d890baa39e4a2763ddef2d8282078e0f"
+  ]
+ },
+ "KXAUSSNOWM-26MAR-0.1": {
+  "p_yes": 0.04473440989903874,
+  "asof_ts": 1773212340,
+  "cost_cents": 7,
+  "error": null,
+  "price_at_asof": 0.035,
+  "result": "no",
+  "cache_keys": [
+   "d04b90d43f78ff2a1759f5479c5943e6a550b893d41f26affdfc6d3778e9ff5a",
+   "55c170aa5a017489cbdcd6e5a7b06452d587b1cad6b41fa9dae13c51492674b2",
+   "bf17762ccc3516d8a4e472f200e857f0d3be1011f15e9ea60a313c6776b365be",
+   "2f8daca91af91016d6dd73273905d014294b7c594be826ce855e147343594ab1"
+  ]
+ },
+ "KXECONSTATU3-26MAR-T4.2": {
+  "p_yes": 0.309911124879469,
+  "asof_ts": 1773404940,
+  "cost_cents": 8,
+  "error": null,
+  "price_at_asof": 0.04,
+  "result": "no",
+  "cache_keys": [
+   "71fc428f095bdd085a27cfb58d407b97f6014748b9540d7e8e13341d00b83a56",
+   "0198f55b526b6895db50ff3d4d8d1754771708e4fb6fff70ee0f5b08d7b30f8b",
+   "2adf65baf0c58be2d7cc5f615339079bbaa9a1bc0a3b7a847799b9770836c068",
+   "6d9bf3f4ef021eef1849be2f92b41014939837853de0472625629d6fc9137c73"
+  ]
+ },
+ "KXECONSTATU3-26APR-T4.3": {
+  "p_yes": 0.3249800543896978,
+  "asof_ts": 1776428940,
+  "cost_cents": 9,
+  "error": null,
+  "price_at_asof": 0.325,
+  "result": "yes",
+  "cache_keys": [
+   "241b3fecbfbc0f11eddadc22c1357eaf84b403fc8cfba44fd87e495f9f648692",
+   "66baeeb0ad9af7c32c0ed7a406a8392c222baa84b909b2169aaaca102fe8f487",
+   "d64cd97bfa8f775a7be53b1f5411069ccf920764537705f708d984cf1b21e68a",
+   "eb5d9d7ec07d786d13c299ec571adbad3ea28c574f18ebc45f9ba4ed236a2c3c"
+  ]
+ },
+ "KXFEDDECISION-26MAR-C25": {
+  "p_yes": 0.05000000000000002,
+  "asof_ts": 1772042340,
+  "cost_cents": 6,
+  "error": null,
+  "price_at_asof": 0.035,
+  "result": "no",
+  "cache_keys": [
+   "62f237d24acb2313d3e5021e3021ba87bb5143f77cb568fa0efe52734f35ff16",
+   "3bc6287010f130c2f7f847156710fd9e548453d696e47c25f39682021897517c",
+   "dc2a508e8694d5133c3dd79dcef3b608c9e2251c7722150efd1cf79f3010367c",
+   "e90aaa00a5c051e6eaa802d921b3deeb5f3d4efc5acba286599a42f9bcc59514"
+  ]
+ },
+ "KXIDPRIMARY-02R26-MSIM": {
+  "p_yes": 0.9351792423968563,
+  "asof_ts": 1777472850,
+  "cost_cents": 7,
+  "error": null,
+  "price_at_asof": 0.952,
+  "result": "yes",
+  "cache_keys": [
+   "dbd07527480dcf33ae7f36665d8e33cb7590db8f30ae1214898f29140ef6ecfb",
+   "54c65a1fbc89f6f565a8583bcb1620d5a66cb15e3acc084c5a66b26f6344cae4",
+   "5e7247973dfaa400947ac01f6ab11f455af0432bc72bca817c2c87219b10e16e",
+   "072c3b3da1c54f5bf33f0da3e11abc9f1ff3f6bfd869f5022fd07bd22483294e"
+  ]
+ },
+ "KXGAPRIMARY-11R26-TPRI": {
+  "p_yes": 0.32,
+  "asof_ts": 1777473265,
+  "cost_cents": 8,
+  "error": null,
+  "price_at_asof": 0.345,
+  "result": "no",
+  "cache_keys": [
+   "f98036dd2ca095b77785f213a28506097ab3df1d387f4ed4d67fc91dab73525e",
+   "f5fe754529e7d4f197f7c8223f948ddcaf50559028a8c9ea13780e5df874c06d",
+   "40935929b18b2cda9f4f23c615accd7e1a464618b526c2bf67ed58856fb4668d",
+   "b71d4c7fd2db591fea3134fe6a8902f9a3d8c085481567c682a5ba41e6bf3e29"
+  ]
+ },
+ "KXOH9R-26-JWIL": {
+  "p_yes": 0.1342938049792908,
+  "asof_ts": 1776265818,
+  "cost_cents": 9,
+  "error": null,
+  "price_at_asof": 0.0995,
+  "result": "no",
+  "cache_keys": [
+   "34bb798d64f0a486ce91d54342b63fc91a956653ae1adf793cd65a2c0d187877",
+   "5e52c0aedccc113492cc12588f837bb03d68cb846d80b85fb8ca8594f5c956d0",
+   "96130a5dba39576e2605f596508d17c8bbc54ceae2e9a4a03a5ae18e450b4905",
+   "c72121691c5413fcf400e5a5c7051a7f044124f47177725549673be3f49c5303"
+  ]
+ },
+ "KXLOSEPRIMARYHOUSED-26NOV03-1": {
+  "p_yes": 0.12967221456621658,
+  "asof_ts": 1778165530,
+  "cost_cents": 10,
+  "error": null,
+  "price_at_asof": 0.0985,
+  "result": "no",
+  "cache_keys": [
+   "29c21d7020972fadf8b37e817ac249460f529efc96e00e651116a648fe29d59f",
+   "e30f407857ede9cca3635b72b60005f568d725e69428ae3b227d2cde5f39c489",
+   "79592e7d36c113c115deed04e8f4194c9e10570fd1d5f122bf8113d17a394c82",
+   "8129c145954febc887a68af642da4c8541c5ea1b8b0098b1d6ba6ca5a724f4c3"
+  ]
+ },
+ "KXLASEN1R-26MAY16-R": {
+  "p_yes": 0.12000000000000001,
+  "asof_ts": 1777209160,
+  "cost_cents": 10,
+  "error": null,
+  "price_at_asof": 0.11950000000000001,
+  "result": "no",
+  "cache_keys": [
+   "072493ab39274d9c5825c46a2cc37a32b5ae76721960ea12b7947ef304431e6b",
+   "f38aa932c451b96e46dc7fe13f3528f0a7a4b951b932a65123731569ad4154d0",
+   "ff6ae3848650312301e8346a0a64e41482c3a39a5b9c4d9218b3c4b083a56136",
+   "84d4626fdfcdb8541c8a54b6e0e71b195398559cda3d4a90034881b28515bae0"
+  ]
+ },
+ "KXRAINNYCM-26APR-2": {
+  "p_yes": 0.7653322431197717,
+  "asof_ts": 1775793540,
+  "cost_cents": 9,
+  "error": null,
+  "price_at_asof": 0.455,
+  "result": "yes",
+  "cache_keys": [
+   "1da947bbf27378052def8ab9e6588fbd9608ea2949af2675c31b232ded6f4180",
+   "cdc8c5184e3fa5f47a022748de4ca4a19f243afb9c65ba9a8bdb5352d49b4ad7",
+   "f20579d4e13cde77e6f1865a087a20515f1162229a2586fe89de883ee170bbca",
+   "62907931c16cba7bfec6fe26d4965986b5470ff81e87f8f91782763135545754"
+  ]
+ },
+ "KXSENATEKYD-26-CBOO": {
+  "p_yes": 0.8355487158476357,
+  "asof_ts": 1777428425,
+  "cost_cents": 9,
+  "error": null,
+  "price_at_asof": 0.865,
+  "result": "yes",
+  "cache_keys": [
+   "dfb66f9e67619d5d6cba0ab62b19ebaa2ef9aaabf26dced67d4618c153a664b8",
+   "e28b3fa7dbc6f22fae6b205b783962f037f0a7ae24b53232810f9a77c96671b6",
+   "c791df1386f4f924996fce7afcd5f57ba031acf11f044cbd367a2f1d04c8f46b",
+   "f04042695f50c008f0c5786186acd7860105984f325676b9a4565e30e93ad3da"
+  ]
+ },
+ "KXTEXASGOP1ROUND-26MAR03": {
+  "p_yes": 0.13970047966354526,
+  "asof_ts": 1770958680,
+  "cost_cents": 10,
+  "error": null,
+  "price_at_asof": 0.165,
+  "result": "no",
+  "cache_keys": [
+   "6dca7dcf79cd576094c1fa0972df62887a651461da1c234e4847a80da1999337",
+   "540aa80bd125f68ccd0450234426c79bed1bb6e994ed026318f0960ec4ecfaf9",
+   "15a902a1b5a066c6a2227f3b60846fab52094a98fbe56597c1f7bec966d0aea1",
+   "b901fc7d0fd673eddf770135e527aa9e71e4130f5f6cbbb8f7023492df987e1c"
+  ]
+ },
+ "KXTORNADO-26APR-275": {
+  "p_yes": 0.3,
+  "asof_ts": 1775793540,
+  "cost_cents": 7,
+  "error": null,
+  "price_at_asof": 0.315,
+  "result": "yes",
+  "cache_keys": [
+   "f8f363db57a1b6073831ffe4e7bfd63486bb25237dae296c770e1969a3a3b0ee",
+   "d6b0a00750d21465d8409b2e67489f86474a1213026cfa02b467d8e4d125498e",
+   "9788dfd7c026987bd920eff5a4c8d7a5673466bcd962b6107faa8b5a5e87b37c",
+   "96e249248bff89b88a4e8b741863da9fc3066d6bf407d6562df56e62ffe5ef27"
+  ]
+ },
+ "KXTXPRIMARY-35D26-MGAL": {
+  "p_yes": 0.08949751194817468,
+  "asof_ts": 1778072170,
+  "cost_cents": 7,
+  "error": null,
+  "price_at_asof": 0.10850000000000001,
+  "result": "no",
+  "cache_keys": [
+   "f2de14613588cb90d7d0f83b16e8cdc6d6eccee66f31b843721f460deca6d1fb",
+   "092e4f40a69af1998cfad7de57eb4ed1d46f3b399c77648131f13084fb4600de",
+   "d35df0c4cc4f3e2734a4612c2c09e1e7c724cb921ca56a56ab3870d13b9a5553",
+   "5c203685c187dc4653dcc5d18d218c0bf3f2feb79dd5e681f7960238b4a9897d"
+  ]
+ },
+ "KXWALESPARLIAMENT-26MAY07-PCYM": {
+  "p_yes": 0.7799999999999999,
+  "asof_ts": 1776560755,
+  "cost_cents": 10,
+  "error": null,
+  "price_at_asof": 0.85,
+  "result": "yes",
+  "cache_keys": [
+   "c9b875efdfeba248c75e514ad3b5a64d0192a92453e8298c63c24b8459855a59",
+   "b23ac8593aad3e05aa8eafd795d4c9149a4a6fb13ad5592d52c92e2a81f54e8f",
+   "63aff530d352883535cf9ca15e213508f5e61e04e290c5b0e23d15b07dc3b32b",
+   "fe3f8e5150a64a22821e3cc18f0fc19714fc44f18fc9f695612263fb49b554f8"
+  ]
+ }
+}

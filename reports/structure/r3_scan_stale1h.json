@@ -1,0 +1,95 @@
+{
+  "params": {
+    "db": "data/kalshi.db",
+    "store": "data/structure/structure.db",
+    "staleness_h": 1,
+    "buffer_cents": 1.0,
+    "depth_frac": 0.25,
+    "fee_stress": 1.0,
+    "out": "reports/structure/r3_scan_stale1h.json",
+    "firings_out": "reports/structure/r3_firings_stale1h.json"
+  },
+  "coverage": {
+    "events_in_universe": 2896,
+    "events_with_complete_leg_candles": 2865,
+    "events_skipped_incomplete": 31,
+    "event_hours_scanned": 244594,
+    "structurally_exhaustive_events": 806
+  },
+  "no_set_executable": {
+    "kind": "no_set",
+    "n_events_scanned": 2865,
+    "n_event_hours_scanned": 244594,
+    "n_firing_hours": 145,
+    "n_firing_events": 57,
+    "pct_hours_firing": 0.0593,
+    "pct_events_firing": 1.99,
+    "calendar_span_weeks": 86.9,
+    "firing_events_per_week": 0.656,
+    "net_edge_cents": {
+      "mean": 2.168,
+      "median": 1.27,
+      "p90": 4.53,
+      "max": 34.8
+    },
+    "fillable_dollars_same_hour": {
+      "median": 0.0,
+      "mean": 0.93,
+      "p90": 2.06,
+      "max": 19.99,
+      "pct_zero": 63.4
+    },
+    "fillable_dollars_trailing24h": {
+      "median": 2.98,
+      "p90": 69.42,
+      "max": 716.31
+    },
+    "by_category": {
+      "Elections": 126,
+      "Politics": 7,
+      "Economics": 6,
+      "Science and Technology": 3,
+      "Financials": 2,
+      "Climate and Weather": 1
+    }
+  },
+  "yes_set_exhaustive_only": {
+    "kind": "yes_set",
+    "n_events_scanned": 806,
+    "n_event_hours_scanned": 36239,
+    "n_firing_hours": 21,
+    "n_firing_events": 7,
+    "pct_hours_firing": 0.0579,
+    "pct_events_firing": 0.868,
+    "calendar_span_weeks": 46.2,
+    "firing_events_per_week": 0.151,
+    "net_edge_cents": {
+      "mean": 4.54,
+      "median": 5.34,
+      "p90": 7.14,
+      "max": 13.78
+    },
+    "fillable_dollars_same_hour": {
+      "median": 0.0,
+      "mean": 0.0,
+      "p90": 0.01,
+      "max": 0.04,
+      "pct_zero": 85.7
+    },
+    "fillable_dollars_trailing24h": {
+      "median": 0.01,
+      "p90": 0.14,
+      "max": 0.15
+    },
+    "by_category": {
+      "Politics": 12,
+      "Financials": 7,
+      "Climate and Weather": 2
+    }
+  },
+  "literal_ask_sum_diagnostic": {
+    "n_firing_hours": 170388,
+    "pct_hours_firing": 69.66,
+    "note": "\u03a3 best-ask YES > 100c + fees + 1c \u2014 NOT executable (buying NO takes the NO ask = 100 \u2212 yes_bid). Diagnostic only."
+  }
+}

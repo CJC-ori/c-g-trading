@@ -1,0 +1,176 @@
+{
+  "eval": "fs_trade_replay",
+  "generated_at": "2026-08-11T22:47:30+00:00",
+  "aggregates": {
+    "Kalshi": {
+      "n": 83,
+      "cost_basis": 85610.055892,
+      "payout": 113408.01999999999,
+      "gross_pnl": 27797.964108000007,
+      "published_pnl_sum": 27797.94,
+      "gross_roi": 0.3247044265812428,
+      "fees_spec": 2234.6497999999992,
+      "fees_legacy": 4652.439999999999,
+      "fees_independent": 2228.618000000001,
+      "net_pnl_spec": 25563.314308000008,
+      "net_pnl_legacy": 23145.52410800001,
+      "net_roi_spec": 0.29860177103784397,
+      "fee_drag_bps_of_cost": 261.0265554339885,
+      "win_rate": 0.5301204819277109
+    },
+    "Polymarket": {
+      "n": 45,
+      "cost_basis": 111140.652429,
+      "payout": 91312.06,
+      "gross_pnl": -19828.592428999993,
+      "published_pnl_sum": -19828.57000000001,
+      "gross_roi": -0.17840989768948043,
+      "fees_spec": 0.0,
+      "fees_legacy": 0.0,
+      "fees_independent": 0.0,
+      "net_pnl_spec": -19828.592428999993,
+      "net_pnl_legacy": -19828.592428999993,
+      "net_roi_spec": -0.17840989768948043,
+      "fee_drag_bps_of_cost": 0.0,
+      "win_rate": 0.5333333333333333
+    },
+    "Combined": {
+      "n": 128,
+      "cost_basis": 196750.708321,
+      "payout": 204720.08,
+      "gross_pnl": 7969.37167900001,
+      "published_pnl_sum": 7969.37000000002,
+      "gross_roi": 0.04050491989079871,
+      "fees_spec": 2234.6497999999992,
+      "fees_legacy": 4652.439999999999,
+      "fees_independent": 2228.618000000001,
+      "net_pnl_spec": 5734.721879000011,
+      "net_pnl_legacy": 3316.931679000011,
+      "net_roi_spec": 0.02914714731112315,
+      "fee_drag_bps_of_cost": 113.57772579675567,
+      "win_rate": 0.53125
+    }
+  },
+  "reconciliation": {
+    "Kalshi": {
+      "published_n": 83,
+      "our_n": 83,
+      "published_pnl": 27798.0,
+      "our_gross_pnl": 27797.964108000007,
+      "residual_usd": -0.035891999992600176,
+      "reconciles": true,
+      "published_cost_basis": 85610.0,
+      "our_cost_basis": 85610.055892,
+      "cost_basis_residual_usd": 0.05589200000395067
+    },
+    "Polymarket": {
+      "published_n": 45,
+      "our_n": 45,
+      "published_pnl": -19829.0,
+      "our_gross_pnl": -19828.592428999993,
+      "residual_usd": 0.4075710000070103,
+      "reconciles": true,
+      "published_cost_basis": 111141.0,
+      "our_cost_basis": 111140.652429,
+      "cost_basis_residual_usd": -0.3475710000057006
+    },
+    "Combined": {
+      "published_n": 128,
+      "our_n": 128,
+      "published_pnl": 7969.0,
+      "our_gross_pnl": 7969.37167900001,
+      "residual_usd": 0.37167900000986265,
+      "reconciles": true,
+      "published_cost_basis": 196751.0,
+      "our_cost_basis": 196750.708321,
+      "cost_basis_residual_usd": -0.29167899998719804
+    }
+  },
+  "gross_pnl_identity": {
+    "max_abs_position_residual_usd": 0.004999999999999005,
+    "worst_position": "0x6897736d782ce70f47126dfcec6669073f563d6e757e60bc61c0367370d6f73e",
+    "n_positions_off_by_more_than_1c": 0,
+    "conclusion": "their published pnl == shares*(1[won] - entry_price) exactly, i.e. the book is gross: zero fees, zero slippage on exit, held to resolution"
+  },
+  "concentration": {
+    "Kalshi": {
+      "n": 83,
+      "total_pnl": 27797.96410800002,
+      "top_5_pnl": 21618.082617999997,
+      "top_5_share_of_pnl": 0.7776858238254396,
+      "share_defined": true,
+      "best": 8725.754538,
+      "worst": -3877.1513999999997,
+      "n_positive": 44
+    },
+    "Polymarket": {
+      "n": 45,
+      "total_pnl": -19828.592429000008,
+      "top_5_pnl": 34808.1062,
+      "top_5_share_of_pnl": null,
+      "share_defined": false,
+      "best": 26609.112,
+      "worst": -5315.791,
+      "n_positive": 24
+    },
+    "Combined": {
+      "n": 128,
+      "total_pnl": 7969.371678999957,
+      "top_5_pnl": 46782.46121800001,
+      "top_5_share_of_pnl": 5.870282263440691,
+      "share_defined": true,
+      "best": 26609.112,
+      "worst": -5315.791,
+      "n_positive": 68
+    }
+  },
+  "fs_forecast_vs_market": {
+    "note": "positions they chose to take, i.e. maximum-disagreement questions; selection-biased and tiny \u2014 not evidence of forecaster skill",
+    "n": 21,
+    "delta": 0.007034440476190469,
+    "sd": 0.053628515615756184,
+    "se": 0.011702701534158286,
+    "t": 0.601095435584517,
+    "ci_low": -0.015902854530759774,
+    "ci_high": 0.02997173548314071,
+    "baseline_brier": 0.10332491666666664,
+    "our_brier": 0.09629047619047619,
+    "significant": false,
+    "rms_disagreement_equivalent": 0.0838715713230083,
+    "tier": "parity (CI spans 0, point estimate >= 0)",
+    "gate": {
+      "n": 21,
+      "min_n_required": 500,
+      "passes_n_gate": false,
+      "min_detectable_delta_at_this_n": 0.02293729500695024,
+      "min_detectable_rms_disagreement": 0.15145063554488716,
+      "delta": 0.007034440476190469,
+      "ci": [
+        -0.015902854530759774,
+        0.02997173548314071
+      ],
+      "ci_excludes_zero": false,
+      "tier": "parity (CI spans 0, point estimate >= 0)",
+      "verdict": "UNDERPOWERED"
+    }
+  },
+  "fee_engine_divergence": {
+    "spec_total_usd": 2234.6497999999992,
+    "legacy_total_usd": 4652.439999999999,
+    "independent_total_usd": 2228.618000000001,
+    "ratio_legacy_over_spec": 2.0819548548501876,
+    "spec_vs_independent_usd": 6.031799999998384,
+    "explanation": "`spec` is bot/backtest/fees.trade_fee_centicents (one ceiling per order, to $0.0001, per-series multiplier) \u2014 the correct model. `legacy` is fees.taker_fee_cents, which ceilings per *contract* and multiplies; on multi-thousand-contract orders that inflates the fee substantially, so any backtest still running without a FeeSchedule is over-charging itself. `independent` is this module's own float-precision implementation of the same formula; it differs from `spec` only because the harness quantizes the execution price to a whole cent before charging, while these entry prices carry four decimals."
+  },
+  "assumptions": [
+    "held to resolution: entry taker fee only, no exit trade, no settlement fee",
+    "every FutureSearch fill is treated as a taker fill (they walk the book, \u00a75)",
+    "Polymarket taker fee = 0 on this book (research/polymarket-data.md \u00a75)",
+    "fee_multiplier read from today's /series config, not point-in-time (/series/fee_changes?show_historical=true not yet pulled)",
+    "each position is charged as ONE order; Kalshi's per-order rounding-fee accumulator would apply per real order, so a position filled across many orders pays slightly more than modelled here",
+    "7 Kalshi positions carry fractional share counts (Kalshi contracts are integral); the spec engine uses them as-is, the harness engine rounds"
+  ],
+  "n_positions": 128,
+  "fee_schedule_overrides": 162,
+  "verdict": "PASS \u2014 harness economics reproduce the external book"
+}

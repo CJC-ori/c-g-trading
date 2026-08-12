@@ -1,0 +1,67 @@
+{
+  "label": "id_r4_overlay",
+  "fee_mode": "exact-per-series",
+  "composition": "r5_endgame_6h (engine run) + R4 overlay (per-episode native harness)",
+  "champion_net_pnl_cents": -67917,
+  "overlay": {
+    "n_train_episodes": 0,
+    "n_entered": 0,
+    "net_pnl_cents": 0,
+    "net_pnl_cents_fee_stress": 0,
+    "per_episode": [],
+    "note": "R4 episodes restricted to the pinned Round-1 TRAIN tickers (settlement <= split_ts). All 136 discovered R4 episodes have window_start >= 2024-11-05 > split_ts (2024-08-02): the R4 episode class does not exist in the train-side tape, so the overlay is a structural no-op on this boundary."
+  },
+  "combined": {
+    "net_pnl_cents_after_inference": -67917,
+    "fee_stress": {
+      "multiplier": 1.5,
+      "net_pnl_cents_after_inference": -68027,
+      "still_positive": false
+    },
+    "capacity_curve": [
+      {
+        "depth_multiplier": 1.0,
+        "net_pnl_cents_after_inference": -67917,
+        "contracts_filled": 12649
+      },
+      {
+        "depth_multiplier": 3.0,
+        "net_pnl_cents_after_inference": -61504,
+        "contracts_filled": 16237
+      },
+      {
+        "depth_multiplier": 10.0,
+        "net_pnl_cents_after_inference": -59102,
+        "contracts_filled": 17149
+      }
+    ],
+    "concentration": {
+      "n_markets_traded": 215,
+      "top5_share_of_net": null,
+      "worst_market_loss_cents": -32851,
+      "top5": [
+        {
+          "ticker": "DCEIL-23JUN1",
+          "net_pnl_cents": 2080
+        },
+        {
+          "ticker": "HIGHCHI-22MAR25-T49",
+          "net_pnl_cents": 1908
+        },
+        {
+          "ticker": "HIGHCHI-23APR24-B52.5",
+          "net_pnl_cents": 1545
+        },
+        {
+          "ticker": "OIL-22JUL11-N100",
+          "net_pnl_cents": 1260
+        },
+        {
+          "ticker": "HIGHNY0-21JUL17-T90",
+          "net_pnl_cents": 1074
+        }
+      ]
+    }
+  },
+  "champion_report_ref": "reports/tournament/round2/r5_endgame_6h/report.json"
+}

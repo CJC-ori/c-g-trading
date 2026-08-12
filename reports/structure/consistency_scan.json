@@ -1,0 +1,189 @@
+{
+  "control_pairs": {
+    "senate-2024-R": {
+      "binary": "CONTROLS-2024-R",
+      "ladder": "RSENATESEATS-25",
+      "control_rule": "R seats >= 50 (VP Vance breaks a 50-50 tie); leg '56' is '56 or more', leg '49' is '49 or fewer'.",
+      "settled": true,
+      "n_hours": 431,
+      "first_ts": 1729108800,
+      "last_ts": 1731157200,
+      "pct_hours_outside_band": 77.49,
+      "divergence_cents": {
+        "mean_abs": 3.792,
+        "median_abs": 4.5,
+        "max_abs": 9.5,
+        "p95_abs": 7.5
+      },
+      "riskless_buy_ladder_sell_binary": {
+        "n_hours_positive": 0,
+        "best_net_cents": -5.08,
+        "median_net_cents": -21.67
+      },
+      "riskless_buy_binary_sell_ladder": {
+        "n_hours_positive": 41,
+        "best_net_cents": 2.89,
+        "median_net_cents": -2.41
+      },
+      "fresh_quotes_only": {
+        "n_hours": 123,
+        "buy_ladder_sell_binary_positive": 0,
+        "buy_binary_sell_ladder_positive": 6,
+        "best_net_cents": 1.81,
+        "median_fillable_sets": 0,
+        "max_fillable_sets": 1637
+      },
+      "median_fillable_sets_same_hour": 0,
+      "divergence_episodes": {
+        "min_divergence_cents": 2.0,
+        "min_hours": 2,
+        "n_episodes": 10,
+        "median_length_h": 21.0,
+        "max_length_h": 88,
+        "median_peak_cents": 7.0
+      }
+    },
+    "house-2024-R": {
+      "binary": "CONTROLH-2024-R",
+      "ladder": "RHOUSESEATSSMALL-25",
+      "control_rule": "R seats >= 218 wins the Speakership; ladder bucket '218 or less' straddles the threshold -> interval, not a point.",
+      "settled": true,
+      "n_hours": 44,
+      "first_ts": 1731427200,
+      "last_ts": 1731610800,
+      "pct_hours_outside_band": 0.0,
+      "divergence_cents": {
+        "mean_abs": 0.0,
+        "median_abs": 0.0,
+        "max_abs": 0.0,
+        "p95_abs": 0.0
+      },
+      "riskless_buy_ladder_sell_binary": {
+        "n_hours_positive": 5,
+        "best_net_cents": 20.81,
+        "median_net_cents": -126.735
+      },
+      "riskless_buy_binary_sell_ladder": {
+        "n_hours_positive": 0,
+        "best_net_cents": -17.48,
+        "median_net_cents": -41.935
+      },
+      "fresh_quotes_only": {
+        "n_hours": 8,
+        "buy_ladder_sell_binary_positive": 0,
+        "buy_binary_sell_ladder_positive": 0,
+        "best_net_cents": -24.4,
+        "median_fillable_sets": 0.0,
+        "max_fillable_sets": 0
+      },
+      "median_fillable_sets_same_hour": 0.0,
+      "divergence_episodes": {
+        "min_divergence_cents": 2.0,
+        "min_hours": 2,
+        "n_episodes": 0,
+        "median_length_h": null,
+        "max_length_h": null,
+        "median_peak_cents": null
+      }
+    },
+    "senate-2026-D": {
+      "binary": "CONTROLS-2026-D",
+      "ladder": "KXDSENATESEATS-27",
+      "control_rule": "D needs >= 51 (VP through Jan 2029 is Republican, so 50-50 organises R); ladder is exhaustive over BELOW45..ABOVE52.",
+      "settled": false,
+      "n_hours": 4132,
+      "first_ts": 1770454800,
+      "last_ts": 1785999600,
+      "pct_hours_outside_band": 66.31,
+      "divergence_cents": {
+        "mean_abs": 1.659,
+        "median_abs": 0.7,
+        "max_abs": 9.5,
+        "p95_abs": 6.5
+      },
+      "riskless_buy_ladder_sell_binary": {
+        "n_hours_positive": 0,
+        "best_net_cents": -2.67,
+        "median_net_cents": -8.2
+      },
+      "riskless_buy_binary_sell_ladder": {
+        "n_hours_positive": 417,
+        "best_net_cents": 4.4,
+        "median_net_cents": -4.09
+      },
+      "fresh_quotes_only": {
+        "n_hours": 1969,
+        "buy_ladder_sell_binary_positive": 0,
+        "buy_binary_sell_ladder_positive": 231,
+        "best_net_cents": 4.4,
+        "median_fillable_sets": 0,
+        "max_fillable_sets": 295
+      },
+      "median_fillable_sets_same_hour": 0.0,
+      "divergence_episodes": {
+        "min_divergence_cents": 2.0,
+        "min_hours": 2,
+        "n_episodes": 26,
+        "median_length_h": 10.0,
+        "max_length_h": 274,
+        "median_peak_cents": 2.7
+      }
+    },
+    "house-2026-D": {
+      "binary": "CONTROLH-2026-D",
+      "ladder": "KXDHOUSESEATS-27",
+      "control_rule": "D seats >= 218; bracket '218-221' (ticker suffix 220) lies wholly inside the control region, so the mapping is exact.",
+      "settled": false,
+      "n_hours": 3559,
+      "first_ts": 1770454800,
+      "last_ts": 1785999600,
+      "pct_hours_outside_band": 37.74,
+      "divergence_cents": {
+        "mean_abs": 1.744,
+        "median_abs": 0.0,
+        "max_abs": 18.9,
+        "p95_abs": 9.05
+      },
+      "riskless_buy_ladder_sell_binary": {
+        "n_hours_positive": 0,
+        "best_net_cents": -5.69,
+        "median_net_cents": -16.67
+      },
+      "riskless_buy_binary_sell_ladder": {
+        "n_hours_positive": 357,
+        "best_net_cents": 11.76,
+        "median_net_cents": -8.93
+      },
+      "fresh_quotes_only": {
+        "n_hours": 880,
+        "buy_ladder_sell_binary_positive": 0,
+        "buy_binary_sell_ladder_positive": 75,
+        "best_net_cents": 11.76,
+        "median_fillable_sets": 0.0,
+        "max_fillable_sets": 39
+      },
+      "median_fillable_sets_same_hour": 0,
+      "divergence_episodes": {
+        "min_divergence_cents": 2.0,
+        "min_hours": 2,
+        "n_episodes": 43,
+        "median_length_h": 9,
+        "max_length_h": 168,
+        "median_peak_cents": 4.5
+      }
+    }
+  },
+  "monotone_ladders": {
+    "events_in_universe": 1401,
+    "events_with_complete_candles": 235,
+    "event_hours_scanned": 8936,
+    "n_breaks": 0,
+    "n_events_with_break": 0,
+    "net_cents": {
+      "median": null,
+      "max": null
+    },
+    "top_events": [],
+    "examples": []
+  }
+}
