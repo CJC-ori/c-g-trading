@@ -4,171 +4,171 @@
   "base": {
     "pnl": {
       "bankroll_cents": 1000000,
-      "net_pnl_cents_gross_of_inference": 26274,
-      "net_pnl_cents_after_inference": 26274,
-      "net_pnl_pct_of_bankroll": 0.026274,
-      "fees_cents": 63,
+      "net_pnl_cents_gross_of_inference": -16179,
+      "net_pnl_cents_after_inference": -16179,
+      "net_pnl_pct_of_bankroll": -0.016179,
+      "fees_cents": 26,
       "inference_cost_cents": 0,
-      "avg_deployed_cents": 9463.778256032692,
+      "avg_deployed_cents": 12696.938208296027,
       "run_span_s": 36325119,
-      "annualized_return_on_avg_deployed": 2.4102450573550835
+      "annualized_return_on_avg_deployed": -1.1062473164887106
     },
     "brier": {
-      "n": 246,
-      "strategy": 0.06905473487317088,
-      "market_baseline": 0.06819745934959355,
-      "delta_brier": -0.0008572755235772308,
+      "n": 344,
+      "strategy": 0.08900690053720947,
+      "market_baseline": 0.0892675872093024,
+      "delta_brier": 0.00026068667209302716,
       "delta_ci95": [
-        -0.0033202097097289962,
-        0.0016056586625745346
+        -0.002097801572498673,
+        0.002619174916684727
       ],
-      "beats_baseline": false,
+      "beats_baseline": true,
       "n_gate": 500,
       "meets_n_gate": false,
       "traded_subset": {
-        "n": 18,
-        "strategy": 0.12498899813333329,
-        "market_baseline": 0.11146666666666667,
-        "delta_brier": -0.013522331466666643,
+        "n": 27,
+        "strategy": 0.18000914330370374,
+        "market_baseline": 0.1832592592592592,
+        "delta_brier": 0.003250115955555566,
         "delta_ci95": [
-          -0.04452624555481103,
-          0.01748158262147774
+          -0.024837570390965628,
+          0.03133780230207676
         ],
-        "beats_baseline": false,
+        "beats_baseline": true,
         "gate_cents": 4.0
       },
       "trade_pnl": {
-        "n_markets_traded": 82,
-        "net_pnl_cents_after_fees": 26274,
-        "net_pnl_cents_after_fees_and_inference": 26274
+        "n_markets_traded": 80,
+        "net_pnl_cents_after_fees": -16179,
+        "net_pnl_cents_after_fees_and_inference": -16179
       },
       "flags": [
-        "n=246 < 500: below the forecast-strategy gate (minimum detectable dBrier at n=100 is ~0.0137, 3x the superforecaster edge)"
+        "n=344 < 500: below the forecast-strategy gate (minimum detectable dBrier at n=100 is ~0.0137, 3x the superforecaster edge)"
       ]
     },
     "calibration": {
-      "n": 246,
-      "ece": 0.06757243902439017,
+      "n": 344,
+      "ece": 0.10923151162790709,
       "curve": [
         {
           "bin": "[0.0,0.1)",
-          "n": 88,
-          "mean_p_hat": 0.021686590909090874,
+          "n": 112,
+          "mean_p_hat": 0.022020535714285673,
           "observed_freq": 0.0
         },
         {
           "bin": "[0.1,0.2)",
-          "n": 27,
-          "mean_p_hat": 0.15373999999999996,
-          "observed_freq": 0.07407407407407407
+          "n": 30,
+          "mean_p_hat": 0.15183999999999995,
+          "observed_freq": 0.06666666666666667
         },
         {
           "bin": "[0.2,0.3)",
-          "n": 11,
-          "mean_p_hat": 0.24075999999999995,
-          "observed_freq": 0.2727272727272727
+          "n": 13,
+          "mean_p_hat": 0.24391692307692306,
+          "observed_freq": 0.23076923076923078
         },
         {
           "bin": "[0.3,0.4)",
-          "n": 9,
-          "mean_p_hat": 0.35019999999999996,
-          "observed_freq": 0.4444444444444444
+          "n": 17,
+          "mean_p_hat": 0.34818823529411763,
+          "observed_freq": 0.5294117647058824
         },
         {
           "bin": "[0.4,0.5)",
-          "n": 5,
-          "mean_p_hat": 0.4500639999999999,
-          "observed_freq": 0.8
-        },
-        {
-          "bin": "[0.5,0.6)",
-          "n": 12,
-          "mean_p_hat": 0.5506200000000002,
+          "n": 6,
+          "mean_p_hat": 0.4459599999999999,
           "observed_freq": 0.8333333333333334
         },
         {
+          "bin": "[0.5,0.6)",
+          "n": 21,
+          "mean_p_hat": 0.5613685714285713,
+          "observed_freq": 0.9047619047619048
+        },
+        {
           "bin": "[0.6,0.7)",
-          "n": 8,
-          "mean_p_hat": 0.648945,
-          "observed_freq": 0.75
+          "n": 29,
+          "mean_p_hat": 0.6523944827586208,
+          "observed_freq": 0.9310344827586207
         },
         {
           "bin": "[0.7,0.8)",
-          "n": 16,
-          "mean_p_hat": 0.75346875,
-          "observed_freq": 0.9375
+          "n": 19,
+          "mean_p_hat": 0.7527600000000001,
+          "observed_freq": 0.8947368421052632
         },
         {
           "bin": "[0.8,0.9)",
-          "n": 11,
-          "mean_p_hat": 0.855310909090909,
+          "n": 20,
+          "mean_p_hat": 0.858249,
           "observed_freq": 1.0
         },
         {
           "bin": "[0.9,1.0)",
-          "n": 59,
-          "mean_p_hat": 0.9640138983050845,
-          "observed_freq": 0.9491525423728814
+          "n": 77,
+          "mean_p_hat": 0.9630361038961044,
+          "observed_freq": 0.8831168831168831
         }
       ],
-      "reliability": 0.011147219230025889,
-      "resolution": 0.19067933982383697,
-      "uncertainty": 0.24762046400951818,
-      "brier_from_decomposition": 0.0680883434157071
+      "reliability": 0.02249239104012414,
+      "resolution": 0.1841170559894778,
+      "uncertainty": 0.24996619794483504,
+      "brier_from_decomposition": 0.08834153299548136
     },
     "drawdown": {
-      "max_drawdown_cents": 23450,
-      "max_drawdown_frac_of_peak": 0.023282505654322803
+      "max_drawdown_cents": 48196,
+      "max_drawdown_frac_of_peak": 0.04794367245188572
     },
     "concentration": {
-      "n_markets_traded": 82,
-      "top5_share_of_net": 1.1354190454441653,
-      "worst_market_loss_cents": -7826,
+      "n_markets_traded": 80,
+      "top5_share_of_net": null,
+      "worst_market_loss_cents": -23650,
       "top5": [
-        {
-          "ticker": "KXAAAGASD-26JUN14-4.065",
-          "net_pnl_cents": 12961
-        },
         {
           "ticker": "KXAAAGASD-26JUL07-3.795",
           "net_pnl_cents": 6441
         },
         {
-          "ticker": "KXNY12D-26-MLAS",
-          "net_pnl_cents": 4821
-        },
-        {
           "ticker": "KXMAKERFIELDBY-27JAN01-LAB",
-          "net_pnl_cents": 3047
+          "net_pnl_cents": 6171
         },
         {
-          "ticker": "KXAAAGASM-26MAY31-4.32",
-          "net_pnl_cents": 2562
+          "ticker": "KXVOTEPRIMARY-SENATESCR26LGRA-75",
+          "net_pnl_cents": 5611
+        },
+        {
+          "ticker": "KXEOWEEK-26MAY30-1",
+          "net_pnl_cents": 1260
+        },
+        {
+          "ticker": "KXLOWTMIA-26JUN21-B77.5",
+          "net_pnl_cents": 1248
         }
       ]
     },
     "trade_stats": {
       "n_decision_calls": 112037,
-      "n_intents": 246,
-      "n_orders": 226,
-      "contracts_requested": 25078,
-      "contracts_ordered": 9090,
-      "contracts_filled": 5178,
-      "fill_rate_vs_ordered": 0.5696369636963696,
-      "fill_rate_vs_requested": 0.2064757955179839,
-      "order_any_fill_rate": 0.6858407079646017,
+      "n_intents": 344,
+      "n_orders": 343,
+      "contracts_requested": 32327,
+      "contracts_ordered": 24009,
+      "contracts_filled": 4552,
+      "fill_rate_vs_ordered": 0.18959556832854346,
+      "fill_rate_vs_requested": 0.14081108670770565,
+      "order_any_fill_rate": 0.23323615160349853,
       "taker_contracts": 0,
-      "maker_contracts": 5178,
+      "maker_contracts": 4552,
       "maker_share": 1.0,
-      "maker_fill_rate": 0.5696369636963696,
+      "maker_fill_rate": 0.18959556832854346,
       "maker_fill_rate_sanity_band": [
         0.4,
         0.5
       ],
-      "avg_edge_at_entry_cents": 1.812865971417538,
-      "avg_holding_period_s": 484542.756097561,
+      "avg_edge_at_entry_cents": 1.6059560632688945,
+      "avg_holding_period_s": 457417.7875,
       "opportunity_lifetime_s": {
-        "n": 226,
+        "n": 343,
         "p25": 3600,
         "median": 7200,
         "p75": 28800
@@ -177,9 +177,9 @@
     },
     "cost_ratios": {
       "inference_cost_cents": 0,
-      "net_pnl_cents": 26274,
-      "notional_traded_cents": 448063,
-      "inference_over_net_pnl": 0.0,
+      "net_pnl_cents": -16179,
+      "notional_traded_cents": 401153,
+      "inference_over_net_pnl": null,
       "inference_over_net_pnl_target": 0.2,
       "inference_over_notional": 0.0,
       "inference_over_notional_target": 0.01,
@@ -193,37 +193,37 @@
           "n_markets": 0
         },
         "test": {
-          "net_pnl_cents": 26274,
-          "n_markets": 82
+          "net_pnl_cents": -16179,
+          "n_markets": 80
         }
       },
       "category": {
         "Economics": {
-          "net_pnl_cents": 21525,
-          "n_markets": 17
+          "net_pnl_cents": 10451,
+          "n_markets": 16
         },
         "Science and Technology": {
-          "net_pnl_cents": 2280,
+          "net_pnl_cents": 41,
           "n_markets": 6
         },
         "Politics": {
-          "net_pnl_cents": -5174,
+          "net_pnl_cents": -32294,
           "n_markets": 27
         },
         "Elections": {
-          "net_pnl_cents": 13004,
+          "net_pnl_cents": 14946,
           "n_markets": 16
         },
         "Financials": {
-          "net_pnl_cents": -2614,
-          "n_markets": 2
+          "net_pnl_cents": 328,
+          "n_markets": 1
         },
         "Climate and Weather": {
-          "net_pnl_cents": -3717,
+          "net_pnl_cents": -2337,
           "n_markets": 9
         },
         "Entertainment": {
-          "net_pnl_cents": 970,
+          "net_pnl_cents": -7314,
           "n_markets": 5
         }
       }
@@ -232,29 +232,29 @@
   "capacity_curve": [
     {
       "depth_multiplier": 1.0,
-      "net_pnl_cents_after_inference": 26274,
-      "contracts_filled": 5178
+      "net_pnl_cents_after_inference": -16179,
+      "contracts_filled": 4552
     },
     {
       "depth_multiplier": 3.0,
-      "net_pnl_cents_after_inference": 18361,
-      "contracts_filled": 9924
+      "net_pnl_cents_after_inference": -13644,
+      "contracts_filled": 4667
     },
     {
       "depth_multiplier": 10.0,
-      "net_pnl_cents_after_inference": 18376,
-      "contracts_filled": 10020
+      "net_pnl_cents_after_inference": -12450,
+      "contracts_filled": 4707
     }
   ],
   "fee_stress": {
     "multiplier": 1.5,
-    "net_pnl_cents_after_inference": 26248,
-    "still_positive": true
+    "net_pnl_cents_after_inference": -16190,
+    "still_positive": false
   },
   "inference_stress": {
     "multiplier": 2.0,
     "inference_cost_cents": 0,
-    "net_pnl_cents_after_inference": 26274,
-    "still_positive": true
+    "net_pnl_cents_after_inference": -16179,
+    "still_positive": false
   }
 }

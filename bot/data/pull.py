@@ -608,6 +608,15 @@ def _select_tickers(store: Store, args: argparse.Namespace) -> list[Any]:
     if getattr(args, "source", None):
         where.append("source = ?")
         params.append(args.source)
+    # Close-time bounds are how a pull is aimed at an era rather than a topic —
+    # "everything that settled before the live tier's 90-day horizon" is the
+    # deep-history sweep, and it cannot be expressed with the other selectors.
+    if getattr(args, "closed_before", None):
+        where.append("close_time < ?")
+        params.append(args.closed_before)
+    if getattr(args, "closed_after", None):
+        where.append("close_time >= ?")
+        params.append(args.closed_after)
 
     sql = (
         "SELECT ticker, series_ticker, category, open_time, close_time, volume, source"
@@ -786,11 +795,22 @@ def cmd_hist_candles(args: argparse.Namespace, client: KalshiClient, store: Stor
     """
     started = _now()
     rows = _select_tickers(store, args)
+    # An absolute window is the event-study path: a market's *decisive* hours
+    # are not always its final hours. PRES-2024-* resolved on election night but
+    # stayed open until inauguration, so `--window final-72h` samples three dead
+    # days in January and misses the 54c -> 97c run entirely.
+    abs_lo = _utc(args.min_ts) if args.min_ts else None
+    abs_hi = _utc(args.max_ts) if args.max_ts else None
     log.info("hist-candles: %d markets, interval=%d window=%s",
-             len(rows), args.interval, args.window)
+             len(rows), args.interval,
+             f"{args.min_ts}..{args.max_ts}" if abs_lo or abs_hi else args.window)
 
     def fetch(row: Any) -> tuple[list[dict[str, Any]], str]:
         start, end = _window(row, args.window)
+        if abs_lo is not None:
+            start = abs_lo
+        if abs_hi is not None:
+            end = abs_hi
         return client.candlesticks_any(
             row["ticker"], start, end, args.interval,
             series_ticker=row["series_ticker"],
@@ -827,7 +847,8 @@ def cmd_hist_candles(args: argparse.Namespace, client: KalshiClient, store: Stor
 
     store.log_pull(
         "hist-candles",
-        f"interval={args.interval} window={args.window} "
+        f"interval={args.interval} window="
+        + (f"{args.min_ts}..{args.max_ts} " if abs_lo or abs_hi else f"{args.window} ")
         + (args.series or args.categories or "selection")[:150],
         total, started, f"markets={done} empty={empty} failed={failed} tiers={dict(per_tier)}",
     )
@@ -1032,6 +1053,10 @@ def build_parser() -> argparse.ArgumentParser:
         sp.add_argument("--min-volume", type=float, default=0.0)
         sp.add_argument("--settled-only", action="store_true")
         sp.add_argument("--source", choices=["live", "hist"], help="restrict by API tier")
+        sp.add_argument("--closed-before", metavar="YYYY-MM-DD",
+                        help="markets whose close_time is before this date")
+        sp.add_argument("--closed-after", metavar="YYYY-MM-DD",
+                        help="markets whose close_time is at or after this date")
         sp.add_argument("--limit", type=int, default=0, help="cap markets (highest volume first)")
         sp.add_argument("--skip-existing", action="store_true",
                         help="skip tickers that already have rows in the target table")
@@ -1066,6 +1091,10 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--interval", type=int, choices=[1, 60, 1440], default=60)
     sp.add_argument("--window", default="full",
                     help="'full', or 'final-<N>h' / 'final-<N>d' (e.g. final-72h)")
+    sp.add_argument("--min-ts", metavar="YYYY-MM-DD[THH:MM]",
+                    help="absolute window start, overriding --window (event studies)")
+    sp.add_argument("--max-ts", metavar="YYYY-MM-DD[THH:MM]",
+                    help="absolute window end, overriding --window")
     sp.set_defaults(func=cmd_hist_candles)
 
     sp = sub.add_parser("discover", help="find markets that traded in a window (firehose)")

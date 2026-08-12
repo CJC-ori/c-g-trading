@@ -69,6 +69,12 @@ USER_AGENT = "c-g-trading-research/0.1 (weather ground-truth; github repo bot)"
 
 DEFAULT_ENSEMBLE_MODELS = ("gfs025", "ecmwf_ifs025")
 
+#: Named deterministic models available on the previous-runs API (verified
+#: 2026-08-12: `models=a,b` suffixes the previous-day variables per model,
+#: fully non-null). Used by the day-ahead sensitivity grid; models=()
+#: keeps Open-Meteo's `best_match` blend.
+PREV_RUNS_MODELS = ("gfs_seamless", "ecmwf_ifs025")
+
 
 # ---------------------------------------------------------------------------
 # 1. Station map
@@ -353,6 +359,7 @@ def previous_runs_daily_max(
     past_days: int = 365,
     cache_dir: str = DATA_DIR,
     refresh: bool = False,
+    models: tuple[str, ...] = (),
 ) -> dict[int, dict[str, float]]:
     """Point-in-time daily-max forecasts {lead: {date: forecast °F}}.
 
@@ -363,10 +370,30 @@ def previous_runs_daily_max(
     calendar day (timezone=auto), matching CLI's midnight-to-midnight.
 
     Empirical: past_days up to 365 verified fully non-null (no 92 cap).
+
+    models=() uses Open-Meteo's default `best_match` blend (one series).
+    Pass a subset of PREV_RUNS_MODELS to get named deterministic models
+    instead; the value returned is then the **mean of the per-model daily
+    maxima** (multi-model consensus when more than one is named). One
+    network pull covers the whole PREV_RUNS_MODELS set and is cached
+    separately from the best_match cache, so subsets are free.
     """
-    path = os.path.join(cache_dir, "openmeteo", f"prev_runs_{station.sid}.json")
+    if models:
+        unknown = [m for m in models if m not in PREV_RUNS_MODELS]
+        if unknown:
+            raise ValueError(f"unknown previous-runs models: {unknown}")
+        suffixes = [f"_{m}" for m in models]
+        fetch_models = PREV_RUNS_MODELS
+        tag = "_models"
+    else:
+        suffixes = [""]
+        fetch_models = ()
+        tag = ""
+    path = os.path.join(cache_dir, "openmeteo", f"prev_runs_{station.sid}{tag}.json")
     cache = _read_cache(path)
     key = f"past{past_days}_leads{'_'.join(map(str, leads))}"
+    if fetch_models:
+        key += f"_models{'_'.join(fetch_models)}"
     if refresh or cache.get("key") != key:
         hourly_vars = ",".join(f"temperature_2m_previous_day{n}" for n in leads)
         url = (
@@ -374,6 +401,8 @@ def previous_runs_daily_max(
             f"&hourly={hourly_vars}&temperature_unit=fahrenheit"
             f"&timezone=auto&past_days={past_days}&forecast_days=1"
         )
+        if fetch_models:
+            url += f"&models={','.join(fetch_models)}"
         j = _http_json(url, tries=6, retry_if=lambda o: bool(o.get("error")))
         if j.get("error"):
             raise RuntimeError(f"open-meteo error for {station.sid}: {j.get('reason')}")
@@ -383,19 +412,29 @@ def previous_runs_daily_max(
     times = hourly["time"]
     out: dict[int, dict[str, float]] = {}
     for n in leads:
-        vals = hourly.get(f"temperature_2m_previous_day{n}")
-        if vals is None:
-            continue
-        by_day: dict[str, float] = {}
-        n_hours: dict[str, int] = {}
-        for t, v in zip(times, vals):
-            if v is None:
+        per_model: list[dict[str, float]] = []
+        for sfx in suffixes:
+            vals = hourly.get(f"temperature_2m_previous_day{n}{sfx}")
+            if vals is None:
                 continue
-            day = t[:10]
-            by_day[day] = v if day not in by_day else max(by_day[day], v)
-            n_hours[day] = n_hours.get(day, 0) + 1
-        # drop partial days (first/last day of the window)
-        out[n] = {d: v for d, v in by_day.items() if n_hours[d] >= 20}
+            by_day: dict[str, float] = {}
+            n_hours: dict[str, int] = {}
+            for t, v in zip(times, vals):
+                if v is None:
+                    continue
+                day = t[:10]
+                by_day[day] = v if day not in by_day else max(by_day[day], v)
+                n_hours[day] = n_hours.get(day, 0) + 1
+            # drop partial days (first/last day of the window)
+            per_model.append({d: v for d, v in by_day.items() if n_hours[d] >= 20})
+        if not per_model:
+            continue
+        # consensus = mean of the per-model daily maxima, on days every
+        # requested model has a value (no silent single-model fallback).
+        common = set(per_model[0])
+        for m in per_model[1:]:
+            common &= set(m)
+        out[n] = {d: sum(m[d] for m in per_model) / len(per_model) for d in common}
     return out
 
 

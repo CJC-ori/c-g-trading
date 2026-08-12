@@ -179,6 +179,13 @@ class OrderIntent:
     p_hat is the strategy's probability that the market resolves YES
     (required for Kelly sizing; intents without p_hat get size 0 from the
     risk layer unless they reduce an existing position).
+
+    replace (additive, 2026-08-12): cancel-and-replace. When True, the
+    engine first cancels ALL of this strategy's still-RESTING orders in the
+    same market on the same yes-space direction (buy-YES==sell-NO side),
+    then processes this intent as a fresh order with a fresh maker-queue
+    position. A replace intent with size=0 is a pure cancel. Orders
+    currently in their taker window are in flight and are not touched.
     """
     ticker: str
     side: Side
@@ -188,6 +195,7 @@ class OrderIntent:
     tif: Tif = "rest"
     p_hat: float | None = None
     rationale: str = ""
+    replace: bool = False
 
 
 @dataclass(frozen=True, slots=True)

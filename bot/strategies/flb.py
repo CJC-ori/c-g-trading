@@ -42,13 +42,14 @@ see reports/flb/ANALYSIS.md "Frozen parameters"):
   half the mid-life maker edge in the endgame window. The variant exists
   to measure the actual win-rate-vs-price curve, not to assume it.
 
-Engine-imposed simplifications (documented, see ANALYSIS.md "Harness
-notes"): the harness has no cancel/replace, so "reprice hourly" is
-implemented as "place a new resting order when the computed quote moves;
-prior orders stay live until fill or market close". Total resting exposure
-stays bounded by the harness's per-market (5%), per-event (10%) and cash
-caps, so the practical effect is a small ladder of stale quotes rather
-than a clean replace.
+Cancel/replace (2026-08-12): the harness now supports replace intents
+(OrderIntent.replace), so "reprice hourly" is implemented as designed: when
+the computed quote moves, the maker variants emit a replace intent that
+cancels the prior resting order and joins the book (and the simulated
+maker queue) afresh at the new price. `use_replace=False` restores the old
+stale-ladder behavior ("place a new resting order when the quote moves;
+prior orders stay live until fill or market close") for before/after
+comparisons — see reports/flb/QUEUE_IMPACT.md.
 """
 from __future__ import annotations
 
@@ -74,6 +75,23 @@ def biased_p_hat(side: Side, side_price_cents: int, bias_frac: float) -> float:
 def _holding(portfolio: Portfolio, ticker: str) -> bool:
     pos = portfolio.position(ticker)
     return pos is not None and pos.qty != 0
+
+
+def _pure_cancel(ticker: str, side: Side, limit: int, tag: str) -> OrderIntent:
+    """size=0 replace intent: cancels this strategy's resting orders in
+    `ticker` on `side`'s buy direction without placing a new order (the
+    engine treats replace+size=0 as a pure cancel; see OrderIntent docs)."""
+    return OrderIntent(
+        ticker=ticker,
+        side=side,
+        action="buy",
+        limit_price_cents=limit,
+        size=0,
+        tif="rest",
+        p_hat=None,
+        rationale=f"{tag} cancel stale {side}@{limit}c quote",
+        replace=True,
+    )
 
 
 class _FLBBase:
@@ -180,6 +198,7 @@ class R2Maker(_FLBBase):
         days_window: float = 10.0,
         categories: tuple[str, ...] | None = None,
         bias_frac: float = R2_BIAS_FRAC,
+        use_replace: bool = True,
     ):
         super().__init__(categories)
         self.min_side_price = min_side_price
@@ -187,6 +206,7 @@ class R2Maker(_FLBBase):
         self.standdown_s = standdown_s
         self.days_window = days_window
         self.bias_frac = bias_frac
+        self.use_replace = use_replace
         self._last_quote: dict[str, tuple[Side, int]] = {}
 
     def _trailing_volume(self, view: MarketView) -> int:
@@ -229,10 +249,16 @@ class R2Maker(_FLBBase):
         size = int(self.vol_frac * self._trailing_volume(view))
         if size < 1:
             return []  # no recent taker flow to fill against
-        if self._last_quote.get(ticker) == (side, limit):
-            return []  # same quote already resting; nothing to reprice
+        prev = self._last_quote.get(ticker)
+        if prev == (side, limit):
+            return []  # same quote already resting; keep queue position
         self._last_quote[ticker] = (side, limit)
-        return [
+        intents: list[OrderIntent] = []
+        if self.use_replace and prev is not None and prev[0] != side:
+            # Side flipped across 50c: replace only cancels same-direction
+            # orders, so explicitly cancel the old side's resting quote.
+            intents.append(_pure_cancel(ticker, prev[0], prev[1], "R2-maker"))
+        intents.append(
             OrderIntent(
                 ticker=ticker,
                 side=side,
@@ -242,8 +268,10 @@ class R2Maker(_FLBBase):
                 tif="rest",
                 p_hat=biased_p_hat(side, limit, self.bias_frac),
                 rationale=f"R2-maker rest {side}@{limit}c vol1h*{self.vol_frac:g}",
+                replace=self.use_replace and prev is not None,
             )
-        ]
+        )
+        return intents
 
 
 class R5Endgame(_FLBBase):
@@ -252,7 +280,8 @@ class R5Endgame(_FLBBase):
     Joins the best bid of whichever side's *bid* is inside the band
     (qualifying on the join price we would actually rest at). One episode
     per market, hold to resolution. Window is a parameter so the runner
-    can sweep 6/12/24h.
+    can sweep 6/12/24h. Repricing uses cancel/replace like R2 (see module
+    docstring); `use_replace=False` restores the stale-ladder behavior.
     """
 
     def __init__(
@@ -262,12 +291,14 @@ class R5Endgame(_FLBBase):
         vol_frac: float = 0.25,
         categories: tuple[str, ...] | None = None,
         bias_frac: float = R5_BIAS_FRAC,
+        use_replace: bool = True,
     ):
         super().__init__(categories)
         self.window_s = window_s
         self.band = band
         self.vol_frac = vol_frac
         self.bias_frac = bias_frac
+        self.use_replace = use_replace
         self._last_quote: dict[str, tuple[Side, int]] = {}
 
     def _trailing_volume(self, view: MarketView) -> int:
@@ -302,10 +333,16 @@ class R5Endgame(_FLBBase):
         size = int(self.vol_frac * self._trailing_volume(view))
         if size < 1:
             return []
-        if self._last_quote.get(ticker) == (side, limit):
-            return []
+        prev = self._last_quote.get(ticker)
+        if prev == (side, limit):
+            return []  # same quote already resting; keep queue position
         self._last_quote[ticker] = (side, limit)
-        return [
+        intents: list[OrderIntent] = []
+        if self.use_replace and prev is not None and prev[0] != side:
+            # Side flipped: replace only cancels same-direction orders, so
+            # explicitly cancel the old side's resting quote.
+            intents.append(_pure_cancel(ticker, prev[0], prev[1], "R5-endgame"))
+        intents.append(
             OrderIntent(
                 ticker=ticker,
                 side=side,
@@ -318,5 +355,7 @@ class R5Endgame(_FLBBase):
                     f"R5-endgame rest {side}@{limit}c "
                     f"window={self.window_s // HOUR}h"
                 ),
+                replace=self.use_replace and prev is not None,
             )
-        ]
+        )
+        return intents

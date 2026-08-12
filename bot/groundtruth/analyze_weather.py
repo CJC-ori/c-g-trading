@@ -49,11 +49,19 @@ def fit_all_biases(
     fit_end: str = BACKTEST_START,
     fit_start: str = "2025-08-12",
     cache_dir: str = wx.DATA_DIR,
+    models: tuple[str, ...] = (),
 ) -> dict[str, dict[int, wx.BiasFit]]:
-    """Per-series, per-lead BiasFit on [fit_start, fit_end) only."""
+    """Per-series, per-lead BiasFit on [fit_start, fit_end) only.
+
+    `models` selects the previous-runs forecast source (see
+    `wx.previous_runs_daily_max`); the bias/σ must be refit per source,
+    so the sensitivity grid passes it through here too.
+    """
     out: dict[str, dict[int, wx.BiasFit]] = {}
     for series, st in sorted(wx.STATIONS.items()):
-        prev = wx.previous_runs_daily_max(st, leads=leads, cache_dir=cache_dir)
+        prev = wx.previous_runs_daily_max(
+            st, leads=leads, cache_dir=cache_dir, models=models
+        )
         stn = wx.acis_daily_maxt(st.sid, fit_start, _day_before(fit_end), cache_dir=cache_dir)
         fits: dict[int, wx.BiasFit] = {}
         for lead in leads:

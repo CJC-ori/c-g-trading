@@ -13,9 +13,18 @@ Discipline:
   morning of D (never current-run data for past dates).
 - Time split: train = first 60% of target DATES; the last 40% is never
   loaded into the engine here (held out for the tournament).
+- Fees: the exact per-series centicent FeeSchedule (SPEC §4), not the
+  legacy per-contract-ceil path. Maker queue model left at the engine's
+  (enabled) default.
 
-Usage: python -m bot.strategies.weather.run_backtest [--variant dayahead|intraday|both]
-Writes reports/weather/report_<variant>.{json,md}.
+Usage:
+  python -m bot.strategies.weather.run_backtest
+      [--variant dayahead|intraday|both] [--buffer C]
+      [--ensemble best_match|gfs|ecmwf|both]
+  python -m bot.strategies.weather.run_backtest --grid
+
+Writes reports/weather/report_<variant>.{json,md}; --grid writes
+reports/weather/sensitivity_dayahead.json.
 """
 from __future__ import annotations
 
@@ -31,6 +40,7 @@ from typing import Any
 
 from bot.backtest.engine import BacktestResult, EngineConfig, run_backtest
 from bot.strategies.weather.dataport_ext import TradeSynthCandleProvider
+from bot.backtest.fees import FeeSchedule
 from bot.backtest.metrics import compute_metrics, render_markdown
 from bot.backtest.risk import RiskConfig
 from bot.groundtruth import weather as wx
@@ -136,12 +146,22 @@ def _walk_forward_offsets(
     return out
 
 
-def build_city_models(window_dates: list[str]) -> dict[str, CityModel]:
-    biases = fit_all_biases()  # pre-window fit only
+def build_city_models(
+    window_dates: list[str], prev_runs_models: tuple[str, ...] = ()
+) -> dict[str, CityModel]:
+    """Per-city point-in-time forecast models.
+
+    prev_runs_models selects the previous-runs source (see
+    `wx.previous_runs_daily_max`): () = Open-Meteo best_match blend,
+    ('gfs_seamless',) / ('ecmwf_ifs025',) = single model, both = the
+    2-model consensus mean. Bias/σ are refit on the same source so the
+    comparison is apples-to-apples.
+    """
+    biases = fit_all_biases(models=prev_runs_models)  # pre-window fit only
     models: dict[str, CityModel] = {}
     lo, hi = window_dates[0], window_dates[-1]
     for series, st in wx.STATIONS.items():
-        prev = wx.previous_runs_daily_max(st, leads=(1, 2))
+        prev = wx.previous_runs_daily_max(st, leads=(1, 2), models=prev_runs_models)
         forecasts = {
             lead: {d: v for d, v in prev.get(lead, {}).items() if lo <= d <= hi}
             for lead in (1, 2)
@@ -337,21 +357,36 @@ def run_variant(
     max16: dict | None,
     rise_pmf: dict | None,
     db_path: str = DB_PATH,
+    buffer_cents: int = 2,
+    prev_runs_models: tuple[str, ...] = (),
+    label_suffix: str = "",
+    write_event_log: bool = True,
+    capacity_multipliers: tuple[float, ...] = (1.0, 3.0, 10.0),
+    fee_stress_multiplier: float | None = 1.5,
 ) -> dict[str, Any]:
     def make_strategy():
         if variant == "dayahead":
-            return WeatherDayAheadStrategy(strikes, models)
-        return WeatherIntradayStrategy(strikes, models, max16, rise_pmf)
+            return WeatherDayAheadStrategy(strikes, models, buffer_cents=buffer_cents)
+        return WeatherIntradayStrategy(
+            strikes, models, max16, rise_pmf, buffer_cents=buffer_cents
+        )
 
     provider = TradeSynthCandleProvider(db_path)
     filters = {"tickers": train_tickers}
     # event logs are large and auditable-but-disposable: keep them under
     # the gitignored data/ tree, not reports/
-    log_dir = os.path.join(wx.DATA_DIR, "backtest_logs")
-    os.makedirs(log_dir, exist_ok=True)
+    log_path = None
+    if write_event_log:
+        log_dir = os.path.join(wx.DATA_DIR, "backtest_logs")
+        os.makedirs(log_dir, exist_ok=True)
+        log_path = os.path.join(log_dir, f"events_{variant}.jsonl")
     config = EngineConfig(
-        event_log_path=os.path.join(log_dir, f"events_{variant}.jsonl"),
+        event_log_path=log_path,
         keep_events_in_memory=False,
+        # exact per-series centicent fee model (SPEC §4) — not the legacy
+        # per-contract ceil path; maker-queue model left at its (honest,
+        # enabled) default.
+        fee_schedule=FeeSchedule.load_default(),
     )
     strat = make_strategy()
     base = run_backtest(provider, strat, config, filters)
@@ -370,7 +405,7 @@ def run_variant(
     kills = kill_criteria(base, brier, by_city, strikes)
 
     capacity = []
-    for mult in (1.0, 3.0, 10.0):
+    for mult in capacity_multipliers:
         if mult == 1.0:
             r = base
         else:
@@ -383,19 +418,31 @@ def run_variant(
             "depth_multiplier": mult,
             "net_pnl_cents_after_inference": r.net_pnl_after_inference_cents,
             "contracts_filled": sum(f.count for f in r.fills),
+            "premium_deployed_cents": sum(f.count * f.price_cents for f in r.fills),
         })
-    stress_cfg = replace(config, fee_stress=1.5, event_log_path=None)
-    stressed = run_backtest(provider, make_strategy(), stress_cfg, filters)
-
-    report: dict[str, Any] = {
-        "label": f"weather-{variant} (train split)",
-        "base": compute_metrics(base),
-        "capacity_curve": capacity,
-        "fee_stress": {
-            "multiplier": 1.5,
+    stress: dict[str, Any] | None = None
+    if fee_stress_multiplier is not None:
+        stress_cfg = replace(
+            config, fee_stress=fee_stress_multiplier, event_log_path=None
+        )
+        stressed = run_backtest(provider, make_strategy(), stress_cfg, filters)
+        stress = {
+            "multiplier": fee_stress_multiplier,
             "net_pnl_cents_after_inference": stressed.net_pnl_after_inference_cents,
             "still_positive": stressed.net_pnl_after_inference_cents > 0,
+        }
+
+    report: dict[str, Any] = {
+        "label": f"weather-{variant} (train split){label_suffix}",
+        "config": {
+            "buffer_cents": buffer_cents,
+            "prev_runs_models": list(prev_runs_models) or ["best_match"],
+            "fee_model": "exact centicent (FeeSchedule.load_default)",
+            "maker_queue": "enabled (engine default)",
         },
+        "base": compute_metrics(base),
+        "capacity_curve": capacity,
+        "fee_stress": stress,
         "brier_vs_market": {k: v for k, v in brier.items() if k != "rows"},
         "calibration_all_strikes": calib,
         "per_city": by_city,
@@ -438,11 +485,96 @@ def _md_extras(report: dict) -> str:
     return "\n".join(lines)
 
 
+#: --ensemble choice -> previous-runs model set (see wx.PREV_RUNS_MODELS).
+ENSEMBLE_CHOICES: dict[str, tuple[str, ...]] = {
+    "best_match": (),
+    "gfs": ("gfs_seamless",),
+    "ecmwf": ("ecmwf_ifs025",),
+    "both": ("gfs_seamless", "ecmwf_ifs025"),
+}
+
+
+def run_grid(
+    strikes: dict,
+    train_tickers: list[str],
+    train_dates: list[str],
+    db_path: str,
+    buffers: tuple[int, ...] = (1, 2, 3),
+    ensembles: tuple[str, ...] = ("gfs", "ecmwf", "both", "best_match"),
+) -> dict[str, Any]:
+    """Day-ahead sensitivity grid: edge buffer × forecast source, TRAIN ONLY.
+
+    Selection metric is the pooled Brier Δ (market − ours) — P&L on 50
+    train dates is far noisier than the per-strike probability score, and
+    the kill criterion the strategy has to clear is the Brier one.
+    """
+    cells = []
+    for ens in ensembles:
+        models = build_city_models(train_dates, ENSEMBLE_CHOICES[ens])
+        for buf in buffers:
+            rep = run_variant(
+                "dayahead", strikes, train_tickers, models, None, None, db_path,
+                buffer_cents=buf, prev_runs_models=ENSEMBLE_CHOICES[ens],
+                label_suffix=f" buffer={buf}c ensemble={ens}",
+                write_event_log=False,
+                # one engine run per cell: capacity/stress are re-run only
+                # for the frozen config, not for all 9 cells
+                capacity_multipliers=(1.0,), fee_stress_multiplier=None,
+            )
+            b = rep["brier_vs_market"]["pooled"]
+            ts = rep["base"]["trade_stats"]
+            cells.append({
+                "ensemble": ens,
+                "buffer_cents": buf,
+                "net_pnl_cents": rep["base"]["pnl"]["net_pnl_cents_after_inference"],
+                "fees_cents": rep["base"]["pnl"]["fees_cents"],
+                "contracts_filled": ts["contracts_filled"],
+                "maker_fill_rate": ts["maker_fill_rate"],
+                "n_markets_traded": sum(
+                    c["n_markets_traded"] for c in rep["per_city"].values()
+                ),
+                "brier_n": b.get("n", 0),
+                "brier_ours": b.get("brier_ours"),
+                "brier_market": b.get("brier_market"),
+                "brier_delta": b.get("delta_market_minus_ours"),
+                "brier_ci95": b.get("delta_ci95"),
+                "ece": rep["calibration_all_strikes"]["ece"],
+                "kill_b_fired": rep["kill_criteria"]["b_brier_vs_market"]["fired"],
+                "kill_d_fired": rep["kill_criteria"]["d_capacity"]["fired"],
+                "capacity_curve": rep["capacity_curve"],
+            })
+            print(
+                f"  buffer={buf}c ensemble={ens:9s} P&L "
+                f"${cells[-1]['net_pnl_cents']/100:>10,.2f}  BrierΔ "
+                f"{(cells[-1]['brier_delta'] or 0):+.4f} (n={cells[-1]['brier_n']})"
+            )
+    best = max(
+        cells, key=lambda c: (c["brier_delta"] if c["brier_delta"] is not None else -9)
+    )
+    return {
+        "label": "weather-dayahead sensitivity grid (train split only)",
+        "selection_metric": "pooled Brier delta (market - ours), higher is better",
+        "cells": cells,
+        "best_by_train": {
+            "ensemble": best["ensemble"], "buffer_cents": best["buffer_cents"],
+            "brier_delta": best["brier_delta"], "net_pnl_cents": best["net_pnl_cents"],
+        },
+    }
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--variant", default="both",
                     choices=["dayahead", "intraday", "both"])
     ap.add_argument("--db", default=DB_PATH)
+    ap.add_argument("--buffer", type=int, default=2,
+                    help="edge buffer in cents over the fee threshold")
+    ap.add_argument("--ensemble", default="best_match",
+                    choices=sorted(ENSEMBLE_CHOICES),
+                    help="previous-runs forecast source")
+    ap.add_argument("--grid", action="store_true",
+                    help="run the buffer x ensemble sensitivity grid "
+                         "(day-ahead, train only) instead of a single config")
     args = ap.parse_args()
 
     os.makedirs(REPORT_DIR, exist_ok=True)
@@ -460,7 +592,16 @@ def main() -> int:
         f"Held-out 40% untouched."
     )
 
-    models = build_city_models(train_dates)
+    if args.grid:
+        grid = run_grid(strikes, train_tickers, train_dates, args.db)
+        gpath = os.path.join(REPORT_DIR, "sensitivity_dayahead.json")
+        with open(gpath, "w") as fh:
+            json.dump(grid, fh, indent=2)
+        print(f"best by train: {grid['best_by_train']} -> wrote {gpath}")
+        return 0
+
+    prev_models = ENSEMBLE_CHOICES[args.ensemble]
+    models = build_city_models(train_dates, prev_models)
     max16 = rise_pmf = None
     variants = ["dayahead", "intraday"] if args.variant == "both" else [args.variant]
     if "intraday" in variants:
@@ -470,7 +611,8 @@ def main() -> int:
     for variant in variants:
         print(f"\n=== {variant} ===")
         report = run_variant(
-            variant, strikes, train_tickers, models, max16, rise_pmf, args.db
+            variant, strikes, train_tickers, models, max16, rise_pmf, args.db,
+            buffer_cents=args.buffer, prev_runs_models=prev_models,
         )
         jpath = os.path.join(REPORT_DIR, f"report_{variant}.json")
         with open(jpath, "w") as fh:

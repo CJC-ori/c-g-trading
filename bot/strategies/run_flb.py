@@ -41,6 +41,7 @@ from typing import Any, Callable
 from bot.backtest.dataport import SqliteHistoryProvider
 from bot.backtest.engine import EngineConfig, run_backtest
 from bot.backtest.fees import FeeSchedule
+from bot.backtest.fills import MakerQueueConfig
 from bot.backtest.metrics import full_report
 from bot.backtest.universe import (
     DEFAULT_EXCLUDE_CATEGORIES,
@@ -132,9 +133,22 @@ def fee_schedule_for(args) -> "FeeSchedule | None":
         return FeeSchedule.load_default()
 
 
+def maker_queue_for(args) -> MakerQueueConfig:
+    """Maker-queue model config (SPEC §3). Default: enabled with the
+    fill-rate-calibrated depth_windows; --no-maker-queue restores the
+    legacy every-qualifying-print model (comparison runs only);
+    --depth-windows overrides the pessimism factor (calibration sweeps)."""
+    if args.no_maker_queue:
+        return MakerQueueConfig(enabled=False)
+    if args.depth_windows is not None:
+        return MakerQueueConfig(depth_windows=args.depth_windows)
+    return MakerQueueConfig()
+
+
 def variant_factories(args) -> dict[str, dict[str, Any]]:
     """name -> {factory, qualifier(close_ts map aware), description}."""
     cats = tuple(args.strategy_categories.split(",")) if args.strategy_categories else None
+    replace = not args.no_replace
     v: dict[str, dict[str, Any]] = {
         "r1_taker": {
             "factory": lambda: flb.R1Taker(categories=cats),
@@ -143,17 +157,20 @@ def variant_factories(args) -> dict[str, dict[str, Any]]:
             "maker_variant": False,
         },
         "r2_maker": {
-            "factory": lambda: flb.R2Maker(categories=cats),
+            "factory": lambda: flb.R2Maker(categories=cats,
+                                           use_replace=replace),
             "qualifier": fa.r2_qualifier(50, 6 * HOUR, 10.0),
             "description": ">=50c side, rest at best bid, <=25% 1h vol, "
-                           "reprice hourly, stand down final 6h",
+                           "reprice hourly (cancel/replace), "
+                           "stand down final 6h",
             "maker_variant": True,
         },
     }
     for hours in (6, 12, 24):
         v[f"r5_endgame_{hours}h"] = {
             "factory": (lambda h=hours: flb.R5Endgame(window_s=h * HOUR,
-                                                      categories=cats)),
+                                                      categories=cats,
+                                                      use_replace=replace)),
             "qualifier": fa.r5_qualifier((90, 98), hours * HOUR),
             "description": f"final {hours}h, maker-join bid on 90-98c side",
             "maker_variant": True,
@@ -188,7 +205,9 @@ def run_variant(
 ) -> dict[str, Any]:
     filters = {"tickers": train}
     vdir = os.path.join(out_dir, name)
-    config = EngineConfig(fee_schedule=fee_schedule_for(args))
+    config = EngineConfig(
+        fee_schedule=fee_schedule_for(args), maker_queue=maker_queue_for(args)
+    )
     report = full_report(
         provider,
         spec["factory"],
@@ -343,6 +362,21 @@ def write_analysis(
         "coefficient still UNVERIFIED per fees.py, and the schedule is a "
         "present-day snapshot, not point-in-time)."
     ))
+    L.append("- Maker fill model: " + (
+        "LEGACY (--no-maker-queue): every qualifying print/candle fills a "
+        "resting order up to the volume cap - known to overstate fill "
+        "rates (SPEC §3 flag)."
+        if args.no_maker_queue else
+        "maker-queue (SPEC §3, 2026-08-12): resting orders join behind "
+        f"depth_windows={maker_queue_for(args).depth_windows:g}x the recent "
+        "per-window traded volume; only qualifying volume in excess of the "
+        "queue fills them (fill-rate-calibrated to the 40-50% live-fill "
+        "band, never on P&L - see reports/flb/QUEUE_IMPACT.md)."
+    ))
+    if args.universe_file:
+        L.append(f"- Universe PINNED to `{args.universe_file}` (frozen "
+                 "train tickers + split from a prior run; not re-selected "
+                 "from the DB, which has since grown).")
     span_days = (universe_meta["t1"] - universe_meta["t0"]) / 86400
     L.append(f"- Span: {span_days:.0f} days. NOTE: with a ~95-day 2026-only "
              "pull, every number here is provisional; the GWU effect is "
@@ -491,16 +525,14 @@ def write_analysis(
         for k, verdict in verdicts[name].items():
             L.append(f"- ({k[0]}) {verdict}")
         L.append("")
-    L.append("## Harness notes / issues found (not fixed here - "
-             "bot/backtest is owned by another agent)")
+    L.append("## Harness notes / issues")
     L.append("")
-    L.append("1. **No cancel/replace for resting orders.** OrderIntent has no "
-             "cancel, and the engine cancels resting orders only at market "
-             "close. R2's 'reprice hourly' therefore degrades to 'add a new "
-             "resting order when the quote moves; stale orders stay live'. "
-             "Exposure stays bounded by the per-market/per-event caps, but "
-             "fills can occur at stale prices the real strategy would have "
-             "repriced away.")
+    L.append("1. **Cancel/replace: FIXED 2026-08-12** (OrderIntent.replace). "
+             "R2/R5 'reprice hourly' is now a real cancel/replace: the old "
+             "same-direction resting order is canceled (freeing its "
+             "committed premium) and the new quote joins the simulated "
+             "maker queue afresh. --no-replace restores the old stale-"
+             "ladder behavior for comparisons.")
     L.append("2. **Fee estimation for sizing still ceils per contract.** "
              "Charged fees use the exact per-series centicent model (fixed "
              "mid-build by the harness team), but the Kelly sizing layer "
@@ -514,11 +546,19 @@ def write_analysis(
     L.append("3. **Sparse trade tape.** Only a handful of universe tickers "
              "have trades locally, so most maker fills come from the "
              "conservative candle OHLC rule (low strictly through the limit, "
-             "<=25% of hourly volume) rather than tape prints.")
-    L.append("4. **Candle coverage defines the universe.** Only ~300 markets "
-             "have hourly candles in the current pull; the universe is a "
-             "property of the local dataset (universe.py docstring). The "
-             "full-history pull will widen it - rerun this command.")
+             "<=25% of hourly volume) rather than tape prints. The maker-"
+             "queue model layers on top of that rule; its depth estimate is "
+             "a volume proxy, not real book depth (candles carry no sizes).")
+    L.append("4. **Candle coverage defines the universe.** The universe is a "
+             "property of the local dataset (universe.py docstring); the "
+             "full-history pull grew it from ~300 to >10k markets. Use "
+             "--universe-file to reproduce a prior run's frozen universe.")
+    L.append("5. **Depth pre-clamp: FIXED 2026-08-12.** The risk layer's "
+             "3-candle depth pre-clamp now applies to taker intents only; "
+             "resting orders are bounded at fill time by the per-print/"
+             "per-candle caps plus the maker queue (pre-clamping them too "
+             "double-counted the same mechanism and zeroed quiet-hour "
+             "quotes).")
     L.append("")
     with open(os.path.join(out_dir, "ANALYSIS.md"), "w") as fh:
         fh.write("\n".join(L))
@@ -553,33 +593,71 @@ def main(argv: list[str] | None = None) -> None:
                          "the exact per-series centicent model")
     ap.add_argument("--limit", type=int, default=None,
                     help="cap universe size (smoke runs)")
+    ap.add_argument("--universe-file", default=None,
+                    help="pin the run to a prior universe.json (frozen "
+                         "train tickers + split) instead of re-selecting "
+                         "from the DB - required for apples-to-apples "
+                         "fill-model comparisons after the DB grows")
+    ap.add_argument("--no-maker-queue", action="store_true",
+                    help="disable the maker-queue fill model (legacy "
+                         "every-qualifying-print fills; comparison runs "
+                         "only - the queue model is the honest default)")
+    ap.add_argument("--no-replace", action="store_true",
+                    help="strategies do not use cancel/replace (legacy "
+                         "stale-ladder repricing; comparison runs only)")
+    ap.add_argument("--depth-windows", type=float, default=None,
+                    help="override MakerQueueConfig.depth_windows "
+                         "(calibration sweeps)")
     args = ap.parse_args(argv)
 
-    universe, ucfg = build_universe(args)
-    if args.limit:
-        universe = universe[: args.limit]
     provider = SqliteHistoryProvider(args.db)
-    split = split_train(provider, universe, args.train_frac)
-    train = split["train"]
-    events = set()
-    for m in provider.iter_markets(tickers=universe):
-        events.add(m.event_ticker)
-    universe_meta = {
-        "n_universe": len(universe),
-        "n_events": len(events),
-        "n_train": len(train),
-        "n_test": split["test_size_only"],
-        "t0": split["t0"],
-        "t1": split["t1"],
-        "split_ts": split["split_ts"],
-        "excluded_categories": list(ucfg.exclude_categories),
-    }
-    os.makedirs(args.out, exist_ok=True)
-    with open(os.path.join(args.out, "universe.json"), "w") as fh:
-        json.dump(
-            {**universe_meta, "train_tickers": train,
-             "universe_config": str(ucfg)}, fh, indent=2,
-        )
+    if args.universe_file:
+        # Pinned mode: replay a prior run's frozen train universe + split
+        # verbatim (the held-out tail stays untouched, as always).
+        with open(args.universe_file) as fh:
+            uj = json.load(fh)
+        train = list(uj["train_tickers"])
+        close_ts = {
+            m.ticker: m.close_ts for m in provider.iter_markets(tickers=train)
+        }
+        split = {
+            "t0": uj["t0"], "t1": uj["t1"], "split_ts": uj["split_ts"],
+            "train": train, "test_size_only": uj["n_test"],
+            "close_ts": close_ts,
+        }
+        universe_meta = {
+            k: uj[k]
+            for k in ("n_universe", "n_events", "n_train", "n_test",
+                      "t0", "t1", "split_ts", "excluded_categories")
+        }
+        universe = train  # only the train half is ever run here
+        os.makedirs(args.out, exist_ok=True)
+        # do NOT rewrite universe.json: the pinned file stays the record
+    else:
+        universe, ucfg = build_universe(args)
+        if args.limit:
+            universe = universe[: args.limit]
+        split = split_train(provider, universe, args.train_frac)
+        train = split["train"]
+        events = set()
+        for m in provider.iter_markets(tickers=universe):
+            events.add(m.event_ticker)
+        universe_meta = {
+            "n_universe": len(universe),
+            "n_events": len(events),
+            "n_train": len(train),
+            "n_test": split["test_size_only"],
+            "t0": split["t0"],
+            "t1": split["t1"],
+            "split_ts": split["split_ts"],
+            "excluded_categories": list(ucfg.exclude_categories),
+        }
+        os.makedirs(args.out, exist_ok=True)
+        with open(os.path.join(args.out, "universe.json"), "w") as fh:
+            json.dump(
+                {**universe_meta, "train_tickers": train,
+                 "universe_config": str(ucfg)}, fh, indent=2,
+            )
     print(f"universe={len(universe)} train={len(train)} "
           f"held-out={split['test_size_only']} "
           f"span={_iso(split['t0'])}..{_iso(split['t1'])} "

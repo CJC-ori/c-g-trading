@@ -431,3 +431,64 @@ class TestOpportunityLifetimeFn:
         assert fills.opportunity_lifetime_s(
             self.norm_buy(), candles, [], 0, 10_000
         ) == 200
+
+
+# ---------------------------------------------------------------------------
+# Maker queue model primitives (SPEC §3, amended 2026-08-12)
+# ---------------------------------------------------------------------------
+
+class TestMakerQueuePrimitives:
+    def test_initial_queue_ahead_scales_window_volume(self):
+        cfg = fills.MakerQueueConfig(depth_windows=2.0)
+        assert fills.initial_queue_ahead(100, cfg) == 200
+        assert fills.initial_queue_ahead(0, cfg) == 0
+
+    def test_initial_queue_ahead_ceils_and_floors(self):
+        cfg = fills.MakerQueueConfig(depth_windows=0.5, min_depth_contracts=10)
+        assert fills.initial_queue_ahead(3, cfg) == 10   # floor applies
+        assert fills.initial_queue_ahead(25, cfg) == 13  # ceil(12.5)
+
+    def test_initial_queue_ahead_none_means_unknown(self):
+        assert fills.initial_queue_ahead(None, fills.MakerQueueConfig()) is None
+
+    def test_queued_fill_consumes_queue_first(self):
+        # queue 100, event 60: all absorbed, no fill.
+        assert fills.queued_maker_fill(50, 60, 100) == (0, 40)
+        # queue 40, event 100: 40 absorbed, excess 60 -> 25% cap = 15.
+        assert fills.queued_maker_fill(50, 100, 40) == (15, 0)
+        # queue 0: legacy behavior on the full event volume.
+        assert fills.queued_maker_fill(50, 100, 0) == (25, 0)
+
+    def test_queued_fill_respects_remaining_and_zero_volume(self):
+        assert fills.queued_maker_fill(5, 1000, 0) == (5, 0)
+        assert fills.queued_maker_fill(50, 0, 30) == (0, 30)
+
+    def test_queued_fill_depth_multiplier(self):
+        # excess 100 at 25% cap x3 multiplier -> 75.
+        assert fills.queued_maker_fill(500, 140, 40, 0.25, 3.0) == (75, 0)
+
+    def test_unknown_depth_gate_is_deterministic(self):
+        cfg = fills.MakerQueueConfig()
+        a = [fills.unknown_depth_event_reaches(cfg, 7, ts) for ts in range(100)]
+        b = [fills.unknown_depth_event_reaches(cfg, 7, ts) for ts in range(100)]
+        assert a == b
+        assert any(a) and not all(a)
+
+    def test_unknown_depth_gate_rate_tracks_probability(self):
+        cfg = fills.MakerQueueConfig(unknown_depth_fill_prob=0.45)
+        n = 20_000
+        hits = sum(
+            fills.unknown_depth_event_reaches(cfg, oid, ts)
+            for oid in range(20) for ts in range(1000, 1000 + n // 20)
+        )
+        assert abs(hits / n - 0.45) < 0.02  # deterministic, no flake
+
+    def test_unknown_depth_prob_extremes(self):
+        never = fills.MakerQueueConfig(unknown_depth_fill_prob=0.0)
+        always = fills.MakerQueueConfig(unknown_depth_fill_prob=1.0)
+        assert not any(
+            fills.unknown_depth_event_reaches(never, 1, ts) for ts in range(50)
+        )
+        assert all(
+            fills.unknown_depth_event_reaches(always, 1, ts) for ts in range(50)
+        )

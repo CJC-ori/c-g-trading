@@ -8,7 +8,13 @@ harness clamps every intent so all strategies are comparable:
 - per-market cap (5% of bankroll), per-event cap (10%), total deployed
   cap (80%), all measured in premium-at-risk (cost basis + premium
   committed by resting orders);
-- depth cap: at most cap_frac (25%) of recently observed per-window volume;
+- depth cap: at most cap_frac (25%) of recently observed per-window volume.
+  Since 2026-08-12 the engine applies this pre-trade clamp to TAKER intents
+  only (their whole fill opportunity is the next window's tape); resting
+  maker orders are bounded at fill time by the per-print/per-candle caps
+  plus the maker-queue model in fills.py — pre-clamping them too
+  double-counted the same mechanism and zeroed quiet-hour orders that
+  would legitimately rest for days (weather report, harness issue #3);
 - hard no-borrowing floor: an order may never commit more premium than
   uncommitted cash.
 

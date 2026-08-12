@@ -3,10 +3,17 @@ import pytest
 
 from bot.backtest.dataport import InMemoryHistoryProvider
 from bot.backtest.engine import EngineConfig, build_decision_times, run_backtest
+from bot.backtest.fills import MakerQueueConfig
 from bot.backtest.testkit import HOUR, ScriptedStrategy, mk_candle, mk_market, mk_trade
 from bot.backtest.types import OrderIntent, SettlementResult
 
 BANKROLL = 1_000_000  # default $10k
+
+#: Legacy fill model (no maker queue) for tests that hand-compute maker
+#: fills to verify OTHER mechanics (at/through rules, caps, fees, tif).
+#: Queue behavior itself is tested in TestMakerQueue below.
+NOQ = MakerQueueConfig(enabled=False)
+NOQ_CONFIG = EngineConfig(maker_queue=NOQ)
 
 
 def candles_only_market(
@@ -156,7 +163,7 @@ class TestMakerEndToEnd:
         provider = InMemoryHistoryProvider([market], candles, trades, [settle])
         intent = OrderIntent("B", "yes", "buy", 40, 40, tif="rest", p_hat=0.6)
         strat = ScriptedStrategy({(HOUR, "B"): [intent]})
-        return run_backtest(provider, strat)
+        return run_backtest(provider, strat, NOQ_CONFIG)
 
     def test_fills(self):
         res = self.run()
@@ -195,7 +202,7 @@ class TestBuyNoComplementarity:
         ]
         provider = InMemoryHistoryProvider([market], candles, trades, [settle])
         strat = ScriptedStrategy({(HOUR, "B"): [intent]})
-        return run_backtest(provider, strat)
+        return run_backtest(provider, strat, NOQ_CONFIG)
 
     def test_buy_no_fills_when_yes_prints_at_or_above_complement(self):
         res = self.run(OrderIntent("B", "no", "buy", 35, 40, tif="rest", p_hat=0.2))
@@ -243,7 +250,7 @@ class TestPartialFillsAndTif:
         )
         provider = InMemoryHistoryProvider([market], candles, [], [settle])
         strat = ScriptedStrategy({(HOUR, "A"): [buy_yes(size=200, tif=tif)]})
-        return run_backtest(provider, strat)
+        return run_backtest(provider, strat, NOQ_CONFIG)
 
     def test_ioc_partial_fill_then_cancel(self):
         res = self.run("ioc")
@@ -274,7 +281,7 @@ class TestPartialFillsAndTif:
         )
         provider = InMemoryHistoryProvider([market], candles, [], [settle])
         strat = ScriptedStrategy({(HOUR, "A"): [buy_yes(size=200, tif="rest")]})
-        res = run_backtest(provider, strat)
+        res = run_backtest(provider, strat, NOQ_CONFIG)
         assert sum(f.count for f in res.fills) == 50  # taker leg only
 
     def test_zero_volume_window_fills_nothing(self):
@@ -454,7 +461,9 @@ class TestExactFeeMode:
         sched = FeeSchedule(
             {"B": SeriesFeeConfig("quadratic_with_maker_fees", 1.0)}
         )
-        res = run_backtest(provider, strat, EngineConfig(fee_schedule=sched))
+        res = run_backtest(
+            provider, strat, EngineConfig(fee_schedule=sched, maker_queue=NOQ)
+        )
         # fill 1: 0.0175*20*0.4*0.6 = $0.084 -> 840cc, ceil -> 9c charged
         # fill 2: +0.0175*10*0.24 = $0.042 -> total 1260cc = 12.6c -> 13c
         #         -> charges the 4c delta (per-order accumulator converges
@@ -473,7 +482,8 @@ class TestExactFeeMode:
         intent = OrderIntent("B", "yes", "buy", 40, 40, tif="rest", p_hat=0.6)
         strat = ScriptedStrategy({(HOUR, "B"): [intent]})
         res = run_backtest(
-            provider, strat, EngineConfig(fee_schedule=FeeSchedule({}))
+            provider, strat,
+            EngineConfig(fee_schedule=FeeSchedule({}), maker_queue=NOQ),
         )
         assert res.fees_cents == 0
 
@@ -560,3 +570,179 @@ class TestPriceQuantization:
         # 61c is a valid tick: no quantization event, order at 61 unchanged
         assert not [e for e in res.events if e["type"] == "price_quantized"]
         assert res.fills and res.fills[0].price_cents == 61
+
+
+# ---------------------------------------------------------------------------
+# Maker queue model (SPEC §3, amended 2026-08-12)
+# ---------------------------------------------------------------------------
+
+class TestMakerQueue:
+    """A resting order joins BEHIND estimated displayed depth; only
+    qualifying volume in excess of the queue reaches it."""
+
+    def test_trade_prints_consume_queue_before_filling(self):
+        market, candles, settle = candles_only_market(
+            ticker="B", closes=(60, 60, 60), close_ts=4 * HOUR, result="no"
+        )
+        # W at placement = mean(last 3 visible candles) = 400 -> queue 400.
+        trades = [
+            mk_trade("B", 5000, 39, 300),  # drains queue 400 -> 100, no fill
+            mk_trade("B", 6000, 38, 200),  # drains 100, excess 100 -> fill 25
+            mk_trade("B", 8000, 39, 400),  # queue 0, excess 400 -> fill 15 (rest)
+        ]
+        provider = InMemoryHistoryProvider([market], candles, trades, [settle])
+        intent = OrderIntent("B", "yes", "buy", 40, 40, tif="rest", p_hat=0.6)
+        strat = ScriptedStrategy({(HOUR, "B"): [intent]})
+        cfg = EngineConfig(maker_queue=MakerQueueConfig(depth_windows=1.0))
+        res = run_backtest(provider, strat, cfg)
+        assert [(f.count, f.price_cents, f.ts) for f in res.fills] == [
+            (25, 40, 6000),
+            (15, 40, 8000),
+        ]
+        (oid,) = {f.order_id for f in res.fills}
+        assert res.orders[oid]["queue_ahead_at_placement"] == 400
+
+    def test_candles_consume_queue_before_filling(self):
+        market, candles, settle = candles_only_market(
+            ticker="A",
+            closes=(60, 61, 62, 61, 60),
+            vols=(800, 0, 400, 400, 400),
+            lows=(59, 58, 55, 55, 55),
+            close_ts=6 * HOUR,
+            result="yes",
+        )
+        provider = InMemoryHistoryProvider([market], candles, [], [settle])
+        # Rest at 59 (ask estimate is 61 -> does not cross).
+        strat = ScriptedStrategy(
+            {(HOUR, "A"): [buy_yes(limit=59, size=200, tif="rest", p_hat=0.8)]}
+        )
+        # W = mean([800]) = 800; depth_windows 0.5 -> queue 400.
+        cfg = EngineConfig(maker_queue=MakerQueueConfig(depth_windows=0.5))
+        res = run_backtest(provider, strat, cfg)
+        # C1 has volume 0 (no qualifying event). C2 drains the 400 queue with
+        # no fill; C3 and C4 each fill 25% of their 400 volume.
+        assert [(f.count, f.ts, f.is_taker) for f in res.fills] == [
+            (100, 4 * HOUR, False),
+            (100, 5 * HOUR, False),
+        ]
+
+    def test_queue_disabled_restores_legacy_fills(self):
+        market, candles, settle = candles_only_market(
+            ticker="B", closes=(60, 60, 60), close_ts=4 * HOUR, result="no"
+        )
+        trades = [mk_trade("B", 5000, 39, 80)]
+        provider = InMemoryHistoryProvider([market], candles, trades, [settle])
+        intent = OrderIntent("B", "yes", "buy", 40, 40, tif="rest", p_hat=0.6)
+        strat = ScriptedStrategy({(HOUR, "B"): [intent]})
+        res = run_backtest(provider, strat, NOQ_CONFIG)
+        assert [(f.count, f.ts) for f in res.fills] == [(20, 5000)]
+
+    def test_default_config_has_queue_enabled(self):
+        assert EngineConfig().maker_queue.enabled  # honest default
+
+
+# ---------------------------------------------------------------------------
+# Cancel/replace (2026-08-12)
+# ---------------------------------------------------------------------------
+
+class TestCancelReplace:
+    def _run(self, script):
+        market, candles, settle = candles_only_market(
+            ticker="A",
+            closes=(60, 61, 62, 61),
+            lows=(59, 60, 61, 60),  # never strictly below 56: no maker fills
+            close_ts=5 * HOUR,
+            result="yes",
+        )
+        provider = InMemoryHistoryProvider([market], candles, [], [settle])
+        strat = ScriptedStrategy(script)
+        return run_backtest(provider, strat)
+
+    def test_replace_cancels_same_direction_resting_order(self):
+        res = self._run({
+            (HOUR, "A"): [buy_yes(limit=55, size=50, tif="rest")],
+            (2 * HOUR, "A"): [
+                OrderIntent("A", "yes", "buy", 56, 50, tif="rest",
+                            p_hat=0.8, replace=True)
+            ],
+        })
+        cancels = [e for e in res.events if e["type"] == "cancel"
+                   and e.get("reason") == "replaced"]
+        assert len(cancels) == 1
+        assert cancels[0]["order_id"] == 1
+        assert cancels[0]["unfilled"] == 50
+        assert len(res.orders) == 2
+        assert res.orders[2]["replace"] is True
+        # Replaced order is dead: the only close-time cancel is order 2.
+        close_cancels = [e for e in res.events if e["type"] == "cancel"
+                         and e.get("reason") == "market-closed"]
+        assert [e["order_id"] for e in close_cancels] == [2]
+
+    def test_replace_frees_committed_premium(self):
+        """The canceled order's committed premium is available to the new
+        one: two full-size orders would otherwise breach the per-market cap."""
+        # per-market cap = 5% of $10k = $500 -> 892 contracts at 55c+1c fee.
+        res = self._run({
+            (HOUR, "A"): [buy_yes(limit=55, size=5000, tif="rest")],
+            (2 * HOUR, "A"): [
+                OrderIntent("A", "yes", "buy", 55, 5000, tif="rest",
+                            p_hat=0.8, replace=True)
+            ],
+        })
+        sizes = [o["size"] for o in res.orders.values()]
+        assert len(sizes) == 2
+        # Without the replace-cancel the second order would be clamped to ~0
+        # by the per-market cap; with it, both got the same full clamp size.
+        assert sizes[0] == sizes[1] > 0
+
+    def test_pure_cancel_with_size_zero(self):
+        res = self._run({
+            (HOUR, "A"): [buy_yes(limit=55, size=50, tif="rest")],
+            (2 * HOUR, "A"): [
+                OrderIntent("A", "yes", "buy", 55, 0, tif="rest",
+                            p_hat=0.8, replace=True)
+            ],
+        })
+        cancels = [e for e in res.events if e["type"] == "cancel"
+                   and e.get("reason") == "replaced"]
+        assert len(cancels) == 1
+        assert len(res.orders) == 1  # no second order was placed
+
+    def test_replace_does_not_touch_opposite_direction(self):
+        res = self._run({
+            (HOUR, "A"): [buy_yes(limit=55, size=50, tif="rest")],
+            (2 * HOUR, "A"): [
+                # yes-sell (sell side) replace must not cancel the yes-buy.
+                OrderIntent("A", "yes", "sell", 90, 50, tif="rest",
+                            p_hat=0.8, replace=True)
+            ],
+        })
+        cancels = [e for e in res.events if e["type"] == "cancel"
+                   and e.get("reason") == "replaced"]
+        assert cancels == []
+
+
+# ---------------------------------------------------------------------------
+# Depth pre-clamp reconciliation (2026-08-12): taker-only
+# ---------------------------------------------------------------------------
+
+class TestDepthClampReconciliation:
+    def _res(self, intent):
+        market, candles, settle = candles_only_market(
+            ticker="A", closes=(60, 61, 62), vols=(4, 4, 4), close_ts=4 * HOUR
+        )
+        provider = InMemoryHistoryProvider([market], candles, [], [settle])
+        strat = ScriptedStrategy({(HOUR, "A"): [intent]})
+        return run_backtest(provider, strat)
+
+    def test_taker_intent_still_depth_clamped(self):
+        res = self._res(buy_yes(limit=61, size=50, tif="ioc"))  # crosses
+        assert "depth-cap" in res.intents[0]["clamp_reasons"]
+        assert res.intents[0]["clamped"] == 1  # 25% of mean(4) volume
+
+    def test_resting_intent_not_depth_pre_clamped(self):
+        res = self._res(buy_yes(limit=55, size=50, tif="rest"))  # rests
+        assert "depth-cap" not in res.intents[0]["clamp_reasons"]
+        assert res.intents[0]["clamped"] == 50
+        # It is still bounded at FILL time: quiet tape -> nothing fills.
+        assert res.fills == []

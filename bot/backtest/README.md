@@ -89,8 +89,17 @@ loaded with future data.
   its limit (25% per print), or — when only candles exist — only if a candle
   goes *strictly* through the limit (a touch is not a fill), 25% of candle
   volume.
+- Maker queue *(2026-08-12)*: a resting order joins BEHIND an estimated
+  displayed depth (`MakerQueueConfig.depth_windows` × recent per-window
+  volume; fill-rate-calibrated, see `reports/flb/QUEUE_IMPACT.md`) and only
+  qualifying volume in excess of that queue reaches it. Disable with
+  `EngineConfig(maker_queue=MakerQueueConfig(enabled=False))` for legacy
+  comparisons.
 - `tif="ioc"` dies after the taker window; `tif="rest"` remainder rests until
   filled or market close. All resting orders are canceled at close.
+  `OrderIntent(replace=True)` first cancels the strategy's still-resting
+  same-direction orders in that market (size=0 → pure cancel); the new
+  order joins the maker queue afresh.
 - Quote estimate at t: latest candle's bid/ask close when available,
   otherwise last traded price ± 1c.
 - When a market has both trades and candles, trades are the fill stream

@@ -5,22 +5,22 @@
   "episode_stats": {
     "n": 13,
     "n_clusters": 12,
-    "mean": 0.062354395958296886,
-    "se": 0.009296657377850775,
-    "ci95_lo": 0.044132947497709366,
-    "ci95_hi": 0.08057584441888441,
+    "mean": 0.06280210635793392,
+    "se": 0.008813553982996703,
+    "ci95_lo": 0.045527540551260376,
+    "ci95_hi": 0.08007667216460745,
     "distribution": {
       "min": 0.02040816326530612,
       "p25": 0.041666666666666664,
       "median": 0.05263157894736842,
       "p75": 0.08695652173913043,
       "max": 0.1111111111111111,
-      "sd": 0.031162969502812173,
+      "sd": 0.03051146368223329,
       "frac_positive": 1.0
     },
-    "dollar_weighted_return": 0.06560784565503515,
-    "total_basis_cents": 124604,
-    "total_net_pnl_cents": 8175
+    "dollar_weighted_return": 0.07250001802048568,
+    "total_basis_cents": 138731,
+    "total_net_pnl_cents": 10058
   },
   "per_category": {
     "Climate and Weather": {
@@ -46,22 +46,22 @@
     "Economics": {
       "n": 7,
       "n_clusters": 6,
-      "mean": 0.06364473319272972,
-      "se": 0.014506636576743304,
-      "ci95_lo": 0.03521172550231284,
-      "ci95_hi": 0.09207774088314659,
+      "mean": 0.06447619536348421,
+      "se": 0.01331293590288386,
+      "ci95_lo": 0.03838284099383185,
+      "ci95_hi": 0.09056954973313658,
       "distribution": {
         "min": 0.02040816326530612,
         "p25": 0.041666666666666664,
         "median": 0.05263157894736842,
         "p75": 0.0989010989010989,
         "max": 0.1111111111111111,
-        "sd": 0.03339799525998438,
+        "sd": 0.03212768235226527,
         "frac_positive": 1.0
       },
-      "dollar_weighted_return": 0.05934321712290644,
-      "total_basis_cents": 98815,
-      "total_net_pnl_cents": 5864
+      "dollar_weighted_return": 0.06419730278958063,
+      "total_basis_cents": 97434,
+      "total_net_pnl_cents": 6255
     },
     "Elections": {
       "n": 2,
@@ -79,9 +79,9 @@
         "sd": 0.016710546642716467,
         "frac_positive": 1.0
       },
-      "dollar_weighted_return": 0.09237015025321224,
-      "total_basis_cents": 23893,
-      "total_net_pnl_cents": 2207
+      "dollar_weighted_return": 0.09486217160605669,
+      "total_basis_cents": 38635,
+      "total_net_pnl_cents": 3665
     },
     "Politics": {
       "n": 2,
@@ -99,9 +99,9 @@
         "sd": 0.007438531255907298,
         "frac_positive": 1.0
       },
-      "dollar_weighted_return": 0.0273972602739726,
-      "total_basis_cents": 584,
-      "total_net_pnl_cents": 16
+      "dollar_weighted_return": 0.024208566108007448,
+      "total_basis_cents": 1074,
+      "total_net_pnl_cents": 26
     },
     "Science and Technology": {
       "n": 1,
@@ -120,19 +120,19 @@
         "frac_positive": 1.0
       },
       "dollar_weighted_return": 0.08695652173913043,
-      "total_basis_cents": 552,
-      "total_net_pnl_cents": 48
+      "total_basis_cents": 828,
+      "total_net_pnl_cents": 72
     }
   },
   "fill_stats": {
     "n_orders": 43,
     "n_maker_orders": 43,
     "n_taker_orders": 0,
-    "maker_order_fill_rate": 0.32558139534883723,
+    "maker_order_fill_rate": 0.3023255813953488,
     "taker_order_fill_rate": null,
-    "maker_contract_fill_rate": 0.31634111481657934,
+    "maker_contract_fill_rate": 0.24019370460048425,
     "taker_contract_fill_rate": null,
-    "maker_contracts_filled": 1328,
+    "maker_contracts_filled": 1488,
     "taker_contracts_filled": 0,
     "maker_fill_rate_flag_gt60": false
   },
@@ -149,7 +149,7 @@
     {
       "category": "Economics",
       "entry_price_cents": 90,
-      "contracts": 198,
+      "contracts": 285,
       "n_markets": 1,
       "win_rate": 1.0,
       "breakeven_win_rate": 0.9,
@@ -158,19 +158,10 @@
     {
       "category": "Economics",
       "entry_price_cents": 91,
-      "contracts": 10,
+      "contracts": 26,
       "n_markets": 1,
       "win_rate": 1.0,
       "breakeven_win_rate": 0.91,
-      "above_breakeven": true
-    },
-    {
-      "category": "Economics",
-      "entry_price_cents": 92,
-      "contracts": 75,
-      "n_markets": 1,
-      "win_rate": 1.0,
-      "breakeven_win_rate": 0.9213333333333333,
       "above_breakeven": true
     },
     {
@@ -185,8 +176,8 @@
     {
       "category": "Economics",
       "entry_price_cents": 95,
-      "contracts": 3,
-      "n_markets": 1,
+      "contracts": 364,
+      "n_markets": 2,
       "win_rate": 1.0,
       "breakeven_win_rate": 0.95,
       "above_breakeven": true
@@ -194,8 +185,8 @@
     {
       "category": "Economics",
       "entry_price_cents": 96,
-      "contracts": 609,
-      "n_markets": 2,
+      "contracts": 89,
+      "n_markets": 1,
       "win_rate": 1.0,
       "breakeven_win_rate": 0.96,
       "above_breakeven": true
@@ -203,7 +194,7 @@
     {
       "category": "Economics",
       "entry_price_cents": 98,
-      "contracts": 60,
+      "contracts": 181,
       "n_markets": 1,
       "win_rate": 1.0,
       "breakeven_win_rate": 0.98,
@@ -212,7 +203,7 @@
     {
       "category": "Elections",
       "entry_price_cents": 91,
-      "contracts": 190,
+      "contracts": 352,
       "n_markets": 1,
       "win_rate": 1.0,
       "breakeven_win_rate": 0.91,
@@ -239,7 +230,7 @@
     {
       "category": "Politics",
       "entry_price_cents": 98,
-      "contracts": 2,
+      "contracts": 7,
       "n_markets": 1,
       "win_rate": 1.0,
       "breakeven_win_rate": 0.98,
@@ -248,7 +239,7 @@
     {
       "category": "Science and Technology",
       "entry_price_cents": 92,
-      "contracts": 6,
+      "contracts": 9,
       "n_markets": 1,
       "win_rate": 1.0,
       "breakeven_win_rate": 0.92,

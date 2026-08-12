@@ -484,3 +484,61 @@ cent conversion with conservative directional rounding, scalar settlements,
 `''` = never-settled, no-trade candle OHLC synthesized from bid/ask mids)
 are documented in `bot/backtest/dataport.py`'s section header and verified
 by `python -m bot.backtest.validate_wiring` against this DB.
+
+---
+
+## Appendix: the `/historical/*` tier and the multi-year backfill (2026-08-12)
+
+Everything above this appendix was written before `/historical/*` was found.
+**The TL;DR's retention table is superseded**: it describes the *live* tier
+only. The archive tier changes the answer for two of the three rows.
+
+### The correction, in one table
+
+| data | live tier (`/markets`, `/markets/trades`) | archive tier (`/historical/*`) | net reach |
+|---|---|---|---|
+| settled **markets** | 2026-05-08, hard | back to **2021-07** | **~5 years** |
+| **trades** (tick tape) | 2026-05-25, hard | back to **2021-08** (first print seen) | **~5 years** |
+| **candlesticks** | market open, for markets the live tier still serves | market open, for archived markets | market open, always |
+
+The two tiers **partition by market, not by timestamp**. A given ticker is
+served by exactly one of them; `/historical/*` 404s for anything the live tier
+still holds and vice versa. That is why `store.markets.source` exists and why
+`KalshiClient.trades_any` / `candlesticks_any` take a `prefer=` hint — routing
+off the stored tier saves a wasted 404 round trip per market. `/historical/cutoff`
+read **2026-06-12T00:00:00Z** on every key throughout this work.
+
+### What the archive tier does *not* give you
+
+* **No date filters.** `/historical/markets` accepts `min_close_ts` and friends
+  and then silently ignores them. The only usable indexes are `series_ticker`,
+  `event_ticker` and an explicit `tickers=` list (mutually exclusive — passing
+  a pair 400s, and `mve_filter` counts as one of the pair). So enumeration must
+  go through the **series catalog**, which is what `pull.py hist-markets` does.
+* **A series ticker resolves its legacy pre-`KX` markets too.** Asking for
+  `KXHIGHNY` returns the 2021–2022 `HIGHNY-*` rows alongside the modern ones.
+  This is load-bearing: **deriving the series from a ticker prefix mis-files
+  every market renamed in the 2023 `KX` migration**, which is most of the
+  pre-2023 archive. `upsert_markets(..., series_ticker=)` therefore takes the
+  series from the *query*, not the ticker, for archived rows.
+  (`test_legacy_ticker_prefixes_map_to_modern_series` guards this.)
+* **Different JSON key convention.** Archive candles use bare
+  `close`/`volume`/`open_interest`; live candles use `close_dollars`/`volume_fp`.
+  Miss it and the rows land with every price column `NULL`.
+  (`test_historical_candles_parsed_from_bare_keys` guards this.)
+* **The exchange-wide trade firehose is the only ticker discovery mechanism**
+  for markets whose series has left the live catalog. `/historical/trades` with
+  `min_ts`/`max_ts` and no `ticker` returns every print exchange-wide — which is
+  also the cheapest way to build an event-night universe, since it surfaces
+  exactly the tickers that actually traded. `pull.py discover` wraps this.
+
+### The `--window final-Nh` trap (cost us a re-pull)
+
+A market's **decisive** hours are not always its **final** hours. `PRES-2024-*`
+resolved on election night, 2024-11-05/06, but stayed open until inauguration
+on **2025-01-20**. So `hist-candles --window final-72h` sampled three dead days
+in January at 1-minute grain and missed the 54c -> 97c run entirely — the pull
+"succeeded", the rows were real, and the data was worthless. `hist-candles` now
+takes `--min-ts` / `--max-ts` to pin an **absolute** window, which is the right
+tool for any event study. Rule of thumb: use `final-Nh` only when
+`close_time` is the event; otherwise name the window.

@@ -57,8 +57,14 @@ class TestMichiganReplay:
 
 class TestUniverse:
     def test_research_universe_shape(self):
+        # Structure, not magnitude: the universe is a property of the local
+        # dataset and grew from ~300 to 10k+ tickers with the full-history
+        # candle pull (universe.py docstring). Pinning an upper bound on its
+        # size just re-breaks on every backfill.
         u = research_universe(str(DB))
-        assert 100 <= len(u) <= 5000
+        assert len(u) >= 100
+        assert len(u) == len(set(u))       # no duplicates
+        assert u == sorted(u)              # deterministic (sorted) ordering
         assert "KXSENATEMID-26-AELS" in u
         assert "KXSENATEMID-26-HSTE" in u
         assert not any(t.startswith("KXMVE") for t in u)

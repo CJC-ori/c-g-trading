@@ -4,23 +4,23 @@
   "base": {
     "pnl": {
       "bankroll_cents": 1000000,
-      "net_pnl_cents_gross_of_inference": 29767,
-      "net_pnl_cents_after_inference": 29767,
-      "net_pnl_pct_of_bankroll": 0.029767,
-      "fees_cents": 25,
+      "net_pnl_cents_gross_of_inference": 16021,
+      "net_pnl_cents_after_inference": 16021,
+      "net_pnl_pct_of_bankroll": 0.016021,
+      "fees_cents": 15,
       "inference_cost_cents": 0,
-      "avg_deployed_cents": 1571.7954472496015,
+      "avg_deployed_cents": 1331.7044020144847,
       "run_span_s": 36325119,
-      "annualized_return_on_avg_deployed": 16.441392687851312
+      "annualized_return_on_avg_deployed": 10.444348299898602
     },
     "brier": {
-      "n": 103,
-      "strategy": 0.0024631204466019504,
-      "market_baseline": 0.0023742718446601936,
-      "delta_brier": -8.884860194175524e-05,
+      "n": 139,
+      "strategy": 0.002333422441726625,
+      "market_baseline": 0.002262949640287767,
+      "delta_brier": -7.047280143885626e-05,
       "delta_ci95": [
-        -0.00028198126091534385,
-        0.00010428405703183336
+        -0.00023055603386076047,
+        8.961043098304796e-05
       ],
       "beats_baseline": false,
       "n_gate": 500,
@@ -35,89 +35,89 @@
         "gate_cents": 4.0
       },
       "trade_pnl": {
-        "n_markets_traded": 35,
-        "net_pnl_cents_after_fees": 29767,
-        "net_pnl_cents_after_fees_and_inference": 29767
+        "n_markets_traded": 33,
+        "net_pnl_cents_after_fees": 16021,
+        "net_pnl_cents_after_fees_and_inference": 16021
       },
       "flags": [
-        "n=103 < 500: below the forecast-strategy gate (minimum detectable dBrier at n=100 is ~0.0137, 3x the superforecaster edge)"
+        "n=139 < 500: below the forecast-strategy gate (minimum detectable dBrier at n=100 is ~0.0137, 3x the superforecaster edge)"
       ]
     },
     "calibration": {
-      "n": 103,
-      "ece": 0.042075728155339914,
+      "n": 139,
+      "ece": 0.04078374100719459,
       "curve": [
         {
           "bin": "[0.0,0.1)",
-          "n": 63,
-          "mean_p_hat": 0.03684603174603187,
+          "n": 74,
+          "mean_p_hat": 0.03929270270270281,
           "observed_freq": 0.0
         },
         {
           "bin": "[0.9,1.0)",
-          "n": 40,
-          "mean_p_hat": 0.9496874999999999,
+          "n": 65,
+          "mean_p_hat": 0.9575187692307686,
           "observed_freq": 1.0
         }
       ],
-      "reliability": 0.001813442715942373,
-      "resolution": 0.23753416910170605,
-      "uncertainty": 0.23753416910170608,
-      "brier_from_decomposition": 0.0018134427159423872
+      "reliability": 0.001665844552798605,
+      "resolution": 0.24895191760260857,
+      "uncertainty": 0.24895191760260857,
+      "brier_from_decomposition": 0.001665844552798612
     },
     "drawdown": {
-      "max_drawdown_cents": 32392,
-      "max_drawdown_frac_of_peak": 0.03156782716829028
+      "max_drawdown_cents": 25114,
+      "max_drawdown_frac_of_peak": 0.02500102038886273
     },
     "concentration": {
-      "n_markets_traded": 35,
-      "top5_share_of_net": 0.48372358652198744,
-      "worst_market_loss_cents": 8,
+      "n_markets_traded": 33,
+      "top5_share_of_net": 0.5769302790088009,
+      "worst_market_loss_cents": 4,
       "top5": [
         {
+          "ticker": "KXAAAGASD-26JUL07-3.795",
+          "net_pnl_cents": 2850
+        },
+        {
           "ticker": "KXMAKERFIELDBY-27JAN01-LAB",
-          "net_pnl_cents": 3504
-        },
-        {
-          "ticker": "KXATTENDUFC250-26JUN-KPAT",
-          "net_pnl_cents": 3248
-        },
-        {
-          "ticker": "KXFABLERESTORE-27-26JUN20",
-          "net_pnl_cents": 2937
-        },
-        {
-          "ticker": "KXGOVOKNOMR-26-CKEA",
-          "net_pnl_cents": 2630
+          "net_pnl_cents": 1918
         },
         {
           "ticker": "KXAAAGASD-26JUN14-4.065",
-          "net_pnl_cents": 2080
+          "net_pnl_cents": 1805
+        },
+        {
+          "ticker": "KXHIGHTBOS-26MAY24-B57.5",
+          "net_pnl_cents": 1650
+        },
+        {
+          "ticker": "KXFISAEXTEND-26MAY-JUN12",
+          "net_pnl_cents": 1020
         }
       ]
     },
     "trade_stats": {
       "n_decision_calls": 112037,
-      "n_intents": 103,
-      "n_orders": 92,
-      "contracts_requested": 43690,
-      "contracts_ordered": 9701,
-      "contracts_filled": 5017,
-      "fill_rate_vs_ordered": 0.5171631790537058,
-      "fill_rate_vs_requested": 0.11483176928358892,
-      "order_any_fill_rate": 0.4891304347826087,
+      "n_intents": 139,
+      "n_orders": 139,
+      "contracts_requested": 48343,
+      "contracts_ordered": 20647,
+      "contracts_filled": 3417,
+      "fill_rate_vs_ordered": 0.1654961979948661,
+      "fill_rate_vs_requested": 0.07068241524108972,
+      "order_any_fill_rate": 0.23741007194244604,
       "taker_contracts": 0,
-      "maker_contracts": 5017,
+      "maker_contracts": 3417,
       "maker_share": 1.0,
-      "maker_fill_rate": 0.5171631790537058,
+      "maker_fill_rate": 0.1654961979948661,
       "maker_fill_rate_sanity_band": [
         0.4,
         0.5
       ],
-      "avg_edge_at_entry_cents": 1.2228032688857788,
-      "avg_holding_period_s": 66124.31428571428,
+      "avg_edge_at_entry_cents": 1.238990927714358,
+      "avg_holding_period_s": 61509.90909090909,
       "opportunity_lifetime_s": {
-        "n": 92,
+        "n": 139,
         "p25": 3600,
         "median": 7200,
         "p75": 14400
@@ -126,8 +126,8 @@
     },
     "cost_ratios": {
       "inference_cost_cents": 0,
-      "net_pnl_cents": 29767,
-      "notional_traded_cents": 471908,
+      "net_pnl_cents": 16021,
+      "notional_traded_cents": 325664,
       "inference_over_net_pnl": 0.0,
       "inference_over_net_pnl_target": 0.2,
       "inference_over_notional": 0.0,
@@ -142,38 +142,38 @@
           "n_markets": 0
         },
         "test": {
-          "net_pnl_cents": 29767,
-          "n_markets": 35
+          "net_pnl_cents": 16021,
+          "n_markets": 33
         }
       },
       "category": {
         "Economics": {
-          "net_pnl_cents": 7301,
+          "net_pnl_cents": 7020,
           "n_markets": 9
         },
         "Politics": {
-          "net_pnl_cents": 4884,
+          "net_pnl_cents": 3195,
           "n_markets": 8
         },
         "Science and Technology": {
-          "net_pnl_cents": 3023,
+          "net_pnl_cents": 731,
           "n_markets": 3
         },
         "Elections": {
-          "net_pnl_cents": 6242,
+          "net_pnl_cents": 2272,
           "n_markets": 3
         },
         "Climate and Weather": {
-          "net_pnl_cents": 3792,
-          "n_markets": 6
+          "net_pnl_cents": 2016,
+          "n_markets": 5
         },
         "Financials": {
-          "net_pnl_cents": 9,
+          "net_pnl_cents": 33,
           "n_markets": 1
         },
         "Entertainment": {
-          "net_pnl_cents": 4516,
-          "n_markets": 5
+          "net_pnl_cents": 754,
+          "n_markets": 4
         }
       }
     }
@@ -181,29 +181,29 @@
   "capacity_curve": [
     {
       "depth_multiplier": 1.0,
-      "net_pnl_cents_after_inference": 29767,
-      "contracts_filled": 5017
+      "net_pnl_cents_after_inference": 16021,
+      "contracts_filled": 3417
     },
     {
       "depth_multiplier": 3.0,
-      "net_pnl_cents_after_inference": 37808,
-      "contracts_filled": 6514
+      "net_pnl_cents_after_inference": 16097,
+      "contracts_filled": 3436
     },
     {
       "depth_multiplier": 10.0,
-      "net_pnl_cents_after_inference": 38972,
-      "contracts_filled": 6694
+      "net_pnl_cents_after_inference": 16097,
+      "contracts_filled": 3436
     }
   ],
   "fee_stress": {
     "multiplier": 1.5,
-    "net_pnl_cents_after_inference": 29755,
+    "net_pnl_cents_after_inference": 16015,
     "still_positive": true
   },
   "inference_stress": {
     "multiplier": 2.0,
     "inference_cost_cents": 0,
-    "net_pnl_cents_after_inference": 29767,
+    "net_pnl_cents_after_inference": 16021,
     "still_positive": true
   }
 }

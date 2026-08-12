@@ -102,3 +102,14 @@ def test_calibration_curve():
     assert c["n"] == 4
     assert c["ece"] == pytest.approx(0.05)
     assert len(c["curve"]) == 2
+
+
+def test_ensemble_choices_map_to_known_models():
+    from bot.groundtruth import weather as wx
+    from bot.strategies.weather.run_backtest import ENSEMBLE_CHOICES
+
+    assert ENSEMBLE_CHOICES["best_match"] == ()
+    for name, models in ENSEMBLE_CHOICES.items():
+        for m in models:
+            assert m in wx.PREV_RUNS_MODELS, (name, m)
+    assert set(ENSEMBLE_CHOICES["both"]) == set(wx.PREV_RUNS_MODELS)

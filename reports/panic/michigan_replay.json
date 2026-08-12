@@ -1,0 +1,998 @@
+{
+ "note": "SANCTIONED HELD-OUT CASE STUDY (docs/viability.md \u00a72, brief item 4). Counts toward no aggregate; parameters frozen before this run.",
+ "R4": {
+  "ticker": "KXSENATEMID-26-AELS",
+  "et_date": "2026-08-04",
+  "outcome_class": "dip-and-revert",
+  "result": "yes",
+  "strategy": "R4",
+  "period_s": 60,
+  "data_resolution": "trades",
+  "n_intents": 8,
+  "n_orders": 8,
+  "n_resting_orders": 7,
+  "n_resting_filled": 4,
+  "entry_fills": [
+   {
+    "ts": 1785896752,
+    "price_cents": 85,
+    "count": 196,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896833,
+    "price_cents": 80,
+    "count": 165,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896850,
+    "price_cents": 80,
+    "count": 22,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896850,
+    "price_cents": 80,
+    "count": 5,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896851,
+    "price_cents": 80,
+    "count": 16,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899730,
+    "price_cents": 75,
+    "count": 7,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899742,
+    "price_cents": 75,
+    "count": 61,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899796,
+    "price_cents": 75,
+    "count": 5,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899796,
+    "price_cents": 75,
+    "count": 3,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899796,
+    "price_cents": 75,
+    "count": 44,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899796,
+    "price_cents": 75,
+    "count": 102,
+    "is_taker": false,
+    "fee_cents": 0
+   }
+  ],
+  "exit_fills": [
+   {
+    "ts": 1785902808,
+    "price_cents": 96,
+    "count": 375,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785902808,
+    "price_cents": 96,
+    "count": 26,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785902808,
+    "price_cents": 96,
+    "count": 2,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785902812,
+    "price_cents": 96,
+    "count": 3,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785902813,
+    "price_cents": 96,
+    "count": 115,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785902816,
+    "price_cents": 96,
+    "count": 37,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785902847,
+    "price_cents": 96,
+    "count": 68,
+    "is_taker": true,
+    "fee_cents": 19
+   }
+  ],
+  "entered": true,
+  "exited": true,
+  "contracts_in": 626,
+  "premium_deployed_cents": 49950,
+  "fees_cents": 19,
+  "net_pnl_cents": 10127,
+  "return_on_deployed": 0.2027,
+  "median_opportunity_lifetime_s": 3
+ },
+ "R4b": {
+  "ticker": "KXSENATEMID-26-AELS",
+  "et_date": "2026-08-04",
+  "outcome_class": "dip-and-revert",
+  "result": "yes",
+  "strategy": "R4b",
+  "period_s": 60,
+  "data_resolution": "trades",
+  "n_intents": 102,
+  "n_orders": 82,
+  "n_resting_orders": 3,
+  "n_resting_filled": 3,
+  "entry_fills": [
+   {
+    "ts": 1785783695,
+    "price_cents": 2,
+    "count": 9,
+    "is_taker": true,
+    "fee_cents": 2
+   },
+   {
+    "ts": 1785785537,
+    "price_cents": 2,
+    "count": 2,
+    "is_taker": true,
+    "fee_cents": 1
+   },
+   {
+    "ts": 1785787026,
+    "price_cents": 2,
+    "count": 72,
+    "is_taker": true,
+    "fee_cents": 10
+   },
+   {
+    "ts": 1785787887,
+    "price_cents": 2,
+    "count": 77,
+    "is_taker": true,
+    "fee_cents": 11
+   },
+   {
+    "ts": 1785787959,
+    "price_cents": 2,
+    "count": 25,
+    "is_taker": true,
+    "fee_cents": 4
+   },
+   {
+    "ts": 1785787971,
+    "price_cents": 2,
+    "count": 5,
+    "is_taker": true,
+    "fee_cents": 1
+   },
+   {
+    "ts": 1785788092,
+    "price_cents": 2,
+    "count": 25,
+    "is_taker": true,
+    "fee_cents": 4
+   },
+   {
+    "ts": 1785788092,
+    "price_cents": 2,
+    "count": 68,
+    "is_taker": true,
+    "fee_cents": 9
+   },
+   {
+    "ts": 1785788768,
+    "price_cents": 2,
+    "count": 12,
+    "is_taker": true,
+    "fee_cents": 2
+   },
+   {
+    "ts": 1785788831,
+    "price_cents": 2,
+    "count": 4,
+    "is_taker": true,
+    "fee_cents": 1
+   },
+   {
+    "ts": 1785789943,
+    "price_cents": 2,
+    "count": 6,
+    "is_taker": true,
+    "fee_cents": 1
+   },
+   {
+    "ts": 1785790579,
+    "price_cents": 2,
+    "count": 277,
+    "is_taker": true,
+    "fee_cents": 39
+   },
+   {
+    "ts": 1785790644,
+    "price_cents": 2,
+    "count": 45,
+    "is_taker": true,
+    "fee_cents": 7
+   },
+   {
+    "ts": 1785792440,
+    "price_cents": 2,
+    "count": 23,
+    "is_taker": true,
+    "fee_cents": 4
+   },
+   {
+    "ts": 1785792570,
+    "price_cents": 2,
+    "count": 4,
+    "is_taker": true,
+    "fee_cents": 1
+   },
+   {
+    "ts": 1785792570,
+    "price_cents": 2,
+    "count": 1,
+    "is_taker": true,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785792596,
+    "price_cents": 2,
+    "count": 20,
+    "is_taker": true,
+    "fee_cents": 3
+   },
+   {
+    "ts": 1785792635,
+    "price_cents": 2,
+    "count": 151,
+    "is_taker": true,
+    "fee_cents": 21
+   },
+   {
+    "ts": 1785792635,
+    "price_cents": 2,
+    "count": 455,
+    "is_taker": true,
+    "fee_cents": 63
+   },
+   {
+    "ts": 1785792730,
+    "price_cents": 2,
+    "count": 250,
+    "is_taker": true,
+    "fee_cents": 35
+   },
+   {
+    "ts": 1785792730,
+    "price_cents": 2,
+    "count": 250,
+    "is_taker": true,
+    "fee_cents": 34
+   },
+   {
+    "ts": 1785792810,
+    "price_cents": 2,
+    "count": 132,
+    "is_taker": true,
+    "fee_cents": 19
+   },
+   {
+    "ts": 1785792810,
+    "price_cents": 2,
+    "count": 685,
+    "is_taker": true,
+    "fee_cents": 94
+   },
+   {
+    "ts": 1785792953,
+    "price_cents": 2,
+    "count": 11,
+    "is_taker": true,
+    "fee_cents": 2
+   },
+   {
+    "ts": 1785792953,
+    "price_cents": 2,
+    "count": 11,
+    "is_taker": true,
+    "fee_cents": 2
+   },
+   {
+    "ts": 1785793367,
+    "price_cents": 2,
+    "count": 105,
+    "is_taker": true,
+    "fee_cents": 15
+   },
+   {
+    "ts": 1785793455,
+    "price_cents": 2,
+    "count": 2,
+    "is_taker": true,
+    "fee_cents": 1
+   },
+   {
+    "ts": 1785793513,
+    "price_cents": 2,
+    "count": 395,
+    "is_taker": true,
+    "fee_cents": 55
+   },
+   {
+    "ts": 1785794285,
+    "price_cents": 3,
+    "count": 5,
+    "is_taker": true,
+    "fee_cents": 2
+   },
+   {
+    "ts": 1785794347,
+    "price_cents": 3,
+    "count": 8,
+    "is_taker": true,
+    "fee_cents": 2
+   },
+   {
+    "ts": 1785794454,
+    "price_cents": 3,
+    "count": 16,
+    "is_taker": true,
+    "fee_cents": 4
+   },
+   {
+    "ts": 1785794486,
+    "price_cents": 3,
+    "count": 92,
+    "is_taker": true,
+    "fee_cents": 19
+   },
+   {
+    "ts": 1785794529,
+    "price_cents": 3,
+    "count": 7,
+    "is_taker": true,
+    "fee_cents": 2
+   },
+   {
+    "ts": 1785794546,
+    "price_cents": 3,
+    "count": 7,
+    "is_taker": true,
+    "fee_cents": 1
+   },
+   {
+    "ts": 1785794606,
+    "price_cents": 3,
+    "count": 10,
+    "is_taker": true,
+    "fee_cents": 3
+   },
+   {
+    "ts": 1785794698,
+    "price_cents": 3,
+    "count": 16,
+    "is_taker": true,
+    "fee_cents": 4
+   },
+   {
+    "ts": 1785794721,
+    "price_cents": 3,
+    "count": 1,
+    "is_taker": true,
+    "fee_cents": 1
+   },
+   {
+    "ts": 1785794721,
+    "price_cents": 3,
+    "count": 8,
+    "is_taker": true,
+    "fee_cents": 1
+   },
+   {
+    "ts": 1785794721,
+    "price_cents": 3,
+    "count": 4,
+    "is_taker": true,
+    "fee_cents": 1
+   },
+   {
+    "ts": 1785795537,
+    "price_cents": 2,
+    "count": 34,
+    "is_taker": true,
+    "fee_cents": 5
+   },
+   {
+    "ts": 1785796033,
+    "price_cents": 2,
+    "count": 2,
+    "is_taker": true,
+    "fee_cents": 1
+   },
+   {
+    "ts": 1785796135,
+    "price_cents": 2,
+    "count": 1,
+    "is_taker": true,
+    "fee_cents": 1
+   }
+  ],
+  "exit_fills": [
+   {
+    "ts": 1785896752,
+    "price_cents": 15,
+    "count": 208,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896752,
+    "price_cents": 15,
+    "count": 6,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896752,
+    "price_cents": 15,
+    "count": 4,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896752,
+    "price_cents": 15,
+    "count": 2,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896752,
+    "price_cents": 15,
+    "count": 1,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896752,
+    "price_cents": 15,
+    "count": 16,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896752,
+    "price_cents": 15,
+    "count": 2,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896752,
+    "price_cents": 15,
+    "count": 5,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896752,
+    "price_cents": 15,
+    "count": 33,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896753,
+    "price_cents": 15,
+    "count": 9,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896754,
+    "price_cents": 15,
+    "count": 5,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896755,
+    "price_cents": 15,
+    "count": 1,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896755,
+    "price_cents": 15,
+    "count": 10,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896755,
+    "price_cents": 15,
+    "count": 2,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896755,
+    "price_cents": 15,
+    "count": 3,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896755,
+    "price_cents": 15,
+    "count": 7,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896755,
+    "price_cents": 15,
+    "count": 2,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896755,
+    "price_cents": 15,
+    "count": 16,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896755,
+    "price_cents": 15,
+    "count": 4,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896756,
+    "price_cents": 15,
+    "count": 138,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896757,
+    "price_cents": 15,
+    "count": 25,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896759,
+    "price_cents": 15,
+    "count": 36,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896759,
+    "price_cents": 15,
+    "count": 3,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896759,
+    "price_cents": 15,
+    "count": 17,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896759,
+    "price_cents": 15,
+    "count": 100,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896759,
+    "price_cents": 15,
+    "count": 2,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896759,
+    "price_cents": 15,
+    "count": 16,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896759,
+    "price_cents": 15,
+    "count": 208,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896759,
+    "price_cents": 15,
+    "count": 14,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896764,
+    "price_cents": 15,
+    "count": 68,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896764,
+    "price_cents": 15,
+    "count": 2,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896764,
+    "price_cents": 15,
+    "count": 36,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896764,
+    "price_cents": 15,
+    "count": 7,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896764,
+    "price_cents": 15,
+    "count": 16,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896767,
+    "price_cents": 15,
+    "count": 11,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896770,
+    "price_cents": 15,
+    "count": 2,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896772,
+    "price_cents": 15,
+    "count": 74,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896833,
+    "price_cents": 20,
+    "count": 165,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896850,
+    "price_cents": 20,
+    "count": 22,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896850,
+    "price_cents": 20,
+    "count": 5,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896851,
+    "price_cents": 20,
+    "count": 813,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785896851,
+    "price_cents": 20,
+    "count": 106,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899730,
+    "price_cents": 25,
+    "count": 7,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899742,
+    "price_cents": 25,
+    "count": 61,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899796,
+    "price_cents": 25,
+    "count": 5,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899796,
+    "price_cents": 25,
+    "count": 3,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899796,
+    "price_cents": 25,
+    "count": 44,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899796,
+    "price_cents": 25,
+    "count": 250,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899796,
+    "price_cents": 25,
+    "count": 40,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899796,
+    "price_cents": 25,
+    "count": 6,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899796,
+    "price_cents": 25,
+    "count": 25,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899796,
+    "price_cents": 25,
+    "count": 2,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899796,
+    "price_cents": 25,
+    "count": 222,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899796,
+    "price_cents": 25,
+    "count": 25,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899808,
+    "price_cents": 25,
+    "count": 5,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899812,
+    "price_cents": 25,
+    "count": 5,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899813,
+    "price_cents": 25,
+    "count": 22,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899822,
+    "price_cents": 25,
+    "count": 1,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899837,
+    "price_cents": 25,
+    "count": 1,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899844,
+    "price_cents": 25,
+    "count": 24,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899844,
+    "price_cents": 25,
+    "count": 12,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899845,
+    "price_cents": 25,
+    "count": 12,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899845,
+    "price_cents": 25,
+    "count": 1,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899847,
+    "price_cents": 25,
+    "count": 5,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899851,
+    "price_cents": 25,
+    "count": 1,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899857,
+    "price_cents": 25,
+    "count": 1,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899858,
+    "price_cents": 25,
+    "count": 32,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899859,
+    "price_cents": 25,
+    "count": 21,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899864,
+    "price_cents": 25,
+    "count": 163,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899865,
+    "price_cents": 25,
+    "count": 5,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899867,
+    "price_cents": 25,
+    "count": 5,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899871,
+    "price_cents": 25,
+    "count": 9,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899873,
+    "price_cents": 25,
+    "count": 9,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899876,
+    "price_cents": 25,
+    "count": 32,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1785899884,
+    "price_cents": 25,
+    "count": 55,
+    "is_taker": false,
+    "fee_cents": 0
+   }
+  ],
+  "entered": true,
+  "exited": true,
+  "contracts_in": 3333,
+  "premium_deployed_cents": 6840,
+  "fees_cents": 488,
+  "net_pnl_cents": 59332,
+  "return_on_deployed": 8.6743,
+  "median_opportunity_lifetime_s": 101682
+ }
+}

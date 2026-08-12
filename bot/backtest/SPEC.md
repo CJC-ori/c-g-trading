@@ -63,6 +63,24 @@ strategies cannot peek between their own ticks.
 - **Maker fills:** a resting limit order fills only if a subsequent trade
   prints AT or THROUGH the limit price, again volume-capped at 25% of prints
   at/through the level.
+- **Maker queue position** *(amended 2026-08-12)*: a resting order does not
+  participate in every qualifying print — it joins BEHIND an estimate of the
+  displayed depth at its level (`MakerQueueConfig.depth_windows` × recent
+  per-window traded volume; the store has no book sizes, so depth is a
+  volume proxy), and only qualifying volume in excess of that queue reaches
+  it, still subject to the 25% cap. `depth_windows` default 1.0 is
+  calibrated on FILL RATE (never P&L) against the FutureSearch live-fill
+  anchor below — see `reports/flb/QUEUE_IMPACT.md`. Where no volume proxy
+  exists at placement, each qualifying event reaches the order with fixed
+  probability 0.45 (mid-band), decided by a deterministic per-(order, event)
+  hash. `MakerQueueConfig(enabled=False)` restores the legacy model for
+  comparisons. The engine also supports cancel/replace
+  (`OrderIntent.replace`): replaced orders rejoin the queue at the back.
+- **Depth pre-clamp is taker-only** *(amended 2026-08-12)*: the risk layer's
+  pre-trade depth clamp (≤25% of recent per-window volume) applies to taker
+  intents only; resting orders are bounded at fill time by the per-print/
+  per-candle caps plus the queue model — pre-clamping them too
+  double-counted the same mechanism and zeroed quiet-hour quotes.
 - **Fill-rate sanity band** *(amended 2026-08-11)*: the simulated maker fill
   rate is reported per run; **40–50% is the sanity band** (FutureSearch's own
   positions table implies ~50.1%, their headline says 43% — simulate, don't

@@ -57,7 +57,7 @@ def _f(x) -> float | None:
 def backfill_candles(
     series_ticker: str, ticker: str, start_ts: int, end_ts: int,
     period_interval: int = 60, db_path: Path = CANDLES_DB,
-    min_spacing_s: float = 1.2, max_attempts: int = 8,
+    min_spacing_s: float = 2.5, max_attempts: int = 8,
 ) -> int:
     """Fetch hourly candles for one market into the private store.
     Idempotent (skips when already backfilled). Returns candle count."""
@@ -72,12 +72,21 @@ def backfill_candles(
         if done is not None:
             return int(done[0])
         rows: list[tuple] = []
+
+        def g(d: dict, key: str):
+            # live endpoint uses "<key>_dollars", historical uses "<key>"
+            v = d.get(f"{key}_dollars")
+            return v if v is not None else d.get(key)
+
         # the API caps ~5000 candles/request; hourly over <200d fits in one
         chunk = 4900 * period_interval * 60
         t0 = start_ts
         while t0 < end_ts:
             t1 = min(end_ts, t0 + chunk)
-            url = (f"{API}/series/{series_ticker}/markets/{ticker}/candlesticks"
+            # the /historical/ endpoint serves delisted markets too and
+            # needs no series ticker (the live /series/ path 404s once a
+            # market is pruned from the current API)
+            url = (f"{API}/historical/markets/{ticker}/candlesticks"
                    f"?start_ts={t0}&end_ts={t1}&period_interval={period_interval}")
             backoff = 5.0
             for _ in range(max_attempts):
@@ -92,6 +101,11 @@ def backfill_candles(
                     time.sleep(backoff)
                     backoff *= 1.8
                     continue
+                if r.status_code != 200:
+                    print(f"[backfill] {ticker}: HTTP {r.status_code}, "
+                          f"backing off {backoff:.0f}s", flush=True)
+                if r.status_code == 404:
+                    raise RuntimeError(f"404 for {ticker} candlesticks")
                 if r.status_code == 200:
                     for c in r.json().get("candlesticks", []):
                         p = c.get("price") or {}
@@ -99,14 +113,15 @@ def backfill_candles(
                         ya = c.get("yes_ask") or {}
                         rows.append((
                             ticker, period_interval, int(c["end_period_ts"]),
-                            _f(p.get("open_dollars")), _f(p.get("high_dollars")),
-                            _f(p.get("low_dollars")), _f(p.get("close_dollars")),
-                            _f(p.get("mean_dollars")), _f(p.get("previous_dollars")),
-                            _f(yb.get("open_dollars")), _f(yb.get("high_dollars")),
-                            _f(yb.get("low_dollars")), _f(yb.get("close_dollars")),
-                            _f(ya.get("open_dollars")), _f(ya.get("high_dollars")),
-                            _f(ya.get("low_dollars")), _f(ya.get("close_dollars")),
-                            _f(c.get("volume_fp")), _f(c.get("open_interest_fp")),
+                            _f(g(p, "open")), _f(g(p, "high")),
+                            _f(g(p, "low")), _f(g(p, "close")),
+                            _f(g(p, "mean")), _f(g(p, "previous")),
+                            _f(g(yb, "open")), _f(g(yb, "high")),
+                            _f(g(yb, "low")), _f(g(yb, "close")),
+                            _f(g(ya, "open")), _f(g(ya, "high")),
+                            _f(g(ya, "low")), _f(g(ya, "close")),
+                            _f(c.get("volume_fp") or c.get("volume")),
+                            _f(c.get("open_interest_fp") or c.get("open_interest")),
                             "rung3-backfill",
                         ))
                     break

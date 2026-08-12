@@ -266,3 +266,50 @@ def test_rise_pmf_and_strike_prob():
     # between 90-91 == rise 0 or 1 -> 0.75
     p3 = wx.strike_prob_from_rise_pmf(90.0, pmf, "between", 90.0, 91.0)
     assert p3 == pytest.approx(0.75)
+
+
+# ---------------------------------------------------------------------------
+# previous-runs multi-model selection (sensitivity grid input)
+# ---------------------------------------------------------------------------
+
+def _prev_runs_cache(tmp_path, sid: str, payload: dict, key: str) -> str:
+    import json
+
+    d = os.path.join(str(tmp_path), "openmeteo")
+    os.makedirs(d, exist_ok=True)
+    with open(os.path.join(d, f"prev_runs_{sid}_models.json"), "w") as fh:
+        json.dump({"key": key, "timezone": "UTC", "hourly": payload}, fh)
+    return str(tmp_path)
+
+
+def test_previous_runs_per_model_and_consensus(tmp_path):
+    """models=(...) reads the per-model suffixed variables; more than one
+    model averages the per-model daily maxima (no network: cache hit)."""
+    st = wx.STATIONS["KXHIGHLAX"]
+    times = [f"2026-07-01T{h:02d}:00" for h in range(24)]
+    hourly = {
+        "time": times,
+        # gfs peaks at 80, ecmwf at 90 on the same day
+        "temperature_2m_previous_day1_gfs_seamless": [70.0] * 23 + [80.0],
+        "temperature_2m_previous_day1_ecmwf_ifs025": [70.0] * 23 + [90.0],
+    }
+    key = "past365_leads1_models" + "_".join(wx.PREV_RUNS_MODELS)
+    cache_dir = _prev_runs_cache(tmp_path, st.sid, hourly, key)
+
+    gfs = wx.previous_runs_daily_max(
+        st, leads=(1,), cache_dir=cache_dir, models=("gfs_seamless",)
+    )
+    ecm = wx.previous_runs_daily_max(
+        st, leads=(1,), cache_dir=cache_dir, models=("ecmwf_ifs025",)
+    )
+    both = wx.previous_runs_daily_max(
+        st, leads=(1,), cache_dir=cache_dir, models=wx.PREV_RUNS_MODELS
+    )
+    assert gfs[1]["2026-07-01"] == pytest.approx(80.0)
+    assert ecm[1]["2026-07-01"] == pytest.approx(90.0)
+    assert both[1]["2026-07-01"] == pytest.approx(85.0)
+
+
+def test_previous_runs_rejects_unknown_model():
+    with pytest.raises(ValueError):
+        wx.previous_runs_daily_max(wx.STATIONS["KXHIGHLAX"], models=("icon_d2",))

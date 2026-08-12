@@ -4,11 +4,17 @@ from __future__ import annotations
 import math
 
 from bot.backtest.dataport import InMemoryHistoryProvider
-from bot.backtest.engine import run_backtest
+from bot.backtest.engine import EngineConfig, run_backtest
+from bot.backtest.fills import MakerQueueConfig
 from bot.backtest.testkit import mk_candle, mk_market, synthetic_provider
 from bot.backtest.types import MarketView, Portfolio, Position, SettlementResult
 from bot.strategies import flb_analysis as fa
 from bot.strategies.flb import R1Taker, R2Maker, R5Endgame, biased_p_hat
+
+#: Engine config with the maker-queue model disabled, for tests that
+#: hand-compute maker fills to verify OTHER mechanics (strict-through
+#: rule, fees). Queue behavior is tested in bot/backtest/test_engine.py.
+NOQ_CONFIG = EngineConfig(maker_queue=MakerQueueConfig(enabled=False))
 
 HOUR = 3600
 DAY = 86400
@@ -195,13 +201,43 @@ class TestR2Maker:
         prov = InMemoryHistoryProvider(
             [m], candles, [], [SettlementResult("MKT", "yes", close)]
         )
-        res = run_backtest(prov, R2Maker())
+        res = run_backtest(prov, R2Maker(), NOQ_CONFIG)
         assert res.fills, "dip through the bid should have filled"
         f = res.fills[0]
         assert not f.is_taker
         assert f.fee_cents == 0
         assert f.price_cents == 69
         assert res.net_pnl_cents > 0  # bought 69, settled 100
+
+    def test_reprice_emits_replace_intent(self):
+        s = R2Maker()
+        first = s.on_decision_point(view_for(price=70), empty_portfolio())
+        assert len(first) == 1 and first[0].replace is False
+        # quote moved -> the new intent is a cancel/replace
+        moved = s.on_decision_point(
+            view_for(price=72, t=T0 + 3 * HOUR), empty_portfolio()
+        )
+        assert len(moved) == 1 and moved[0].replace is True
+        assert moved[0].size > 0
+
+    def test_side_flip_emits_pure_cancel_of_old_side(self):
+        s = R2Maker()
+        assert len(s.on_decision_point(view_for(price=70), empty_portfolio())) == 1
+        flipped = s.on_decision_point(
+            view_for(price=30, t=T0 + 3 * HOUR), empty_portfolio()
+        )
+        assert len(flipped) == 2
+        cancel, quote = flipped
+        assert (cancel.side, cancel.size, cancel.replace) == ("yes", 0, True)
+        assert (quote.side, quote.replace) == ("no", True)
+
+    def test_use_replace_false_restores_stale_ladder(self):
+        s = R2Maker(use_replace=False)
+        s.on_decision_point(view_for(price=70), empty_portfolio())
+        moved = s.on_decision_point(
+            view_for(price=72, t=T0 + 3 * HOUR), empty_portfolio()
+        )
+        assert len(moved) == 1 and moved[0].replace is False
 
 
 # ---------------------------------------------------------------------------
@@ -237,6 +273,16 @@ class TestR5Endgame:
         v = view_for(price=95, t=T0, close_ts=T0 + 5 * HOUR)
         it = s.on_decision_point(v, empty_portfolio())[0]
         assert math.isclose(it.p_hat, min(0.995, 0.94 * 1.013))
+
+    def test_reprice_emits_replace_intent(self):
+        s = R5Endgame(window_s=12 * HOUR)
+        close = T0 + 10 * HOUR
+        v = view_for(price=95, t=T0, close_ts=close)
+        first = s.on_decision_point(v, empty_portfolio())
+        assert len(first) == 1 and first[0].replace is False
+        v2 = view_for(price=93, t=T0 + HOUR, close_ts=close)
+        moved = s.on_decision_point(v2, empty_portfolio())
+        assert len(moved) == 1 and moved[0].replace is True
 
 
 # ---------------------------------------------------------------------------

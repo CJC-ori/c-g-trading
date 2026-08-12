@@ -12,7 +12,10 @@ Flow per run:
    through the risk layer, and register orders (crossing intents become
    takers filling in the following candle window; the rest rest as makers).
 4. Between events, replay trades/candles in time order against live orders
-   (fills.py rules), track cash/positions, and mark to market.
+   (fills.py rules, incl. the maker-queue model: resting orders join behind
+   estimated displayed depth and only excess qualifying volume fills them),
+   track cash/positions, and mark to market. Replace intents cancel the
+   strategy's same-direction resting orders first (fresh queue position).
 5. At market close (or early settlement) cancel that market's resting
    orders; at settlement, pay out positions (voids refund at cost).
 6. Charge taker/maker fees per fill and per-decision inference cost
@@ -55,13 +58,21 @@ class EngineConfig:
     (backward compatible, conservative on taker fees, but charges 0 maker
     fees everywhere). Pass a fees.FeeSchedule (e.g. FeeSchedule.
     load_default()) for the exact per-series centicent model — the honest
-    mode for real-data runs (SPEC §4)."""
+    mode for real-data runs (SPEC §4).
+
+    maker_queue (2026-08-12): queue-position model for resting orders
+    (SPEC §3). Enabled by default — that IS the honest default; pass
+    fills.MakerQueueConfig(enabled=False) only to reproduce legacy runs
+    whose maker fill rates were flagged as too generous."""
     risk: RiskConfig = field(default_factory=RiskConfig)
     candle_period_s: int = DEFAULT_CANDLE_PERIOD_S
     fee_stress: float = 1.0
     event_log_path: str | None = None
     keep_events_in_memory: bool = True
     fee_schedule: fees_mod.FeeSchedule | None = None
+    maker_queue: fills.MakerQueueConfig = field(
+        default_factory=fills.MakerQueueConfig
+    )
 
 
 @dataclass(frozen=True, slots=True)
@@ -120,7 +131,7 @@ class _Order:
     __slots__ = (
         "order_id", "intent", "norm", "remaining", "placed_ts", "state",
         "taker_yes_price", "window_end", "maker_from_ts", "p_hat",
-        "fee_accrued_cc", "fee_charged_cents",
+        "fee_accrued_cc", "fee_charged_cents", "queue_ahead",
     )
 
     def __init__(self, order_id: int, intent: OrderIntent, norm, placed_ts: int):
@@ -134,6 +145,10 @@ class _Order:
         self.window_end: int | None = None
         self.maker_from_ts = placed_ts
         self.p_hat = intent.p_hat
+        # Maker-queue state: contracts estimated ahead of us at our level
+        # at placement (fills.initial_queue_ahead). None = no volume proxy
+        # was available -> probabilistic-discount path.
+        self.queue_ahead: int | None = 0
         # Exact-fee mode: per-order accumulator (centicents accrued, cents
         # charged) so multi-fill orders converge to the single-fill fee —
         # mirrors Kalshi's own per-order rounding accumulator.
@@ -392,6 +407,25 @@ class _Engine:
             position_qty=ms.qty,
         )
 
+    def _maker_fill_count(self, o: _Order, event_volume: int, event_ts: int) -> int:
+        """Contracts one qualifying event delivers to resting order `o`,
+        after the maker-queue model (SPEC §3). Mutates o.queue_ahead."""
+        vf = self.risk.depth_cap_frac
+        vm = self.risk.depth_multiplier
+        q = self.config.maker_queue
+        if not q.enabled:
+            # Legacy model: every qualifying event fills up to the cap.
+            return min(o.remaining, fills.volume_cap(event_volume, vf, vm))
+        if o.queue_ahead is None:
+            # No volume proxy existed at placement: probabilistic discount.
+            if not fills.unknown_depth_event_reaches(q, o.order_id, event_ts):
+                return 0
+            return min(o.remaining, fills.volume_cap(event_volume, vf, vm))
+        n, o.queue_ahead = fills.queued_maker_fill(
+            o.remaining, event_volume, o.queue_ahead, vf, vm
+        )
+        return n
+
     def _finalize_taker_window(self, ms: _MarketState, order: _Order, ts: int) -> None:
         """Taker window elapsed: remainder rests (tif=rest) or dies (ioc)."""
         if order.state != _TAKER:
@@ -456,10 +490,12 @@ class _Engine:
                             self._apply_fill(
                                 ms, o, n, o.taker_yes_price, trade.ts, is_taker=True
                             )
-                        elif o.state == _RESTING and trade.ts > o.maker_from_ts:
-                            n = fills.maker_fill_from_trade(
-                                o.norm, trade, o.remaining, vf, vm
-                            )
+                        elif (
+                            o.state == _RESTING
+                            and trade.ts > o.maker_from_ts
+                            and fills.trade_qualifies(o.norm, trade)
+                        ):
+                            n = self._maker_fill_count(o, trade.count, trade.ts)
                             self._apply_fill(
                                 ms, o, n, o.norm.yes_limit, trade.ts, is_taker=False
                             )
@@ -488,10 +524,12 @@ class _Engine:
                             self._apply_fill(
                                 ms, o, n, o.taker_yes_price, candle.end_ts, is_taker=True
                             )
-                        elif o.state == _RESTING and candle.start_ts >= o.maker_from_ts:
-                            n = fills.maker_fill_from_candle(
-                                o.norm, candle, o.remaining, vf, vm
-                            )
+                        elif (
+                            o.state == _RESTING
+                            and candle.start_ts >= o.maker_from_ts
+                            and fills.candle_qualifies(o.norm, candle)
+                        ):
+                            n = self._maker_fill_count(o, candle.volume, candle.end_ts)
                             self._apply_fill(
                                 ms, o, n, o.norm.yes_limit, candle.end_ts, is_taker=False
                             )
@@ -570,6 +608,21 @@ class _Engine:
         except ValueError as e:
             self._log(t, "intent_rejected", ticker=intent.ticker, reason=str(e))
             return
+        # Cancel/replace (2026-08-12): a replace intent first cancels every
+        # still-resting order in this market on the same yes-space direction.
+        # The freed premium is available to the clamp below, and the new
+        # order (if any survives the clamp) joins the maker queue afresh.
+        # Orders inside their taker window are in flight and not touched.
+        if intent.replace:
+            for o in ms.orders:
+                if o.live and o.state == _RESTING and o.norm.yes_buy == norm.yes_buy:
+                    o.state = _DONE
+                    self._log(
+                        t, "cancel", order_id=o.order_id, ticker=ms.info.ticker,
+                        reason="replaced", unfilled=o.remaining,
+                    )
+            if norm.size == 0:
+                return  # pure cancel
         # Quantize the limit to the market's tick structure (SYNTHESIS §2.2).
         # Whole-cent limits are on-grid for every observed Kalshi structure
         # (0.1c/0.5c/1c steps all divide 1c and ranges start at 0), so this
@@ -624,6 +677,13 @@ class _Engine:
                 if est_rate > 0
                 else 0
             )
+        # Depth reconciliation (2026-08-12): the pre-trade depth clamp only
+        # applies to taker intents (their whole fill opportunity is the next
+        # window's tape). Resting orders are bounded at fill time by the
+        # per-print/per-candle caps plus the maker-queue model — pre-clamping
+        # them against the last 3 candles double-counted that mechanism and
+        # zeroed orders placed in quiet hours that would rest for days.
+        window_vol = self._recent_window_volume(view, ms.period_s)
         clamp: ClampResult = clamp_intent_size(
             norm,
             intent.p_hat,
@@ -631,7 +691,7 @@ class _Engine:
             fee_pc,
             self._exposure_for(ms),
             self.risk,
-            observed_window_volume=self._recent_window_volume(view, ms.period_s),
+            observed_window_volume=window_vol if is_taker else None,
         )
         self.intents_log.append(
             {
@@ -667,6 +727,14 @@ class _Engine:
             order.taker_yes_price = est_yes_price
             order.window_end = t + ms.period_s
             order.maker_from_ts = order.window_end
+        # Maker-queue position: join behind the estimated displayed depth
+        # at our level (volume proxy; None -> probabilistic path). Also
+        # covers a taker remainder that later converts to resting.
+        order.queue_ahead = (
+            fills.initial_queue_ahead(window_vol, self.config.maker_queue)
+            if self.config.maker_queue.enabled
+            else 0
+        )
         ms.orders.append(order)
         # Opportunity lifetime (diagnostic; uses the future tape, never
         # visible to the strategy): how long the trigger condition persisted.
@@ -681,12 +749,15 @@ class _Engine:
             "size": clamp.size, "tif": intent.tif, "p_hat": intent.p_hat,
             "is_taker_at_entry": is_taker,
             "opportunity_lifetime_s": lifetime_s,
+            "replace": intent.replace,
+            "queue_ahead_at_placement": order.queue_ahead,
         }
         self._log(
             t, "order_placed", order_id=order.order_id, ticker=intent.ticker,
             is_taker=is_taker, size=clamp.size,
             taker_yes_price=order.taker_yes_price, yes_limit=norm.yes_limit,
             opportunity_lifetime_s=lifetime_s,
+            queue_ahead=order.queue_ahead,
         )
 
     # -- close / settlement ---------------------------------------------------
