@@ -1,0 +1,195 @@
+{
+  "label": "r5_endgame_24h",
+  "fee_mode": "exact-per-series",
+  "base": {
+    "pnl": {
+      "bankroll_cents": 1000000,
+      "net_pnl_cents_gross_of_inference": -999952,
+      "net_pnl_cents_after_inference": -999952,
+      "net_pnl_pct_of_bankroll": -0.999952,
+      "fees_cents": 210,
+      "inference_cost_cents": 0,
+      "avg_deployed_cents": 11457.680684101253,
+      "run_span_s": 96780001,
+      "annualized_return_on_avg_deployed": -28.43828638206672
+    },
+    "brier": {
+      "n": 5600,
+      "strategy": 0.03841198354178761,
+      "market_baseline": 0.03807266071428772,
+      "delta_brier": -0.000339322827500004,
+      "delta_ci95": [
+        -0.00043695068975517325,
+        -0.00024169496524483472
+      ],
+      "beats_baseline": false,
+      "n_gate": 500,
+      "meets_n_gate": true,
+      "traded_subset": {
+        "n": 0,
+        "strategy": null,
+        "market_baseline": null,
+        "delta_brier": null,
+        "delta_ci95": null,
+        "beats_baseline": null,
+        "gate_cents": 4.0
+      },
+      "trade_pnl": {
+        "n_markets_traded": 846,
+        "net_pnl_cents_after_fees": -999952,
+        "net_pnl_cents_after_fees_and_inference": -999952
+      },
+      "flags": []
+    },
+    "calibration": {
+      "n": 5600,
+      "ece": 0.0018979428571405837,
+      "curve": [
+        {
+          "bin": "[0.0,0.1)",
+          "n": 4134,
+          "mean_p_hat": 0.04328839622641669,
+          "observed_freq": 0.04354136429608128
+        },
+        {
+          "bin": "[0.9,1.0)",
+          "n": 1466,
+          "mean_p_hat": 0.9614033356070983,
+          "observed_freq": 0.9679399727148704
+        }
+      ],
+      "reliability": 1.1232722178069643e-05,
+      "resolution": 0.16513797494872118,
+      "uncertainty": 0.20400507015306124,
+      "brier_from_decomposition": 0.03887832792651813
+    },
+    "drawdown": {
+      "max_drawdown_cents": 1001983,
+      "max_drawdown_frac_of_peak": 0.9999520972904032
+    },
+    "concentration": {
+      "n_markets_traded": 846,
+      "top5_share_of_net": null,
+      "worst_market_loss_cents": -49980,
+      "top5": [
+        {
+          "ticker": "HIGHNY-21NOV08-T63",
+          "net_pnl_cents": 3249
+        },
+        {
+          "ticker": "HIGHNY-23JAN20-B50.5",
+          "net_pnl_cents": 3051
+        },
+        {
+          "ticker": "HIGHCHI-22MAR25-T49",
+          "net_pnl_cents": 1908
+        },
+        {
+          "ticker": "HIGHNY-22SEP10-T86",
+          "net_pnl_cents": 1764
+        },
+        {
+          "ticker": "HIGHNY-22JUN05-B77.5",
+          "net_pnl_cents": 1700
+        }
+      ]
+    },
+    "trade_stats": {
+      "n_decision_calls": 185562,
+      "n_intents": 5600,
+      "n_orders": 4162,
+      "contracts_requested": 717627,
+      "contracts_ordered": 360947,
+      "contracts_filled": 45856,
+      "fill_rate_vs_ordered": 0.12704358257583523,
+      "fill_rate_vs_requested": 0.06389949096118179,
+      "order_any_fill_rate": 0.20326765977895242,
+      "taker_contracts": 0,
+      "maker_contracts": 45856,
+      "maker_share": 1.0,
+      "maker_fill_rate": 0.12704358257583523,
+      "maker_fill_rate_sanity_band": [
+        0.4,
+        0.5
+      ],
+      "avg_edge_at_entry_cents": 1.2295914602233062,
+      "avg_holding_period_s": 94908.50827423167,
+      "opportunity_lifetime_s": {
+        "n": 4162,
+        "p25": 933,
+        "median": 3330,
+        "p75": 7200
+      },
+      "flags": []
+    },
+    "cost_ratios": {
+      "inference_cost_cents": 0,
+      "net_pnl_cents": -999952,
+      "notional_traded_cents": 4337242,
+      "inference_over_net_pnl": null,
+      "inference_over_net_pnl_target": 0.2,
+      "inference_over_notional": 0.0,
+      "inference_over_notional_target": 0.01,
+      "flags": []
+    },
+    "splits": {
+      "time": {
+        "split_ts": 1683824400,
+        "train": {
+          "net_pnl_cents": -937255,
+          "n_markets": 812
+        },
+        "test": {
+          "net_pnl_cents": -62697,
+          "n_markets": 34
+        }
+      },
+      "category": {
+        "Politics": {
+          "net_pnl_cents": -62361,
+          "n_markets": 10
+        },
+        "Economics": {
+          "net_pnl_cents": 13188,
+          "n_markets": 51
+        },
+        "World": {
+          "net_pnl_cents": -48692,
+          "n_markets": 8
+        },
+        "Climate and Weather": {
+          "net_pnl_cents": -902087,
+          "n_markets": 777
+        }
+      }
+    }
+  },
+  "capacity_curve": [
+    {
+      "depth_multiplier": 1.0,
+      "net_pnl_cents_after_inference": -999952,
+      "contracts_filled": 45856
+    },
+    {
+      "depth_multiplier": 3.0,
+      "net_pnl_cents_after_inference": -995047,
+      "contracts_filled": 61167
+    },
+    {
+      "depth_multiplier": 10.0,
+      "net_pnl_cents_after_inference": -994863,
+      "contracts_filled": 62817
+    }
+  ],
+  "fee_stress": {
+    "multiplier": 1.5,
+    "net_pnl_cents_after_inference": -999924,
+    "still_positive": false
+  },
+  "inference_stress": {
+    "multiplier": 2.0,
+    "inference_cost_cents": 0,
+    "net_pnl_cents_after_inference": -999952,
+    "still_positive": false
+  }
+}
