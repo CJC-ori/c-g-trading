@@ -43,7 +43,7 @@ A complete, tested research-to-backtest stack:
 | FLB R2-maker (rest bids ≥50¢) | KILLED | Its +$262 was a fill-model artifact; honest queue model → −$162 |
 | FLB R1-taker (buy 70–97¢) | KILLED | 85% win rate, but taker fees + tail losses eat it |
 | Weather ground-truth (bias-corrected ensemble vs strikes) | KILLED | On 1,480 markets the market's Brier beats ours (Δ −0.022, CI < 0) in all 12 configs. Kalshi weather prices already embed the ensembles |
-| Panic-wick ladders R4 (the Michigan thesis) | **PARKED** (positive, n-limited) | 136-episode census: 11% adverse selection, R4 5/5 hits, +17.8% median. Michigan replay: caught the 74¢ wick, +20.3%. Only 9 fillable episodes exist in ALL available history (structural — Kalshi listed no candidate markets pre-Oct-2024) → below the pre-registered n≥10 bar. Paper-trade Nov 2026 midterms |
+| Panic-wick ladders R4 (the Michigan thesis) | **PARKED → now breakeven-at-best** (see §4b) | 136-episode census: 11% adverse selection, R4 5/5 hits, +17.8% median, Michigan replay +20.3%. But only 9 fillable episodes in all history, and the Wisconsin out-of-sample dip-and-die (−100%) erased the cumulative P&L. Paper-trade Nov 2026 midterms only with a much stronger episode gate |
 | Panic R4b (cheap-NO convexity) | KILLED | Measured arm rate 3.8% vs ~10% breakeven; Michigan's 8.67× was the lucky draw |
 | Swing-fade (general, Chris's hypothesis) | KILLED (with a real answer) | 510k-episode census: ≥10¢/24h swings are frequent (~339/wk) and 60–74% half-revert, BUT 53–72% settle *with* the move (information, not panic), and the reversion is quote-only — no prints to exit into. The tails (panic-dip / spike-fade) have 3–6× lower adverse selection — Chris right about *where* — but engine-honest fading still loses except eco spike-fade (parked, concentration-flagged) |
 | Structure: overround NO-sets | DEMOTED to monitoring | Fee-clearing overround: 0.75/week, median fillable **$0.98**. Fees destroy 98.6% of the raw signal. (Original research — nobody had published this) |
@@ -79,11 +79,66 @@ A complete, tested research-to-backtest stack:
    before results; the tournament protocol was committed before any held-out
    run. This is why the numbers above are believable.
 
-## 4. Tournament results
+## 4. Tournament results (complete — `reports/tournament/FINAL.md`)
 
-*(Placeholder — filled by `reports/tournament/FINAL.md` when Round 4
-completes: champion, integration variants kept, adversarial audit verdicts,
-and the single held-out evaluation against the graduation gates.)*
+The four-round tournament ran exactly as pre-registered, and it *changed the
+answer twice* — which is the point of running it:
+
+**Round 1 (full-history championship)** exposed the R5-endgame train pass as
+a window artifact: on 2021→2024 train data, all three R5 windows LOSE
+(weather episodes dominate the unfiltered universe and weather endgame
+favorites are fairly priced). Economics (+4.12%/ep, SE 0.41) and Politics
+cells stayed positive.
+
+**Round 2 (integration)** produced the integrated champion: **ia_econ_only**
+(R5-6h, maker-join 90–98¢, Economics category only) — the only net-positive
+variant on full-history train (+$144, fee-stress positive, rising capacity
+curve, fills in the honest band).
+
+**Round 3 (adversarial audits)**: one VIOLATION (the category filter is
+selected on train outcomes — winner's curse; plus a volume-filter form
+defect worth exactly $0.00) and two MINOR panels. Remediation was executed
+and pre-committed *before* the held-out run: the train number was formally
+reclassified as a biased upper bound, the DB snapshot pinned, and a
+never-contaminated CLEAN sub-window breakout pre-committed.
+
+**Round 4 (the single held-out evaluation)** — the only number that counts:
+
+| config | held-out episodes | net P&L after fees | per-episode mean ± SE | fee ×1.5 | top-5 share | gates |
+|---|---|---|---|---|---|---|
+| **ia_econ_only** | 309 (195 clusters) | **+$1,642.14** | +2.36% ± 1.30% | +$1,638 | 9.9% | **PASS 5/5 → GRADUATES** |
+| ib_swing_filter | 1,158 | −$2,035.13 | −1.40% ± 0.87% | moot | n/a | FAIL → killed |
+
+Honest degradation was real and is reported: in-sample +4.12%/ep fell to
++2.36%/ep held-out, with 9 losing episodes including two ~−100%. The verdict
+survives the pre-committed CLEAN sub-window (+$662.07, +1.04%/ep, 197
+episodes never touched by any earlier pull). Caveats that go with the
+graduation: the equal-weighted CI grazes zero; ~80% of profit sits in one
+series family (AAA gas-price ladders); capacity is real but modest.
+
+**What graduates to paper trading:** R5-6h Economics-only, maker-join
+90–98¢, final 6 hours, exact per-series fees, quarter-Kelly, depth caps —
+the tournament-frozen config in `reports/tournament/round4/`.
+
+## 4b. The Wisconsin out-of-sample coda (2026-08-11, `reports/case-wisconsin/`)
+
+The night before the session ended, the Wisconsin Dem gubernatorial primary
+handed us a free out-of-sample test of the founding thesis, and it was the
+*adverse* draw: Hong (95¢, market overconfident vs polls that justified
+60–80%) dipped, partially reverted to 79¢ — live-indistinguishable from
+Michigan — then died. Settled NO. Replaying the FROZEN rules: the R4 panic
+ladder filled fully and lost −100% (−$499.50); one Wisconsin erased Michigan
+plus all five train wins (cumulative R4 P&L across every simulated fill ever:
+≈ +$18 on ~$3.1k — statistically zero, dip-die rate now 2/11 ≈ 18%, above
+R4's ~15% economic breakeven). **The panic-ladder thesis is now
+breakeven-at-best on all available evidence.** The genuinely capturable edge
+that night was *pre-event*: Crowley YES / Hong NO at ~5¢ — the
+fade-the-overconfident-favorite forecasting expression, the same mechanism as
+the hits-forecaster's +14.4× Clayton trade. Twice demonstrated, still
+unproven at n. Our pipeline missed it because of a close-time anchoring bug
+(markets close in November; the primary was in August) — fixed post-hoc as
+infrastructure (see `reports/hits/ANALYSIS.md` v2 section), with no new
+performance claims attached.
 
 ## 5. What we'd do next (post-session roadmap)
 
@@ -102,11 +157,24 @@ and the single held-out evaluation against the graduation gates.)*
 
 ## 6. Honest overall assessment
 
-The session's strongest claim is *negative space*: six of eight strategy
-families died under honest fills and fees, which is exactly what the research
-predicted (markets are efficient where liquid; anomalies are small). The
-surviving edges are (a) a modest, well-evidenced, capacity-limited endgame
-harvest, (b) a rare but high-quality event-night pattern awaiting its n, and
-(c) one demonstrated 14× forecasting hit whose repeatability is the single
-most valuable open question. The infrastructure to answer that question —
-honestly, cheaply, reproducibly — is the real deliverable.
+The session's strongest claim is *negative space*: most strategy families
+died under honest fills and fees, which is exactly what the research
+predicted (markets are efficient where liquid; anomalies are small). What
+survived the full gauntlet — pre-registered kill criteria, adversarial
+audits, a single held-out evaluation, and an out-of-sample election night:
+
+1. **One graduated strategy**: Economics-only endgame favorite-buying,
+   +$1,642 held-out net on $10k with 5/5 gates passed — real, modest,
+   capacity-limited, and dependent on one series family for most of its
+   profit. Worth paper-trading; not worth quitting a job over.
+2. **One twice-demonstrated mechanism**: pre-event fades of overconfident
+   extreme favorites found by targeted forecasting (+14.4× Clayton, and the
+   Wisconsin ~20× that our anchoring bug missed). Its repeatability is the
+   single most valuable open question this repo can now answer cheaply.
+3. **The founding panic thesis, honestly priced**: the dips are real, the
+   ladders fill, and the adverse tail (Wisconsin) eats the winners. You
+   cannot tell a Michigan from a Wisconsin mid-panic; you *might* be able to
+   tell them apart pre-event, which routes back to #2.
+
+The infrastructure to keep answering these questions — honestly, cheaply,
+reproducibly, with fills and fees that don't lie — is the real deliverable.
