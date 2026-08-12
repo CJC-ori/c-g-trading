@@ -109,6 +109,28 @@ COOLDOWN_MAX_H = 72                # episode closes at revert50 or +72h
 CAPTURE_FRAC = 0.25                # SPEC par.3 volume cap
 
 PRICE_BINS = ((0, 10), (10, 30), (30, 70), (70, 90), (90, 100))
+
+# First-class TAIL CELLS (added 2026-08-12 per Chris, before the full run):
+# (1) panic_dip  — the Michigan shape generalized: >=90c market swinging
+#     down (fade = buy the dip);
+# (2) spike_fade — the mirror: a 1-15c market panic-spiking upward
+#     (fade = sell into the spike: resting YES asks / NO bids above market;
+#     note the census stays integer-cent — on tapered_deci_cent books the
+#     real 0.1c ticks make the sell-side entries slightly BETTER than
+#     simulated, so spike-fade economics here are conservative);
+# (3) mid_range  — 30-70c either direction, the comparison group.
+TAIL_PANIC_DIP_MIN_REF_C = 90
+TAIL_SPIKE_FADE_MAX_REF_C = 15
+
+
+def tail_cell_of(direction: str, ref_c: int) -> str | None:
+    if direction == "down" and ref_c >= TAIL_PANIC_DIP_MIN_REF_C:
+        return "panic_dip"
+    if direction == "up" and ref_c <= TAIL_SPIKE_FADE_MAX_REF_C:
+        return "spike_fade"
+    if 30 <= ref_c < 70:
+        return "mid_range"
+    return None
 DTC_BINS_D = ((0, 1), (1, 7), (7, 30), (30, 10_000))
 LIQ_TIERS = ((500, 2_000), (2_000, 10_000), (10_000, float("inf")))
 NEAR_CLOSE_H = 48                  # "scheduled-event-ish": t0 within 48h of close
@@ -550,6 +572,7 @@ def aggregate(episodes: list[Episode], span_weeks: float,
             ("by_dtc_bin", lambda e: e.dtc_bin),
             ("by_liq_tier", lambda e: e.liq_tier),
             ("by_near_close", lambda e: "near_close<=48h" if e.near_close else "far_from_close"),
+            ("tail_cells", lambda e: tail_cell_of(e.direction, e.ref_c) or "other"),
         ):
             groups: dict[str, list[Episode]] = {}
             for e in eps:
@@ -580,6 +603,9 @@ def shortlist(episodes: list[Episode], span_weeks: float,
     cells: dict[tuple, list[Episode]] = {}
     for e in episodes:
         cells.setdefault((e.x, e.t_h, e.direction, e.category, e.price_bin), []).append(e)
+        tail = tail_cell_of(e.direction, e.ref_c)
+        if tail in ("panic_dip", "spike_fade"):
+            cells.setdefault((e.x, e.t_h, e.direction, e.category, f"TAIL:{tail}"), []).append(e)
     rows = []
     for key, eps in cells.items():
         n = len(eps)

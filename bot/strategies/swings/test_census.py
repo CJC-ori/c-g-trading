@@ -276,6 +276,30 @@ def _mk_episode(swm: bool, revert: bool, n_id: int) -> Episode:
     return ep
 
 
+class TestTailCells:
+    def test_tail_cell_classification(self):
+        from bot.strategies.swings.census import tail_cell_of
+        assert tail_cell_of("down", 95) == "panic_dip"
+        assert tail_cell_of("down", 89) is None
+        assert tail_cell_of("up", 10) == "spike_fade"
+        assert tail_cell_of("up", 16) is None
+        assert tail_cell_of("up", 50) == "mid_range"
+        assert tail_cell_of("down", 45) == "mid_range"
+
+    def test_spike_fade_pnl_is_no_side(self):
+        # 5c market spikes to 30c, settles NO: selling the spike earns entry
+        hours = [mk(i, 5, vol=2000) for i in range(30)]
+        hours += [mk(30, 30, vol=5000)]
+        hours += [mk(31 + i, 30, vol=500) for i in range(80)]
+        ep = measure_episode(hours, 30, x=20, t_h=6, direction="up")
+        annotate(ep, dict(META, result="no", payout_c=0))
+        d0 = ep.fades[0]
+        # taker entry = sell YES at bid 29; settles 0 -> pnl = +29c/contract
+        assert d0["entry_c"] == 29
+        assert d0["pnl_c"] == 29
+        assert ep.settled_with_move is False
+
+
 class TestShortlist:
     def test_min_n_and_adverse_gates(self):
         good = [_mk_episode(swm=False, revert=True, n_id=i) for i in range(40)]
