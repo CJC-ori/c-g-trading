@@ -170,6 +170,46 @@ def test_zero_bid_rests_at_one_cent():
     assert len(out) == 1 and out[0].limit_price_cents == 1
 
 
+def test_freshness_gate_default_off_preserves_frozen_behaviour():
+    # frozen runs never pass freshness_h: a forecast fires days after D,
+    # exactly as the frozen engine did (documented, not endorsed)
+    s = HitsStrategy({"T1": _fc(0.40, asof=90 * DAY)})
+    out = s.on_decision_point(_view(t=95 * DAY), _FakePortfolio())
+    assert len(out) == 1
+
+
+def test_freshness_gate_blocks_stale_forecast():
+    # D at day 90, execution 3 days later -> stale under a 24h window
+    s = HitsStrategy({"T1": _fc(0.40, asof=90 * DAY)}, freshness_h=24.0)
+    assert s.on_decision_point(_view(t=93 * DAY), _FakePortfolio()) == []
+    # research spend is still charged at the first usable decision point
+    assert s.last_inference_cost_cents == 10
+    # inside the window it fires as before
+    s2 = HitsStrategy({"T1": _fc(0.40, asof=90 * DAY)}, freshness_h=24.0)
+    out = s2.on_decision_point(_view(t=90 * DAY + 12 * 3600), _FakePortfolio())
+    assert len(out) == 1
+
+
+def test_freshness_gate_revalidates_price_gap():
+    # the Clayton wrong-side entry: forecast 18% vs 93.5c at D; by execution
+    # the price collapsed THROUGH the forecast to ~0.5c. |edge| = 17.5 >= 15
+    # would fire without re-validation; the gate must refuse it.
+    fc = HitsForecast(ticker="T1", p_yes=0.18, asof_ts=90 * DAY,
+                      cost_cents=10, price_at_d_cents=93.5)
+    s = HitsStrategy({"T1": fc}, freshness_h=24.0)
+    crashed = _view(t=90 * DAY + 3600, bid=0, ask=1)     # mid 0.5c
+    assert s.on_decision_point(crashed, _FakePortfolio()) == []
+    # same forecast, price still on the rich side -> normal fire (buy NO)
+    s2 = HitsStrategy({"T1": fc}, freshness_h=24.0)
+    out = s2.on_decision_point(_view(t=90 * DAY + 3600, bid=91, ask=93),
+                               _FakePortfolio())
+    assert len(out) == 1 and out[0].side == "no"
+    # without price_at_d recorded (frozen forecasts), only staleness applies
+    s3 = HitsStrategy({"T1": _fc(0.18)}, freshness_h=24.0)
+    out = s3.on_decision_point(crashed, _FakePortfolio())
+    assert len(out) == 1     # documents the residual gap for legacy rows
+
+
 def test_market_as_forecast_null_never_fires():
     s = MarketAsForecastStrategy({"T1": 90 * DAY})
     for bid, ask in [(0, 2), (7, 9), (49, 51), (91, 93), (97, 99)]:

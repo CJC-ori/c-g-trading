@@ -53,6 +53,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Sequence
 
+from bot.forecaster import event_anchor as EA
 from bot.forecaster.llm import LLMClient, LLMRequest, LLMResponse, ReplayCache
 
 REPO = Path(__file__).resolve().parents[2]
@@ -107,6 +108,11 @@ class Candidate:
     cheap_side: str             # "yes" if price <= EXTREME_LO else "no"
     volume: float
     result: str                 # settled outcome (NEVER shown to any model)
+    # v2 event anchoring (post-hoc infrastructure fix; defaults keep frozen
+    # close-anchored rows loadable): see bot/forecaster/event_anchor.py.
+    event_ts: int | None = None         # derived event date (12:00 UTC) or None
+    anchor_source: str = "close_time"   # source actually used for D
+    anchor_provenance: str = ""         # matched text / field / calendar key
 
     @property
     def cheap_price(self) -> float:
@@ -142,15 +148,36 @@ def price_at(con: sqlite3.Connection, ticker: str, ts: int,
     return float(pc) if pc is not None else None
 
 
-def enumerate_candidates(window: str, db_path: Path = DB) -> tuple[list[Candidate], dict]:
-    """The full price-only candidate set for one window, plus funnel counts."""
-    w = WINDOWS[window]
+def enumerate_candidates(
+    window: str,
+    db_path: Path = DB,
+    anchoring: str = "close",
+    windows: dict | None = None,
+) -> tuple[list[Candidate], dict]:
+    """The full price-only candidate set for one window, plus funnel counts.
+
+    ``anchoring``:
+      * ``"close"`` — the FROZEN behaviour: D = close_time − DECISION_DAYS.
+      * ``"event"`` — v2 anchoring (post-hoc infrastructure fix): derive the
+        decision-relevant event date from market metadata
+        (bot/forecaster/event_anchor.py — explicit text dates, statutory
+        election calendar, expected_expiration_time; NEVER the
+        outcome-adjacent activity signature) and set D = event − k whenever
+        the event precedes close by more than k days. Everything else
+        (extreme band, volume, lifetime, categories) stays frozen.
+
+    ``windows`` overrides the frozen WINDOWS table (report-only reruns).
+    """
+    if anchoring not in ("close", "event"):
+        raise ValueError(f"unknown anchoring: {anchoring!r}")
+    w = (windows or WINDOWS)[window]
     con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
     con.row_factory = sqlite3.Row
     try:
         rows = con.execute(
             f"""SELECT ticker, event_ticker, series_ticker, title, yes_sub_title,
-                       category, open_time, close_time, volume, result, rules_primary
+                       category, open_time, close_time, volume, result,
+                       rules_primary, raw_json
                 FROM markets
                 WHERE result IN ('yes','no')
                   AND close_time >= ? AND close_time <= ?||'T23:59:59Z'
@@ -161,6 +188,8 @@ def enumerate_candidates(window: str, db_path: Path = DB) -> tuple[list[Candidat
         ).fetchall()
         funnel = {"settled_vol_cat": len(rows), "lifetime_ok": 0,
                   "price_at_d": 0, "extreme": 0}
+        if anchoring == "event":
+            funnel["event_anchored"] = 0
         out: list[Candidate] = []
         for r in rows:
             close_ts = _iso_to_ts(r["close_time"])
@@ -169,6 +198,22 @@ def enumerate_candidates(window: str, db_path: Path = DB) -> tuple[list[Candidat
                 continue
             funnel["lifetime_ok"] += 1
             d_ts = close_ts - DECISION_DAYS * DAY
+            event_ts: int | None = None
+            anchor_source, anchor_prov = "close_time", ""
+            if anchoring == "event":
+                anchor = EA.derive_event_anchor(
+                    title=r["title"] or "",
+                    subtitle=r["yes_sub_title"] or "",
+                    rules=(r["rules_primary"] or "")[:2000],
+                    open_ts=open_ts, close_ts=close_ts,
+                    raw_json=r["raw_json"],
+                )
+                d_ts, used = EA.anchored_decision_ts(
+                    anchor, close_ts, k_days=DECISION_DAYS)
+                if used != "close_time":
+                    funnel["event_anchored"] += 1
+                    event_ts = anchor.event_ts
+                    anchor_source, anchor_prov = used, anchor.provenance
             p = price_at(con, r["ticker"], d_ts)
             if p is None:
                 continue
@@ -188,6 +233,8 @@ def enumerate_candidates(window: str, db_path: Path = DB) -> tuple[list[Candidat
                 decision_ts=d_ts, price_at_d=p,
                 cheap_side="yes" if p <= EXTREME_LO else "no",
                 volume=float(r["volume"]), result=r["result"],
+                event_ts=event_ts, anchor_source=anchor_source,
+                anchor_provenance=anchor_prov,
             ))
         return out, funnel
     finally:

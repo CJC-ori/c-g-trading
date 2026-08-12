@@ -252,3 +252,137 @@ edge unproven, execution unsolved.** The follow-up that would settle it is
 specified above (bigger sample over more windows + forecast-freshness
 gate + taker entry at D); it should be run before any capital, paper or
 real, chases this.
+
+---
+
+## v2 anchoring — event-date decision anchors (post-hoc infrastructure fix, 2026-08-12)
+
+**This section documents an infrastructure fix, not a performance claim.**
+No new forecasts were run, no held-out evaluation was performed, and every
+frozen number above stands exactly as run. What changed is the screen's
+*plumbing*, motivated by two independent post-freeze findings:
+
+1. **Wisconsin (reports/case-wisconsin/ANALYSIS.md §3):** the frozen anchor
+   D = `close_time` − 10d made the screen structurally blind to the
+   KXGOVWINOMD-26 nominee markets — pre-event their `close_time` was
+   2026-11-03 (the general-election date), so D = 2026-10-24 never landed
+   before the 2026-08-11 primary and a ~20x pre-event fade (Hong NO at
+   ~4–5c) was invisible by construction.
+2. **F3 close-anchor audit
+   (reports/tournament/round4/ia_econ_only/f3_close_anchor_audit.json):**
+   the same shape in econ — `can_close_early` markets whose data-determined
+   outcome fixes long before the listed close.
+
+### Design (`bot/forecaster/event_anchor.py`)
+
+The decision-relevant **event date** is derived from market metadata, with
+provenance stored, in strict priority order:
+
+1. `explicit_text` — dates parsed from `rules_primary`/title/subtitle
+   (month-name, ISO, m/d/y, day-month-year; yearless dates resolve to the
+   close year; "Jun 2026" month-year forms are guarded against parsing as
+   a day). Among parsed dates the latest one inside the market's life
+   (open .. close+1d] is taken.
+2. `election_calendar` — for election markets with no explicit date (the
+   Wisconsin shape), the public **statutory** 2026 primary calendar
+   (partial table; runoffs/specials excluded; unknown states fall through)
+   plus the general-election date. These dates are ex-ante public-calendar
+   knowledge fixed by statute.
+3. `expected_expiration` — the market's own `expected_expiration_time`
+   from the raw JSON, when it precedes `close_time` (an upper bound on the
+   event date).
+4. `activity` — volume-concentration signature from hourly candles.
+   **Outcome-adjacent** (trading concentrates when the event happens): it
+   is flagged `outcome_adjacent=True`, `anchored_decision_ts` refuses to
+   anchor on it, and the screen never enables it — live diagnostics only.
+
+Anchor rule: D = event − 10d whenever a (non-outcome-adjacent) event date
+exists and precedes `close_time` by more than 10 days; otherwise the
+frozen D = close − 10d, unchanged. `enumerate_candidates(anchoring="event")`
+turns it on; the default `anchoring="close"` reproduces the frozen screen
+byte-for-byte (verified: 487/487 window-B candidates, zero drift).
+
+**Freshness gate** (the lesson recorded in the engine section, now
+implemented): a forecast anchored at D is *stale* when |now − D| > f hours
+(f = 24 by default — a round pre-specified default, not tuned on any
+result), and entry re-validates the price gap at execution: it must still
+clear the 15-point gate **and point the same way it did at D** — a price
+that moved *through* the forecast (the Clayton wrong-side entry) is
+refused. Wired into `HitsStrategy(freshness_h=...)`, **default off**, so
+the frozen engine runs reproduce unchanged; unit tests cover the exact
+Clayton pattern.
+
+### Parse rate (measured, deterministic; also asserted in tests)
+
+- Deterministic 1-in-8 sample of the settled Politics/Elections/World/
+  Economics/Companies universe (vol ≥ 2k, closes 2026-02-01..08-05,
+  n = 1,320): **event date found for 62.4%** (`explicit_text` 586,
+  `election_calendar` 190, `expected_expiration` 48, none 496); the anchor
+  actually *moves* (event precedes close by > 10d) for 103 (7.8%).
+- Full window-B universe (n = 3,827): parse rate 61.2%
+  (`explicit_text` 1,853, `election_calendar` 490).
+
+### Wisconsin regression test (bot/forecaster/test_event_anchor.py)
+
+On the real KXGOVWINOMD-26 rows with the documented pre-event close
+(2026-11-03): every market derives event date **2026-08-11**
+(`election_calendar: primary_2026:wisconsin`) ⇒ **D = 2026-08-01,
+ten days pre-primary**, where the frozen anchor put D = 2026-10-24
+(post-primary, blind). An end-to-end fixture test reconstructs the
+pre-event snapshot (real metadata + real hourly candles, pre-event close)
+and proves `enumerate_candidates` returns FHON as a candidate at
+D = Aug 1 (95c, cheap NO ≈ 5c) under `anchoring="event"` while returning
+**nothing** under the frozen `anchoring="close"`.
+
+### Candidate-set delta, window B (screen only — no forecasts, no P&L)
+
+| | frozen (close-anchored) | v2 (event-anchored) |
+|---|---|---|
+| lifetime-ok universe | 2,180 | 2,180 |
+| anchors moved | — | 333 (15.3%) |
+| price available at D | 653 | 585 |
+| **extreme at D (candidates)** | **487** | **431** |
+| event-deduped | 231 | 196 |
+
+- **All 333 moved anchors had a frozen D *after* the derived event date**
+  (this is by construction: the anchor only moves when the event precedes
+  close by > 10d). The frozen screen was, for these markets, screening
+  *post-event* prices — mostly election complexes whose `close_time` is a
+  certification date weeks after the vote (CA primary complex: frozen
+  D ≈ Jul 1 for a Jun 2 primary).
+- **57 candidates disappear** (all were post-event extremes at the frozen
+  D — e.g. KXVOTEPRIMARY/KXCAPRIMARY/KXPRIMARYMOV series): at the
+  corrected pre-event D, 55 have no hourly candle (the store's coverage
+  concentrates in the last ~15 days of life — caveat 2 gets *worse* at
+  earlier anchors) and 2 are genuinely not extreme yet. **1 appears**
+  (KXPRIMARYMOV-SENATEMED-GPLA-P35). Net: 487 → 431.
+- **KXGOVWINOMD:** still outside frozen window B under any anchoring —
+  window membership is close-keyed and B was frozen to closes ≤ 08-05
+  (realized WI close 08-12; pre-event 11-03). In a report-only extended
+  window B′ (closes 06-15..08-12), all 11 KXGOVWINOMD markets enter the
+  candidate set with D = 2026-08-02, FHON at 95.2c ⇒ cheap NO ≈ 4.8c
+  (~20x if right). Note the honest nuance: in the *current post-settlement
+  DB* that D comes from the realized early close (now only ~1d after the
+  primary), so close-anchoring happens to coincide with event-anchoring;
+  it is the **live / pre-event** case — where close_time still reads
+  2026-11-03 — that the event anchor fixes, as the fixture test proves.
+
+### Caveats
+
+1. Post-hoc infrastructure fix: parameters of the *fix* (source priority,
+   the k = 10d reuse, f = 24h) were chosen for consistency with the frozen
+   design, not tuned on outcomes; still, any future run using v2 anchoring
+   is a **new experiment** and must not be compared against the frozen
+   numbers as if same-protocol.
+2. The candidate-set delta above describes screen *composition* only.
+   Nothing here says the 431 v2 candidates forecast better or trade
+   better — that is exactly the follow-up experiment this report already
+   pre-specified, and it remains unrun.
+3. The statutory election calendar is partial (2026 only, well-known
+   statutory dates only); a wrong or missing entry degrades gracefully to
+   the next source. `expected_expiration_time` in the current DB was
+   re-fetched post-settlement for some markets and may differ from its
+   pre-event value; it sits last in priority partly for this reason.
+4. Candle coverage binds harder at pre-event anchors (653 → 585 priced
+   markets in B): early-determination markets need earlier-life candle
+   pulls before v2 anchoring can screen them at scale.

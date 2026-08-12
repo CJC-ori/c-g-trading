@@ -26,9 +26,15 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from bot.backtest.types import MarketView, OrderIntent, Portfolio
+from bot.forecaster.event_anchor import FRESHNESS_HOURS, gap_still_valid, is_stale
 from bot.forecaster.hits import GATE_PTS, MIN_PAYOFF
 
 DAY = 86400
+
+__all__ = [
+    "FRESHNESS_HOURS", "HitsForecast", "HitsStrategy",
+    "MarketAsForecastStrategy", "AlwaysFadeStrategy", "payoff_multiple",
+]
 
 
 @dataclass(frozen=True)
@@ -37,6 +43,10 @@ class HitsForecast:
     p_yes: float                # aggregated pipeline output, [0,1]
     asof_ts: int                # D — the PIT anchor the forecast was made at
     cost_cents: int             # full pipeline + amortized screen cost
+    # price (cents) the forecast disagreed with at D; enables the
+    # gap-revalidation half of the freshness gate. Optional so the frozen
+    # runs (which never recorded it) still load.
+    price_at_d_cents: float | None = None
 
 
 def payoff_multiple(entry_price_cents: float) -> float:
@@ -54,6 +64,14 @@ class HitsStrategy:
     resting maker order, hold to resolution. Inference cost is charged at
     the first usable decision point whether or not a trade fires — research
     spend on a no-trade is still spend.
+
+    Freshness gate (v2, pre-specified by reports/hits/ANALYSIS.md caveat 3;
+    OFF by default so the frozen engine result reproduces exactly): pass
+    ``freshness_h`` to require |now − D| <= f hours at execution — a stale
+    forecast never enters. When the forecast carries ``price_at_d_cents``,
+    entry additionally re-validates the gap: it must still clear the gate
+    AND point the same way it did at D (a price that moved *through* the
+    forecast — the Clayton wrong-side entry — is refused).
     """
 
     decision_interval_s = DAY
@@ -67,11 +85,13 @@ class HitsStrategy:
         gate_pts: float = GATE_PTS,
         min_payoff: float = MIN_PAYOFF,
         size: int = 1000,
+        freshness_h: float | None = None,   # e.g. event_anchor.FRESHNESS_HOURS
     ):
         self.forecasts = forecasts
         self.gate_pts = gate_pts
         self.min_payoff = min_payoff
         self.size = size
+        self.freshness_h = freshness_h
         self._charged: set[str] = set()
         self._quoted: set[str] = set()
 
@@ -102,6 +122,13 @@ class HitsStrategy:
         p_hat = self._p_hat(view)
         if p_hat is None:
             return []
+        if self.freshness_h is not None:
+            if is_stale(view.t, fc.asof_ts, self.freshness_h):
+                return []      # stale forecast: research spend without a trade
+            if (fc.price_at_d_cents is not None
+                    and not gap_still_valid(p_hat, mid, fc.price_at_d_cents,
+                                            self.gate_pts)):
+                return []      # gap gone or price moved through the forecast
         edge_pts = p_hat * 100.0 - mid
         if abs(edge_pts) < self.gate_pts:
             return []
