@@ -47,6 +47,58 @@ def _dollars(cents) -> str:
     return f"${cents / 100:+,.2f}"
 
 
+def _entry(price_yes: float, side: str) -> float:
+    e = price_yes if side == "yes" else 1.0 - price_yes
+    return max(e, 0.005)          # sub-half-cent books quote at the 0.5c tick
+
+
+def at_d_rule(fmap: dict, by_ticker: dict) -> dict:
+    """The frozen trade rule applied analytically at the decision anchor D
+    (taker at the D price, equal-$ stakes) — the forecast-level answer,
+    independent of the engine's tick/fill mechanics."""
+    fired = []
+    for t, d in sorted(fmap.items()):
+        p, mkt = d.get("p_yes"), d["price_at_d"]
+        if p is None:
+            continue
+        edge = p - mkt
+        if abs(edge) < H.GATE_PTS / 100.0:
+            continue
+        side = "yes" if edge > 0 else "no"
+        entry = _entry(mkt, side)
+        payoff = (1.0 - entry) / entry
+        if payoff < H.MIN_PAYOFF:
+            continue
+        won = side == by_ticker[t]["result"]
+        fired.append({"ticker": t, "window": d["window"], "mkt_at_d": mkt,
+                      "p_yes": p, "side": side, "entry": entry,
+                      "payoff_x": payoff, "result": by_ticker[t]["result"],
+                      "hit": won,
+                      "pnl_per_unit": payoff if won else -1.0})
+
+    def fade(rows) -> dict:
+        pnls = []
+        for r in rows:
+            mkt = r["price_at_d"]
+            side = "yes" if mkt <= 0.5 else "no"
+            entry = _entry(mkt, side)
+            if (1.0 - entry) / entry < H.MIN_PAYOFF:
+                continue
+            pnls.append((1.0 - entry) / entry
+                        if side == r["result"] else -1.0)
+        return {"n": len(pnls), "total_pnl_per_unit": sum(pnls),
+                "avg_pnl_per_unit": sum(pnls) / len(pnls) if pnls else None}
+
+    forecasted_rows = [by_ticker[t] for t in fmap]
+    return {
+        "fired": fired,
+        "n_fired": len(fired),
+        "n_hits": sum(1 for r in fired if r["hit"]),
+        "total_pnl_per_unit": sum(r["pnl_per_unit"] for r in fired),
+        "null_always_fade_forecasted": fade(forecasted_rows),
+    }
+
+
 def build() -> None:
     cands = _load("candidates.json")
     screen = _load("screen.json")
@@ -138,6 +190,7 @@ def build() -> None:
             "paired_delta_pooled": pooled,
             "paired_delta_fired": fired_delta,
         },
+        "at_d_rule": at_d_rule(fmap, by_ticker),
         "engine": {k: v.get("summary") for k, v in engine.items()},
         "trades": trade_rows,
         "n_fired": len(trade_rows),
