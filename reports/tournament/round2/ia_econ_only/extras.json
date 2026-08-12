@@ -1,0 +1,140 @@
+{
+  "variant": "ia_econ_only",
+  "description": "I-a: R5-6h restricted to categories above breakeven in every Round-1 price bin/window = Economics only",
+  "episodes_n": 29,
+  "episode_stats": {
+    "n": 29,
+    "n_clusters": 21,
+    "mean": 0.04121555996641995,
+    "se": 0.0040532212840985815,
+    "ci95_lo": 0.03327124624958673,
+    "ci95_hi": 0.04915987368325317,
+    "distribution": {
+      "min": 0.01948051948051948,
+      "p25": 0.020052525031460305,
+      "median": 0.036458333333333336,
+      "p75": 0.05263157894736842,
+      "max": 0.10915032679738562,
+      "sd": 0.02233054463080043,
+      "frac_positive": 1.0
+    },
+    "dollar_weighted_return": 0.03618411973553802,
+    "total_basis_cents": 398545,
+    "total_net_pnl_cents": 14421
+  },
+  "per_category": {
+    "Economics": {
+      "n": 29,
+      "n_clusters": 21,
+      "mean": 0.04121555996641995,
+      "se": 0.0040532212840985815,
+      "ci95_lo": 0.03327124624958673,
+      "ci95_hi": 0.04915987368325317,
+      "distribution": {
+        "min": 0.01948051948051948,
+        "p25": 0.020052525031460305,
+        "median": 0.036458333333333336,
+        "p75": 0.05263157894736842,
+        "max": 0.10915032679738562,
+        "sd": 0.02233054463080043,
+        "frac_positive": 1.0
+      },
+      "dollar_weighted_return": 0.03618411973553802,
+      "total_basis_cents": 398545,
+      "total_net_pnl_cents": 14421
+    }
+  },
+  "fill_stats": {
+    "n_orders": 65,
+    "n_maker_orders": 65,
+    "n_taker_orders": 0,
+    "maker_order_fill_rate": 0.4461538461538462,
+    "taker_order_fill_rate": null,
+    "maker_contract_fill_rate": 0.266769965782168,
+    "taker_contract_fill_rate": null,
+    "maker_contracts_filled": 4132,
+    "taker_contracts_filled": 0,
+    "maker_fill_rate_flag_gt60": false
+  },
+  "winrate_by_price": [
+    {
+      "category": "Economics",
+      "entry_price_cents": 90,
+      "contracts": 51,
+      "n_markets": 1,
+      "win_rate": 1.0,
+      "breakeven_win_rate": 0.9017647058823529,
+      "above_breakeven": true
+    },
+    {
+      "category": "Economics",
+      "entry_price_cents": 92,
+      "contracts": 17,
+      "n_markets": 1,
+      "win_rate": 1.0,
+      "breakeven_win_rate": 0.9217647058823529,
+      "above_breakeven": true
+    },
+    {
+      "category": "Economics",
+      "entry_price_cents": 93,
+      "contracts": 92,
+      "n_markets": 1,
+      "win_rate": 1.0,
+      "breakeven_win_rate": 0.9311956521739131,
+      "above_breakeven": true
+    },
+    {
+      "category": "Economics",
+      "entry_price_cents": 94,
+      "contracts": 464,
+      "n_markets": 4,
+      "win_rate": 1.0,
+      "breakeven_win_rate": 0.9410344827586207,
+      "above_breakeven": true
+    },
+    {
+      "category": "Economics",
+      "entry_price_cents": 95,
+      "contracts": 252,
+      "n_markets": 1,
+      "win_rate": 1.0,
+      "breakeven_win_rate": 0.95,
+      "above_breakeven": true
+    },
+    {
+      "category": "Economics",
+      "entry_price_cents": 96,
+      "contracts": 964,
+      "n_markets": 7,
+      "win_rate": 1.0,
+      "breakeven_win_rate": 0.9606535269709543,
+      "above_breakeven": true
+    },
+    {
+      "category": "Economics",
+      "entry_price_cents": 97,
+      "contracts": 881,
+      "n_markets": 6,
+      "win_rate": 1.0,
+      "breakeven_win_rate": 0.9705334846765039,
+      "above_breakeven": true
+    },
+    {
+      "category": "Economics",
+      "entry_price_cents": 98,
+      "contracts": 1411,
+      "n_markets": 8,
+      "win_rate": 1.0,
+      "breakeven_win_rate": 0.9803756201275691,
+      "above_breakeven": true
+    }
+  ],
+  "opportunity_lifetime": {
+    "n_markets": 2444,
+    "median_hours": 2.0,
+    "mean_hours": 1.9423076923076923,
+    "min_hours": 1.0,
+    "max_hours": 6.0
+  }
+}
