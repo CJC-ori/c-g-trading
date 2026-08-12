@@ -1,0 +1,127 @@
+{
+ "note": "Wisconsin out-of-sample case study 2026-08-11 (KXGOVWINOMD-26-FHON); frozen params, engine replay identical to michigan_replay",
+ "R4": {
+  "ticker": "KXGOVWINOMD-26-FHON",
+  "et_date": "2026-08-11",
+  "outcome_class": "dip-and-die",
+  "result": "no",
+  "strategy": "R4",
+  "period_s": 60,
+  "data_resolution": "trades",
+  "n_intents": 5,
+  "n_orders": 5,
+  "n_resting_orders": 5,
+  "n_resting_filled": 3,
+  "entry_fills": [
+   {
+    "ts": 1786497174,
+    "price_cents": 85,
+    "count": 196,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1786497562,
+    "price_cents": 80,
+    "count": 208,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1786497586,
+    "price_cents": 75,
+    "count": 18,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1786497587,
+    "price_cents": 75,
+    "count": 32,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1786497587,
+    "price_cents": 75,
+    "count": 1,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1786497589,
+    "price_cents": 75,
+    "count": 8,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1786497589,
+    "price_cents": 75,
+    "count": 30,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1786497590,
+    "price_cents": 75,
+    "count": 1,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1786497592,
+    "price_cents": 75,
+    "count": 3,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1786497592,
+    "price_cents": 75,
+    "count": 1,
+    "is_taker": false,
+    "fee_cents": 0
+   },
+   {
+    "ts": 1786497593,
+    "price_cents": 75,
+    "count": 128,
+    "is_taker": false,
+    "fee_cents": 0
+   }
+  ],
+  "exit_fills": [],
+  "entered": true,
+  "exited": false,
+  "contracts_in": 626,
+  "premium_deployed_cents": 49950,
+  "fees_cents": 0,
+  "net_pnl_cents": -49950,
+  "return_on_deployed": -1.0,
+  "median_opportunity_lifetime_s": 99
+ },
+ "R4b": {
+  "ticker": "KXGOVWINOMD-26-FHON",
+  "et_date": "2026-08-11",
+  "outcome_class": "dip-and-die",
+  "result": "no",
+  "strategy": "R4b",
+  "period_s": 60,
+  "data_resolution": "trades",
+  "n_intents": 0,
+  "n_orders": 0,
+  "n_resting_orders": 0,
+  "n_resting_filled": 0,
+  "entry_fills": [],
+  "exit_fills": [],
+  "entered": false,
+  "exited": false,
+  "contracts_in": 0,
+  "premium_deployed_cents": 0,
+  "fees_cents": 0,
+  "net_pnl_cents": 0,
+  "return_on_deployed": null,
+  "median_opportunity_lifetime_s": null
+ }
+}

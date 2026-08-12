@@ -1,0 +1,717 @@
+{
+ "night_episodes": {
+  "KXGOVWINOMD-26-FHON": {
+   "window_min": 0.1,
+   "depth_le85_trades": 4926885.049999976,
+   "anchor": "2026-08-12T01:00:00+00:00",
+   "episode": {
+    "ticker": "KXGOVWINOMD-26-FHON",
+    "window_start": 1786474800,
+    "window_end": 1786533505,
+    "trades_cover_window": true,
+    "outcome_class": "dip-and-die",
+    "et_date": "2026-08-11",
+    "data_resolution": "trades"
+   }
+  },
+  "KXWIPRIMARY-07D26-FCLA": {
+   "window_min": 48.0,
+   "depth_le85_trades": 214.47,
+   "anchor": "2026-08-12T03:00:00+00:00",
+   "episode": {
+    "ticker": "KXWIPRIMARY-07D26-FCLA",
+    "window_start": 1786482000,
+    "window_end": 1786509853,
+    "trades_cover_window": true,
+    "outcome_class": "dip-and-revert",
+    "et_date": "2026-08-11",
+    "data_resolution": "trades"
+   }
+  },
+  "KXCTPRIMARY-04R26-MGOL": {
+   "window_min": 98.0,
+   "depth_le85_trades": 0,
+   "anchor": "2026-08-11T14:00:00+00:00",
+   "episode": {
+    "ticker": "KXCTPRIMARY-04R26-MGOL",
+    "window_start": 1786435200,
+    "window_end": 1786510357,
+    "trades_cover_window": true,
+    "outcome_class": "no-dip",
+    "et_date": "2026-08-11",
+    "data_resolution": "trades"
+   }
+  },
+  "KXGOVMNNOMD-26-AKLO": {
+   "window_min": 99.6,
+   "depth_le85_trades": 0,
+   "anchor": "2026-08-12T00:00:00+00:00",
+   "episode": {
+    "ticker": "KXGOVMNNOMD-26-AKLO",
+    "window_start": 1786471200,
+    "window_end": 1786510385,
+    "trades_cover_window": true,
+    "outcome_class": "no-dip",
+    "et_date": "2026-08-11",
+    "data_resolution": "trades"
+   }
+  },
+  "KXMNPRIMARY-07D26-EOSB": {
+   "window_min": 99.0,
+   "depth_le85_trades": 0,
+   "anchor": "2026-08-12T01:00:00+00:00",
+   "episode": {
+    "ticker": "KXMNPRIMARY-07D26-EOSB",
+    "window_start": 1786474800,
+    "window_end": 1786509958,
+    "trades_cover_window": true,
+    "outcome_class": "no-dip",
+    "et_date": "2026-08-11",
+    "data_resolution": "trades"
+   }
+  },
+  "KXMNPRIMARY-08D26-TSWA": {
+   "window_min": 96.0,
+   "depth_le85_trades": 0,
+   "anchor": "2026-08-12T02:00:00+00:00",
+   "episode": {
+    "ticker": "KXMNPRIMARY-08D26-TSWA",
+    "window_start": 1786478400,
+    "window_end": 1786509987,
+    "trades_cover_window": true,
+    "outcome_class": "no-dip",
+    "et_date": "2026-08-11",
+    "data_resolution": "trades"
+   }
+  },
+  "KXSENATEMNR-26-MTAF": {
+   "window_min": 99.1,
+   "depth_le85_trades": 0,
+   "anchor": "2026-08-12T01:00:00+00:00",
+   "episode": {
+    "ticker": "KXSENATEMNR-26-MTAF",
+    "window_start": 1786474800,
+    "window_end": 1786510231,
+    "trades_cover_window": true,
+    "outcome_class": "no-dip",
+    "et_date": "2026-08-11",
+    "data_resolution": "trades"
+   }
+  }
+ },
+ "engine_results": {
+  "KXGOVWINOMD-26-FHON": {
+   "R4": {
+    "ticker": "KXGOVWINOMD-26-FHON",
+    "et_date": "2026-08-11",
+    "outcome_class": "dip-and-die",
+    "result": "no",
+    "strategy": "R4",
+    "period_s": 60,
+    "data_resolution": "trades",
+    "n_intents": 5,
+    "n_orders": 5,
+    "n_resting_orders": 5,
+    "n_resting_filled": 3,
+    "entry_fills": [
+     {
+      "ts": 1786497174,
+      "price_cents": 85,
+      "count": 196,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786497562,
+      "price_cents": 80,
+      "count": 208,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786497586,
+      "price_cents": 75,
+      "count": 18,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786497587,
+      "price_cents": 75,
+      "count": 32,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786497587,
+      "price_cents": 75,
+      "count": 1,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786497589,
+      "price_cents": 75,
+      "count": 8,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786497589,
+      "price_cents": 75,
+      "count": 30,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786497590,
+      "price_cents": 75,
+      "count": 1,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786497592,
+      "price_cents": 75,
+      "count": 3,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786497592,
+      "price_cents": 75,
+      "count": 1,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786497593,
+      "price_cents": 75,
+      "count": 128,
+      "is_taker": false,
+      "fee_cents": 0
+     }
+    ],
+    "exit_fills": [],
+    "entered": true,
+    "exited": false,
+    "contracts_in": 626,
+    "premium_deployed_cents": 49950,
+    "fees_cents": 0,
+    "net_pnl_cents": -49950,
+    "return_on_deployed": -1.0,
+    "median_opportunity_lifetime_s": 99
+   },
+   "R4b": {
+    "ticker": "KXGOVWINOMD-26-FHON",
+    "et_date": "2026-08-11",
+    "outcome_class": "dip-and-die",
+    "result": "no",
+    "strategy": "R4b",
+    "period_s": 60,
+    "data_resolution": "trades",
+    "n_intents": 0,
+    "n_orders": 0,
+    "n_resting_orders": 0,
+    "n_resting_filled": 0,
+    "entry_fills": [],
+    "exit_fills": [],
+    "entered": false,
+    "exited": false,
+    "contracts_in": 0,
+    "premium_deployed_cents": 0,
+    "fees_cents": 0,
+    "net_pnl_cents": 0,
+    "return_on_deployed": null,
+    "median_opportunity_lifetime_s": null
+   }
+  },
+  "KXWIPRIMARY-07D26-FCLA": {
+   "R4": {
+    "ticker": "KXWIPRIMARY-07D26-FCLA",
+    "et_date": "2026-08-11",
+    "outcome_class": "dip-and-revert",
+    "result": "yes",
+    "strategy": "R4",
+    "period_s": 60,
+    "data_resolution": "trades",
+    "n_intents": 11,
+    "n_orders": 11,
+    "n_resting_orders": 11,
+    "n_resting_filled": 5,
+    "entry_fills": [
+     {
+      "ts": 1786499636,
+      "price_cents": 85,
+      "count": 8,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786499636,
+      "price_cents": 85,
+      "count": 4,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786499638,
+      "price_cents": 85,
+      "count": 8,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786499638,
+      "price_cents": 80,
+      "count": 8,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786499638,
+      "price_cents": 85,
+      "count": 4,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786499638,
+      "price_cents": 80,
+      "count": 4,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786499758,
+      "price_cents": 85,
+      "count": 7,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786499758,
+      "price_cents": 80,
+      "count": 7,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786499758,
+      "price_cents": 75,
+      "count": 7,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786499959,
+      "price_cents": 85,
+      "count": 1,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786499959,
+      "price_cents": 80,
+      "count": 1,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786499959,
+      "price_cents": 75,
+      "count": 1,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786500790,
+      "price_cents": 85,
+      "count": 2,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786500790,
+      "price_cents": 80,
+      "count": 2,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786500790,
+      "price_cents": 75,
+      "count": 2,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786501761,
+      "price_cents": 85,
+      "count": 12,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786501761,
+      "price_cents": 80,
+      "count": 12,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786501761,
+      "price_cents": 75,
+      "count": 12,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786503947,
+      "price_cents": 85,
+      "count": 2,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786503947,
+      "price_cents": 80,
+      "count": 2,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786503947,
+      "price_cents": 75,
+      "count": 2,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786504093,
+      "price_cents": 85,
+      "count": 2,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786504093,
+      "price_cents": 80,
+      "count": 2,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786504093,
+      "price_cents": 75,
+      "count": 2,
+      "is_taker": false,
+      "fee_cents": 0
+     }
+    ],
+    "exit_fills": [
+     {
+      "ts": 1786506202,
+      "price_cents": 93,
+      "count": 12,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786506380,
+      "price_cents": 93,
+      "count": 16,
+      "is_taker": false,
+      "fee_cents": 0
+     },
+     {
+      "ts": 1786506380,
+      "price_cents": 93,
+      "count": 86,
+      "is_taker": false,
+      "fee_cents": 0
+     }
+    ],
+    "entered": true,
+    "exited": true,
+    "contracts_in": 114,
+    "premium_deployed_cents": 9240,
+    "fees_cents": 0,
+    "net_pnl_cents": 1362,
+    "return_on_deployed": 0.1474,
+    "median_opportunity_lifetime_s": 2147
+   },
+   "R4b": {
+    "ticker": "KXWIPRIMARY-07D26-FCLA",
+    "et_date": "2026-08-11",
+    "outcome_class": "dip-and-revert",
+    "result": "yes",
+    "strategy": "R4b",
+    "period_s": 60,
+    "data_resolution": "trades",
+    "n_intents": 0,
+    "n_orders": 0,
+    "n_resting_orders": 0,
+    "n_resting_filled": 0,
+    "entry_fills": [],
+    "exit_fills": [],
+    "entered": false,
+    "exited": false,
+    "contracts_in": 0,
+    "premium_deployed_cents": 0,
+    "fees_cents": 0,
+    "net_pnl_cents": 0,
+    "return_on_deployed": null,
+    "median_opportunity_lifetime_s": null
+   }
+  },
+  "KXCTPRIMARY-04R26-MGOL": {
+   "R4": {
+    "ticker": "KXCTPRIMARY-04R26-MGOL",
+    "et_date": "2026-08-11",
+    "outcome_class": "no-dip",
+    "result": "yes",
+    "strategy": "R4",
+    "period_s": 60,
+    "data_resolution": "trades",
+    "n_intents": 3,
+    "n_orders": 3,
+    "n_resting_orders": 3,
+    "n_resting_filled": 0,
+    "entry_fills": [],
+    "exit_fills": [],
+    "entered": false,
+    "exited": false,
+    "contracts_in": 0,
+    "premium_deployed_cents": 0,
+    "fees_cents": 0,
+    "net_pnl_cents": 0,
+    "return_on_deployed": null,
+    "median_opportunity_lifetime_s": 12235
+   },
+   "R4b": {
+    "ticker": "KXCTPRIMARY-04R26-MGOL",
+    "et_date": "2026-08-11",
+    "outcome_class": "no-dip",
+    "result": "yes",
+    "strategy": "R4b",
+    "period_s": 60,
+    "data_resolution": "trades",
+    "n_intents": 4,
+    "n_orders": 2,
+    "n_resting_orders": 0,
+    "n_resting_filled": 0,
+    "entry_fills": [],
+    "exit_fills": [],
+    "entered": false,
+    "exited": false,
+    "contracts_in": 0,
+    "premium_deployed_cents": 0,
+    "fees_cents": 0,
+    "net_pnl_cents": 0,
+    "return_on_deployed": null,
+    "median_opportunity_lifetime_s": 22333
+   }
+  },
+  "KXGOVMNNOMD-26-AKLO": {
+   "R4": {
+    "ticker": "KXGOVMNNOMD-26-AKLO",
+    "et_date": "2026-08-11",
+    "outcome_class": "no-dip",
+    "result": "yes",
+    "strategy": "R4",
+    "period_s": 60,
+    "data_resolution": "trades",
+    "n_intents": 3,
+    "n_orders": 3,
+    "n_resting_orders": 3,
+    "n_resting_filled": 0,
+    "entry_fills": [],
+    "exit_fills": [],
+    "entered": false,
+    "exited": false,
+    "contracts_in": 0,
+    "premium_deployed_cents": 0,
+    "fees_cents": 0,
+    "net_pnl_cents": 0,
+    "return_on_deployed": null,
+    "median_opportunity_lifetime_s": 3
+   },
+   "R4b": {
+    "ticker": "KXGOVMNNOMD-26-AKLO",
+    "et_date": "2026-08-11",
+    "outcome_class": "no-dip",
+    "result": "yes",
+    "strategy": "R4b",
+    "period_s": 60,
+    "data_resolution": "trades",
+    "n_intents": 23,
+    "n_orders": 21,
+    "n_resting_orders": 3,
+    "n_resting_filled": 0,
+    "entry_fills": [
+     {
+      "ts": 1786446334,
+      "price_cents": 1,
+      "count": 116,
+      "is_taker": true,
+      "fee_cents": 9
+     }
+    ],
+    "exit_fills": [],
+    "entered": true,
+    "exited": false,
+    "contracts_in": 116,
+    "premium_deployed_cents": 116,
+    "fees_cents": 9,
+    "net_pnl_cents": -125,
+    "return_on_deployed": -1.0776,
+    "median_opportunity_lifetime_s": 62525
+   }
+  },
+  "KXMNPRIMARY-07D26-EOSB": {
+   "R4": {
+    "ticker": "KXMNPRIMARY-07D26-EOSB",
+    "et_date": "2026-08-11",
+    "outcome_class": "no-dip",
+    "result": "yes",
+    "strategy": "R4",
+    "period_s": 60,
+    "data_resolution": "trades",
+    "n_intents": 3,
+    "n_orders": 3,
+    "n_resting_orders": 3,
+    "n_resting_filled": 0,
+    "entry_fills": [],
+    "exit_fills": [],
+    "entered": false,
+    "exited": false,
+    "contracts_in": 0,
+    "premium_deployed_cents": 0,
+    "fees_cents": 0,
+    "net_pnl_cents": 0,
+    "return_on_deployed": null,
+    "median_opportunity_lifetime_s": 4944
+   },
+   "R4b": {
+    "ticker": "KXMNPRIMARY-07D26-EOSB",
+    "et_date": "2026-08-11",
+    "outcome_class": "no-dip",
+    "result": "yes",
+    "strategy": "R4b",
+    "period_s": 60,
+    "data_resolution": "trades",
+    "n_intents": 9,
+    "n_orders": 9,
+    "n_resting_orders": 0,
+    "n_resting_filled": 0,
+    "entry_fills": [],
+    "exit_fills": [],
+    "entered": false,
+    "exited": false,
+    "contracts_in": 0,
+    "premium_deployed_cents": 0,
+    "fees_cents": 0,
+    "net_pnl_cents": 0,
+    "return_on_deployed": null,
+    "median_opportunity_lifetime_s": 89278
+   }
+  },
+  "KXMNPRIMARY-08D26-TSWA": {
+   "R4": {
+    "ticker": "KXMNPRIMARY-08D26-TSWA",
+    "et_date": "2026-08-11",
+    "outcome_class": "no-dip",
+    "result": "yes",
+    "strategy": "R4",
+    "period_s": 60,
+    "data_resolution": "trades",
+    "n_intents": 3,
+    "n_orders": 3,
+    "n_resting_orders": 3,
+    "n_resting_filled": 0,
+    "entry_fills": [],
+    "exit_fills": [],
+    "entered": false,
+    "exited": false,
+    "contracts_in": 0,
+    "premium_deployed_cents": 0,
+    "fees_cents": 0,
+    "net_pnl_cents": 0,
+    "return_on_deployed": null,
+    "median_opportunity_lifetime_s": 5263
+   },
+   "R4b": {
+    "ticker": "KXMNPRIMARY-08D26-TSWA",
+    "et_date": "2026-08-11",
+    "outcome_class": "no-dip",
+    "result": "yes",
+    "strategy": "R4b",
+    "period_s": 60,
+    "data_resolution": "trades",
+    "n_intents": 1,
+    "n_orders": 0,
+    "n_resting_orders": 0,
+    "n_resting_filled": 0,
+    "entry_fills": [],
+    "exit_fills": [],
+    "entered": false,
+    "exited": false,
+    "contracts_in": 0,
+    "premium_deployed_cents": 0,
+    "fees_cents": 0,
+    "net_pnl_cents": 0,
+    "return_on_deployed": null,
+    "median_opportunity_lifetime_s": null
+   }
+  },
+  "KXSENATEMNR-26-MTAF": {
+   "R4": {
+    "ticker": "KXSENATEMNR-26-MTAF",
+    "et_date": "2026-08-11",
+    "outcome_class": "no-dip",
+    "result": "yes",
+    "strategy": "R4",
+    "period_s": 60,
+    "data_resolution": "trades",
+    "n_intents": 3,
+    "n_orders": 3,
+    "n_resting_orders": 3,
+    "n_resting_filled": 0,
+    "entry_fills": [],
+    "exit_fills": [],
+    "entered": false,
+    "exited": false,
+    "contracts_in": 0,
+    "premium_deployed_cents": 0,
+    "fees_cents": 0,
+    "net_pnl_cents": 0,
+    "return_on_deployed": null,
+    "median_opportunity_lifetime_s": 937
+   },
+   "R4b": {
+    "ticker": "KXSENATEMNR-26-MTAF",
+    "et_date": "2026-08-11",
+    "outcome_class": "no-dip",
+    "result": "yes",
+    "strategy": "R4b",
+    "period_s": 60,
+    "data_resolution": "trades",
+    "n_intents": 73,
+    "n_orders": 37,
+    "n_resting_orders": 0,
+    "n_resting_filled": 0,
+    "entry_fills": [],
+    "exit_fills": [],
+    "entered": false,
+    "exited": false,
+    "contracts_in": 0,
+    "premium_deployed_cents": 0,
+    "fees_cents": 0,
+    "net_pnl_cents": 0,
+    "return_on_deployed": null,
+    "median_opportunity_lifetime_s": 55351
+   }
+  }
+ }
+}
